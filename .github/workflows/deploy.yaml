@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: 'Building...'
-      uses: Rurouni-z/hugo-deploy@v1
+      uses: Rurouni-z/hugo-deploy@master
       env:
         DEPLOY_REPO: Rurouni-z/Rurouni-z.github.io
         DEPLOY_BRANCH: build
