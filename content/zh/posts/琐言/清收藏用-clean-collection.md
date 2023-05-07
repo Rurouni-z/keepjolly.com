@@ -1,0 +1,28 @@
+---
+title: 清收藏用
+date: 2022-07-31 19:01:58.277
+updated: 2022-07-31 19:16:51.5
+url: /archives/clean-collection
+categories: 
+- 琐言
+tags: 
+- 深度学习
+---
+
+## 深度学习
+- [吴恩达课后作业目录](https://blog.csdn.net/u013733326/article/details/79827273)
+- [深度学习作业 习题无答案](https://github.com/Relph1119/stanford-deep-learning-notes)
+- [深度学习作业 编程](https://zhuanlan.zhihu.com/p/95510114)
+- [《深度学习》笔记](https://kyonhuang.top/Andrew-Ng-Deep-Learning-notes/#/)
+- 作业
+	- [深度学习代码](https://github.com/AdalbertoCq/Deep-Learning-Specialization-Coursera)
+	- [深度学习 习题 有答案](https://www.heywhale.com/mw/project/5e20243e2823a10036b542da)
+- [李沐动手学深度学习](https://zh.d2l.ai)
+- [李沐深度学习](https://www.bilibili.com/medialist/play/1567748478)
+- [如何自学机器学习](https://www.zhihu.com/question/332726203)
+## 前端
+- [图床](https://imgtu.com/)
+- [在线api](https://www.fastmock.site)
+## 资源下载
+- [csdn下载](https://ziquyun.com/#)
+- [b站下载](https://bilibili.iiilab.com)
