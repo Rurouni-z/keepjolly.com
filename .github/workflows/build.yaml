@@ -1,22 +1,33 @@
-# .github/workflows/build.yml
-
-name: build
+name: Deploy Hugo Site to Github Pages on Master Branch
 
 on:
   push:
     branches:
-    - main
+      - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  build-deploy:
+    runs-on: ubuntu-18.04
     steps:
-    - name: 'Building...'
-      uses: Rurouni-z/hugo-deploy@master
-      env:
-        DEPLOY_REPO: Rurouni-z/Rurouni-z.github.io
-        DEPLOY_BRANCH: build
-        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-        # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-        TZ: Asia/Shanghai
+      - uses: actions/checkout@v1  # v2 does not have submodules option now
+       # with:
+       #   submodules: true
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "latest"
+          # extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} # 这里的 ACTIONS_DEPLOY_KEY 则是上面设置 Private Key的变量名
+          external_repository: Rurouni-z/Rurouni-z.github.io # Pages 远程仓库 
+          publish_dir: ""
+          keep_files: false # remove existing files
+          publish_branch: build  # deploying branch
+          commit_message: ${{ github.event.head_commit.message }}
