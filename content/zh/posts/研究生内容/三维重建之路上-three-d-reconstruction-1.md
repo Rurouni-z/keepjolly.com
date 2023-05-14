@@ -7,6 +7,7 @@ categories:
 - 笔记
 tags: 
 - 三维重建
+summary: 三维重建上
 ---
 
 instant-ngp --scene data/nerf/fox
