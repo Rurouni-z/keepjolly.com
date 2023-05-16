@@ -1,8 +1,6 @@
 name: Algolia Upload Records
 on:
-  created:
-    branches:
-      - build
+  page_build #推送时执行
 jobs:
   algolia:
     runs-on: ubuntu-latest
