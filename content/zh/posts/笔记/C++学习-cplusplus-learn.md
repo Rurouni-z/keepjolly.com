@@ -561,9 +561,10 @@ istream& operator >> (istream& is, Complex &x)
 	is >> x._real >> x._image;
 	return is;
 }
-```
-防止缓冲区遗留数据：
+// 防止缓冲区遗留数据：
 cin.ignore(numeric_limits<std::streamsize>::max(), '\n'); // 清空缓冲区脏数据
+```
+使用转义字符。使用 "&lt;" 代替 “<” , 使用 "&gt;" 代替 ">"。防止识别为html
 #### 文件操作
 文件的打开方式：
 
