@@ -41,4 +41,5 @@ jobs:
           destination-username: 'Rurouni-z'
           destination-repository: 'Rurouni-z.github.io'
           destination-directory: ' .github/workflows'
+          destination-branch: 'build'
           commit-email: 'upload algolia action'
