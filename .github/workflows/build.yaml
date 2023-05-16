@@ -31,15 +31,4 @@ jobs:
           keep_files: false # remove existing files
           publish_branch: build  # deploying branch
           commit_message: ${{ github.event.head_commit.message }}
-        
-      - name: Push yaml to another repository
-        uses: nkoppel/push-files-to-another-repository@master
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-files: '.github/workflows/upload_algolia.yaml'
-          destination-username: 'Rurouni-z'
-          destination-repository: 'Rurouni-z.github.io'
-          destination-directory: ' .github/workflows'
-          destination-branch: 'build'
-          commit-email: 'upload algolia action'
+      
