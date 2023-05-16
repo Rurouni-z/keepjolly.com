@@ -1,6 +1,6 @@
 name: Algolia Upload Records
 on:
-  [push] #推送时执行
+  [created] #推送时执行
 jobs:
   algolia:
     runs-on: ubuntu-latest
