@@ -24,17 +24,17 @@ jobs:
       - name: Build
         run: hugo --minify
 
-      # - name: Deploy
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} # 这里的 ACTIONS_DEPLOY_KEY 则是上面设置 Private Key的变量名
-      #     external_repository: Rurouni-z/Rurouni-z.github.io # Pages 远程仓库 
-      #     publish_dir: ./public
-      #     keep_files: true # remove existing files
-      #     publish_branch: build  # deploying branch
-      #     commit_message: ${{ github.event.head_commit.message }}
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} # 这里的 ACTIONS_DEPLOY_KEY 则是上面设置 Private Key的变量名
+          external_repository: Rurouni-z/Rurouni-z.github.io # Pages 远程仓库 
+          publish_dir: ./public
+          keep_files: true # remove existing files
+          publish_branch: build  # deploying branch
+          commit_message: ${{ github.event.head_commit.message }}
       
-      - name: Upload Records
+      - name: Upload Algolia
         # 使用 Action
         uses: iChochy/Algolia-Upload-Records@main
         # 设置环境变量
