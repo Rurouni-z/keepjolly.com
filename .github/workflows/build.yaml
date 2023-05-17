@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout
         # 获取代码 Checkout
-        uses: actions/checkout@v3  # v2 does not have submodules option now
+        uses: actions/checkout@v3
         with:
           submodules: true
 
@@ -27,10 +27,10 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} # 这里的 ACTIONS_DEPLOY_KEY 则是上面设置 Private Key的变量名
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} # 这里的 ACTIONS_DEPLOY_KEY 则是secrets中设置Private Key的变量名
           external_repository: Rurouni-z/Rurouni-z.github.io # Pages 远程仓库 
           publish_dir: ./public
-          keep_files: true # remove existing files
+          keep_files: false # remove existing files
           publish_branch: build  # deploying branch
           commit_message: ${{ github.event.head_commit.message }}
       
