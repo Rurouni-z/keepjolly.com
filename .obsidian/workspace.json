@@ -1,0 +1,169 @@
+{
+  "main": {
+    "id": "5e8e9f8b37884bbc",
+    "type": "split",
+    "children": [
+      {
+        "id": "ae2e2c9adf731c5d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b78f50f3b29927a1",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "9560c7e19f23cb7d",
+    "type": "split",
+    "children": [
+      {
+        "id": "762ac37e31c6ca73",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ea10bd2e34cb9477",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "fdc0284f2ba65ef6",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "91a6872effdb80ab",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "7fd862221b396924",
+    "type": "split",
+    "children": [
+      {
+        "id": "a55d7d0c7c080f6f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9b3c9241832cc39a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "cffd4f58064422f5",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "ef2e87a1a9d9b04c",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "2266ee6c8a2496a2",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "ea10bd2e34cb9477",
+  "lastOpenFiles": [
+    "content/zh/posts/2023y5m18d20h1m7s.md",
+    "content/zh/posts/2023y5m18d20h14m43s.md",
+    "content/zh/posts/2023y5m18d20h0m32s.md",
+    "content/zh/posts/2023m5d18h19m58s9.md",
+    "content/zh/posts/2023m5d18h19m58s37.md",
+    "content/zh/posts/2023m5d18h19m58s29.md",
+    "content/zh/posts/2023m5d18h19m47s53.md",
+    "content/zh/posts/2023m5d18h19m53s44.md",
+    "content/zh/posts/2023m5d18h19m53s50.md",
+    "content/zh/posts/2023m5d18h19m53s49.md",
+    "content/zh/posts/2023m5d18h19m53s48.md",
+    "content/zh/posts/2023m5d18h19m53s47.md",
+    "content/zh/posts/2023m5d18h19m53s46.md",
+    "content/zh/posts/2023m5d18h19m53s45.md",
+    "content/zh/posts/2023m5d18h19m41s28.md",
+    "content/zh/zh/posts/2023m5d18h19m47s17.md",
+    "content/zh/zh/posts",
+    "content/zh/zh",
+    "content/zh/posts/笔记/C++学习-cplusplus-learn.md",
+    "content/zh/posts/笔记/_index.md",
+    "content/zh/categories/_index.md",
+    "content/zh/about/_index.md",
+    "public",
+    "obs_sctipts/NewBlog.js",
+    "obs_sctipts"
+  ]
+}
