@@ -6,6 +6,13 @@
       "type": "Macro",
       "command": true,
       "macroId": "e870c954-8a1f-439e-a40f-0614ff8f3713"
+    },
+    {
+      "id": "ab0360d9-7680-4083-936e-cf6b9c65da48",
+      "name": "New",
+      "type": "Macro",
+      "command": false,
+      "macroId": ""
     }
   ],
   "macros": [
@@ -19,6 +26,53 @@
           "id": "e40b7d2a-e467-4015-98ea-23577a2d1375",
           "path": "obs_sctipts/NewBlog.js",
           "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "New",
+      "id": "4d8d2060-37c2-44c3-a7e6-82581d0da116",
+      "commands": [
+        {
+          "name": "create_new_post",
+          "type": "UserScript",
+          "id": "74310266-988e-4727-9d23-fe1dc373a0a6",
+          "path": "obs_sctipts/create_new_post.js",
+          "settings": {}
+        },
+        {
+          "name": "Untitled Template Choice",
+          "type": "NestedChoice",
+          "id": "d7999d38-c072-489c-b0f9-941e0c983bb5",
+          "choice": {
+            "id": "c6bfe90a-f720-4696-948e-8134f471f1a7",
+            "name": "Untitled Template Choice",
+            "type": "Template",
+            "command": false,
+            "templatePath": "obs_templates/New Post.md",
+            "fileNameFormat": {
+              "enabled": true,
+              "format": "{{DATE}}-{{VALUE:articleFilename}}"
+            },
+            "folder": {
+              "enabled": true,
+              "folders": [],
+              "chooseWhenCreatingNote": false,
+              "createInSameFolderAsActiveFile": false,
+              "chooseFromSubfolders": false
+            },
+            "appendLink": false,
+            "openFileInNewTab": {
+              "enabled": false,
+              "direction": "vertical",
+              "focus": true
+            },
+            "openFile": true,
+            "openFileInMode": "default",
+            "fileExistsMode": "Increment the file name",
+            "setFileExistsBehavior": false
+          }
         }
       ],
       "runOnStartup": false

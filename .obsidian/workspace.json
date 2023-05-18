@@ -11,8 +11,12 @@
             "id": "b78f50f3b29927a1",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "obs_templates/New Post.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "obs_templates/New Post.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "obs_templates/New Post.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "obs_templates/New Post.md"
+              }
             }
           }
         ]
@@ -140,8 +148,19 @@
   },
   "active": "ea10bd2e34cb9477",
   "lastOpenFiles": [
-    "content/zh/posts/2023y5m18d20h1m7s.md",
+    "data/favicon_package_v0.16.zip",
+    "data/favicon_package_v0.16 (1).zip",
+    "content/zh/posts/2023y5m18d21h10m28s.md",
+    "2023-05-18-a.md",
     "content/zh/posts/2023y5m18d20h14m43s.md",
+    "public",
+    "obs_sctipts/create_new_post.js",
+    "obs_sctipts/新建文本文档.txt",
+    "obs_templates/New Post.md",
+    "obs_templates/新建文本文档.txt",
+    "obs_templates",
+    "新建文件夹",
+    "content/zh/posts/2023y5m18d20h1m7s.md",
     "content/zh/posts/2023y5m18d20h0m32s.md",
     "content/zh/posts/2023m5d18h19m58s9.md",
     "content/zh/posts/2023m5d18h19m58s37.md",
@@ -162,8 +181,6 @@
     "content/zh/posts/笔记/_index.md",
     "content/zh/categories/_index.md",
     "content/zh/about/_index.md",
-    "public",
-    "obs_sctipts/NewBlog.js",
-    "obs_sctipts"
+    "obs_sctipts/NewBlog.js"
   ]
 }
