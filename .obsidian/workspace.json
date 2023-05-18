@@ -148,6 +148,7 @@
   },
   "active": "ea10bd2e34cb9477",
   "lastOpenFiles": [
+    "static/favicon_package_v0.16.zip",
     "data/favicon_package_v0.16.zip",
     "data/favicon_package_v0.16 (1).zip",
     "content/zh/posts/2023y5m18d21h10m28s.md",
@@ -180,7 +181,6 @@
     "content/zh/posts/笔记/C++学习-cplusplus-learn.md",
     "content/zh/posts/笔记/_index.md",
     "content/zh/categories/_index.md",
-    "content/zh/about/_index.md",
-    "obs_sctipts/NewBlog.js"
+    "content/zh/about/_index.md"
   ]
 }
