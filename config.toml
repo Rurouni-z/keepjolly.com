@@ -1472,10 +1472,10 @@ uglyURLs = false
 # 自行添加的多语言站点配置
 
 # 中文
-[languages.zh]
-    languageName = "🇨🇳"
-    contentDir = "content/zh"
-    weight = 1
+# [languages.zh]
+#     languageName = "🇨🇳"
+#     contentDir = "content/zh"
+#     weight = 1
 
 # 英文
 # [languages.en]
