@@ -15,13 +15,28 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
-	"New Blog Post": {
-		"prefix": [
-			"blog-post"
-		],
-		"body": [
-			"---\ntitle:\ndate: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND\nseoTitle:\ndescription:\nauthors: [\"YOUR NAME HERE\"]\n---"
-		],
-		"description": "New blog post for KeepJolly."
+	"hugo post template":{
+        "prefix": "post",
+        "body": [
+            "---",
+            "title: $1",
+            "date: {{ dateFormat \"2006-01-02\" .Date }}",
+			"lastmod: ",
+            "summary: ",
+            "slug: $3", // url: www.keepjolly.com/tags/:slug/
+			"draft: false",
+			"categories: ",
+			"- ",
+			"tags: ",
+			"- '$4'",
+			"original: true",
+			"author: Rurouni",
+			"website: www.keepjolly.com",
+			"---"
+        ]
+    },
+	"update time":{
+		"prefix": "update",
+		"body": "{{ dateFormat \"2006-01-02\" .Date }}"
 	}
 }
