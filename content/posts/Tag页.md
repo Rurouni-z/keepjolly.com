@@ -1,6 +1,6 @@
 ---
 title: 查看tag
-date: {{ dateFormat "2006-01-02" .Date }}
+date: 2023-05-20 21:33:52 +0800
 lastmod: 
 summary: 
 slug: showtag
