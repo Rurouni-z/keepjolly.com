@@ -1,9 +1,15 @@
+// https://0x3f.org/posts/how-to-write-blog-with-obsidian/
 module.exports = async (params) => {
+    const {app, quickAddApi: {suggester}} = params;
+    const allTags = Object.keys(app.metadataCache.getTags());
+    var newArr = allTags.map(str => str.replace("#", ""));
+    console.log(newArr);
+
     QuickAdd = params;
 
     const title = await QuickAdd.quickAddApi.inputPrompt("Blog - Title");
     var slug = await QuickAdd.quickAddApi.inputPrompt("Blog - Slug");
-    const category = await QuickAdd.quickAddApi.checkboxPrompt(["计算机", "青梅煮酒", "行见"], ["计算机"]);
+    const category = await QuickAdd.quickAddApi.checkboxPrompt(newArr);
 
     if (typeof slug === 'undefined') {
         slug = title;

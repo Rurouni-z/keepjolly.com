@@ -4,7 +4,7 @@
       "id": "a1a0bd5a-f557-428e-9e4a-518bb5849ab3",
       "name": "新建博客",
       "type": "Macro",
-      "command": true,
+      "command": false,
       "macroId": "e870c954-8a1f-439e-a40f-0614ff8f3713"
     },
     {
@@ -12,7 +12,7 @@
       "name": "New",
       "type": "Macro",
       "command": false,
-      "macroId": ""
+      "macroId": "4d8d2060-37c2-44c3-a7e6-82581d0da116"
     }
   ],
   "macros": [
