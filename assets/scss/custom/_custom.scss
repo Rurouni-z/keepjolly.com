@@ -7,13 +7,14 @@
     font-size: 1em;
     margin-top: 0.4em;
 }
+// 导航栏
 .menu-item {
     margin-left: 0.6em;
 }
 li.menu-item.search-item {
     margin-left: 1.2em;
 }
-
+// about页
 .try {   // io-oi.me
     margin-top: 50px;
     text-align: center;
@@ -32,4 +33,8 @@ li.menu-item.search-item {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+em {
+    font-style: italic;
 }
