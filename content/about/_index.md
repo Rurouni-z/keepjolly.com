@@ -5,7 +5,7 @@ title: "About"
 
 ---
 
-<!-- {{< aplayer url="https://ipfs.io/ipfs/QmS1bKR7DrU4W45P58oD4zgF2QFespoTNYt8Fkb5cKDWZt?filename=04%20Try.m4p" >}} -->
+<!-- {{< music url="https://ipfs.io/ipfs/QmS1bKR7DrU4W45P58oD4zgF2QFespoTNYt8Fkb5cKDWZt?filename=04%20Try.m4p" >}} -->
 <video src="QmTz7jzWdGrTVKT7YwNwX9cEgfg4smNFHVxnaFDR82BrXt" poster="../images/Gypsy Heart.jpg" controls >
 如需下载：<a href="https://gateway.pinata.cloud/ipfs/QmTz7jzWdGrTVKT7YwNwX9cEgfg4smNFHVxnaFDR82BrXt">MP4</a>
 </video>
@@ -21,6 +21,8 @@ You don't have to change a single thing</em>
 </p>
 
 ---
+
+虽然这个视频是讲女人的，但是还是对其中的旋律十分喜欢，其中的歌词也曾让我在考研期间让我don't have to try so hard。另外也推荐另一个首歌，以后说不定搞个随机播放视频，歌名叫The Phoenix - Fall Out Boy。
 
 评论系统已关闭，有问题欢迎提交[Issue](https://github.com/Rurouni-z/Rurouni-z.github.io/issues)
 
