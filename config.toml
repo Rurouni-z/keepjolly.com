@@ -942,7 +942,7 @@ uglyURLs = false
     enableVideoHost = false
 
     # 视频外链地址
-    videoHostURL = "https://example.com/"
+    videoHostURL = "https://gateway.pinata.cloud/ipfs/"
 
 
     ######################################
