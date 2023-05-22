@@ -5,10 +5,11 @@ title: "About"
 
 ---
 
-<!-- {{< music url="https://ipfs.io/ipfs/QmS1bKR7DrU4W45P58oD4zgF2QFespoTNYt8Fkb5cKDWZt?filename=04%20Try.m4p" >}} -->
-<video src="QmTz7jzWdGrTVKT7YwNwX9cEgfg4smNFHVxnaFDR82BrXt" poster="../images/Gypsy Heart.jpg" controls >
+{{< music url="https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/music/Colbie%20Caillat%20-%20Try.mp3" 
+ name="Try" artist="Colbie Caillat" cover="../songs/Gypsy Heart song.jpg" lrc="../songs/Try - Colbie Caillat.lrc">}}
+<!-- <video src="QmTz7jzWdGrTVKT7YwNwX9cEgfg4smNFHVxnaFDR82BrXt" poster="../songs/Gypsy Heart video.jpg" controls >
 如需下载：<a href="https://gateway.pinata.cloud/ipfs/QmTz7jzWdGrTVKT7YwNwX9cEgfg4smNFHVxnaFDR82BrXt">MP4</a>
-</video>
+</video> -->
 
 <h2 class="try">Try</h2>
 <!-- <p style="text-align:center" class="colbie">Colbie Caillat</p> -->
@@ -22,7 +23,7 @@ You don't have to change a single thing</em>
 
 ---
 
-虽然这个视频是讲女人的，但是还是对其中的旋律十分喜欢，其中的歌词也曾让我在考研期间让我don't have to try so hard。另外也推荐另一个首歌，以后说不定搞个随机播放视频，歌名叫The Phoenix - Fall Out Boy。
+虽然这个音乐是讲女人的，但是还是对其中的旋律十分喜欢，其中的歌词也曾让我在考研期间让我don't have to try so hard。
 
 评论系统已关闭，有问题欢迎提交[Issue](https://github.com/Rurouni-z/Rurouni-z.github.io/issues)
 
