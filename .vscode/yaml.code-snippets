@@ -11,7 +11,7 @@
             "slug: $2", // url: www.keepjolly.com/tags/:slug/
 			"draft: false",
 			"categories: ",
-			"- ${3|笔记,技巧,力扣,软件安装,琐言,问题集锦,研究生内容,应用|}",
+			"- ${3|笔记,技巧,力扣,软件安装,琐言,问题集锦,研究生内容,应用,博客|}",
 			"tags: ",
 			"- ${4|Python,C++,Linux,博客,软件|}",
 			"original: true",

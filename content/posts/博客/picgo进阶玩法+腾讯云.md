@@ -4,7 +4,7 @@ date: 2022-05-31 22:36:39.402
 updated: 2022-05-31 22:45:13.465
 url: /archives/picgo-jin-jie-wan-fa--teng-xun-yun
 categories: 
-- 技巧
+- 博客
 tags: 
 - 博客
 - picgo
@@ -38,4 +38,3 @@ tags:
 ## 提取盲水印
 因为需要别人拿我的照片，并且要上传到他的cos才能提取盲水印
 这里放链接：[Link](https://cloud.tencent.com/developer/article/1416987)、[Link2](https://cloud.tencent.com/document/api/436/46782#.E6.8F.90.E5.8F.96.E7.9B.B2.E6.B0.B4.E5.8D.B0)
-

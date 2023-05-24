@@ -4,7 +4,7 @@ date: 2022-03-19 20:11:01.786
 updated: 2022-03-28 18:19:32.685
 url: /archives/halo-blog-build-a-website-of-your-own
 categories: 
-- 技巧
+- 博客
 tags: 
 - 博客
 - 服务器
@@ -103,6 +103,3 @@ tags:
 ## 搜索引擎检索
 这里只在[必应](https://www.bing.com/webmasters/home)（可以直接从你的Google里导入，但还是得把你网站地图放进去https://www.你的域名/sitemap.xml ）、[Google](https://search.google.com/)、[百度](https://ziyuan.baidu.com/dashboard)上弄了，
 ![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo%2Fblog%2Fhalo%2Fgoogle-search.jpg)
-
-
-

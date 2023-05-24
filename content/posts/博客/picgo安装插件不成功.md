@@ -4,7 +4,7 @@ date: 2022-05-31 21:39:04.656
 updated: 2022-05-31 21:47:49.634
 url: /archives/picgo-install-plugin
 categories: 
-- 问题集锦
+- 博客
 tags: 
 - 博客
 ---
