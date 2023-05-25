@@ -10,7 +10,8 @@ tags:
 - LeetCode
 ---
 
-# [二倍数对数组](https://leetcode-cn.com/problems/array-of-doubled-pairs/)
+# 二倍数对数组
+[二倍数对数组](https://leetcode-cn.com/problems/array-of-doubled-pairs/)
 思路就是 使得每一个奇数位置的值均是前一个位置的值的两倍，即凑成 n/2 对元素形如 (x, 2 * x) 的数对。
 ```python
 # 利用python的Counter，计算每一个值的个数
@@ -46,7 +47,8 @@ def canReorderDoubled(arr):
         return True
     return False
 ```
-## [寻找比目标字母大的最小字母](https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/)
+## 寻找比目标字母大的最小字母
+[寻找比目标字母大的最小字母](https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/)
 简单题重拳出击，二分法忘了😓
 ```python
 def nextGreatestLetter(self, letters, target):
@@ -71,7 +73,8 @@ def nextGreatestLetter(letters, target):
 def nextGreatestLetter(self, letters: List[str], target: str) -> str:
         return letters[bisect.bisect(letters, target) % len(letters)]
 ```
-## [区域和检索 - 数组可修改](https://leetcode-cn.com/problems/range-sum-query-mutable/)
+## 区域和检索 - 数组可修改
+[区域和检索 - 数组可修改](https://leetcode-cn.com/problems/range-sum-query-mutable/)
 前缀和概念：[Link](https://zhuanlan.zhihu.com/p/107778275)、[Link2](https://juejin.cn/post/6944913393627168798)
 > int n = nums.length; 
 > int[] preSum = new int[n + 1];  // 前缀和数组 

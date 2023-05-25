@@ -10,7 +10,8 @@ tags:
 - LeetCode
 ---
 
-## [O(1) 时间插入、删除和获取随机元素](https://leetcode-cn.com/problems/insert-delete-getrandom-o1/)
+## O(1) 时间插入、删除和获取随机元素
+[O(1) 时间插入、删除和获取随机元素](https://leetcode-cn.com/problems/insert-delete-getrandom-o1/)
 ```python
 # 暴力
 class RandomizedSet(object):
@@ -82,7 +83,8 @@ class RandomizedSet:
     def getRandom(self) -> int:
         return choice(list(self.nums))
 ```
-## [最富有客户的资产总量](https://leetcode-cn.com/problems/richest-customer-wealth/)
+## 最富有客户的资产总量
+[最富有客户的资产总量](https://leetcode-cn.com/problems/richest-customer-wealth/)
 ```python
 # 代码长
 def maximumWealth(self, accounts: List[List[int]]) -> int:
@@ -99,7 +101,8 @@ def maximumWealth(self, accounts: List[List[int]]) -> int:
     # map()返回每行求和值
     return max(map(sum, accounts))
 ```
-## [迷你语法分析器](https://leetcode-cn.com/problems/mini-parser/)
+## 迷你语法分析器
+[迷你语法分析器](https://leetcode-cn.com/problems/mini-parser/)
 看接口原型：[Link](https://leetcode-cn.com/problems/mini-parser/solution/by-ac_oier-zuy6/1507877)
 ```python
 # 一行解决 双百效率摘自评论区
@@ -139,7 +142,8 @@ class Solution:
                     curVal = curVal * 10 + int(c)
         return stack.pop()
 ```
-## [最大回文数乘积](https://leetcode-cn.com/problems/largest-palindrome-product/)
+## 最大回文数乘积
+[最大回文数乘积](https://leetcode-cn.com/problems/largest-palindrome-product/)
 学习回文数构造
 ```python
 # 官解

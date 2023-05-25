@@ -10,7 +10,9 @@ tags:
 - LeetCode
 ---
 
-## [二进制表示中质数个计算置位](https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/)
+## 二进制表示中质数个计算置位
+[二进制表示中质数个计算置位](https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/)
+[Link](https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/
 [Link](https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/er-jin-zhi-biao-shi-zhong-zhi-shu-ge-ji-jy35g/1486534)
 1，计算整数x的二进制表示有多少个1： x&=x-1可以消除x最低位的1，while循环计数，直到x=0即可。
 2，只保留整数x最低位的1： x&-x ，暨鼎鼎大名的lowbit
@@ -49,7 +51,8 @@ def countPrimeSetBits(left, right):
     return sum(((1 << x.bit_count()) & 665772) != 0 for x in range(left, right + 1))
 
 ```
-## [旋转字符串](https://leetcode-cn.com/problems/rotate-string/)
+## 旋转字符串
+[旋转字符串](https://leetcode-cn.com/problems/rotate-string/)
 ```python
 class Solution(object):
     def rotateString(self, s, goal):
@@ -64,7 +67,8 @@ class Solution:
     def rotateString(self, s: str, goal: str) -> bool:
         return len(s) == len(goal) and goal in s + s
 ```
-## [N 叉树的层序遍历](https://leetcode-cn.com/problems/n-ary-tree-level-order-traversal/)
+## N叉树的层序遍历
+[N 叉树的层序遍历](https://leetcode-cn.com/problems/n-ary-tree-level-order-traversal/)
 模板题
 ```python
 def levelOrder(self, root: 'Node') -> List[List[int]]:
@@ -86,5 +90,6 @@ def levelOrder(self, root: 'Node') -> List[List[int]]:
     return ans
     
 ```
-## [最小高度树](https://leetcode-cn.com/problems/minimum-height-trees/)
+## 最小高度树
+[最小高度树](https://leetcode-cn.com/problems/minimum-height-trees/)
 难 暂放

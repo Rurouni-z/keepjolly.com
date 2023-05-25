@@ -10,7 +10,8 @@ tags:
 ---
 
 至此一个月全部打卡，之后按专题来进行提高
-## [随机数索引](https://leetcode-cn.com/problems/random-pick-index/)
+## 随机数索引
+[随机数索引](https://leetcode-cn.com/problems/random-pick-index/)
 ```python
 # 暴力
 class Solution:
@@ -62,7 +63,8 @@ def ReservoirSampling(nums, target, k):
                 res[ran] = i
     return res
 ```
-## [三维形体投影面积](https://leetcode-cn.com/problems/projection-area-of-3d-shapes/)
+## 三维形体投影面积
+[三维形体投影面积](https://leetcode-cn.com/problems/projection-area-of-3d-shapes/)
 ```python
 # 简单题
 def projectionArea(self, grid: List[List[int]]) -> int:
@@ -82,7 +84,8 @@ def projectionArea(self, grid: List[List[int]]) -> int:
 def projectionArea(self, grid: List[List[int]]) -> int:
     return sum(sum(v > 0 for v in g) + max(g) for g in grid) + sum(max(g) for g in zip(*grid))
 ```
-## [太平洋大西洋水流问题](https://leetcode-cn.com/problems/pacific-atlantic-water-flow/)
+## 太平洋大西洋水流问题
+[太平洋大西洋水流问题](https://leetcode-cn.com/problems/pacific-atlantic-water-flow/)
 ```python
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
@@ -107,7 +110,8 @@ class Solution:
         atlantic = [(m-1, i) for i in range(n)] + [(j, n-1) for j in range(m-1)]
         return list(map(list, search(pacific) & search(atlantic)))
 ```
-## [按奇偶排序数组](https://leetcode-cn.com/problems/sort-array-by-parity/)
+## 按奇偶排序数组
+[按奇偶排序数组](https://leetcode-cn.com/problems/sort-array-by-parity/)
 ```python
 # 双指针
 def sortArrayByParity(nums: List[int]) -> List[int]:
@@ -125,7 +129,8 @@ def sortArrayByParity(nums: List[int]) -> List[int]:
 def sortArrayByParity(nums: List[int]) -> List[int]:
     return sorted(nums, keys=lambda x: x%2!=0)
 ```
-## [建立四叉树](https://leetcode-cn.com/problems/construct-quad-tree/)
+## 建立四叉树
+[建立四叉树](https://leetcode-cn.com/problems/construct-quad-tree/)
 ```python
 def construct(self, grid: List[List[int]]) -> 'Node':
     def dfs(r0: int, r1: int, c0: int,c1: int) -> 'Node':
@@ -141,7 +146,8 @@ def construct(self, grid: List[List[int]]) -> 'Node':
         return Node(grid[r0][c0], True)
     return dfs(0, len(grid), 0, len(grid[0]))
 ```
-## [最小差值 I](https://leetcode-cn.com/problems/smallest-range-i/)
+## 最小差值 I
+[最小差值 I](https://leetcode-cn.com/problems/smallest-range-i/)
 ```python
 def smallestRangeI(self, nums: List[int], k: int) -> int:
     return max(0, max(nums)-min(nums)-2*k)

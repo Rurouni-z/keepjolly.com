@@ -10,8 +10,9 @@ tags:
 - LeetCode
 ---
 
-作为第一篇力扣每日一题，要好好坚持，广大网友给我监督！！
-## [图片平滑器](https://leetcode-cn.com/problems/image-smoother/)
+作为第一篇力扣每日一题，要好好坚持，广大网友给我监督！！(后记，没坚持下去😅)
+## 图片平滑器
+[图片平滑器](https://leetcode-cn.com/problems/image-smoother/)
 ```python
 # 速度有点拉跨
 def imageSmoother(self, img):
@@ -154,7 +155,8 @@ def tryImageAgain(img):
             ans[i][j] = s // div
     return ans
 ```
-## [阶乘后的零](https://leetcode-cn.com/problems/factorial-trailing-zeroes/)
+## 阶乘后的零
+[阶乘后的零](https://leetcode-cn.com/problems/factorial-trailing-zeroes/)
 本质就是求质因数，考数学题，~~太难了~~
 n! = 1 * 2 * 3 * 4 * (1 * 5) * ... * (2 * 5) * ... * (3 * 5) *... * n
 因为**每隔 5 个数出现一个 5，所以计算n!中出现了多少个 5，我们只需要用 n/5 就可以算出来**。即n=5，1；n=10，2.
@@ -199,7 +201,8 @@ def trailingZeroes(self, n: int) -> int:
 
 
 ```
-## [棒球比赛](https://leetcode-cn.com/problems/baseball-game/)
+## 棒球比赛
+[棒球比赛](https://leetcode-cn.com/problems/baseball-game/)
 唯一注意的点就是python一些语法，如`del 列表元素`、`sum(列表)`、match case只在python3.10支持即switch case、将字符串转整形
 ```python
 def calPoints(ops):

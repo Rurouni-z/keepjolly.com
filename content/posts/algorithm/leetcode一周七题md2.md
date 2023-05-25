@@ -10,7 +10,8 @@ tags:
 - LeetCode
 ---
 
-## [最常见的单词](https://leetcode-cn.com/problems/most-common-word/)
+## 最常见的单词
+[最常见的单词](https://leetcode-cn.com/problems/most-common-word/)
 ```python
 # 自己写的水代码
 def mostCommonWord(paragraph, banned):
@@ -64,7 +65,8 @@ def mostCommonWord(paragraph, banned):
 def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
         return Counter(w for w in re.findall(r'\w+', paragraph.lower()) if w not in set(banned)).most_common(1)[0][0]
 ```
-## [字典序排数](https://leetcode-cn.com/problems/lexicographical-numbers/)
+## 字典序排数
+[字典序排数](https://leetcode-cn.com/problems/lexicographical-numbers/)
 ```python
 # 官解
 def lexicalOrder(n: int) -> List[int]:
@@ -98,7 +100,8 @@ def lexicalOrder(n: int) -> List[int]:
 def lexicalOrder(self, n: int) -> List[int]:
     return sorted(range(1,n+1),key=str)
 ```
-## [字符的最短距离](https://leetcode-cn.com/problems/shortest-distance-to-a-character/)
+## 字符的最短距离
+[字符的最短距离](https://leetcode-cn.com/problems/shortest-distance-to-a-character/)
 ```python
 # 官解的-n、2*n 秒啊
 def shortestToChar(s: str, c: str) -> List[int]:
@@ -159,7 +162,8 @@ def shortestToChar(s: str, c: str) -> List[int]:
             ans[idx+1] = ans[idx] - ans[idx+1]
     return ans
 ```
-## [文件的最长绝对路径](https://leetcode-cn.com/problems/longest-absolute-file-path/)
+## 文件的最长绝对路径
+[文件的最长绝对路径](https://leetcode-cn.com/problems/longest-absolute-file-path/)
 ```python
 ''' 解题思路 本题为求解文件夹路径的最大值，其中会添加 /
 1. 用 depth_length_map 保留每层路径的长度， input.split('\n') 切分为每行分析每行长度与文件
@@ -216,7 +220,8 @@ def lengthLongestPath(input: str) -> int:
         i = j + 1
     return 0 if len(ans) == 0 else len(ans)
 ```
-## [山羊拉丁文](https://leetcode-cn.com/problems/goat-latin/)
+## 山羊拉丁文
+[山羊拉丁文](https://leetcode-cn.com/problems/goat-latin/)
 ```python
 # 太离谱了，除了变量命名不一样，他的运行比我快
 # 复制成他的，速度快了，莫非是代码格式化的问题
@@ -241,7 +246,8 @@ def toGoatLatin(self, sentence: str) -> str:
                 words[i]=word[1:]+word[0]+'ma'+'a'*(i+1)
         return ' '.join(words)
 ```
-## [旋转函数](https://leetcode-cn.com/problems/rotate-function/)
+## 旋转函数
+[旋转函数](https://leetcode-cn.com/problems/rotate-function/)
 ```python
 # 想不出来
 # 来自宫水三叶
@@ -292,9 +298,11 @@ def maxRotateFunction(self, nums: List[int]) -> int:
 
 
 ```
-## [安装栅栏](https://leetcode-cn.com/problems/erect-the-fence/)
+## 安装栅栏
+[安装栅栏](https://leetcode-cn.com/problems/erect-the-fence/)
 困难题 pass
-## [二进制间距](https://leetcode-cn.com/problems/binary-gap/)
+## 二进制间距
+[二进制间距](https://leetcode-cn.com/problems/binary-gap/)
 ```python
 # 好耶 ac
 def binaryGap(self, n: int) -> int:

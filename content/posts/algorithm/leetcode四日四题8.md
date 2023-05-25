@@ -8,7 +8,8 @@ categories:
 tags: 
 ---
 
-## [到达终点](https://leetcode-cn.com/problems/reaching-points/)
+## 到达终点
+[到达终点](https://leetcode-cn.com/problems/reaching-points/)
 ```python
 # 摘自评论
 # https://leetcode-cn.com/problems/reaching-points/comments/85185
@@ -25,7 +26,8 @@ def reachingPoints(self, sx, sy, tx, ty):
             ty -= tx * max((ty-sy)/tx, 1)
     return False
 ```
-## [唯一摩尔斯密码词](https://leetcode-cn.com/problems/unique-morse-code-words/)
+## 唯一摩尔斯密码词
+[唯一摩尔斯密码词](https://leetcode-cn.com/problems/unique-morse-code-words/)
 ```python
 def uniqueMorseRepresentations(self, words):
     Mose =[".-","-...","-.-.","-..",".","..-.","--.","....","..",
@@ -53,7 +55,8 @@ class Solution(object):
               ans.add(t)
         return len(ans)
 ```
-## [统计各位数字都不同的数字个数](https://leetcode-cn.com/problems/count-numbers-with-unique-digits/)
+## 统计各位数字都不同的数字个数
+[统计各位数字都不同的数字个数](https://leetcode-cn.com/problems/count-numbers-with-unique-digits/)
 [Link](https://leetcode-cn.com/problems/count-numbers-with-unique-digits/solution/tong-ji-ge-wei-shu-zi-du-bu-tong-de-shu-iqbfn/1498651)
 ```
 n=0，数字有{0} 1个。
@@ -105,7 +108,8 @@ class Solution:
 # 进阶做法
 # https://leetcode-cn.com/problems/count-numbers-with-unique-digits/solution/by-ac_oier-6tfl/
 ```
-## [写字符串需要的行数](https://leetcode-cn.com/problems/number-of-lines-to-write-string/)
+## 写字符串需要的行数
+[写字符串需要的行数](https://leetcode-cn.com/problems/number-of-lines-to-write-string/)
 ```python
 # 简单题重拳出击
 def numberOfLines(self, widths, s):

@@ -10,7 +10,8 @@ tags:
 - LeetCode
 ---
 
-## [找出缺失的观测数据](https://leetcode-cn.com/problems/find-missing-observations/)
+## 找出缺失的观测数据
+[找出缺失的观测数据](https://leetcode-cn.com/problems/find-missing-observations/)
 ```python
 # 我的题解
 def missingRolls(rolls, mean, n):
@@ -37,7 +38,8 @@ def missingRolls(rolls: List[int], mean: int, n: int) -> List[int]:
         return [s // n + 1] * (s % n) + [s // n] * (n - s % n) 
                 if n <= (s := mean * (len(rolls) + n) - sum(rolls)) <= 6 * n else []
 ```
-## [交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/)
+## 交替位二进制数
+[交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/)
 原本以为超时，没想到直接ac了
 ```python
 def hasAlternatingBits(n):
@@ -76,7 +78,8 @@ def hasAlternatingBits(self, n: int) -> bool:
 def hasAlternatingBits(n):
     return not ('11' in bin(n) or '00' in bin(n))
 ```
-## [考试的最大困扰度](https://leetcode-cn.com/problems/maximize-the-confusion-of-an-exam/)
+## 考试的最大困扰度
+[考试的最大困扰度](https://leetcode-cn.com/problems/maximize-the-confusion-of-an-exam/)
 思路：[Link](https://leetcode-cn.com/problems/maximize-the-confusion-of-an-exam/solution/-by-mochi-ds-onfv/)
 滑动窗口思想：监视k窗口内的值，如果二者数量都超过k，表示无论修改哪个值都必定不满足条件，且当前连续串长度是最后一次不超过k的长度，且最大窗口是连续串的长度，当最大窗口确定下来后，因为不满足，所以根据这个最大窗口进行左移比较是否窗口内有新的值可以满足。
 视频解析：[Link](https://leetcode-cn.com/problems/maximize-the-confusion-of-an-exam/solution/shua-ti-ka-pei-guan-hua-dong-chuang-kou-te8b0/)
