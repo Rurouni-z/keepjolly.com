@@ -1,5 +1,5 @@
 ---
-title: (leetcode) 一周六题.md
+title: (leetcode) 一周六题
 date: 2022-04-30 14:50:31.527
 updated: 2022-04-30 14:51:04.706
 url: /archives/leetcode-one-week-six-ans

@@ -87,7 +87,7 @@ uglyURLs = false
         lineNumbersInTable = true
         noClasses = false
     [markup.tableOfContents]
-        startLevel = 2
+        startLevel = 1
         endLevel = 6
         ordered = true
 

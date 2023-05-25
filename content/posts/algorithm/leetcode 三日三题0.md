@@ -10,7 +10,7 @@ tags:
 - LeetCode
 ---
 
-# 二倍数对数组
+## 二倍数对数组
 [二倍数对数组](https://leetcode-cn.com/problems/array-of-doubled-pairs/)
 思路就是 使得每一个奇数位置的值均是前一个位置的值的两倍，即凑成 n/2 对元素形如 (x, 2 * x) 的数对。
 ```python
