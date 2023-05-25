@@ -16,7 +16,7 @@ tags:
 [Link](https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/er-jin-zhi-biao-shi-zhong-zhi-shu-ge-ji-jy35g/1486534)
 1，计算整数x的二进制表示有多少个1： x&=x-1可以消除x最低位的1，while循环计数，直到x=0即可。
 2，只保留整数x最低位的1： x&-x ，暨鼎鼎大名的lowbit
->>1 相当于除2，<<1相当与乘2，因为一位相当于2^1
+&gt;&gt;1 相当于除2，<<1相当与乘2，因为一位相当于2^1
 ```python
 # 暴力，但忘记素数怎么求
 def check(x):
