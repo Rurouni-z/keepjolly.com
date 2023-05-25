@@ -11,9 +11,9 @@
             "slug: $2", // url: www.keepjolly.com/tags/:slug/
 			"draft: false",
 			"categories: ",
-			"- ${3|笔记,技巧,力扣,软件安装,琐言,问题集锦,研究生内容,应用,博客|}",
+			"- ${3|tech,learn,algorithm,error,create,other,life|}",
 			"tags: ",
-			"- ${4|Python,C++,Linux,博客,软件|}",
+			"- ${4|ComputerVision,C++,LeetCode,Blog,Install|}",
 			"original: true",
 			"author: Rurouni",
 			"website: www.keepjolly.com",

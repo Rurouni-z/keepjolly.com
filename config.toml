@@ -44,14 +44,16 @@ disablePathToLower = false
 relativeURLs = false
 uglyURLs = false
 
-# URL 结构
+# URL 结构 默认以xxx.com/posts/文件夹名/:slug
+# 文件夹里设置_index title来显示中文
 [permalinks]
-    categories = "/categories/:slug/"
-    tags = "/tags/:slug/"
+    categories = "/categories/:slug/"  # 注释与否都不会影响 /categories/xxx_name
+    tags = "/tags/:slug/"  # 注释与否都不会影响 /tags/tags_name
+    # posts = '/posts/:year/:month/:slug/'
 
 # 类别
 [taxonomies]
-    category = "categories"   # 注释就会让分类页没有树形显示
+    # category = "categories"   # 注释当使用sections
     tag = "tags"
 
 # 修改时间
@@ -490,7 +492,7 @@ uglyURLs = false
 
     # 说明：分区的名字即站点的 content 目录下
     #      的文件夹的名字。
-
+    # 与posts同级的文件夹名，会显示在category页面
     mainSections = ["posts", "test"]
 
 
