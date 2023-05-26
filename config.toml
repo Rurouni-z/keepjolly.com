@@ -87,7 +87,7 @@ uglyURLs = false
         lineNumbersInTable = true
         noClasses = false
     [markup.tableOfContents]
-        startLevel = 1
+        startLevel = 1 # 从h1开始
         endLevel = 6
         ordered = true
 
@@ -1421,9 +1421,9 @@ uglyURLs = false
 
     enableAlgoliaSearch = true
 
-    algoliaAppId = "Z1QBIVDX3I"
-    algoliaApiKey = "fe499ccef1cfa0ffa0e64e8785efb2ee"
-    algoliaIndexName = "Blog"
+    algoliaAppId = ""
+    algoliaApiKey = ""
+    algoliaIndexName = ""
     # 说明：https://www.algolia.com/
 
 
