@@ -49,7 +49,7 @@ uglyURLs = false
 [permalinks]
     categories = "/categories/:slug/"  # 注释与否都不会影响 /categories/xxx_name
     tags = "/tags/:slug/"  # 注释与否都不会影响 /tags/tags_name
-    # posts = '/posts/:year/:month/:slug/'
+    posts = '/posts/:sections[1]/:slug/'
 
 # 类别
 [taxonomies]

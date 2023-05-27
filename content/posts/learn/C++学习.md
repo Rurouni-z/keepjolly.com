@@ -354,7 +354,7 @@ char ch5 = ++*++cp; // 1.先cp地址+1, 2.得到其引用的值, 3.值+1, 4.赋�
 [delete and delete[]](https://www.iteye.com/blog/hzdiy-736816)、删除指针后并不会置为nullptr
 对于像 int/char/long/int*/struct 等等简单数据类型，由于对象没有 destructor，所以用 delete 和 delete [] 是一样的！但是如果是C++ 对象数组就不同了！
 ### 内存分配
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/12600461/1676602885720-04081f99-124e-471a-b4c2-ae6ad1b73d69.png#averageHue=%23fbd26b&clientId=u4e1a1f95-50a9-4&from=paste&height=439&id=uacc70f9e&name=image.png&originHeight=439&originWidth=453&originalType=binary&ratio=1&rotation=0&showTitle=false&size=67840&status=done&style=none&taskId=uf57f9d7d-4d1e-4042-9966-df9a6ba186e&title=&width=453)
+![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527212359.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 - stack：由程序分配地址
 - heap：由程序员分配地址 new/delete

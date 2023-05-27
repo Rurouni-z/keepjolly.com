@@ -15,7 +15,31 @@ author: Rurouni
 website: www.keepjolly.com
 ---
 ## 设置为section
-文章路径放在 blog/content/posts ，其内每个文件夹必须有个_index.md文件，为空没事，并且posts下也需要有
+文章路径放在 blog/content/posts ，其内每个文件夹必须有个_index.md文件，为空没事，并且posts下也需要有。
+
+如果需要在第一个section内创建文件夹但是不显示该文件夹名可以配置Permalinks属性为
+
+[permalinks]
+    posts = '/posts/:sections[1]/:slug/'
+
+[url pattern](https://gohugo.io/content-management/urls/#permalinks)
+
+```
+.
+└── content
+    └── about
+    |   └── index.md       // <- https://example.com/about/
+    ├── posts
+    |   ├── _index.md      // <- https://example.com/posts/
+    |   ├── firstpost.md   // <- https://example.com/posts/firstpost/
+    |   ├── happy
+    |   |   └── ness.md    // <- https://example.com/posts/ness/  不显示happy
+    |   └── secondpost.md  // <- https://example.com/posts/secondpost/
+    └── quote
+        ├── first.md       // <- https://example.com/quote/first/
+        └── second.md      // <- https://example.com/quote/second/
+```
+
 ```python
 ######################################
 # 分类方式

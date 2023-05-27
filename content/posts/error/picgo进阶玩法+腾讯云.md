@@ -21,9 +21,13 @@ tags:
 - [数据万象常见问题](https://cloud.tencent.com/document/product/460/32832)
 
 因为想着今晚已经浪费好长时间了，索性把picgo上传图片优化一下。
-<a name="gp5WK"></a>
+## 无法上传图片
+> TypeError: Cannot create property ‘xxx’ on string
+
+启用[兼容模式](https://zhuanlan.zhihu.com/p/489236769)打开软件，我选的是Windows8
+
 ## 上传图片为webp格式并加盲水印
-自定义链接格式如下：$url?imageMogr2/format/webp|?watermark/3/type/3/text/XXXX
+在图床设置下选择腾讯云cos，设定网址后缀如下：?imageMogr2/format/webp|?watermark/3/type/3/text/XXXX
 
 - |?watermark/3/type/3/text/XXXX：生成盲水印，另外盲水印目前的价格是添加盲水印：1元/千次 提取盲水印：1元/千次
 - XXXX记得通过上述的[Base64编码解码](https://tool.chinaz.com/tools/base64.aspx)生成你的base64字符串
@@ -34,7 +38,7 @@ tags:
       - 把操作符 “|” 替换成 “%7C”。
 
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/2022/0520220531224449.png?imageMogr2/format/webp|?watermark/3/type/3/text/a2VlcGpvbGx5)
-<a name="I8wnJ"></a>
+
 ## 提取盲水印
 因为需要别人拿我的照片，并且要上传到他的cos才能提取盲水印
 这里放链接：[Link](https://cloud.tencent.com/developer/article/1416987)、[Link2](https://cloud.tencent.com/document/api/436/46782#.E6.8F.90.E5.8F.96.E7.9B.B2.E6.B0.B4.E5.8D.B0)
