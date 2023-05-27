@@ -275,3 +275,8 @@ blockquote.quote {
         }
     }
 }
+@media only screen and (max-width: 1224px) {
+    .post-toc {
+        display: none;
+    }
+} 
