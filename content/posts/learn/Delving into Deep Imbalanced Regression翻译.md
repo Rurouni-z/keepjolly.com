@@ -22,7 +22,7 @@ tags:
 &emsp;&emsp;现实世界的数据往往是不平衡分布，其中某些target值的观测数据很少。处理不平衡数据的现存方法都侧重于具有分类索引的target（已经标好数据的数据集？数据都标出了类别），如不同的类别。然而，很多任务涉及到连续目标，其中类之间不存在清晰边界。我们称深度不平衡回归（DIR）为从此类含连续目标的不平衡数据中学习，处理某些target值的潜在缺失值，并泛化到整个target范围。受分类和连续标签空间之间固有差异的激发，我们建议对标签和特征的进行平滑分布，这承认了临近目标的影响，并校准标签和学习到的特征分布。我们从计算机视觉、自然语言处理和医疗领域的常见现实世界任务中评估该大型 DIR 数据集。大量实验验证了我们策略的卓越性能。我们的工作填补了实际中的不平衡回归问题的基准数据集和技术方面的空白。
 
 <a name="cH3xw"></a>
-##  1. Introduction  
+##  Introduction  
 &emsp;&emsp;Data imbalance is ubiquitous and inherent in the real world. Rather than preserving an ideal uniform distribution over each category, the data often exhibit [skewed distributions](https://www.statisticshowto.com/probability-and-statistics/skewed-distribution/) with a long tail ([Buda et al., 2018](https://arxiv.org/abs/1710.05381?context=cs.AI); [Liu et al., 2019](https://arxiv.org/abs/1904.05160)), where certain target values have significantly fewer observations. This phenomenon poses great challenges for deep recognition models, and has motivated many prior techniques for addressing data imbalance ([Cao et al., 2019](https://arxiv.org/abs/1906.07413); [Cui et al., 2019](https://arxiv.org/abs/1901.05555); [Huang et al., 2019](https://arxiv.org/abs/1806.00194); [Liu et al., 2019](https://arxiv.org/abs/1904.05160); [Tang et al., 2020](https://arxiv.org/abs/2009.12991)).  
 &emsp;&emsp;在现实中，数据的不平衡是常见且固有的。与在每个类别上保持理想的均匀分布不同，数据经常表现出带有长尾的偏态分布，其中某些目标值的观测值十分少。该现象对深度识别模型提出了巨大的挑战，并激发许多现有技术去处理数据不平衡。
 
@@ -63,18 +63,18 @@ Our contributions are as follows:
 - 我们在不同领域管理DIR基准数据集。我们为DIR性能评估建立了强大的基线和基准。
 - 在大规模DIR数据集上进行的大量实验验证了我们方法的一致性和卓越的性能。
 <a name="iAF2C"></a>
-##  2. Related Work  
+##  Related Work  
 &emsp;&emsp;**Imbalanced Classification.** Much prior work has focused on the imbalanced classification problem (also referred to as long-tailed recognition ([Liu et al., 2019](https://arxiv.org/abs/1904.05160))). Past solutions can be divided into data-based and model-based solutions: Data-based solutions either over-sample the minority class or under-sample the majority ([Chawla et al., 2002](https://www.jair.org/index.php/jair/article/view/10302); [Garc´ıa & Herrera, 2009](https://ieeexplore.ieee.org/document/6793456); [He et al., 2008](https://ieeexplore.ieee.org/document/4633969)). For example, SMOTE generates synthetic samples for minority classes by linearly interpolating samples in the same class ([Chawla et al., 2002](https://www.jair.org/index.php/jair/article/view/10302)). Model-based solutions include re-weighting or adjusting the loss function to compensate for class imbalance ([Cao et al., 2019](https://arxiv.org/abs/1906.07413); [Cui et al., 2019](https://arxiv.org/abs/1901.05555); [Dong et al., 2019](https://arxiv.org/abs/1804.10851); [Huang et al., 2016](https://ieeexplore.ieee.org/document/7780949); [2019](https://arxiv.org/abs/1806.00194)), and leveraging relevant learning paradigms, including transfer learning ([Yin et al., 2019](https://arxiv.org/abs/1803.09014)), metric learning ([Zhang et al., 2017](https://arxiv.org/abs/1611.08976)), meta-learning ([Shu et al., 2019](https://arxiv.org/abs/1902.07379)), and two-stage training ([Kang et al., 2020](https://arxiv.org/abs/1910.09217)). Recent studies have also discovered that semi-supervised learning and selfsupervised learning lead to better imbalanced classification results ([Yang & Xu, 2020](https://arxiv.org/abs/2006.07529?amp=1)). In contrast to these past work, we identify the limitations of applying class imbalance methods to regression problems, and introduce new techniques particularly suitable for learning continuous target values.
 &emsp;&emsp;不平衡分类。大量的先前工作都集中于不平衡分类问题（也称为长尾识别问题）上。过去的解决方案可以分为基于数据和基于模型：基于数据的方案要么在少数类上过采样或在大多数上缺采样。如，SMOTE为少数类别生成人造样本通过在相同类别的样本中线性插值。基于模型的方案包括重加权或调整损失函数来弥补类别不平衡（yolo的大小目标的超参数），并利用相关的学习范式，包括迁移学习、度量学习、元学习和二阶段训练。最近研究也发现半监督学习和自监督学习会产生不平衡分类问题的好结果。与过去工作相比，我们发现在回归问题上应用类别不平衡方法的局限性，并引入特别适合学习连续目标值的新方法。
 
 &emsp;&emsp;**Imbalanced Regression.** Regression over imbalanced data is not as well explored. Most of the work on this topic is a direct adaptation of the SMOTE algorithm to regression scenarios (Branco et al., 2017; 2018; Torgo et al., 2013). Synthetic samples are created for pre-defined rare target regions by either directly interpolating both inputs and targets (Torgo et al., 2013), or using Gaussian noise augmentation (Branco et al., 2017). A bagging-based ensemble method that incorporates multiple data pre-processing steps has also been introduced (Branco et al., 2018). However, there exist several intrinsic drawbacks for these methods. First, they fail to take the distance between targets into account, and rather heuristically divide the dataset into rare and frequent sets, then plug in classification-based methods. Moreover, modern data is of extremely high dimension (e.g., images and physiological signals); linear interpolation of two samples of such data does not lead to meaningful new synthetic samples. Our methods are intrinsically different from past work in their approach. They can be combined with existing methods to improve their performance, as we show in Sec. 4. Further, our approaches are tested on large-scale real-world datasets in computer vision, NLP, and healthcare.  
 &emsp;&emsp;不平衡回归。在不平衡数据上回归也没有很好的探索过。大多数的工作是SMOTE算法的直接调整到回归场景。通过直接在输入和目标上插值或使用高斯噪声增强技术，来为预定义的稀少目标区域（样本很少的地方）创造人造样本。还引入一个基于bagging的集成方法，它包含多个数据预处理步骤。但是，这些方法存在几个固有的缺陷。首先，它们没有考虑目标间的distance，而是启发式地把数据集分成rare集和frequent集，然后插入基于分类的方法。此外，极高维度的现代数据（如，图片和生理信号）对此类数据的两个样本进行线性插值不会产生有意义的新合成样本。我们的方法本质上同先前方法不同。它们可以结合现有方法来提高性能，如Sec.4所示。此外，我们的方法在视觉、NLP和医疗的大规模数据集上测试过。
 <a name="pchzD"></a>
-##  3. Methods  
+##  Methods  
 &emsp;&emsp;**Problem Setting.**   $`  \left\{\left(x_i,y_i\right)\right\}_{i=1}^N `$ be a training set, where$`x_i\in \mathbb{R} ^d `$ denotes the input and$y_i\in \mathbb{R}$ is the label, which is a continuous target. We introduce an additional structure for the label space $\mathcal{Y}$ , where we divide $\mathcal{Y}$ into $B$ [groups (bins)](https://datavizguru.com/tableau/groups-vs-sets-vs-bins-vs-parameters/) with equal intervals, i.e., $\left [ y_0, y_1\right ), \left [ y_1, y_2\right ), \cdots  , \left [ y_{B-1}, y_B\right )$. Throughout the paper, we use $b \in \mathcal{B}$ to denote the group index of the target value, where $\mathcal{B} = \left \{  1, \dots , B\right \} \subset \mathbb{Z}^+$ is the index space. In practice, the defined bins reflect a minimum resolution we care for grouping data in a regression task. For instance, in age estimation, we could define $\delta y \triangleq y_{b+1}-y_{b}=1$, showing a minimum age difference of 1 is of interest. Finally, we denote $\mathrm {z} =f\left ( x;\theta  \right )$as the feature for $\mathrm {x}$, where $f\left ( x;\theta  \right )$ is parameterized by a deep neural network model with parameter $\theta$. The final prediction $\hat{y}$ is given by a regression function $g(\cdot)$ that operates over $\mathbf{  \mathrm {z}}$.  
 &emsp;&emsp;问题设置。让 $\left \{ \left ( x_i, y_i \right )  \right \}^N_{i=1}$作为训练集，其中$x_i\in \mathbb{R} ^d$表示输入，$y_i\in \mathbb{R}$表示标签，是连续目标值。我们为标签空间$\mathcal{Y}$引入额外的结构，其中我们把$\mathcal{Y}$分成等间隔的B组（箱），即$\left [ y_0, y_1\right ), \left [ y_1, y_2\right ), \cdots  , \left [ y_{B-1}, y_B\right )$。在整个文章中，我们使用$b \in \mathcal{B}$表示目标值的组索引，其中 $\mathcal{B} = \left \{  1, \dots , B\right \} \subset \mathbb{Z}^+$是索引空间。实际上，定义的bins反应了我们在回归任务中对数据分组时关心的最小分辨率。例如，在年龄评估上，我们可以定义$\delta y \triangleq y_{b+1}-y_{b}=1$，表明最小年龄差为1是有用的。最终，我们把 $\mathrm {z} =f\left ( x;\theta  \right )$表示x的特征，其中$f\left ( x;\theta  \right )$是通过具有参数$\theta$的深度神经网络参数化的。最终的预测 $\hat{y}$是通过 一个在$\mathbf{  \mathrm {z}}$上运行的回归函数$g(\cdot)$给出。
 <a name="jWbVx"></a>
-### 3.1. Label Distribution Smoothing 
+### Label Distribution Smoothing 
 &emsp;&emsp;We start by showing an example to demonstrate the difference between classification and regression when imbalance comes into the picture.  
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-1.png "Figure 2. Comparison on the test error distribution (bottom) using same training label distribution (top) on two different datasets: (a) CIFAR-100, a classification task with categorical label space. (b) IMDB-WIKI, a regression task with continuous label space.图二。在两个不同的数据集上使用相同的训练标签分布来比较测试error分布(bottom)：(a)CIFAR-100，具有分类的标签空间的分类任务。(b)IMDB-WIKI，具有连续标签空间的回归任务")
 <figure>Figure 2. Comparison on the test error distribution (bottom) using same training label distribution (top) on two different datasets: (a) CIFAR-100, a classification task with categorical label space. (b) IMDB-WIKI, a regression task with continuous label space.
@@ -110,7 +110,7 @@ where $p(y)$ is the number of appearances of label of y in the training data, an
 &emsp;&emsp;Now that the effective label density is available, techniques for addressing class imbalance problems can be directly adapted to the DIR context. For example, a straightforward adaptation can be the cost-sensitive re-weighting method, where we re-weight the loss function by multiplying it by the inverse of the LDS estimated label density for each target. We show in Sec. 4 that LDS can be seamlessly incorporated with a wide range of techniques to boost DIR performance.  
 &emsp;&emsp;既然有效的标签密度是可用的，为了解决类不平衡问题的技术可以直接用于DIR环境。例如，一个简单的调整是关于成本敏感的方法，其中我们通过将损失函数乘上每个目标的LDS估计标签密度的倒数来重新加权损失函数。我们在Sec.4展示了LDS可以无缝结合大量的方法来提高DIR的性能。
 <a name="yzgyN"></a>
-### 3.2. Feature Distribution Smoothing 
+### Feature Distribution Smoothing 
 &emsp;&emsp;We are motivated by the intuition that continuity in the target space should create a corresponding continuity in the feature space. That is, if the model works properly and the data is balanced, one expects the feature statistics corresponding to nearby targets to be close to each other.  
 &emsp;&emsp;我们认为目标空间的连续性应该创造一个在特征空间相对应的的连续性。即，如果模型工作正常，数据平衡，则与临近目标对应的特征数据彼此接近。
 
@@ -151,7 +151,7 @@ $$\tilde{\mathbf{z}}=\tilde{\boldsymbol{\Sigma}}_{b}^{\frac{1}{2}} \boldsymbol{\
 图6。五个 DIR 数据集的训练集标签分布概述。 它们的范围从单值预测（例如年龄、文本相似度得分和健康状况得分）到密集值预测（例如深度估计）。 附录 B 中提供了更多详细信息。</figure>
 
 <a name="oPq0c"></a>
-## 4. Benchmarking DIR
+## Benchmarking DIR
 &emsp;&emsp;**Datasets.** We curate five DIR benchmarks that span computer vision, natural language processing, and healthcare.Fig. 6 shows the label density distribution of these datasets,and their level of imbalance.
 &emsp;&emsp;数据集。我们整理了五个DIR基准集，包括CV、NLP、HC。图6展示了这些数据集地标签密度分布和不平衡等级。
 
@@ -187,7 +187,7 @@ $$\tilde{\mathbf{z}}=\tilde{\boldsymbol{\Sigma}}_{b}^{\frac{1}{2}} \boldsymbol{\
 &emsp;&emsp;**Evaluation Process and Metrics.** Following (Liu et al., 2019), we divide the target space into three disjoint subsets: many-shot region (bins with over 100 training samples), medium-shot region (bins with 20∼100 training samples), and few-shot region (bins with under 20 training samples), and report results on these subsets, as well as overall performance. We also refer to regions with no training samples as zero-shot, and investigate the ability of our techniques to generalize to zero-shot regions in Sec. 4.2. For metrics, we use common metrics for regression, such as the meanaverage-error (MAE), mean-squared-error (MSE), and Pearson correlation. We further propose another metric, called error Geometric Mean (**GM**), and is defined as$\left(\prod_{i=1}^{n} e_{i}\right)^{\frac{1}{n}}$for better prediction fairness.  
 &emsp;&emsp;评估过程和指标。在 (Liu et al., 2019) 之后，我们将目标空间划分为三个不相交的子集：many-shot 区域（具有超过 100 个训练样本的 bin）、medium-shot 区域（具有 20∼100 个训练样本的 bin）和few-shot区域（训练样本少于 20 个的 bin），并说明这些子集的结果以及整体性能。 我们将没有训练样本的区域称为zero-shot，并在 Sec.4.2中研究我们的技术泛化到该区域的能力。 对于指标，我们使用常用的回归指标，例如均值误差 (MAE)、均方误差 (MSE) 和皮尔逊相关性。 我们进一步提出另一个度量，称为误差几何平均值 (GM)，定义为 $\left(\prod_{i=1}^{n} e_{i}\right)^{\frac{1}{n} }$以获得更好的预测公平性。
 <a name="qCLS0"></a>
-### 4.1. Main Results 
+### Main Results 
 &emsp;&emsp;We report the main results in this section for all DIR datasets. All training details, hyper-parameter settings, and additional results are provided in Appendix C and D. 
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-5.png)
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-6.png)
@@ -211,7 +211,7 @@ $$\tilde{\mathbf{z}}=\tilde{\boldsymbol{\Sigma}}_{b}^{\frac{1}{2}} \boldsymbol{\
   图 7. LDS + FDS 在vanilla模型上的绝对 MAE 增益，在 IMDB-WIKI-DIR 的精选子集上，其中某些目标值没有训练数据。 在所有区域有着显著的性能提升，特别是对于外插和内插。</figure>
 
 <a name="f4V3z"></a>
-### 4.2. Further Analysis 
+### Further Analysis 
 &emsp;&emsp;**Extrapolation & Interpolation.** In real-world DIR tasks, certain target values can have no data at all (e.g., see SHHSDIR and STS-B-DIR in Fig. 6). This motivates the need for target extrapolation and interpolation. We curate a subset from the training set of IMDB-WIKI-DIR, which has no  training data in certain regions (Fig. 7), but evaluate on the original testset for zero-shot generalization analysis. 
 &emsp;&emsp;外插和内插。在现实世界的DIR任务中，某些目标值没有数据（看图6的SHHSDIR和SRS-B-DIR）。这激发对目标外插和内插的需求。我们挑选了IMDB-WIKI训练集中的一个子集，该子集在某些区域没有训练数据（图7）进行训练，但在原始测试集上评估来进行零样本泛化分析。
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-11.png)
