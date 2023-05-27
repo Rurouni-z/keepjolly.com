@@ -14,7 +14,7 @@ original: true
 author: Rurouni
 website: www.keepjolly.com
 ---
-# 音频原理
+## 音频原理
 [博客](https://zhuanlan.zhihu.com/p/53475069)
 
 1. **声音**
@@ -28,19 +28,19 @@ website: www.keepjolly.com
 对声音的采样常用麦克风等设备将声音信号转换成电信号，再用模/数转换器将电信号转换成一串用1和0表示的二进制数字（数字信号）。
 **采样频率**指录音设备在一秒钟内对声音信号的采样次数。采样频率越高，声音的还原就越真实越自然。
 目前主流的采样频率有22.05KHz、44.1KHz、48KHz三种。
-## PCM
+### PCM
 PCM(Pulse Code Modulation)也被称为 脉码编码调制。PCM中的声音数据没有被压缩，如果是单声道的文件，采样数据按时间的先后顺序依次存入。(它的基本组织单位是BYTE(8bit)或WORD(16bit))
 **一般情况下，一帧PCM是由2048次采样组成的**( 参考 [http://discussion.forum.nokia.com/forum/showthread.php?129458-请问PCM格式的音频流，每次读入或输出的块的大小是必须固定为4096B么&s=e79e9dd1707157281e3725a163844c49](http://discussion.forum.nokia.com/forum/showthread.php?129458-%E8%AF%B7%E9%97%AEPCM%E6%A0%BC%E5%BC%8F%E7%9A%84%E9%9F%B3%E9%A2%91%E6%B5%81%EF%BC%8C%E6%AF%8F%E6%AC%A1%E8%AF%BB%E5%85%A5%E6%88%96%E8%BE%93%E5%87%BA%E7%9A%84%E5%9D%97%E7%9A%84%E5%A4%A7%E5%B0%8F%E6%98%AF%E5%BF%85%E9%A1%BB%E5%9B%BA%E5%AE%9A%E4%B8%BA4096B%E4%B9%88&s=e79e9dd1707157281e3725a163844c49) )。
 如果是双声道的文件，采样数据按时间先后顺序交叉地存入。如图所示:
 ![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210449.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
-# aac的码流格式
+## aac的码流格式
 [AAC的ADTS头文件信息介绍](https://blog.csdn.net/jay100500/article/details/52955232)、[C++ 解析aac-adts的头部信息](https://blog.csdn.net/u013113678/article/details/123134860)、[AAC ADTS格式分析](https://www.cnblogs.com/zhangxuan/p/8809245.html)、[保留用](https://xie.infoq.cn/article/403c31f46c2ee5e39fdbede0e)
 ![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210449-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 AAC音频格式：Advanced Audio Coding(高级音频解码)，是一种由MPEG-4标准定义的有损音频压缩格式，由Fraunhofer发展，Dolby, Sony和AT&T是主要的贡献者。
 
 - ADIF：Audio Data Interchange Format 音频数据交换格式。这种格式的特征是可以确定的找到这个音频数据的开始，不需进行在音频数据流中间开始的解码，即它的解码必须在明确定义的开始处进行。故这种格式常用在**磁盘文件**中。
 - ADTS的全称是Audio Data Transport Stream。是AAC音频的传输流格式。AAC音频格式在MPEG-2（ISO-13318-7 2003）中有定义。AAC后来又被采用到MPEG-4标准中。这种格式的特征是它是一个有同步字的比特流，解码可以在这个流中任何位置开始。它的特征类似于mp3数据流格式。常用在**数据传输**中。
-## ADTS Header
+### ADTS Header
 
 - syncword ：总是0xFFF, 代表一个ADTS帧的开始, 用于同步.解码器可通过0xFFF确定每个ADTS的开始位置.因为它的存在，解码可以在这个流中任何位置开始, 即可以在任意帧解码。
 - ID：MPEG Version: 0 for MPEG-4，1 for MPEG-2
@@ -65,7 +65,7 @@ AAC音频格式：Advanced Audio Coding(高级音频解码)，是一种由MPEG-4
    - protection_absent=1时, header length=7bytes
 - adts_buffer_fullness：0x7FF 说明是码率可变的码流。
 - number_of_raw_data_blocks_in_frame：表示ADTS帧中有number_of_raw_data_blocks_in_frame + 1个AAC原始帧。所以说number_of_raw_data_blocks_in_frame == 0 表示说ADTS帧中有一个AAC数据块。(一个AAC原始帧包含一段时间内1024个采样及相关数据)
-# 代码
+## 代码
 rtp.h、 rtp.cpp参考前文
 ```cpp
 #include "rtp.h"
@@ -556,7 +556,7 @@ int main() {
 
 
 ```
-# 第4讲：实现一个基于TCP的RTP同时传输h264和aac的RTSP服务器
+## 第4讲：实现一个基于TCP的RTP同时传输h264和aac的RTSP服务器
 这个只是将前两讲组合在一起，并用线程分别开启，所以直接合并成一个博客。
 > 如果之前的rtp.cpp不能使用，请重新在[北小菜](https://gitee.com/Vanishi/BXC_RtspServer_study)下载
 

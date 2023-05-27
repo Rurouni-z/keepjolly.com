@@ -19,10 +19,10 @@ website: www.keepjolly.com
    - RTP协议：负责服务器与客户端之间**传输媒体数据**
    - RTCP协议：负责提供有关RTP传输质量的反馈，就是**确保RTP传输的质量**
    - 三者的关系：rtsp并不会发送媒体数据，只是完成服务器和客户端之间的信令交互，rtp协议负责媒体数据传输，rtcp负责rtp数据包的监视和反馈。rtp和rtcp并没有规定传输层的类型，可以选择udp和tcp。Rtsp的传输层则要求是基于tcp。
-# 准备工作
-## 安装ffmepg
+## 准备工作
+### 安装ffmepg
 因为已经装过了，所以这里[自行安装](https://www.google.com.hk/search?q=ffmpeg%E4%B8%8B%E8%BD%BDubuntu)。
-## 安装wireshark
+### 安装wireshark
 
 1. sudo apt-get update
 2. sudo apt-get install wireshark
@@ -40,14 +40,14 @@ website: www.keepjolly.com
 随后运行程序即可，然后再开启一个终端（ctrl+alt+T），输入ffplay -i rtsp://127.0.0.1:8554
 然后wireshark就会出现
 ![2.jpg](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210441-1.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
-# RTSP相关选项
+## RTSP相关选项
 
 - [options](https://blog.csdn.net/mlfcjob/article/details/109120103)请求，用于查询RTSP服务器支持的方法（如DESCRIBE、SETUP、PLAY等）。
    - ![3.jpg](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210441-2.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 - [DESCRIBE](https://blog.csdn.net/mlfcjob/article/details/109120169)请求，用于获取有关流媒体的信息，例如它的编码格式、分辨率、码率等。（[sdp](https://blog.csdn.net/uianster/article/details/125902301)）
 - [SETUP](https://blog.csdn.net/mlfcjob/article/details/109120217)请求，作用是指明媒体流该以什么方式传输；每个流PLAY之前必须执行SETUP操作；发送SETUP请求时，客户端会指定两个端口，一个端口用于接收RTP数据；另一个端口接收RTCP数据，偶数端口用来接收RTP数据，相邻的奇数端口用于接收RTCP数据！
 - [PLAY](https://blog.csdn.net/mlfcjob/article/details/109336283)请求，发送播放请求的时候可以指定播放区间！发起播放请求后，如果连接正常，则服务端开始播放，即开始向客户端按照之前在TRASPORT中约定好的方式发送音视频数据包！播放流程便这样开始了
-# Linux代码
+## Linux代码
 ```cpp
 #include <stdio.h>
 #include <stdlib.h>
@@ -347,7 +347,7 @@ int main(int argc, char* argv[])
     return 0;
 }
 ```
-# ffmpeg入门
+## ffmpeg入门
 
 - [ffmpeg命令行 视频生成图片](https://zhuanlan.zhihu.com/p/413567427)
    - ffmpeg -i input.mp4 -r 25 -f image2 data/image%3d.jpg

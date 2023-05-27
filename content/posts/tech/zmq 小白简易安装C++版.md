@@ -16,14 +16,14 @@ website: www.keepjolly.com
 主要参考博客:[ 在cmake工程中使用ZeroMQ](https://www.cnblogs.com/y4247464/p/14241876.html),并加以补充
 次要博客:[Linux下ZeroMQ的编译安装与运行](https://blog.csdn.net/qq_41453285/article/details/105989698)
 文中提到arm,我只装在linux系统上，原本想用在通信中，最后还是用tcp实现了
-# 安装libzmq
+## 安装libzmq
 
 1. git clone [https://github.com/zeromq/libzmq.git](https://github.com/zeromq/libzmq.git) 
    1. 在当前文件夹内下载libzmq文件夹,建议先cd到你想要放的文件夹
 2. cd libzmq
 3. ./autogen.sh
 4. ./configure
-## 安装zmqpp
+### 安装zmqpp
 
 1. git clone [https://github.com/zeromq/zmqpp.git](https://github.com/zeromq/zmqpp.git)
    1. 同理,找个文件夹放
@@ -35,7 +35,7 @@ website: www.keepjolly.com
 > 头文件路径 ： /usr/local/include
 > 库文件路径 : /usr/local/lib
 
-## CMakeList.txt
+### CMakeList.txt
 ```cmake
 cmake_minimum_required(VERSION 3.10)
 
@@ -69,8 +69,8 @@ target_link_libraries(server PRIVATE ${link_libs})
 
 
 ```
-## server.cpp简易案例
-### server
+### server.cpp简易案例
+#### server
 ```cpp
 #include <iostream>
 #include <zmqpp/zmqpp.hpp>
@@ -102,7 +102,7 @@ using namespace cv;
    return 0;
 }
 ```
-### client
+#### client
 ```python
 import zmq  # pip install zmq
 context = zmq.Context()

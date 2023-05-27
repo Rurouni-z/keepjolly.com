@@ -9,7 +9,7 @@ tags:
 - Software
 ---
 
-# HEU KMS Activator 用于Windows激活
+## HEU KMS Activator 用于Windows激活
 **原文[Link](https://meledee.com/2020/12/3724.html)，纯粹为了记录，与原文一致**
 我常给自己或者亲朋好友的电脑重装系统，基于稳定性和系统运行速度等因素考量，一般都会选择安装Windows 10 Enterprise LTSC 2019。之前曾使用过国外网友s1ave77制作的Windows 10数字权利激活工具——HWIDGEN，遗憾的是该软件不支持以数字许可证永久激活LTSC 2019，仅能用KMS离线激活，让系统有效期延长到2038年。
 > 小知识：
@@ -35,7 +35,7 @@ HEU KMS Activator支持激活**Windows Vista/7/8/10/Server 2008/2008R2**等微�
 
 ---
 
-## **HEU KMS Activator 当前最新版本下载：**
+### **HEU KMS Activator 当前最新版本下载：**
 [HEU KMS Activator最新版本下载地址](https://url01.ctfile.com/f/12669301-537630116-a4c518)** （访问密码：2278）**
 **文件: HEU_KMS_Activator_v24.6.1.exe**
 **SHA1: 6375D61442698AA57FFD56DA26CE09661504AC8C**

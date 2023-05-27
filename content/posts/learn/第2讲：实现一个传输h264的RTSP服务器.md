@@ -14,7 +14,7 @@ original: true
 author: Rurouni
 website: www.keepjolly.com
 ---
-# vscode配置
+## vscode配置
 [vscode编译多个cpp文件](https://blog.csdn.net/Yujian2563/article/details/124749727)
 将${file}更改为选中部分，使之编译所有cpp文件。注意：变更之后本工程内不能出现多个main函数！！
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
@@ -36,22 +36,22 @@ cmake_minimum_required(VERSION 3.5)
 
 project(myproject)
 
-# 添加源代码文件
+## 添加源代码文件
 add_library(mylib SHARED 
     myclass.cpp 
     utils.cpp
 )
 
-# 包含头文件搜索路径
+## 包含头文件搜索路径
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-# 指定头文件
+## 指定头文件
 set(MY_HEADERS
     myclass.h
     utils.h
 )
 
-# 指定生成可执行文件，并链接库
+## 指定生成可执行文件，并链接库
 add_executable(myapp main.cpp)
 target_link_libraries(myapp mylib)
 ```
@@ -100,7 +100,7 @@ struct RtpPacket
     uint8_t payload[0];
 };
 ```
-# H264理解
+## H264理解
 [链接](https://mp.weixin.qq.com/s/SJblG5lj8nzQweM1VnRTEA)
 
 - I帧(intraframe frame),关键帧。
@@ -115,7 +115,7 @@ IDR帧和I帧的关系：
 IDR(Instantannous Decoder Refresh) 解码器立即刷新
 作用：在解码的过程，一旦有一帧数据出现错误，将是无法恢复的过程，后面数据帧不能使用。当有了IDR帧，解码器收到IDR帧时，就会将缓冲区的数据清空，找到第一个IDR帧，重新解码。I和IDR帧都使用帧内预测，在编码解码中为了方便，首个I帧要和其他I帧区别开，**把第一个I帧叫IDR**，这样方便控制编码和解码流程。IDR帧必须是一个I帧，但是I帧不一定是IDR帧，这个帧出现的时候，是告诉解码器，可以清除掉所有的参考帧，这是一个全新的序列，新的GOP已经开始。I帧有被跨帧参考的可能,IDR不会。
 每个GOP中的第一帧就是IDR帧。 
-# H264码流进行RTP封装
+## H264码流进行RTP封装
 [RTP封装](https://blog.csdn.net/jwybobo2007/article/details/7054140)
 **H.264由一个一个的NALU组成**，每个NALU之间使用**00 00 00 01**或**00 00 01**分隔开
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
@@ -151,9 +151,9 @@ Type：28，表示该RTP包一个分片，为什么是28？因为H.264的规范�
 S：标记该分片打包的第一个RTP包
 E：比较该分片打包的最后一个RTP包
 Type：NALU的Type，不同与FU Indicator的type
-# 代码
+## 代码
 **ffmpeg -i test.mp4 -codec copy -bsf: h264_mp4toannexb -f h264 test.h264 **生成h264文件
-## rtp.h文件
+### rtp.h文件
 ```cpp
 #pragma once
 #include <stdint.h>
@@ -225,7 +225,7 @@ int rtpSendPacketOverUdp(int serverRtpSockfd, const char* ip, int16_t port, stru
 
 
 ```
-## rtp.cpp
+### rtp.cpp
 ```cpp
 #include "rtp.h"
 #include <stdio.h>
@@ -302,7 +302,7 @@ int rtpSendPacketOverUdp(int serverRtpSockfd, const char* ip, int16_t port, stru
 }
 
 ```
-## main.cpp
+### main.cpp
 ```cpp
 #include "rtp.h"
 #include <stdio.h>
