@@ -77,3 +77,4 @@ hugo server -D
 **原因不明，不能复现问题**
 我使用的是腾讯云的图床，但是部署到github发现不能使用
 最后将config.toml中的enableMediumZoom = false置为false即可（true也没事）
+可能是防盗链的关系

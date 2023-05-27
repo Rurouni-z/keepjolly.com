@@ -104,7 +104,7 @@ uglyURLs = false
     # 座右铭或简介
     motto = "知行合一"
     # 头像
-    avatar = "https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/profile%20photo_1647067705220.jpeg"
+    avatar = ""
     # 网站（默认值：baseURL）
     website = "https://keepjolly.com/"
     # 推特
@@ -365,8 +365,8 @@ uglyURLs = false
     ######################################
     # 站点信息
 
-    # 站点的 LOGO 
-    siteLogo = "https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo%2Fweb_logo.png"
+    # 站点的 LOGO https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo%2Fweb_logo.png
+    siteLogo = ""
     # 说明：用于 JSON-LD、Open Graph
 
     # 站点的描述
@@ -375,7 +375,7 @@ uglyURLs = false
     #      Open Graph、Atom、RSS
 
     # 站点的创建时间
-    siteCreatedTime = "2023-05-02T12:00:00+00:00"
+    siteCreatedTime = "2022-02-19T12:00:00+00:00"
     # 注意：请保持此格式，更改数字
 
     # 站点的推特帐号

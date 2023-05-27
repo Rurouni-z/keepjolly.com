@@ -8,6 +8,7 @@
             "date: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND +0800",
 			"lastmod: ",
             "summary: ",
+			"url: ",
             "slug: $2", // url: www.keepjolly.com/tags/:slug/
 			"toc: ${3|true,false|}",
 			"rightToc: ${4|false,true|}",
