@@ -3,6 +3,8 @@ title: Delving into Deep Imbalanced Regression翻译
 date: 2022-08-16 20:19:04.481
 updated: 2022-08-17 22:00:19.543
 url: /archives/delving-into-dir-translation
+toc: false
+rightToc: true
 categories: 
 - learn
 tags: 

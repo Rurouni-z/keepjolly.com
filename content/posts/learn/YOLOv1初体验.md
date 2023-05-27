@@ -27,7 +27,7 @@ tags:
 Second, YOLO reasons globally about the image when making predictions. Unlike sliding window and region proposal-based techniques, YOLO sees the entire image.
 Third, YOLO learns generalizable representations of objects. When trained on natural images and tested on art- work, YOLO outperforms top detection methods like DPM and R-CNN by a wide margin.
 
-## ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653536968541-23b5ea20-24dc-4fe6-ad35-f550474f62b2.png?imageMogr2/format/webp)
+![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653536968541-23b5ea20-24dc-4fe6-ad35-f550474f62b2.png?imageMogr2/format/webp)
  Our system models detection as a regression problem. It divides the image into an S × S grid and for each grid cell predicts B bounding boxes, confidence for those boxes, and C class probabilities. These predictions are encoded as an S × S × (B ∗ 5 + C) tensor.  
 实现方案：[Link](https://www.jianshu.com/p/cad68ca85e27)，大致下面这个区域，因为都是原文摘抄，所以不全部复制了。
 > **1）结构**
@@ -64,9 +64,9 @@ which gives us class-specific confidence scores for each box. These scores encod
 最后在PASCAL VOC中 S=7，B=2，C=20，最终输出为7×7×30的标量（30=(4+1)*2+20, 4是xywh，1是置信度，2是bbox个数，20类别数）
 ## 损失函数
 图片来源：[Link](https://www.cnblogs.com/yifanrensheng/p/12871235.html#_label4_1)
-## ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653446878220-7d2da09d-efaa-4f2f-8bcf-30e14fdc5bfb.png?imageMogr2/format/webp)
-## ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653546402345-b302bc1a-36f6-439c-ac36-8f3e4e24b882.png?imageMogr2/format/webp)
- ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653447175456-063291b7-cbdc-47b6-b461-90e3d88d7593.png?imageMogr2/format/webp)
+![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653446878220-7d2da09d-efaa-4f2f-8bcf-30e14fdc5bfb.png?imageMogr2/format/webp)
+![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653546402345-b302bc1a-36f6-439c-ac36-8f3e4e24b882.png?imageMogr2/format/webp)
+![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653447175456-063291b7-cbdc-47b6-b461-90e3d88d7593.png?imageMogr2/format/webp)
 $1_{ij}^{obj}$表示第i个网格中的第j个bbox有对象
 $1_{ij}^{noobj}$表示第i个网格中的第j个bbox无对象
 
@@ -101,12 +101,9 @@ $1_{ij}^{noobj}$表示第i个网格中的第j个bbox无对象
 其它：类别错误，IOU>0.1
 背景：IOU<0.1
 ## 文中的小技巧
-
-
-
 1. 回归offset代替直接回归坐标
 > We parametrize the bounding box x and y coordinates to be offsets of a particular grid cell location so they are also bounded between 0 and 1
 
 **(x, y)不直接回归中心点坐标数值，而是回归相对于格点左上角坐标的位移值。** 例如，第一个格点中物体坐标为 (2.3, 3.6) ，另一个格点中的物体坐标为(4.2, 4.6)，这四个数值让神经网络暴力回归，有一定难度。所以这里的offset是指，既然格点已知，那么物体中心点的坐标一定在格点正方形里，相对于格点左上角的位移值一定在区间[0, 1)中。让神经网络去预测 (0.3, 0.6) 与 (0.2, 0.6) 会更加容易，在使用时，加上格点左上角坐标(2, 3)、(4, 4)即可。
-##  
+## 问题 
 为什么一个网格只检测一个目标：[实时目标检测](https://www.zdaiot.com/DeepLearningApplications/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E5%AE%9E%E6%97%B6%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9AYOLO%E3%80%81YOLOv2%E4%BB%A5%E5%8F%8AYOLOv3/)

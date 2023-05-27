@@ -16,7 +16,7 @@ tags:
 参考：[人脸识别之主成分分析（PCA）](https://zhuanlan.zhihu.com/p/26652435)
 
 **简易** 系统展示
-![](/upload/2022/02/Snipaste_2022-02-22_16-19-23-9bb0ff00b0b647bd9f78e7f0cc5f97e6.png)
+迁移后图片丢失
 
 ```python
 import sys

@@ -3,6 +3,8 @@ title: Java 学习 半成品
 date: 2023-03-11 20:23:47.173
 updated: 2023-03-11 20:23:47.173
 url: /archives/java-study
+toc: false
+rightToc: true
 categories: 
 - other
 tags: 

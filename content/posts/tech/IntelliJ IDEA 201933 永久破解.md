@@ -11,6 +11,7 @@ tags:
 
 ​
 **感谢原文博主！**
+
 程序安装包下载：
 链接：https://pan.baidu.com/s/1RigVWufNh-TF84zCYjxhAw
 提取码：i3om
@@ -24,36 +25,36 @@ tags:
 
 - 打开IDEA
 
-![](https://img-blog.csdnimg.cn/img_convert/fa8218b640b7d2fce93995b15e3116a8.png)
+![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 - 重新启动IDEA：
 
 - 打开配置文件
-![](https://img-blog.csdnimg.cn/img_convert/a246a83307be151901030753fb9a7721.png)
+![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 在最后一行加入'**-javaagent:**'且后面再跟上你的破解补丁的位置，两者都要在同一行上；这里的路径千万别输错且不能有中文，否则以后会打不开IDEA，最好直接复制再加上文件名；改完后记得保存。
-![](https://img-blog.csdnimg.cn/img_convert/02919e8bb8d83e732b81059546c21280.png)
+![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
-![](https://img-blog.csdnimg.cn/img_convert/d7f9224310d57813b001cf5a9c501c52.png)
+![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
  
 
 - 自动破解
 
 重启完成后正常情况下就已经自动破解成功了，可以去下面的地方去看下结果。
-![](https://img-blog.csdnimg.cn/img_convert/ebb4da6fede5a19d8b1877e3a7ef0de5.png)
+![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 
 
 
 - 手动破解：
 - - 进入idea激活界面
-![](https://img-blog.csdnimg.cn/img_convert/c0c31996e2ddb77352c5788262e74d85.png)
+![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 
 - - License server方式激活
 要使用License server激活就点击`License server`,下面的`Server address`中输入`http://fls.jetbrains-agent.com`，再点`Activate`，如出现下图的情况则激活成功。
-![](https://img-blog.csdnimg.cn/img_convert/0e22b612852061b1f27c5de88f1d4b75.png)
-![](https://img-blog.csdnimg.cn/img_convert/7e9bbdb6712440aafca32956a68da426.png)
+![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-7.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 - - **Activation code**
 
@@ -64,7 +65,7 @@ tags:
 
 
 再点Activate，如果出现如下图所示，则激活成功
-![](https://img-blog.csdnimg.cn/img_convert/6f9b4bb200bc28b9f62265623de64172.png)
+![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-8.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 
 我个人是在hosts文件里加上了

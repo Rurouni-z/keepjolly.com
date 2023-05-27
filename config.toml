@@ -87,7 +87,7 @@ uglyURLs = false
         lineNumbersInTable = true
         noClasses = false
     [markup.tableOfContents]
-        startLevel = 1 # 从h1开始
+        startLevel = 2 # 从h1开始
         endLevel = 6
         ordered = true
 
