@@ -1,3 +1,21 @@
+---
+title: ubuntu安装nerfstudio
+date: 2023-05-28 09:34:46 +0800
+lastmod: 
+summary: 
+url: 
+slug: ubuntu-install-nerfstudio
+toc: true
+rightToc: false
+categories: 
+- tech
+tags: 
+- ComputerVision
+- Ubuntu
+original: true
+author: Rurouni
+website: www.keepjolly.com
+---
 博主配置：
 
 - ubuntu18.04
@@ -42,5 +60,3 @@
 
 # Train model 
 > ns-train nerfacto --data data/nerfstudio/poster
-
-

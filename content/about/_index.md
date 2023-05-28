@@ -27,7 +27,7 @@ You don't have to change a single thing</em>
 
 评论系统已关闭，有问题欢迎提交[Issue](https://github.com/Rurouni-z/Rurouni-z.github.io/issues)
 
-采用标签确实比分类看起来更加清爽，想必是标签没有显示文章吧[^1]
+<!-- 采用标签确实比分类看起来更加清爽，想必是标签没有显示文章吧[^1].测试 -->
 
 
 ---
@@ -42,4 +42,4 @@ You don't have to change a single thing</em>
 
 如有侵权，欢迎联系
 
-[^1]: https://io-oi.me/tech/categories+tags/
+<!-- [^1]: https://io-oi.me/tech/categories+tags/ -->

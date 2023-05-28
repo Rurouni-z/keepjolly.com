@@ -198,18 +198,18 @@ uglyURLs = false
     #     weight = 1
     #     pre = "internal"
     #     post = ""  # home
-    [[menu.main]]
-        pageref = "/posts/"
-        name = "文章"
-        weight = 2
-        pre = "internal"
-        post = ""  # archive
     # [[menu.main]]
-    #     pageref = "/categories/"
-    #     name = "分类"
-    #     weight = 3
+    #     pageref = "/posts/"
+    #     name = "文章"
+    #     weight = 2
     #     pre = "internal"
-    #     post = ""  # th
+    #     post = ""  # archive
+    [[menu.main]]
+        pageref = "/categories/"
+        name = "分类"
+        weight = 3
+        pre = "internal"
+        post = ""  # th
     [[menu.main]]
         pageref = "/tags/"
         name = "标签"
@@ -247,8 +247,8 @@ uglyURLs = false
         weight = 1
         pre = "internal"
     [[menu.links]]
-        pageref = "/categories/"
-        name = "categories"
+        pageref = "/posts/"
+        name = "posts"
         weight = 2
         pre = "internal"
     # [[menu.links]]
@@ -365,7 +365,7 @@ uglyURLs = false
     ######################################
     # 站点信息
 
-    # 站点的 LOGO https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo%2Fweb_logo.png
+    # 站点的 LOGO https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo%2Fweb_logo.png 
     siteLogo = ""
     # 说明：用于 JSON-LD、Open Graph
 
@@ -420,11 +420,11 @@ uglyURLs = false
     # 是否显示文章标题
     displayPosts = true
 
-    # 是否显示每一分类下的文章数
-    displayPostsCount = false
+    # 是否显示每一分类下的文章数，每个section必须有文章
+    displayPostsCount = true
 
     # 设置一个非负数来限制每一分类下展示的文章数
-    limitPostsLimit = 4
+    limitPostsLimit = 5
 
 
     ######################################
@@ -492,7 +492,7 @@ uglyURLs = false
 
     # 说明：分区的名字即站点的 content 目录下
     #      的文件夹的名字。
-    # 与posts同级的文件夹名，会显示在category页面
+    # 与posts同级的文件夹名，会显示在category树形页面
     mainSections = ["posts", "test"]
 
 
@@ -1420,10 +1420,10 @@ uglyURLs = false
     #      Algolia
 
     enableAlgoliaSearch = true
-
-    algoliaAppId = ""
-    algoliaApiKey = ""
-    algoliaIndexName = ""
+    # 不加就无法搜索
+    algoliaAppId = "Z1QBIVDX3I"
+    algoliaApiKey = "fe499ccef1cfa0ffa0e64e8785efb2ee"
+    algoliaIndexName = "Blog"
     # 说明：https://www.algolia.com/
 
 

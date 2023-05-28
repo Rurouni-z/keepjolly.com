@@ -1,3 +1,21 @@
+---
+title: ubuntu多版本管理GCC和CUDA
+date: 2023-05-28 09:33:29 +0800
+lastmod: 
+summary: 
+url: 
+slug: Ubuntu-multi-version-management-GCC-and-CUDA
+toc: true
+rightToc: false
+categories: 
+- tech
+tags: 
+- Ubuntu
+- C++
+original: true
+author: Rurouni
+website: www.keepjolly.com
+---
 # 管理GCC
 1. 前提是安装了多个gcc版本，可采取如下命令
 > sudo apt-get install gcc-11 g++-11
@@ -24,4 +42,3 @@
 > nvcc -V
 
 [参考链接](https://zhuanlan.zhihu.com/p/410764884)
-
