@@ -1,6 +1,7 @@
 {{ define "main" }}
-    {{ partial "pages/post.html" . }}
+    <!-- display at top -->
     <div class = "toc-wrapper">
         {{ partial "mytoc.html" . }}
     </div>
+    {{ partial "pages/post.html" . }}
 {{ end }}

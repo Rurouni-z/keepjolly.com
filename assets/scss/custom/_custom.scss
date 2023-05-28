@@ -275,8 +275,16 @@ blockquote.quote {
         }
     }
 }
+.toc-phone {
+    display: None;
+}
 @media only screen and (max-width: 1224px) {
     .post-toc {
         display: none;
+    }
+    .toc-phone {
+        display: flex;
+        justify-content: center;
+        align-items:center;
     }
 } 
