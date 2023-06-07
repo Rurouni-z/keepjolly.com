@@ -18,7 +18,7 @@ toc: false
 You don't have to try so hard<br>
 You don't have to, give it all away<br>
 You just have to get up, get up, get up, get up<br>
-You don't have to change a single thing</em>
+</em>
 </p>
 
 ---
@@ -35,8 +35,6 @@ You don't have to change a single thing</em>
 版权信息：
 
 网站主题：[MemE](https://github.com/reuixiy/hugo-theme-meme)
-
-网站图标来源：[小假哥_医疗_icon015_睡眠](https://www.iconfont.cn/collections/detail?cid=42142)
 
 网站部署平台：[github](www.github.com)
 
