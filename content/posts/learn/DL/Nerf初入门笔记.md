@@ -17,14 +17,14 @@ tags:
 通过使用稀疏的输入视图优化底层的的连续辐射体积场函数，实现**复杂场景的新视角合成**
 ## NeRF 是怎么做的
 ![Nerf pipeline: (a)，(b)生成射线，(c)立体渲染，(d)算 mse loss。](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220051.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5 "Nerf pipeline: (a)，(b)生成射线，(c)立体渲染，(d)算 mse loss。")
-### 一、Pipeline
+### Pipeline
 [nerf(二)---工作流程与基本原理](https://github.com/yangkang2021/nerf-learn/blob/master/nerf/02.%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E4%B8%8E%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.md)
 
 - a).沿着相机光线的方向采样 5D 坐标
 - b).将坐标信息输入到 MLP 中，产生颜色和体积密度
 - c).使用立体渲染将颜色和体积密度合成为图像
 - d).渲染函数是可微分的，因此可以通过最小化合成图像和实际观察到的图像之间的残差来优化场景表示
-### 二、静态场景的表示
+### 静态场景的表示
 
 - 使用全连接（非卷积）深度网络(多层感知机，MLP)来表示场景
 - 输入是一个连续的5D坐标：**空间位置 **$(x,y,z)$ 和 **2D 观察方向**$(\theta, \phi)$
@@ -51,7 +51,7 @@ tags:
 - $\mathcal{R}$ 是每个 batch 里面光线的集合，$\mathbf{r}$ 是指集合里面的每一条光线
 - $C(\mathbf{r})$，$\hat{C}_c(\mathbf{r})$，$\hat{C}_f(\mathbf{r})$ 分别是gt实景，粗网络，细网络中输出的光线 RGB 颜色
 - 同时还将 $\hat{C}_c(\mathbf{r})$ 的损失最小化，以便粗网络的权重分布可以用于在细网络中分配样本
-### 三、神经渲染
+### 神经渲染
 [https://zhuanlan.zhihu.com/p/486642042](https://zhuanlan.zhihu.com/p/486642042)
 
 - 沿着相机光线查询 5D 坐标来合成视图
@@ -78,7 +78,7 @@ $t_i \sim \mathcal{U}\left[t_n+\frac{i-1}{N}\left(t_f-t_n\right), t_n+\frac{i}{N
 > 这里得到的 $t_i$ 是每个小区间内的随机抽取样本点的空间坐标
 
 根据数值积分方法估计的颜色积分结果如下所示：<br />$\hat{C}(\mathbf{r})=\sum_{i=1}^N T_i\left(1-\exp \left(-\sigma_i \delta_i\right)\right) \mathbf{c}*i, \text { where } T_i=\exp \left(-\sum*{j=1}^{i-1} \sigma_j \delta_j\right)$<br />通过分层抽样的方式，将**连续的积分变成了离散的求和**，$\delta_i = t_{i+1} - t_i$ 是**样本间隔(距离)**<br />文中还提到了可以简化为传统的 Alpha 合成，对应的 alpha value 是<br />$\alpha_i = 1 - exp(-\sigma_i \delta_i)$
-### 四、如何优化
+### 如何优化
 输入为一系列**已知相机位姿**的图像<br />**两方面的优化：**
 
 - 使用**位置编码**来转换输入的 5D 坐标，将坐标映射到**更高维度的空间**中，使相似的内容分离到更远的地方，从而使 MLP 能够表示**更高频率的函数**，使得物体表面的几何和纹理更加逼真

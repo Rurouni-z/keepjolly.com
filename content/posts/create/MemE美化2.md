@@ -50,7 +50,7 @@ website: www.keepjolly.com
         ]
     },
 	"update time":{
-		"scope": "markdown",
+		"scope": "yaml",
 		"prefix": "update",
 		"body": "$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND +0800"
 	}
