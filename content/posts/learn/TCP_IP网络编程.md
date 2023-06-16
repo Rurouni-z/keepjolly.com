@@ -5,8 +5,8 @@ lastmod:
 summary: 
 url: 
 slug: TCP_IP_network_programming
-toc: true
-rightToc: false
+toc: false
+rightToc: true
 categories: 
 - learn
 tags: 

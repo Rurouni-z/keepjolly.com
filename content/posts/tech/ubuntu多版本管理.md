@@ -68,31 +68,31 @@ make -j8 && sudo make install
 6. 使用opencv
    1. 将otherpackages中的opencv3.4.15复制到项目路径
       1. 在qt.pro中粘贴代码
-```bash
-INCLUDEPATH += ./opencv3415/include \
-               ./opencv3415/include/opencv \
-               ./opencv3415/include/opencv2
+      ```bash
+      INCLUDEPATH += ./opencv3415/include \
+                  ./opencv3415/include/opencv \
+                  ./opencv3415/include/opencv2
 
-LIBS += -L./opencv3415/lib -lopencv_core -lopencv_highgui \
-        -lopencv_imgcodecs -lopencv_imgproc -lopencv_videoio \
-```
-
+      LIBS += -L./opencv3415/lib -lopencv_core -lopencv_highgui \
+            -lopencv_imgcodecs -lopencv_imgproc -lopencv_videoio \
+      ```
       2. 如果是cmake
-```bash
-include_directories(
-    ${CMAKE_SOURCE_DIR}/./opencv3415/include
-)
+      ```bash
+      include_directories(
+      ${CMAKE_SOURCE_DIR}/./opencv3415/include
+      )
 
-set(link_libs  ${CMAKE_SOURCE_DIR}/./opencv3415/lib/libopencv_core.so
-               ${CMAKE_SOURCE_DIR}/./opencv3415/lib/libopencv_highgui.so
-               ${CMAKE_SOURCE_DIR}/./opencv3415/lib/libopencv_imgcodecs.so
-               ${CMAKE_SOURCE_DIR}/./opencv3415/lib/libopencv_imgproc.so
-               ${CMAKE_SOURCE_DIR}/./opencv3415/lib/libopencv_videoio.so
-)
+      set(link_libs  ${CMAKE_SOURCE_DIR}/./opencv3415/lib/libopencv_core.so
+                  ${CMAKE_SOURCE_DIR}/./opencv3415/lib/libopencv_highgui.so
+                  ${CMAKE_SOURCE_DIR}/./opencv3415/lib/libopencv_imgcodecs.so
+                  ${CMAKE_SOURCE_DIR}/./opencv3415/lib/libopencv_imgproc.so
+                  ${CMAKE_SOURCE_DIR}/./opencv3415/lib/libopencv_videoio.so
+      )
 
-add_executable(main  ./main.cpp)
-target_link_libraries(main ${link_libs})
-```
+      add_executable(main  ./main.cpp)
+      target_link_libraries(main ${link_libs})
+      ```
+
  [参考博客](https://zhuanlan.zhihu.com/p/510292490)
 ## 管理cuda
 
@@ -100,11 +100,11 @@ target_link_libraries(main ${link_libs})
 > cd /usr/local
 > sudo unlink cuda
 
-2. 建立新链接
+1. 建立新链接
 > sudo ln -snf /usr/local/`..cuda-xx..` /usr/local/cuda
 > cuda-xx是文件夹名
 
-3. 查看当前版本
+1. 查看当前版本
 > nvcc -V
 
 [参考链接](https://zhuanlan.zhihu.com/p/410764884)
