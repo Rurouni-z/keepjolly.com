@@ -550,7 +550,7 @@ blockquote.quote {
 } 
 ```
 ## 配置豆瓣短码
-## 创建douban.md
+### 创建douban.md
 xxx\layouts\shortcodes 下创建douban.md
 ```html
 {{ $dbUrl := .Get 0 }}
@@ -584,7 +584,7 @@ xxx\layouts\shortcodes 下创建douban.md
 {{end}}
 
 ```
-## 修改custom.scss样式
+### 修改custom.scss样式
 在源文件下追加，修改了一些样式，使其更适配Meme
 ```html
 // douban (api unstable)
@@ -608,11 +608,12 @@ xxx\layouts\shortcodes 下创建douban.md
 }
 
 ```
-## 注意事项
+### 注意事项
 
 - 所给api可能不稳定，可能需要更换。
 - 也可以试试[本地缓存](https://blog.yandaojiang.com/posts/others/hugo_shortcodes%E7%A4%BA%E4%BE%8B/#%E8%B1%86%E7%93%A3%E6%9D%A1%E7%9B%AE)
-- 使用：{a(去掉a){< douban(shortcode_name) "https://book.douban.com/subject/35496106/">}}
+- 使用：
+   - {a(去掉a){< douban(shortcode_name) "https://book.douban.com/subject/35496106/">}}
 
 参考网址：
 
