@@ -341,6 +341,7 @@ uglyURLs = false
     ## 「诗意人生」
     # 诗句，支持 Markdown
     homePoetry = ['碌碌无为', '则余生太长', "欲有所为", "则人生苦短",
+                '------',
                 'do nothing', 'the life is too long', 'do something', 'the life is too short']
     # 底部链接的内间距，单位：em
     homeLinksPadding = 1

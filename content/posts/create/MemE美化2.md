@@ -2,7 +2,7 @@
 title: MemE关键美化
 date: 2023-05-27 19:59:46 +0800
 lastmod: 
-summary: 运用snippet简化配置front-matter；运用action简化配置algolia上传；修改about页加入视频和音频；创建toc右边显示，定制为页面级显示；
+summary: 运用snippet简化配置front-matter；运用action简化配置algolia上传；修改about页加入视频和音频；创建toc右边显示，定制为页面级显示；加入豆瓣条目；
 slug: meme-custom-important
 toc: true
 rightToc: false
@@ -549,3 +549,73 @@ blockquote.quote {
   }
 } 
 ```
+## 配置豆瓣短码
+## 创建douban.md
+xxx\layouts\shortcodes 下创建douban.md
+```html
+{{ $dbUrl := .Get 0 }}
+{{ $dbApiUrl := "https://neodb.social/api/" }}
+{{ $dbType := "" }}
+
+{{ if ( findRE `^.*neodb\.social\/.*` $dbUrl ) }}
+    {{ $dbType = replaceRE `.*neodb.social\/(.*\/.*)` "$1" $dbUrl }}
+{{ else }}
+    {{ $dbType = $dbUrl }}
+    {{ $dbApiUrl = "https://neodb.social/api/catalog/fetch?url=" }}
+{{ end }}
+
+{{ $dbFetch := getJSON $dbApiUrl $dbType }}
+
+{{ if $dbFetch }}
+    {{ $itemRating := 0 }}{{ with $dbFetch.rating }}{{ $itemRating = . }}{{ end }}
+    <div class="db-card">
+        <div class="db-card-subject">
+            <div class="db-card-post"><img loading="lazy" decoding="async" referrerpolicy="no-referrer" src="{{ $dbFetch.cover_image_url }}"></div>
+            <div class="db-card-content">
+                <div class="db-card-title"><a href="{{ $dbUrl }}" class="cute" target="_blank" rel="noreferrer">{{ $dbFetch.title }}</a></div>
+                <div class="rating"><span class="allstardark"><span class="allstarlight" style="width:{{mul 10 $itemRating }}%"></span></span><span class="rating_nums">{{ $itemRating }}</span></div>
+                <div class="db-card-abstract">{{ $dbFetch.brief }}</div>
+            </div>
+            <div class="db-card-cate">{{ $dbFetch.category }}</div>
+        </div>
+    </div>
+{{else}}
+    <p style="text-align: center;"><small>远程获取内容失败，请检查 API 有效性。</small></p>
+{{end}}
+
+```
+## 修改custom.scss样式
+在源文件下追加，修改了一些样式，使其更适配Meme
+```html
+// douban (api unstable)
+.db-card{background:#fafafa;border-radius: 5px;}
+.db-card-subject{display: flex;align-items:flex-start;line-height:1.6;padding:12px;position:relative;}
+.dark .db-card{background:#252627;}
+.db-card-content {flex:1 1 auto;}
+.db-card-post {width: 96px;margin-right: 15px;display: flex;flex: 0 0 auto;}
+.db-card-title {margin-bottom: 5px;font-size: 18px;}
+.db-card-title a{text-decoration: none!important}
+.db-card-abstract,.db-card-comment{font-size:14px;overflow: hidden;max-height:4rem;}
+.db-card-cate{position: absolute;top:0;right:0;background:#f99b01;padding:1px 8px;font-size:small;font-style:italic;border-radius:0 8px 0 8px;text-transform:capitalize;}
+.db-card-post img{margin:0;width: 96px!important;border-radius: 5px;-o-object-fit: cover;object-fit: cover;}
+.rating{margin: 0 0 5px;font-size:13px;line-height: 1;display: flex;align-items: center;}
+.rating .allstardark{position:relative;color: #f99b01;height: 16px;width: 80px;background-size: auto 100%;margin-right: 8px;background-repeat: repeat;background-image: url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MDguMSAzNTMuMWwtMjUzLjktMzYuOUw1NDAuNyA4Ni4xYy0zLjEtNi4zLTguMi0xMS40LTE0LjUtMTQuNS0xNS44LTcuOC0zNS0xLjMtNDIuOSAxNC41TDM2OS44IDMxNi4ybC0yNTMuOSAzNi45Yy03IDEtMTMuNCA0LjMtMTguMyA5LjMtMTIuMyAxMi43LTEyLjEgMzIuOS42IDQ1LjNsMTgzLjcgMTc5LjEtNDMuNCAyNTIuOWMtMS4yIDYuOS0uMSAxNC4xIDMuMiAyMC4zIDguMiAxNS42IDI3LjYgMjEuNyA0My4yIDEzLjRMNTEyIDc1NGwyMjcuMSAxMTkuNGM2LjIgMy4zIDEzLjQgNC40IDIwLjMgMy4yIDE3LjQtMyAyOS4xLTE5LjUgMjYuMS0zNi45bC00My40LTI1Mi45IDE4My43LTE3OS4xYzUtNC45IDguMy0xMS4zIDkuMy0xOC4zIDIuNy0xNy41LTkuNS0zMy43LTI3LTM2LjN6TTY2NC44IDU2MS42bDM2LjEgMjEwLjNMNTEyIDY3Mi43IDMyMy4xIDc3MmwzNi4xLTIxMC4zLTE1Mi44LTE0OUw0MTcuNiAzODIgNTEyIDE5MC43IDYwNi40IDM4MmwyMTEuMiAzMC43LTE1Mi44IDE0OC45eiIgZmlsbD0iI2Y5OWIwMSIvPjwvc3ZnPg==);
+}
+.rating .allstarlight{position: absolute;left: 0;color: #f99b01;height:16px;overflow: hidden;background-size: auto 100%;background-repeat: repeat;background-image: url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MDguMSAzNTMuMWwtMjUzLjktMzYuOUw1NDAuNyA4Ni4xYy0zLjEtNi4zLTguMi0xMS40LTE0LjUtMTQuNS0xNS44LTcuOC0zNS0xLjMtNDIuOSAxNC41TDM2OS44IDMxNi4ybC0yNTMuOSAzNi45Yy03IDEtMTMuNCA0LjMtMTguMyA5LjMtMTIuMyAxMi43LTEyLjEgMzIuOS42IDQ1LjNsMTgzLjcgMTc5LjEtNDMuNCAyNTIuOWMtMS4yIDYuOS0uMSAxNC4xIDMuMiAyMC4zIDguMiAxNS42IDI3LjYgMjEuNyA0My4yIDEzLjRMNTEyIDc1NGwyMjcuMSAxMTkuNGM2LjIgMy4zIDEzLjQgNC40IDIwLjMgMy4yIDE3LjQtMyAyOS4xLTE5LjUgMjYuMS0zNi45bC00My40LTI1Mi45IDE4My43LTE3OS4xYzUtNC45IDguMy0xMS4zIDkuMy0xOC4zIDIuNy0xNy41LTkuNS0zMy43LTI3LTM2LjN6IiBmaWxsPSIjZjk5YjAxIi8+PC9zdmc+);}
+@media (max-width:550px) {
+	.db-card{margin:0.8rem 1rem;}
+	.db-card-comment{display: none;}
+}
+
+```
+## 注意事项
+
+- 所给api可能不稳定，可能需要更换。
+- 也可以试试[本地缓存](https://blog.yandaojiang.com/posts/others/hugo_shortcodes%E7%A4%BA%E4%BE%8B/#%E8%B1%86%E7%93%A3%E6%9D%A1%E7%9B%AE)
+- 使用：{a(去掉a){< douban(shortcode_name) "https://book.douban.com/subject/35496106/">}}
+
+参考网址：
+
+- [文章内显示豆瓣条目](https://immmmm.com/post-show-douban-item/)
+- [Hugo 豆瓣短代码](https://immmmm.com/hugo-shortcodes-douban/)
+- [引入豆瓣（暂时没用）](https://www.sulvblog.cn/posts/blog/shortcodes/#5-%e5%bc%95%e5%85%a5%e8%b1%86%e7%93%a3%e9%98%85%e8%af%bb%e5%92%8c%e7%94%b5%e5%bd%b1%e5%8d%a1%e7%89%87)

@@ -1,21 +1,32 @@
 .main {
     padding-bottom: 4em;
 }
+
 // https://github.com/reuixiy/hugo-theme-meme/issues/357
 // https://github.com/reuixiy/io-oi.me/blob/master/assets/scss/custom/_custom.scss
-.nav {  // 导航栏字体变大
+.nav {
+    // 导航栏字体变大
     font-size: 1em;
     margin-top: 0.4em;
 }
+
 // 导航栏
 .menu-item {
     margin-left: 0.6em;
 }
+
 li.menu-item.search-item {
     margin-left: 1.2em;
 }
+
+// 首页 诗
+.home .poetry {
+    padding: 10em 1em;
+}
+
 // about页
-.try {   // io-oi.me
+.try {
+    // io-oi.me
     margin-top: 50px;
     text-align: center;
     font-family: 'Cinzel Decorative', serif !important;
@@ -25,6 +36,7 @@ li.menu-item.search-item {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 .colbie {
     text-align: center;
     font-family: 'Cinzel Decorative', serif !important;
@@ -40,7 +52,7 @@ li.menu-item.search-item {
     font-family: 'Amstelvar';
     font-display: swap;
     src: url('#{$baseRelURL}/fonts/Amstelvar-Italic-VF.woff2') format('woff2-variations'),
-         url('#{$baseRelURL}/fonts/Amstelvar-Italic-VF.woff2') format("woff2");
+    url('#{$baseRelURL}/fonts/Amstelvar-Italic-VF.woff2') format("woff2");
     font-weight: 100 900;
     font-stretch: 50% 125%;
     font-style: italic;
@@ -50,14 +62,14 @@ li.menu-item.search-item {
     font-family: 'Amstelvar';
     font-display: swap;
     src: url('#{$baseRelURL}/fonts/Amstelvar-Roman-VF.woff2') format('woff2-variations'),
-         url('#{$baseRelURL}/fonts/Amstelvar-Roman-VF.woff2') format('woff2');
+    url('#{$baseRelURL}/fonts/Amstelvar-Roman-VF.woff2') format('woff2');
     font-weight: 100 900;
     font-stretch: 50% 125%;
     font-style: normal;
 }
 
 body {
-    font-family: 'Amstelvar', 'Noto Serif SC',  serif;
+    font-family: 'Amstelvar', 'Noto Serif SC', serif;
 }
 
 :root {
@@ -91,9 +103,11 @@ blockquote.quote {
     padding-left: 3em;
     color: inherit;
     border: none;
+
     p {
         text-indent: 0 !important;
     }
+
     &::before {
         position: absolute;
         left: 0;
@@ -102,19 +116,24 @@ blockquote.quote {
         font-weight: bold;
         line-height: 1;
     }
+
     &.poetry {
         display: table;
         padding: 0;
+
         &::before {
             left: -1em;
         }
+
         p {
             margin: 0 0 1em;
         }
+
         p:last-child {
             margin: 0;
         }
     }
+
     &.en {
         p {
             line-height: 1.618;
@@ -124,6 +143,7 @@ blockquote.quote {
             -moz-hyphens: auto;
         }
     }
+
     &.italic {
         p {
             font-style: italic;
@@ -135,118 +155,122 @@ blockquote.quote {
     blockquote.quote {
         &.poetry {
             padding-left: 3em;
+
             &::before {
                 left: 0;
             }
         }
     }
 }
+
 // Aplayer
-:root[data-theme="light"]{
-    .aplayer-pic{
+:root[data-theme="light"] {
+    .aplayer-pic {
         background-color: #b7daff;
     }
 }
-:root[data-theme="dark"]{
+
+:root[data-theme="dark"] {
     .aplayer {
         background: #212121
     }
 
-     .aplayer.aplayer-withlist .aplayer-info {
+    .aplayer.aplayer-withlist .aplayer-info {
         border-bottom-color: #5c5c5c
     }
 
-     .aplayer.aplayer-fixed .aplayer-list {
+    .aplayer.aplayer-fixed .aplayer-list {
         border-color: #5c5c5c
     }
 
-     .aplayer .aplayer-body {
+    .aplayer .aplayer-body {
         background-color: #212121
     }
 
-     .aplayer .aplayer-info {
+    .aplayer .aplayer-info {
         border-top-color: #212121
     }
 
-     .aplayer .aplayer-info .aplayer-music .aplayer-title {
+    .aplayer .aplayer-info .aplayer-music .aplayer-title {
         color: #fff
     }
 
-     .aplayer .aplayer-info .aplayer-music .aplayer-author {
+    .aplayer .aplayer-info .aplayer-music .aplayer-author {
         color: #fff
     }
 
-     .aplayer .aplayer-info .aplayer-controller .aplayer-time {
+    .aplayer .aplayer-info .aplayer-controller .aplayer-time {
         color: #eee
     }
 
-     .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon path {
+    .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon path {
         fill: #eee
     }
 
-     .aplayer .aplayer-list {
+    .aplayer .aplayer-list {
         background-color: #212121
     }
 
-     .aplayer .aplayer-list::-webkit-scrollbar-thumb {
+    .aplayer .aplayer-list::-webkit-scrollbar-thumb {
         background-color: #999
     }
 
-     .aplayer .aplayer-list::-webkit-scrollbar-thumb:hover {
+    .aplayer .aplayer-list::-webkit-scrollbar-thumb:hover {
         background-color: #bbb
     }
 
-     .aplayer .aplayer-list li {
+    .aplayer .aplayer-list li {
         color: #fff;
         border-top-color: #666
     }
 
-     .aplayer .aplayer-list li:hover {
+    .aplayer .aplayer-list li:hover {
         background: #4e4e4e
     }
 
-     .aplayer .aplayer-list li.aplayer-list-light {
+    .aplayer .aplayer-list li.aplayer-list-light {
         background: #6c6c6c
     }
 
-     .aplayer .aplayer-list li .aplayer-list-index {
+    .aplayer .aplayer-list li .aplayer-list-index {
         color: #ddd
     }
 
-     .aplayer .aplayer-list li .aplayer-list-author {
+    .aplayer .aplayer-list li .aplayer-list-author {
         color: #ddd
     }
 
-     .aplayer .aplayer-lrc {
+    .aplayer .aplayer-lrc {
         text-shadow: -1px -1px 0 #666
     }
 
-     .aplayer .aplayer-lrc:before {
+    .aplayer .aplayer-lrc:before {
         background: -moz-linear-gradient(top, #212121 0%, rgba(33, 33, 33, 0) 100%);
         background: -webkit-linear-gradient(top, #212121 0%, rgba(33, 33, 33, 0) 100%);
         background: linear-gradient(to bottom, #212121 0%, rgba(33, 33, 33, 0) 100%);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#212121', endColorstr='#00212121', GradientType=0)
     }
 
-     .aplayer .aplayer-lrc:after {
+    .aplayer .aplayer-lrc:after {
         background: -moz-linear-gradient(top, rgba(33, 33, 33, 0) 0%, rgba(33, 33, 33, 0.8) 100%);
         background: -webkit-linear-gradient(top, rgba(33, 33, 33, 0) 0%, rgba(33, 33, 33, 0.8) 100%);
         background: linear-gradient(to bottom, rgba(33, 33, 33, 0) 0%, rgba(33, 33, 33, 0.8) 100%);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00212121', endColorstr='#cc212121', GradientType=0)
     }
 
-     .aplayer .aplayer-lrc p {
+    .aplayer .aplayer-lrc p {
         color: #fff
     }
 
-     .aplayer .aplayer-miniswitcher {
+    .aplayer .aplayer-miniswitcher {
         background: #484848
     }
 
-     .aplayer .aplayer-miniswitcher .aplayer-icon path {
+    .aplayer .aplayer-miniswitcher .aplayer-icon path {
         fill: #eee
     }
 }
+
 // right toc
 // https://yyqx.online/posts/%E5%8D%9A%E5%AE%A2%E4%BE%A7%E8%BE%B9%E5%AF%BC%E8%88%AA%E6%A0%8F/
 .post-toc {
@@ -275,16 +299,39 @@ blockquote.quote {
         }
     }
 }
+
 .toc-phone {
     display: None;
 }
+
 @media only screen and (max-width: 1224px) {
     .post-toc {
         display: none;
     }
+
     .toc-phone {
         display: flex;
         justify-content: center;
-        align-items:center;
+        align-items: center;
     }
-} 
+}
+
+// douban (api unstable)
+.db-card{background:#fafafa;border-radius: 5px;}
+.db-card-subject{display: flex;align-items:flex-start;line-height:1.6;padding:12px;position:relative;}
+.dark .db-card{background:#252627;}
+.db-card-content {flex:1 1 auto;}
+.db-card-post {width: 96px;margin-right: 15px;display: flex;flex: 0 0 auto;}
+.db-card-title {margin-bottom: 5px;font-size: 18px;}
+.db-card-title a{text-decoration: none!important}
+.db-card-abstract,.db-card-comment{font-size:14px;overflow: hidden;max-height:4rem;}
+.db-card-cate{position: absolute;top:0;right:0;background:#f99b01;padding:1px 8px;font-size:small;font-style:italic;border-radius:0 8px 0 8px;text-transform:capitalize;}
+.db-card-post img{margin:0;width: 96px!important;border-radius: 5px;-o-object-fit: cover;object-fit: cover;}
+.rating{margin: 0 0 5px;font-size:13px;line-height: 1;display: flex;align-items: center;}
+.rating .allstardark{position:relative;color: #f99b01;height: 16px;width: 80px;background-size: auto 100%;margin-right: 8px;background-repeat: repeat;background-image: url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MDguMSAzNTMuMWwtMjUzLjktMzYuOUw1NDAuNyA4Ni4xYy0zLjEtNi4zLTguMi0xMS40LTE0LjUtMTQuNS0xNS44LTcuOC0zNS0xLjMtNDIuOSAxNC41TDM2OS44IDMxNi4ybC0yNTMuOSAzNi45Yy03IDEtMTMuNCA0LjMtMTguMyA5LjMtMTIuMyAxMi43LTEyLjEgMzIuOS42IDQ1LjNsMTgzLjcgMTc5LjEtNDMuNCAyNTIuOWMtMS4yIDYuOS0uMSAxNC4xIDMuMiAyMC4zIDguMiAxNS42IDI3LjYgMjEuNyA0My4yIDEzLjRMNTEyIDc1NGwyMjcuMSAxMTkuNGM2LjIgMy4zIDEzLjQgNC40IDIwLjMgMy4yIDE3LjQtMyAyOS4xLTE5LjUgMjYuMS0zNi45bC00My40LTI1Mi45IDE4My43LTE3OS4xYzUtNC45IDguMy0xMS4zIDkuMy0xOC4zIDIuNy0xNy41LTkuNS0zMy43LTI3LTM2LjN6TTY2NC44IDU2MS42bDM2LjEgMjEwLjNMNTEyIDY3Mi43IDMyMy4xIDc3MmwzNi4xLTIxMC4zLTE1Mi44LTE0OUw0MTcuNiAzODIgNTEyIDE5MC43IDYwNi40IDM4MmwyMTEuMiAzMC43LTE1Mi44IDE0OC45eiIgZmlsbD0iI2Y5OWIwMSIvPjwvc3ZnPg==);
+}
+.rating .allstarlight{position: absolute;left: 0;color: #f99b01;height:16px;overflow: hidden;background-size: auto 100%;background-repeat: repeat;background-image: url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MDguMSAzNTMuMWwtMjUzLjktMzYuOUw1NDAuNyA4Ni4xYy0zLjEtNi4zLTguMi0xMS40LTE0LjUtMTQuNS0xNS44LTcuOC0zNS0xLjMtNDIuOSAxNC41TDM2OS44IDMxNi4ybC0yNTMuOSAzNi45Yy03IDEtMTMuNCA0LjMtMTguMyA5LjMtMTIuMyAxMi43LTEyLjEgMzIuOS42IDQ1LjNsMTgzLjcgMTc5LjEtNDMuNCAyNTIuOWMtMS4yIDYuOS0uMSAxNC4xIDMuMiAyMC4zIDguMiAxNS42IDI3LjYgMjEuNyA0My4yIDEzLjRMNTEyIDc1NGwyMjcuMSAxMTkuNGM2LjIgMy4zIDEzLjQgNC40IDIwLjMgMy4yIDE3LjQtMyAyOS4xLTE5LjUgMjYuMS0zNi45bC00My40LTI1Mi45IDE4My43LTE3OS4xYzUtNC45IDguMy0xMS4zIDkuMy0xOC4zIDIuNy0xNy41LTkuNS0zMy43LTI3LTM2LjN6IiBmaWxsPSIjZjk5YjAxIi8+PC9zdmc+);}
+@media (max-width:550px) {
+	.db-card{margin:0.8rem 1rem;}
+	.db-card-comment{display: none;}
+}
