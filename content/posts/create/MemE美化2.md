@@ -2,7 +2,7 @@
 title: MemE关键美化
 date: 2023-05-27 19:59:46 +0800
 lastmod: 
-summary: 运用snippet简化配置front-matter；运用action简化配置algolia上传；修改about页加入视频和音频；创建toc右边显示，定制为页面级显示；加入豆瓣条目；
+summary: 运用snippet简化配置front-matter；运用action简化配置algolia上传；修改about页加入视频和音频；创建toc右边显示，定制为页面级显示；加入豆瓣条目。
 slug: meme-custom-important
 toc: true
 rightToc: false
@@ -14,6 +14,11 @@ original: true
 author: Rurouni
 website: www.keepjolly.com
 ---
+## hugo坑
+- 使用shortcode时，无论放何处都会生效，必须取消shortcode格式，如：
+  - {a(加入a破坏shortcode){ music }}
+  - 目前已知问题:目录跳转无法生效
+
 ## 配置front matter
 使用[vscode snippet](https://code.visualstudio.com/docs/editor/userdefinedsnippets)快捷生成front matter
 参考博客：[vs-code-workflows-for-hugo](https://moonbooth.com/hugo/vs-code/#vs-code-workflows-for-hugo)、 [markdown-snippets-not-working-in-vscode](https://bingdoal.github.io/others/2021/12/markdown-snippets-not-working-in-vscode/)
@@ -207,7 +212,7 @@ videoHostURL = "https://gateway.pinata.cloud/ipfs/"  # 用于src属性，使其�
 
 2. 在about/_index.md中修改代码
 ```css
-{{< music url="xxx.mp3" 
+{a(去掉a){< music url="xxx.mp3" 
  name="Try" artist="Colbie Caillat" cover="../songs/Gypsy Heart song.jpg" lrc="xxx.lrc">}}
 ```
 
