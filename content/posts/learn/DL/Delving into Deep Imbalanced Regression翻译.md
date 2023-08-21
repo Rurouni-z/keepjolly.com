@@ -15,7 +15,7 @@ tags:
 因为halo渲染的原因，有些地方可能不对，请留言
 [作者解释](https://zhuanlan.zhihu.com/p/369627086)  and  [paper](https://arxiv.org/abs/2102.09554)
 
-[自己做的笔记](https://www.keepjolly.com/archives/dir-note)
+[自己做的笔记](https://keepjolly.com/archives/dir-note)
 <a name="U6BAc"></a>
 ## Abstract
 &emsp;&emsp;Real-world data often exhibit imbalanced distributions, where certain target values have significantly fewer observations. Existing techniques for dealing with imbalanced data focus on targets with categorical indices, i.e., different classes. However, many tasks involve continuous targets, where hard boundaries between classes do not exist. We define Deep Imbalanced Regression (DIR) as learning from such imbalanced data with continuous targets, dealing with potential missing data for certain target values, and generalizing to the entire target range. Motivated by the intrinsic difference between categorical and continuous label space, we propose distribution smoothing for both labels and features, which explicitly acknowledges the effects of nearby targets, and calibrates both label and learned feature distributions. We curate and benchmark large-scale DIR datasets from common real-world tasks in computer vision, natural language processing, and healthcare domains. Extensive experiments verify the superior performance of our strategies. Our work fills the gap in benchmarks and techniques for practical imbalanced regression problems. Code and data are available at: [https://github.com/YyzHarry/imbalanced-regression](https://github.com/YyzHarry/imbalanced-regression).  

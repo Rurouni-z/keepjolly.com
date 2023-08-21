@@ -23,7 +23,7 @@ You just have to get up, get up, get up, get up<br>
 
 ---
 
-虽然这个音乐是讲女人的，但是还是对其中的旋律十分喜欢，其中的歌词也曾让我在考研期间让我don't have to try so hard。
+好好学习，天天向上。
 
 评论系统已关闭，有问题欢迎提交[Issue](https://github.com/Rurouni-z/Rurouni-z.github.io/issues)
 
