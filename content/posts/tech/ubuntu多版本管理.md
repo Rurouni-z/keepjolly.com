@@ -98,10 +98,12 @@ make -j8 && sudo make install
 
 1. 删除原软链接
 > cd /usr/local
+> 
 > sudo unlink cuda
 
 1. 建立新链接
 > sudo ln -snf /usr/local/`..cuda-xx..` /usr/local/cuda
+> 
 > cuda-xx是文件夹名
 
 1. 查看当前版本

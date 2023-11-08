@@ -8,7 +8,7 @@ categories:
 tags: 
 - Python
 ---
-
+## 使用pathlib解决同名不同后缀(扩展名)的文件的转移
 ```python
 from pathlib import Path
 import shutil
@@ -43,8 +43,8 @@ for file_name in json_names & nii_names:  # 同名文件
 # https://www.cnblogs.com/lincappu/p/13496306.html
 # https://zhuanlan.zhihu.com/p/70127659
 # https://www.pythonheidong.com/blog/article/469303/424bc6bd1880effd30ba/
-
-
-
-
 ```
+
+## 使用ls
+
+ls 

@@ -16,10 +16,15 @@ website: www.keepjolly.com
 ---
 ## vscode配置
 [vscode编译多个cpp文件](https://blog.csdn.net/Yujian2563/article/details/124749727)
+
 将${file}更改为选中部分，使之编译所有cpp文件。注意：变更之后本工程内不能出现多个main函数！！
+
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+
 或者使用命令行：gcc  file1.cpp file2.cpp main.cpp -o myprogram
+
 或者使用cmake
+
 ```cmake
 #假设我们有三个源代码文件：
 
@@ -55,12 +60,19 @@ set(MY_HEADERS
 add_executable(myapp main.cpp)
 target_link_libraries(myapp mylib)
 ```
-# 项目功能
+## 项目功能
+
 服务端需要源源不断的读取一个本地h264视频文件，并将读取到的h264视频流封装到RTP数据包中，再推送至客户端。这样我们就实现了一个简单的支持RTSP协议流媒体分发服务。
-# RTP理解
+
+## RTP理解
 RTP:实时传输协议（Real-time Transport Protocol或简写RTP）是一个网络传输协议.
-RTP定义了两种报文：RTP报文和RTCP报文，RTP报文用于传送媒体数据（如音频和视频），它由 RTP报头和数据两部分组成，RTP数据部分称为有效载荷(payload)；RTCP报文用于传送控制信息，以实现协议控制功能。RTP报文和RTCP 报文将作为下层协议（TCP/UDP）的数据单元进行传输。如果使用UDP，则RTP报文和RTCP报文分别使用两个相邻的UDP端口，RTP报文使用**低端口**，RTCP报文使用**高端口**。如果使用其它的下层协议（TCP），RTP报文和RTCP报文可以合并，放在一个数据单元中一起传送，控制信息在前，媒体数据在后。通常，RTP是由应用程序实现的。
+
+RTP定义了两种报文：RTP报文和RTCP报文，RTP报文用于传送媒体数据（如音频和视频），它由 RTP报头和数据两部分组成，RTP数据部分称为有效载荷(payload)；
+
+RTCP报文用于传送控制信息，以实现协议控制功能。RTP报文和RTCP 报文将作为下层协议（TCP/UDP）的数据单元进行传输。如果使用UDP，则RTP报文和RTCP报文分别使用两个相邻的UDP端口，RTP报文使用**低端口**，RTCP报文使用**高端口**。如果使用其它的下层协议（TCP），RTP报文和RTCP报文可以合并，放在一个数据单元中一起传送，控制信息在前，媒体数据在后。通常，RTP是由应用程序实现的。
+
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+
 ```cpp
 // RTP头的结构体
  
@@ -101,6 +113,7 @@ struct RtpPacket
 };
 ```
 ## H264理解
+
 [链接](https://mp.weixin.qq.com/s/SJblG5lj8nzQweM1VnRTEA)
 
 - I帧(intraframe frame),关键帧。
@@ -112,12 +125,18 @@ struct RtpPacket
 
 **编码后数据，根据I帧P帧B帧的特性，在解码的过程是按I帧、P帧和B帧进行解码，文件播放还是按I帧、B帧和P帧顺序播放**
 IDR帧和I帧的关系：
+
 IDR(Instantannous Decoder Refresh) 解码器立即刷新
+
 作用：在解码的过程，一旦有一帧数据出现错误，将是无法恢复的过程，后面数据帧不能使用。当有了IDR帧，解码器收到IDR帧时，就会将缓冲区的数据清空，找到第一个IDR帧，重新解码。I和IDR帧都使用帧内预测，在编码解码中为了方便，首个I帧要和其他I帧区别开，**把第一个I帧叫IDR**，这样方便控制编码和解码流程。IDR帧必须是一个I帧，但是I帧不一定是IDR帧，这个帧出现的时候，是告诉解码器，可以清除掉所有的参考帧，这是一个全新的序列，新的GOP已经开始。I帧有被跨帧参考的可能,IDR不会。
+
 每个GOP中的第一帧就是IDR帧。 
+
 ## H264码流进行RTP封装
 [RTP封装](https://blog.csdn.net/jwybobo2007/article/details/7054140)
+
 **H.264由一个一个的NALU组成**，每个NALU之间使用**00 00 00 01**或**00 00 01**分隔开
+
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 1. F(forbiden):禁止位，占用NALU头的第一个位，当禁止位值为1时表示语法错误；
@@ -138,21 +157,37 @@ IDR(Instantannous Decoder Refresh) 解码器立即刷新
 2. 分片打包
 
 每个RTP包都有大小限制的，因为RTP一般都是使用UDP发送，UDP没有流量控制，所以要限制每一次发送的大小，所以如果一个NALU的太大，就需要分成多个RTP包发送，至于如何分成多个RTP包，如下：
+
 首先要明确，RTP包的格式是绝不会变的，永远都是RTP头+RTP载荷
+
 RTP头部是固定的，那么只能在**RTP载荷中去添加额外信息**来说明这个RTP包是表示同一个NALU
+
 如果是分片打包的话，那么在RTP载荷开始有**两个字节的信息**，然后再是NALU的内容
+
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+
 第一个字节**FU Indicator**，其格式如下
+
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+
 高三位：与NALU第一个字节的高三位相同
+
 Type：28，表示该RTP包一个分片，为什么是28？因为H.264的规范中定义的，此外还有许多其他Type，这里不详讲
+
 第二个字节**FU Header**，其格式如下
+
 ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+
 S：标记该分片打包的第一个RTP包
+
 E：比较该分片打包的最后一个RTP包
+
 Type：NALU的Type，不同与FU Indicator的type
+
 ## 代码
+
 **ffmpeg -i test.mp4 -codec copy -bsf: h264_mp4toannexb -f h264 test.h264 **生成h264文件
+
 ### rtp.h文件
 ```cpp
 #pragma once

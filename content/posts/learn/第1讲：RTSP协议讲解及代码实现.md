@@ -21,7 +21,9 @@ website: www.keepjolly.com
    - 三者的关系：rtsp并不会发送媒体数据，只是完成服务器和客户端之间的信令交互，rtp协议负责媒体数据传输，rtcp负责rtp数据包的监视和反馈。rtp和rtcp并没有规定传输层的类型，可以选择udp和tcp。Rtsp的传输层则要求是基于tcp。
 ## 准备工作
 ### 安装ffmepg
+
 因为已经装过了，所以这里[自行安装](https://www.google.com.hk/search?q=ffmpeg%E4%B8%8B%E8%BD%BDubuntu)。
+
 ### 安装wireshark
 
 1. sudo apt-get update
@@ -34,12 +36,19 @@ website: www.keepjolly.com
 6. [参考博客](https://blog.csdn.net/magiclyj/article/details/77231707)
 
 注意运行需要管理员运行，即sudo
+
 选择本地回环：loopback
+
 ![1.jpg](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210441.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+
 然后双击该行，进入监听
+
 随后运行程序即可，然后再开启一个终端（ctrl+alt+T），输入ffplay -i rtsp://127.0.0.1:8554
+
 然后wireshark就会出现
+
 ![2.jpg](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210441-1.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+
 ## RTSP相关选项
 
 - [options](https://blog.csdn.net/mlfcjob/article/details/109120103)请求，用于查询RTSP服务器支持的方法（如DESCRIBE、SETUP、PLAY等）。
@@ -359,4 +368,3 @@ int main(int argc, char* argv[])
       - ffmpeg -f dshow -i video="USB webcam" -vcodec libx264 -acodec aac -ar 44100 -ac 1 -r 25 -s 1920*1080 -f flv rtmp://192.168.1.3/live/desktop
    - **摄像头推流到RTSP（rtp over tcp）**
       - ffmpeg -f dshow -i video="FULL HD webcam" -rtsp_transport tcp -vcodec libx264 -preset ultrafast -acodec libmp3lame -ar 44100 -ac 1 -r 25 -f rtsp rtsp://192.168.0.1/webcam
-   - 
