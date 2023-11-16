@@ -28,12 +28,12 @@ C++缺点：
 
 1. 机器语言，汇编语言
 2. 编译型语言 C++，C
-   1. ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/03/20230326090137.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+   1. ![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 3. 解释型语言 Basic Python Java
 4. 脚本语言 bash csh
 - 逐级运行效率低，更易理解
 ### 数据类型
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/03/20230326090137-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 疑问，为什么64位三个字节对齐
 ### 常量
 定义常量的方法：
@@ -197,7 +197,7 @@ C++：string库（仍保留'\0'）、redis库（用多个结构体优化存储�
 - off-by-one error
    -  解决思路：先考虑简单特例，然后外推结果；仔细计算边界
    - 判断范围时采取左闭右开，使其相减为元素个数 for (int i =0; i<10; i++)
-   - ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/03/20230326090137-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+   - ![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 [数组的下标访问和指针访问方式效率分析](https://blog.csdn.net/caomiao2006/article/details/7401833)
 二维数组访问时的原则：尽可能满足空间局部性
@@ -354,7 +354,7 @@ char ch5 = ++*++cp; // 1.先cp地址+1, 2.得到其引用的值, 3.值+1, 4.赋�
 [delete and delete[]](https://www.iteye.com/blog/hzdiy-736816)、删除指针后并不会置为nullptr
 对于像 int/char/long/int*/struct 等等简单数据类型，由于对象没有 destructor，所以用 delete 和 delete [] 是一样的！但是如果是C++ 对象数组就不同了！
 ### 内存分配
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527212359.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://pic.keepjolly.com/halo/blog/2023/05/20230527212359.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 - stack：由程序分配地址
 - heap：由程序员分配地址 new/delete
@@ -700,11 +700,11 @@ private:
 	double _len;
 };
 ```
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/03/20230326090137-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 所以sizeof(s1) = 16 = 8+4+4
 ### 三大特性
 封装、继承、多态
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/03/20230326090137-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 ## 编程思想
 ### 单例模式
 ```cpp
@@ -903,7 +903,7 @@ cout << endl;
 ## Linux编程
 ### makefile
 [https://www.gnu.org/software/make/manual/](https://www.gnu.org/software/make/manual/)
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/03/20230326090137-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 - **Makefile基本规则**
 ```cpp
@@ -938,7 +938,7 @@ install:
 uninstall:
 	rm /usr/local/bin/mainTest
 ```
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/03/20230326090137-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 - **Makefile动态库**
 ```makefile
@@ -963,7 +963,7 @@ clean:
 
 - 自动变量和模式变量
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/03/20230326090137-7.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-7.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 ```makefile
 TARGET = main
 OBJS = test.o
@@ -986,6 +986,6 @@ clean:
 在qt项目下新建bat文件，输入qmake -tp vc 项目名.pro 即可生成sln文件
 ## 调试
 ### 汇编语言
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/03/20230326090137-8.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/03/20230326090137-9.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-8.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-9.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
  

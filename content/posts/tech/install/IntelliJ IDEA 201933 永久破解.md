@@ -25,36 +25,36 @@ tags:
 
 - 打开IDEA
 
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://pic.keepjolly.com/halo/blog/2023/05/20230527172117.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 - 重新启动IDEA：
 
 - 打开配置文件
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://pic.keepjolly.com/halo/blog/2023/05/20230527172117-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 在最后一行加入'**-javaagent:**'且后面再跟上你的破解补丁的位置，两者都要在同一行上；这里的路径千万别输错且不能有中文，否则以后会打不开IDEA，最好直接复制再加上文件名；改完后记得保存。
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://pic.keepjolly.com/halo/blog/2023/05/20230527172117-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://pic.keepjolly.com/halo/blog/2023/05/20230527172117-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
  
 
 - 自动破解
 
 重启完成后正常情况下就已经自动破解成功了，可以去下面的地方去看下结果。
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://pic.keepjolly.com/halo/blog/2023/05/20230527172117-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 
 
 
 - 手动破解：
 - - 进入idea激活界面
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://pic.keepjolly.com/halo/blog/2023/05/20230527172117-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 
 - - License server方式激活
 要使用License server激活就点击`License server`,下面的`Server address`中输入`http://fls.jetbrains-agent.com`，再点`Activate`，如出现下图的情况则激活成功。
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-7.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://pic.keepjolly.com/halo/blog/2023/05/20230527172117-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://pic.keepjolly.com/halo/blog/2023/05/20230527172117-7.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 - - **Activation code**
 
@@ -65,7 +65,7 @@ tags:
 
 
 再点Activate，如果出现如下图所示，则激活成功
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230527172117-8.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://pic.keepjolly.com/halo/blog/2023/05/20230527172117-8.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 
 我个人是在hosts文件里加上了

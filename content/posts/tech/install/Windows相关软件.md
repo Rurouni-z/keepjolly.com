@@ -17,7 +17,7 @@ tags:
 >  在同一台电脑上主要硬件（CPU和主板等）不变化的情况下，每次重新安装系统时无需再次输入密钥，系统会在自动连接到微软服务器进行激活。如果你在电脑登录了Microsoft帐户，那么数字许可证还会自动关联你的账户，即使你更换电脑，只要登录账户就可以激活相同版本的系统。
 
 那么，有没有一款能支持以数字许可证永久激活LTSC 2019，而且不捆绑恶意软件，不篡改浏览器主页或静默下载安装广告软件等不法行为的的系统激活工具？答案当然有，这款软件叫HEU KMS Activator！HEU KMS Activator的优势在于纯粹的本地搭建服务器几乎无需联网，同时不含有任何广告或后门程序不篡改系统设置等。该工具原理主要是在本地搭建KMS服务器通过GVLK密钥激活。
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/windows/1649071057800-418776ec-22e9-4fe9-8a6d-774a49de3898.png)
+![image.png](https://pic.keepjolly.com/halo/blog/windows/1649071057800-418776ec-22e9-4fe9-8a6d-774a49de3898.png)
 这款激活软件之前颇有名气，其作者“知彼而知己”近期已更新到v20版本，这次更新采用了全新的UI设计，告别繁琐的操作，主页面的“橘黄色按钮”为智能激活按钮，将根据当前的Windows系统和Office，智能判断最佳的激活方式。诸如以下的问题，根本无需担心，只需一键按照激活按钮，HEU KMS Activator将自动提供最佳的解决方案——
 _已永久激活的Windows或Office会不会破坏？_
 _安装了多个版本的Office怎么激活？_
@@ -30,7 +30,7 @@ HEU KMS Activator支持激活**Windows Vista/7/8/10/Server 2008/2008R2**等微�
 
 ---
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/windows/1649071057818-df2a8857-5ec9-4e0b-ac4d-5871d866c2e7.png)
+![image.png](https://pic.keepjolly.com/halo/blog/windows/1649071057818-df2a8857-5ec9-4e0b-ac4d-5871d866c2e7.png)
 亲测使用HEU KMS Activator，以数字许可证方式成功永久激活LTSC 2019
 
 ---

@@ -5,7 +5,7 @@ title: "About"
 toc: false
 ---
 
-{{< music url="https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/music/Colbie%20Caillat%20-%20Try.mp3" 
+{{< music url="https://pic.keepjolly.com/halo/music/Colbie%20Caillat%20-%20Try.mp3" 
  name="Try" artist="Colbie Caillat" cover="../songs/Gypsy Heart song.jpg" lrc="../songs/Try - Colbie Caillat.lrc">}}
 <!-- <video src="QmTz7jzWdGrTVKT7YwNwX9cEgfg4smNFHVxnaFDR82BrXt" poster="../songs/Gypsy Heart video.jpg" controls >
 如需下载：<a href="https://gateway.pinata.cloud/ipfs/QmTz7jzWdGrTVKT7YwNwX9cEgfg4smNFHVxnaFDR82BrXt">MP4</a>

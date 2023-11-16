@@ -87,8 +87,8 @@ def nextGreatestLetter(self, letters: List[str], target: str) -> str:
 假设现在有一个线性数组A,为了便于理解A的范围从1--8。
 并构造一个数组C，范围也是1--8
 接下来将C构造为那么一个树结构：
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/leetcode/1649161994149-226aa556-cf96-4b39-9afb-09b4bead3311.png)
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/leetcode/1649162012125-38b98bb6-d4c2-4a42-8db2-947a33982cfb.png)
+![image.png](https://pic.keepjolly.com/halo/blog/leetcode/1649161994149-226aa556-cf96-4b39-9afb-09b4bead3311.png)
+![image.png](https://pic.keepjolly.com/halo/blog/leetcode/1649162012125-38b98bb6-d4c2-4a42-8db2-947a33982cfb.png)
 观察这棵树结构，可以发现叶子结点的二进制的最后一位为1。接下来的结点为倒数第二位为1....
 现在，我们对这棵树结构赋予其涵义：
 > 二进制

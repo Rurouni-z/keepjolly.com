@@ -27,7 +27,7 @@ tags:
 Second, YOLO reasons globally about the image when making predictions. Unlike sliding window and region proposal-based techniques, YOLO sees the entire image.
 Third, YOLO learns generalizable representations of objects. When trained on natural images and tested on art- work, YOLO outperforms top detection methods like DPM and R-CNN by a wide margin.
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653536968541-23b5ea20-24dc-4fe6-ad35-f550474f62b2.png?imageMogr2/format/webp)
+![image.png](https://pic.keepjolly.com/halo/blog/yolov1/1653536968541-23b5ea20-24dc-4fe6-ad35-f550474f62b2.png?imageMogr2/format/webp)
  Our system models detection as a regression problem. It divides the image into an S × S grid and for each grid cell predicts B bounding boxes, confidence for those boxes, and C class probabilities. These predictions are encoded as an S × S × (B ∗ 5 + C) tensor.  
 实现方案：[Link](https://www.jianshu.com/p/cad68ca85e27)，大致下面这个区域，因为都是原文摘抄，所以不全部复制了。
 > **1）结构**
@@ -64,9 +64,9 @@ which gives us class-specific confidence scores for each box. These scores encod
 最后在PASCAL VOC中 S=7，B=2，C=20，最终输出为7×7×30的标量（30=(4+1)*2+20, 4是xywh，1是置信度，2是bbox个数，20类别数）
 ## 损失函数
 图片来源：[Link](https://www.cnblogs.com/yifanrensheng/p/12871235.html#_label4_1)
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653446878220-7d2da09d-efaa-4f2f-8bcf-30e14fdc5bfb.png?imageMogr2/format/webp)
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653546402345-b302bc1a-36f6-439c-ac36-8f3e4e24b882.png?imageMogr2/format/webp)
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653447175456-063291b7-cbdc-47b6-b461-90e3d88d7593.png?imageMogr2/format/webp)
+![image.png](https://pic.keepjolly.com/halo/blog/yolov1/1653446878220-7d2da09d-efaa-4f2f-8bcf-30e14fdc5bfb.png?imageMogr2/format/webp)
+![image.png](https://pic.keepjolly.com/halo/blog/yolov1/1653546402345-b302bc1a-36f6-439c-ac36-8f3e4e24b882.png?imageMogr2/format/webp)
+![image.png](https://pic.keepjolly.com/halo/blog/yolov1/1653447175456-063291b7-cbdc-47b6-b461-90e3d88d7593.png?imageMogr2/format/webp)
 $1_{ij}^{obj}$表示第i个网格中的第j个bbox有对象
 $1_{ij}^{noobj}$表示第i个网格中的第j个bbox无对象
 
@@ -81,7 +81,7 @@ $1_{ij}^{noobj}$表示第i个网格中的第j个bbox无对象
 - 第五行是网格包含物体时的物体类别概率。
 ## 训练过程和推理interference过程
 ### train
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653550530915-bf70a1d9-4f2c-4c8f-b0c5-530cc486582f.png?imageMogr2/format/webp)
+![image.png](https://pic.keepjolly.com/halo/blog/yolov1/1653550530915-bf70a1d9-4f2c-4c8f-b0c5-530cc486582f.png?imageMogr2/format/webp)
 作者采用ImageNet 1000-class 数据集来预训练卷积层。预训练阶段，采用上图网络中的前20卷积层（包括池化层），外加average-pooling 层和全连接层。然后，将模型转换为检测模型使用DarkNet架构并用于interference阶段。作者向预训练模型中加入了4个卷积层和两层全连接层，提高了模型输入分辨率（224×224->448×448）。最后一层预测类别概率和bounding box坐标值。bounding box的宽和高通过输入图像宽和高归一化到0-1区间。最后一层采用linear activation，其它层使用 leaky rectified linear。作者采用sum-squared error为目标函数来优化，增加bounding box loss权重，减少置信度权重，实验中，设定为$λ_{coord} =5$,$λ_{noobj} = .5$。
 作者还采用了dropout和 data augmentation来预防过拟合。dropout值为0.5；data augmentation包括：random scaling，translation，adjust exposure和saturation。
 ### inference
@@ -93,7 +93,7 @@ $1_{ij}^{noobj}$表示第i个网格中的第j个bbox无对象
 1. YOLO是从数据中学习预测bounding boxes，因此，对新的或者不常见角度的目标无法识别。
 1. YOLO的loss函数对small bounding boxes和large bounding boxes的error平等对待，影响了模型识别准确率。因为对于小的bounding boxes，small error影响更大。主要识别错误来源是不正确的定位框。
 ### 错误分析
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/yolov1/1653554508484-c0c71686-f569-4709-91cf-76565620cda4.png?imageMogr2/format/webp)
+![image.png](https://pic.keepjolly.com/halo/blog/yolov1/1653554508484-c0c71686-f569-4709-91cf-76565620cda4.png?imageMogr2/format/webp)
 预测结果包括以下几类：
 正确：类别正确，IOU>0.5
 定位：类别正确，0.1<IOU<0.5

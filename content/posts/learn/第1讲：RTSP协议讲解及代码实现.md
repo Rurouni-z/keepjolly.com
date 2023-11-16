@@ -39,7 +39,7 @@ website: www.keepjolly.com
 
 选择本地回环：loopback
 
-![1.jpg](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210441.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![1.jpg](https://pic.keepjolly.com/halo/blog/2023/05/20230526210441.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 然后双击该行，进入监听
 
@@ -47,12 +47,12 @@ website: www.keepjolly.com
 
 然后wireshark就会出现
 
-![2.jpg](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210441-1.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![2.jpg](https://pic.keepjolly.com/halo/blog/2023/05/20230526210441-1.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 ## RTSP相关选项
 
 - [options](https://blog.csdn.net/mlfcjob/article/details/109120103)请求，用于查询RTSP服务器支持的方法（如DESCRIBE、SETUP、PLAY等）。
-   - ![3.jpg](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210441-2.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+   - ![3.jpg](https://pic.keepjolly.com/halo/blog/2023/05/20230526210441-2.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 - [DESCRIBE](https://blog.csdn.net/mlfcjob/article/details/109120169)请求，用于获取有关流媒体的信息，例如它的编码格式、分辨率、码率等。（[sdp](https://blog.csdn.net/uianster/article/details/125902301)）
 - [SETUP](https://blog.csdn.net/mlfcjob/article/details/109120217)请求，作用是指明媒体流该以什么方式传输；每个流PLAY之前必须执行SETUP操作；发送SETUP请求时，客户端会指定两个端口，一个端口用于接收RTP数据；另一个端口接收RTCP数据，偶数端口用来接收RTP数据，相邻的奇数端口用于接收RTCP数据！
 - [PLAY](https://blog.csdn.net/mlfcjob/article/details/109336283)请求，发送播放请求的时候可以指定播放区间！发起播放请求后，如果连接正常，则服务端开始播放，即开始向客户端按照之前在TRASPORT中约定好的方式发送音视频数据包！播放流程便这样开始了

@@ -19,7 +19,7 @@ website: www.keepjolly.com
 
 将${file}更改为选中部分，使之编译所有cpp文件。注意：变更之后本工程内不能出现多个main函数！！
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210444.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 或者使用命令行：gcc  file1.cpp file2.cpp main.cpp -o myprogram
 
@@ -71,7 +71,7 @@ RTP定义了两种报文：RTP报文和RTCP报文，RTP报文用于传送媒体�
 
 RTCP报文用于传送控制信息，以实现协议控制功能。RTP报文和RTCP 报文将作为下层协议（TCP/UDP）的数据单元进行传输。如果使用UDP，则RTP报文和RTCP报文分别使用两个相邻的UDP端口，RTP报文使用**低端口**，RTCP报文使用**高端口**。如果使用其它的下层协议（TCP），RTP报文和RTCP报文可以合并，放在一个数据单元中一起传送，控制信息在前，媒体数据在后。通常，RTP是由应用程序实现的。
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210444-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 ```cpp
 // RTP头的结构体
@@ -137,12 +137,12 @@ IDR(Instantannous Decoder Refresh) 解码器立即刷新
 
 **H.264由一个一个的NALU组成**，每个NALU之间使用**00 00 00 01**或**00 00 01**分隔开
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210444-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 1. F(forbiden):禁止位，占用NALU头的第一个位，当禁止位值为1时表示语法错误；
 2. NRI:参考级别，占用NALU头的第二到第三个位；值越大，该NAL越重要。
 3. Type:Nalu数据类型，也就是标识该NALu的数据类型是哪种，占用NALU头的第4到第8个位；
-- ![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+- ![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210444-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 - [图片来源](https://blog.csdn.net/qq_29350001/article/details/78226286#t0)
 - 0x61 (0 11 00001) I帧 type = 1
 - 0x41 (0 10 00001) P帧 type = 1
@@ -164,11 +164,11 @@ RTP头部是固定的，那么只能在**RTP载荷中去添加额外信息**来�
 
 如果是分片打包的话，那么在RTP载荷开始有**两个字节的信息**，然后再是NALU的内容
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210444-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 第一个字节**FU Indicator**，其格式如下
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210444-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 高三位：与NALU第一个字节的高三位相同
 
@@ -176,7 +176,7 @@ Type：28，表示该RTP包一个分片，为什么是28？因为H.264的规范�
 
 第二个字节**FU Header**，其格式如下
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/05/20230526210444-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210444-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 S：标记该分片打包的第一个RTP包
 

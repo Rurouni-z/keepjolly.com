@@ -29,7 +29,7 @@ tags:
 &emsp;&emsp;Existing solutions for learning from imbalanced data, however, focus on targets with categorical indices, i.e., the targets are different classes. However, many real-world tasks involve continuous and even infinite target values. For example, in vision applications, one needs to infer the age of different people based on their visual appearances, where age is a continuous target and can be highly imbalanced. Treating different ages as distinct classes is unlikely to yield the best results because it does not take advantage of the similarity between people with nearby ages. Similar issues happen in medical applications since many health metrics including heart rate, blood pressure, and oxygen saturation, are continuous and often have skewed distributions across patient populations.  
 &emsp;&emsp;然而，现有从不平衡数据中学习的方案侧重于带分类索引的目标，如目标是不同的类别（有多个目标还是目标有多个label值？应该是每个目标都标出了独立类别）。但，许多现实任务涉及连续且无限的目标值。如，在视觉应用中，需要根据他们的外貌来推断他们的年龄，其中年龄是连续值并且可能高度不平衡。把不同年龄视为独立类别不太可能产生最佳结果，因为它没有利用年龄相近的人的相似性。类似的问题也发生在医疗应用中，因为包括心率、血压和血氧饱和度在内的许多健康指标是连续的，并且在患者群体中通常是偏态分布。
 
-![alt](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758.png "Figure 1. Deep Imbalanced Regression (DIR) aims to learn from imbalanced data with continuous targets, tackle potential missing data for certain regions, and generalize to the entire target range.图一   DIR旨在从带连续目标的不平衡数据中学习，解决某些区域的潜在缺失数据并泛化到整个目标范围")
+![alt](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758.png "Figure 1. Deep Imbalanced Regression (DIR) aims to learn from imbalanced data with continuous targets, tackle potential missing data for certain regions, and generalize to the entire target range.图一   DIR旨在从带连续目标的不平衡数据中学习，解决某些区域的潜在缺失数据并泛化到整个目标范围")
 <style type="text/css" rel="stylesheet">
 figure {  
  font-size: 13px;
@@ -76,7 +76,7 @@ Our contributions are as follows:
 <a name="jWbVx"></a>
 ### Label Distribution Smoothing 
 &emsp;&emsp;We start by showing an example to demonstrate the difference between classification and regression when imbalance comes into the picture.  
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-1.png "Figure 2. Comparison on the test error distribution (bottom) using same training label distribution (top) on two different datasets: (a) CIFAR-100, a classification task with categorical label space. (b) IMDB-WIKI, a regression task with continuous label space.图二。在两个不同的数据集上使用相同的训练标签分布来比较测试error分布(bottom)：(a)CIFAR-100，具有分类的标签空间的分类任务。(b)IMDB-WIKI，具有连续标签空间的回归任务")
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-1.png "Figure 2. Comparison on the test error distribution (bottom) using same training label distribution (top) on two different datasets: (a) CIFAR-100, a classification task with categorical label space. (b) IMDB-WIKI, a regression task with continuous label space.图二。在两个不同的数据集上使用相同的训练标签分布来比较测试error分布(bottom)：(a)CIFAR-100，具有分类的标签空间的分类任务。(b)IMDB-WIKI，具有连续标签空间的回归任务")
 <figure>Figure 2. Comparison on the test error distribution (bottom) using same training label distribution (top) on two different datasets: (a) CIFAR-100, a classification task with categorical label space. (b) IMDB-WIKI, a regression task with continuous label space.
   
 图二。在两个不同的数据集上使用相同的训练标签分布来比较测试error分布(bottom)：(a)CIFAR-100，具有分类的标签空间的分类任务。(b)IMDB-WIKI，具有连续标签空间的回归任务</figure>
@@ -100,7 +100,7 @@ Our contributions are as follows:
 $$\tilde{p}\left(y^{\prime}\right) \triangleq \int_{\mathcal{Y}} \mathrm{k}\left(y, y^{\prime}\right) p(y) d y	\qquad(1) $$
 where $p(y)$ is the number of appearances of label of y in the training data, and $\tilde{p}(y^{\prime} )$ is the effective density of label$y^{\prime}$.
 其中p(y)是在训练数据中y标签的出现次数，并且 $\tilde{p}(y^{\prime} )$ 是标签y'的有效密度
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-2.png "Figure 3.  Label distribution smoothing (LDS) convolves a symmetric kernel with the empirical label density to estimate the effective label density distribution that accounts for the continuity of labels.                图3.标签分布平滑LDS，将对称核与经验标签密度进行卷积，以估计说明标签连续性的有效的标签密度分布。")
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-2.png "Figure 3.  Label distribution smoothing (LDS) convolves a symmetric kernel with the empirical label density to estimate the effective label density distribution that accounts for the continuity of labels.                图3.标签分布平滑LDS，将对称核与经验标签密度进行卷积，以估计说明标签连续性的有效的标签密度分布。")
 <figure>Figure 3.  Label distribution smoothing (LDS) convolves a symmetric kernel with the empirical label density to estimate the effective label density distribution that accounts for the continuity of labels.                
   图3.标签分布平滑LDS，将对称核与经验标签密度进行卷积，以估计说明标签连续性的有效的标签密度分布。</figure>
   
@@ -117,7 +117,7 @@ where $p(y)$ is the number of appearances of label of y in the training data, an
 &emsp;&emsp;**Motivating Example.** We use an illustrative example to highlight the impact of data imbalance on feature statistics in DIR. Again, we use a plain model trained on the images in the IMDB-WIKI dataset to infer a person's age from visual appearance. We focus on the learned feature space, i.e., $\mathbf{z}$. We use a minimum bin size of 1, i.e., $y_b+1 − y_b = 1$, and group features with the same target value in the same bin. We then compute the feature statistics (i.e., mean and variance) with respect to the data in each bin, which we denote as $\left\{\boldsymbol{\mu}_{b}, \boldsymbol{\sigma}_{b}\right\}_{b=1}^{B}$. To visualize the similarity between feature statistics, we select an anchor bin $b_0$, and calculate the cosine similarity of the feature statistics between $b_0$ and all other bins. The results are summarized in Fig. 4 for $b_0 = 30$. The figure also shows the regions with different data densities using the colors purple, yellow, and pink. 
 &emsp;&emsp;激励的例子。我们使用一个说明性的例子来强调数据不平衡在DIR中的特征statistics的影响。再一次，我们使用一个在IMDB-WIKI数据集内的图片训练的空白模型来从外貌推断年龄。我们侧重学习到的特征空间，即z。我们使用最小bin的大小为1，即$y_b+1 − y_b = 1$，并将具有相同目标值的特征组放在相同bin中。然后计算每个bin中的数据的特征统计数据（即均值和方差），将其表示为$\left\{\boldsymbol{\mu}_{b}, \boldsymbol{\sigma}_{b}\right\}_{b=1}^{B}$。为了可视化特征统计数据之间的相似性，我们选择一个anchor bin $b_0$，并计算$b_0$与所有其他bins的特征统计的余弦相似度。在图4总结了结果。该图还使用紫色、黄色和粉红色显示了具有不同数据密度的区域。
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-3.png "Figure 4. Feature statistics similarity for age 30. Top: Cosine similarity of the feature mean at a particular age w.r.t. its value at the anchor age. Bottom: Cosine similarity of the feature variance at a particular age w.r.t. its value at the anchor age. The color of the background refers to the data density in a particular target range. The figure shows that nearby ages have close similarities; However, it also shows that there is unjustified similarity between images at ages 0 to 6 and age 30, due to data imbalance.图4. 30岁的特征统计值的相似度。上图：在特定年龄的特征均值相对于anchor年龄值的余弦相似度。下图：特定年龄的特征方差相对于anchor年龄的余弦相似度。背景颜色是指特定目标范围的数据密度。图片表明临近年龄有近似的相似度；但，它也表明在0-6岁/30岁的图片间有不合理的相似度，因为数据不平衡")
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-3.png "Figure 4. Feature statistics similarity for age 30. Top: Cosine similarity of the feature mean at a particular age w.r.t. its value at the anchor age. Bottom: Cosine similarity of the feature variance at a particular age w.r.t. its value at the anchor age. The color of the background refers to the data density in a particular target range. The figure shows that nearby ages have close similarities; However, it also shows that there is unjustified similarity between images at ages 0 to 6 and age 30, due to data imbalance.图4. 30岁的特征统计值的相似度。上图：在特定年龄的特征均值相对于anchor年龄值的余弦相似度。下图：特定年龄的特征方差相对于anchor年龄的余弦相似度。背景颜色是指特定目标范围的数据密度。图片表明临近年龄有近似的相似度；但，它也表明在0-6岁/30岁的图片间有不合理的相似度，因为数据不平衡")
 <figure>Figure 4. Feature statistics similarity for age 30. Top: Cosine similarity of the feature mean at a particular age w.r.t. its value at the anchor age. Bottom: Cosine similarity of the feature variance at a particular age w.r.t. its value at the anchor age. The color of the background refers to the data density in a particular target range. The figure shows that nearby ages have close similarities; However, it also shows that there is unjustified similarity between images at ages 0 to 6 and age 30, due to data imbalance.
  
 图4. 30岁的特征统计值的相似度。上图：在特定年龄的特征均值相对于anchor年龄值的余弦相似度。下图：特定年龄的特征方差相对于anchor年龄的余弦相似度。背景颜色是指特定目标范围的数据密度。图片表明临近年龄有近似的相似度；但，它也表明在0-6岁/30岁的图片间有不合理的相似度，因为数据不平衡</figure>
@@ -145,7 +145,7 @@ $$\tilde{\mathbf{z}}=\tilde{\boldsymbol{\Sigma}}_{b}^{\frac{1}{2}} \boldsymbol{\
 &emsp;&emsp;We note that FDS can be integrated with any neural network model, as well as any past work on improving label imbalance. In Sec. 4, we integrate FDS with a variety of prior techniques for addressing data imbalance, and demonstrate that it consistently improves performance.
 &emsp;&emsp;我们注意到FDS可以整合到任何神经网络模型内，以及任何过去改善标签不平衡的工作。在Sec.4，我们将FDS与一系列解决数据不平衡的现有技术结合，并证明它能不断地提高性能
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-4.png "Figure 6. Overview of training set label distribution for five DIR datasets. They range from single-value prediction such as age, textual similarity score, and health condition score, to dense-value prediction such as depth estimation. More details are provided in Appendix B.图6。五个 DIR 数据集的训练集标签分布概述。 它们的范围从单值预测（例如年龄、文本相似度得分和健康状况得分）到密集值预测（例如深度估计）。 附录 B 中提供了更多详细信息。")
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-4.png "Figure 6. Overview of training set label distribution for five DIR datasets. They range from single-value prediction such as age, textual similarity score, and health condition score, to dense-value prediction such as depth estimation. More details are provided in Appendix B.图6。五个 DIR 数据集的训练集标签分布概述。 它们的范围从单值预测（例如年龄、文本相似度得分和健康状况得分）到密集值预测（例如深度估计）。 附录 B 中提供了更多详细信息。")
 <figure>Figure 6. Overview of training set label distribution for five DIR datasets. They range from single-value prediction such as age, textual similarity score, and health condition score, to dense-value prediction such as depth estimation. More details are provided in Appendix B.
 
 图6。五个 DIR 数据集的训练集标签分布概述。 它们的范围从单值预测（例如年龄、文本相似度得分和健康状况得分）到密集值预测（例如深度估计）。 附录 B 中提供了更多详细信息。</figure>
@@ -189,23 +189,23 @@ $$\tilde{\mathbf{z}}=\tilde{\boldsymbol{\Sigma}}_{b}^{\frac{1}{2}} \boldsymbol{\
 <a name="qCLS0"></a>
 ### Main Results 
 &emsp;&emsp;We report the main results in this section for all DIR datasets. All training details, hyper-parameter settings, and additional results are provided in Appendix C and D. 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-5.png)
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-6.png)
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-5.png)
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-6.png)
 **Inferring Age from Images: IMDB-WIKI-DIR & AgeDB-DIR.** We report the performance of different methods in Table 1 and 2, respectively. For each dataset, we group the baselines into four sections to reflect their different strategies. First, as both tables indicate, when applied to modern high-dimensional data like images, SMOTER and SMOGN can actually degrade the performance in comparison to the vanilla model. Moreover, within each group, adding either LDS, FDS, or both leads to performance gains, while LDS + FDS often achieves the best results. Finally, when compared to the vanilla model, using our LDS and FDS maintains or slightly improves the performance overall and on the many-shot regions, while substantially boosting the performance for the medium-shot and few-shot regions.
 &emsp;&emsp;从图像推断年龄：IMDB-WIKI-DIR 和 AgeDB-DIR。 我们分别在表 1 和表 2 中报告了不同方法的性能。 对于每个数据集，我们将基线分为四个部分以反映它们的不同策略。 首先，如两个表所示，当应用于现代的高维数据（如图像）时，与普通模型相比，SMOTER 和 SMOGN 实际上会降低性能。 此外，在每个组中，添加 LDS、FDS 或两者都会导致性能提升，而 LDS + FDS 通常会获得最佳结果。 最后，与普通模型相比，使用我们的 LDS 和 FDS 保持或略微提高了整体和many-shot区域的性能，同时显著提高了medium-和few-shot 区域的性能。 
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-7.png)
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-7.png)
 &emsp;&emsp;**Inferring Text Similarity Score: STS-B-DIR.** Table 3 shows the results, where similar observations can be made on STS-B-DIR. Again, both SMOTER and SMOGN perform worse than the vanilla model. In contrast, both LDS and FDS consistently and substantially improve the results for various methods, especially in medium- and few-shot regions. The advantage is even more profound under Pearson correlation, which is commonly used for this NLP task. 
 &emsp;&emsp;推断文本相似度得分：STS-B-DIR。 表 3 展示了结果，其中可以对 STS-B-DIR 进行类似的观察。 同样，SMOTER 和 SMOGN 的表现都比vanilla模型差。 相比之下，LDS 和 FDS 都改善了各种方法的结果，尤其是在中等和少样本区域。 在NLP 任务常用的Pearson相关性下，优势更加显著。
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-8.png)
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-8.png)
 &emsp;&emsp;**Inferring Depth: NYUD2-DIR.** For NYUD2-DIR, which is a dense regression task, we verify from Table 4 that adding LDS and FDS significantly improves the results. We note that the vanilla model can inevitably overfit to the manyshot regions during training. FDS and LDS help alleviate this effect, and generalize better to all regions, with minor degradation in the many-shot region but significant boosts for other regions. 
 &emsp;&emsp;推断深度：NYUD2-DIR。 对于密集回归任务 NYUD2-DIR，我们从表 4 中验证了添加 LDS 和 FDS 可以显著改善结果。 我们注意到，vanilla 模型在训练期间不可避免地会过度拟合到manyshot区域。 FDS 和 LDS 有助于减轻这种影响，并更好地泛化到所有区域，在manyshot区域有轻微的退化，但在其他区域有显著提升。
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-9.png)
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-9.png)
 &emsp;&emsp;**Inferring Health Score: SHHS-DIR.** Table 5 reports the results on SHHS-DIR. Since SMOTER and SMOGN are not directly applicable to this medical data, we skip them for  this dataset. The results again confirm the effectiveness of both FDS and LDS when applied for real-world imbalanced regression tasks, where by combining FDS and LDS we often get the highest gains over all tested regions. 
 &emsp;&emsp;推断健康评分：SHHS-DIR。 表 5 说明了 SHHS-DIR 的结果。 由于 SMOTER 和 SMOGN 并不直接适用于该医学数据，因此我们在此数据集中跳过它们。 结果再次证实了 FDS 和 LDS 在应用于现实世界的不平衡回归任务时的有效性，通过结合 FDS 和 LDS，我们通常在所有测试区域中获得最高收益。
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-10.png "Figure 7. The absolute MAE gains of LDS + FDS over the vanilla model, on a curated subset of IMDB-WIKI-DIR with certain target values having no training data. We establish notable performance gains w.r.t. all regions, especially for extrapolation & interpolation.图 7. LDS + FDS 在vanilla模型上的绝对 MAE 增益，在 IMDB-WIKI-DIR 的精选子集上，其中某些目标值没有训练数据。 在所有区域有着显著的性能提升，特别是对于外插和内插。")
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-10.png "Figure 7. The absolute MAE gains of LDS + FDS over the vanilla model, on a curated subset of IMDB-WIKI-DIR with certain target values having no training data. We establish notable performance gains w.r.t. all regions, especially for extrapolation & interpolation.图 7. LDS + FDS 在vanilla模型上的绝对 MAE 增益，在 IMDB-WIKI-DIR 的精选子集上，其中某些目标值没有训练数据。 在所有区域有着显著的性能提升，特别是对于外插和内插。")
 <figure>Figure 7. The absolute MAE gains of LDS + FDS over the vanilla model, on a curated subset of IMDB-WIKI-DIR with certain target values having no training data. We establish notable performance gains w.r.t. all regions, especially for extrapolation & interpolation.
 
   图 7. LDS + FDS 在vanilla模型上的绝对 MAE 增益，在 IMDB-WIKI-DIR 的精选子集上，其中某些目标值没有训练数据。 在所有区域有着显著的性能提升，特别是对于外插和内插。</figure>
@@ -214,14 +214,14 @@ $$\tilde{\mathbf{z}}=\tilde{\boldsymbol{\Sigma}}_{b}^{\frac{1}{2}} \boldsymbol{\
 ### Further Analysis 
 &emsp;&emsp;**Extrapolation & Interpolation.** In real-world DIR tasks, certain target values can have no data at all (e.g., see SHHSDIR and STS-B-DIR in Fig. 6). This motivates the need for target extrapolation and interpolation. We curate a subset from the training set of IMDB-WIKI-DIR, which has no  training data in certain regions (Fig. 7), but evaluate on the original testset for zero-shot generalization analysis. 
 &emsp;&emsp;外插和内插。在现实世界的DIR任务中，某些目标值没有数据（看图6的SHHSDIR和SRS-B-DIR）。这激发对目标外插和内插的需求。我们挑选了IMDB-WIKI训练集中的一个子集，该子集在某些区域没有训练数据（图7）进行训练，但在原始测试集上评估来进行零样本泛化分析。
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-11.png)
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-11.png)
 As Table 6 shows, compared to the vanilla model, LDS and FDS can both improve the results not only on regions that have data, but also achieve larger gains on those without data. Specifically, substantial improvements are established for both target interpolation and extrapolation, where interpolation enjoys larger boosts. 
 如表6所示，跟vanilla模型比较，LDS和FDS不仅在有数据的区域提高性能还能在没有数据的区域取得更大的收益。具体来说，在目标内插和外插都有实质上的提升，尤其在内插中。
 We further visualize the absolute MAE gains of our method over vanilla model in Fig. 7. Our method provides a comprehensive treatment to the many, medium, few, as well as zero-shot regions, achieving remarkable performance gains. 
 我们进一步可视化我们方法的绝对MAE收益在图7中的vanilla模型上。我们的方法对多、中，少，零区域提供全面综合的处理，实现了巨大的收益。
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-12.png "(a) Feature statistics similarity for age 0, without FDS")
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-13.png "(b) Feature statistics similarity for age 0, with FDS")
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-14.png "(c) Statistics change")
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-12.png "(a) Feature statistics similarity for age 0, without FDS")
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-13.png "(b) Feature statistics similarity for age 0, with FDS")
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-14.png "(c) Statistics change")
 >&emsp;&emsp;Figure 8. Analysis on how FDS works.(a) & (b)Feature statistics similarity for anchor age 0, using model trained without and with FDS. (c) L1 distance between the running statistics$\left\{\boldsymbol{\mu}_{b}, \boldsymbol{\Sigma}_{b}\right\}$and the smoothed statistics$\left\{\tilde{\boldsymbol{\mu}}_{b}, \widetilde{\boldsymbol{\Sigma}}_{b}\right\}$during training.  
 > 图8：对FDS如何有效的分析。(a)和(b)anchor age 0的特征统计相似性，使用带FDS和不带FDS的训练模型。(c)运行统计数据$\left\{\boldsymbol{\mu}_{b}、\boldsymbol{\Sigma}_{b}\right\}$与平滑统计数据$\left\{\tilde{\boldsymbol{\mu}}_{b}, \widetilde{\boldsymbol{\Sigma}}_{b}\right\}$在训练期间的L1距离。
 
@@ -253,11 +253,11 @@ We further visualize the absolute MAE gains of our method over vanilla model in 
 ## Supplementary Material  
 <a name="Nun91"></a>
 ###  A. Pseudo Code for LDS & FDS  
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-15.png)
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-15.png)
 <a name="cchrV"></a>
 ### B. Details of DIR Datasets
 In this section, we provide the detailed information of the five curated DIR datasets we used in our experiments. Table 7 provides an overview of the five datasets.  
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2022/08/20220816201758-16.png)
+![image.png](https://pic.keepjolly.com/halo/blog/2022/08/20220816201758-16.png)
 <a name="ESOiR"></a>
 ### C. Experimental Settings  
 <a name="tQC4e"></a>

@@ -22,7 +22,7 @@ Linux中anaconda地址是：anaconda3安装路径/envs/虚拟环境名/lib/pytho
 ## !ssize.empty() in function resize
 顾名思义，某个地方调用opencv库的resize时，传入空值，导致该错误，仔细检查传入值的数据是否为0或者None即可。
 但是给的错误信息有点误导意思，因为我用的是另一个版本的opencv，还以为是版本不一致导致的错误。如下，提示的是OpenCV3.4.15版本
-![da3de5c330013051f9be766648ade55.jpg](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/03/20230311202709.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![da3de5c330013051f9be766648ade55.jpg](https://pic.keepjolly.com/halo/blog/2023/03/20230311202709.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 ## ImportError: No module named tensorflow
 如果你是在jupyter notebook中出现这个错误。先看你是否安装了tensorflow 其次看你是否安装了jupyter notebook。
 我用conda管理环境的时候 运行的环境里没有jupyter notebook 他估计自动调用了全局的notebook ，但是全局没有tensorflow，然后就报错了。

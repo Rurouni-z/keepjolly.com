@@ -225,7 +225,7 @@ while (recv_len < str_len)
 在收发过程中定好规则（协议）以表示数据边界，或者提前告知需要发送的数据的大小。服务端/客户端实现过程中逐步定义的规则集合就是应用层协议。
 ### TCP 原理
 #### TCP 套接字中的 I/O 缓冲
-实际上，write 函数调用后并非立即传输数据， read 函数调用后也并非马上接收数据。<br />![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />I/O 缓冲特性可以整理如下：
+实际上，write 函数调用后并非立即传输数据， read 函数调用后也并非马上接收数据。<br />![image.png](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />I/O 缓冲特性可以整理如下：
 
 - I/O 缓冲在每个 TCP 套接字中单独存在
 - I/O 缓冲在创建套接字时自动生成
@@ -240,22 +240,22 @@ TCP 套接字从创建到消失所经过的过程分为如下三步：
 ##### 1 与对方套接字的连接
 
 -  **Three-way handshaking**
-- ![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+- ![图片.png](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
    - 第一次客户端发送SYN，表示发送SEQ为1000的数据包
    - 第二次服务端发送SYN+ACK，表示接收后发送ACK（1000+1）的数据包，并发送SEQ为2000的数据包
    - 第三次客户端发送SYN+ACK，表示接收到服务端的数据包，并发送下一个数据包
 #####   2与对方主机的数据交换
 
-- ![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+- ![图片.png](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
    - 首先主机A发送100字节的数据包，SEQ为1200，主机B确认收到发送ACK（SEQ+传递字节数+1）=1301给主机B，防止丢失数据
    - 第二次发送时主机A失败，主机B未发送ACK，主机A启动计时器等待ACK应答，超时则重传数据。
 ##### 3与对方主机的数据交换
-![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />图中数据包内的 FIN 表示断开连接。也就是说，双方各发送 1 次 FIN 消息后断开连接。图中，主机 A 传递了两次 ACK 5001，也许这里会有困惑。其实，第二次 FIN 数据包中的 ACK 5001 只是因为发送了 ACK 消息后未接收到的数据重传的。
+![图片.png](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />图中数据包内的 FIN 表示断开连接。也就是说，双方各发送 1 次 FIN 消息后断开连接。图中，主机 A 传递了两次 ACK 5001，也许这里会有困惑。其实，第二次 FIN 数据包中的 ACK 5001 只是因为发送了 ACK 消息后未接收到的数据重传的。
 ## 基于UDP的服务端/客户端
 ### UDP原理
 寄信前应先在信封上填好寄信人ip和收信人的地址port，之后贴上邮票放进邮筒write即可。当然，信件的特点使我们无法确认信件是否被收到。邮寄过程中也可能发生信件丢失的情况。也就是说，信件是一种不可靠的传输方式，UDP 也是一种不可靠的数据传输方式。
 ### UDP工作原理
-![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />IP 的作用就是让离开主机 B 的 UDP 数据包准确传递到主机 A 。但是把 UDP 数据包最终交给主机 A 的某一 UDP 套接字的过程是由 UDP 完成的。UDP 的最重要的作用就是根据端口号将传到主机的数据包交付给最终的 UDP 套接字。<br />TCP 比 UDP 慢的原因主要有以下两点：
+![图片.png](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />IP 的作用就是让离开主机 B 的 UDP 数据包准确传递到主机 A 。但是把 UDP 数据包最终交给主机 A 的某一 UDP 套接字的过程是由 UDP 完成的。UDP 的最重要的作用就是根据端口号将传到主机的数据包交付给最终的 UDP 套接字。<br />TCP 比 UDP 慢的原因主要有以下两点：
 
 - 收发数据前后进行的连接设置及清除过程。
 - 收发过程中为保证可靠性而添加的流控制。
@@ -323,10 +323,10 @@ howto: 传递断开方式信息
 #### 为何要半关闭
 为了关闭服务器后，仍可以接收客户端的数据。调用 shutdown 函数，只关闭服务器的输出流。这样既可以发送 EOF ，同时又保留了输入流。
 #### 一个优雅的流程
-当服务端发送完数据后，shutdown关闭发送流，当接收到客户端的回复信息，则close套接字，同时客户端发送完消息后关闭套接字。<br />![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+当服务端发送完数据后，shutdown关闭发送流，当接收到客户端的回复信息，则close套接字，同时客户端发送完消息后关闭套接字。<br />![图片.png](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 ## 域名及网络地址
 ### 域名系统
-DNS 是对IP地址和域名进行相互转换的系统，其核心是 DNS 服务器<br />域名是IP地址的别名，可以通过DNS服务器查询到对应IP地址<br />![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />当在电脑浏览器上输入一个域名，会通过一系列的DNS服务器的映射找到最终的目标服务器。
+DNS 是对IP地址和域名进行相互转换的系统，其核心是 DNS 服务器<br />域名是IP地址的别名，可以通过DNS服务器查询到对应IP地址<br />![图片.png](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />当在电脑浏览器上输入一个域名，会通过一系列的DNS服务器的映射找到最终的目标服务器。
 ### IP地址和域名之间的转换
 #### 通过域名获得ip
 ```cpp
@@ -345,7 +345,7 @@ struct hostent
     char **h_addr_list; /* List of addresses from name server. 域名对应IP地址 */
 };
 ```
-![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-7.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />linux下可以使用dig @8.8.8.8 +trace baidu.com命令追踪DNS查询路径
+![图片.png](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-7.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />linux下可以使用dig @8.8.8.8 +trace baidu.com命令追踪DNS查询路径
 ```cpp
 #include <stdio.h>
 #include <stdlib.h>
@@ -499,7 +499,7 @@ extern int getsockopt (int __fd, int __level, int __optname,
 ```
 ### SO_REUSEADDR（important）
 #### Time-wait 状态
-![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-8.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />假设图中主机 A 是服务器，因为是主机 A 向 B 发送 FIN 消息，即服务器使用 CTRL+C强制终止 。但是问题是，套接字经过四次握手后并没有立即消除，而是要经过一段时间的 Time-wait 状态。当然，只有**先断开连接**的（**先发送 FIN 消息**的）主机才经过 Time-wait 状态。因此，若服务器端先断开连接，则无法立即重新运行。套接字处在 Time-wait 过程时，相应端口是正在使用的状态。因此，就像之前验证过的，bind 函数调用过程中会发生错误。<br />实际上，不论是服务端还是客户端，都要经过一段时间的 Time-wait 过程。先断开连接的套接字必然会经过 Time-wait 过程，但是由于**客户端套接字的端口是任意指定**的，所以无需过多关注 Time-wait 状态。<br />那到底为什么会有 Time-wait 状态呢，在图中假设，主机 A 向主机 B 传输 ACK 消息（SEQ 5001 , ACK 7502 ）后立刻消除套接字。但是最后这条 ACK 消息在传递过程中丢失，没有传递主机 B ，这时主机 B 就会试图重传。但是此时主机 A 已经是完全终止状态，因此主机 B 永远无法收到从主机 A 最后传来的 ACK 消息。防止数据丢失后，无法再次通信，所以要设计 Time-wait 状态。
+![图片.png](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-8.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />假设图中主机 A 是服务器，因为是主机 A 向 B 发送 FIN 消息，即服务器使用 CTRL+C强制终止 。但是问题是，套接字经过四次握手后并没有立即消除，而是要经过一段时间的 Time-wait 状态。当然，只有**先断开连接**的（**先发送 FIN 消息**的）主机才经过 Time-wait 状态。因此，若服务器端先断开连接，则无法立即重新运行。套接字处在 Time-wait 过程时，相应端口是正在使用的状态。因此，就像之前验证过的，bind 函数调用过程中会发生错误。<br />实际上，不论是服务端还是客户端，都要经过一段时间的 Time-wait 过程。先断开连接的套接字必然会经过 Time-wait 过程，但是由于**客户端套接字的端口是任意指定**的，所以无需过多关注 Time-wait 状态。<br />那到底为什么会有 Time-wait 状态呢，在图中假设，主机 A 向主机 B 传输 ACK 消息（SEQ 5001 , ACK 7502 ）后立刻消除套接字。但是最后这条 ACK 消息在传递过程中丢失，没有传递主机 B ，这时主机 B 就会试图重传。但是此时主机 A 已经是完全终止状态，因此主机 B 永远无法收到从主机 A 最后传来的 ACK 消息。防止数据丢失后，无法再次通信，所以要设计 Time-wait 状态。
 #### 地址再分配
 ```cpp
 socklen_t optlen = sizeof(option);
@@ -507,7 +507,7 @@ int option = 1;
 setsockopt(serv_sock, SOL_SOCKET, SO_REUSEADDR, (void *)&option, optlen);
 ```
 ### TCP_NODELAY
-![只有接收到前一数据的 ACK 消息， Nagle 算法才发送下一数据。](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-9.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5 "只有接收到前一数据的 ACK 消息， Nagle 算法才发送下一数据。")<br />TCP 套接字默认使用 Nagle 算法交换数据，因此最大限度的进行缓冲，直到收到 ACK 。左图也就是说一共传递 4 个数据包以传输一个字符串。从右图可以看出，发送数据包一共使用了 10 个数据包。由此可知，不使用 Nagle 算法将对网络流量产生负面影响。即使只传输一个字节的数据，其头信息都可能是几十个字节。因此，为了提高网络传输效率，必须使用 Nagle 算法。<br />Nagle 算法并不是什么情况下都适用，**网络流量未受太大影响时**，不使用 Nagle 算法要比使用它时传输速度快。最典型的就是「**传输大文数据**」。将文件数据传入输出缓冲不会花太多时间，因此，不使用 Nagle 算法，也会在装满输出缓冲时传输数据包。这不仅不会增加数据包的数量，反而在无需等待 ACK 的前提下连续传输，因此可以大大提高传输速度。<br />所以，未准确判断数据性质时不应禁用 Nagle 算法。
+![只有接收到前一数据的 ACK 消息， Nagle 算法才发送下一数据。](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-9.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5 "只有接收到前一数据的 ACK 消息， Nagle 算法才发送下一数据。")<br />TCP 套接字默认使用 Nagle 算法交换数据，因此最大限度的进行缓冲，直到收到 ACK 。左图也就是说一共传递 4 个数据包以传输一个字符串。从右图可以看出，发送数据包一共使用了 10 个数据包。由此可知，不使用 Nagle 算法将对网络流量产生负面影响。即使只传输一个字节的数据，其头信息都可能是几十个字节。因此，为了提高网络传输效率，必须使用 Nagle 算法。<br />Nagle 算法并不是什么情况下都适用，**网络流量未受太大影响时**，不使用 Nagle 算法要比使用它时传输速度快。最典型的就是「**传输大文数据**」。将文件数据传入输出缓冲不会花太多时间，因此，不使用 Nagle 算法，也会在装满输出缓冲时传输数据包。这不仅不会增加数据包的数量，反而在无需等待 ACK 的前提下连续传输，因此可以大大提高传输速度。<br />所以，未准确判断数据性质时不应禁用 Nagle 算法。
 #### 禁用 Nagle 算法
 禁用 Nagle 算法应该使用：
 ```cpp
@@ -866,7 +866,7 @@ int main(int argc, char *argv[]) {
 
 ### 基于多任务的并发服务器
 #### 基于进程的并发服务器模型
-![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-10.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />从图中可以看出，每当有客户端请求时（连接请求），回声服务器都创建子进程以提供服务。如果请求的客户端有 5 个，则将创建 5 个子进程来提供服务，为了完成这些任务，需要经过如下过程：
+![图片.png](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-10.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />从图中可以看出，每当有客户端请求时（连接请求），回声服务器都创建子进程以提供服务。如果请求的客户端有 5 个，则将创建 5 个子进程来提供服务，为了完成这些任务，需要经过如下过程：
 
 - 第一阶段：回声服务器端（父进程）通过调用 accept 函数受理连接请求
 - 第二阶段：此时获取的套接字文件描述符创建并传递给子进程
@@ -899,11 +899,11 @@ while (1) {
 }
 ```
 #### 通过 fork 函数复制文件描述符
-示例中给出了通过 fork 函数复制文件描述符的过程。父进程将 2 个套接字（一个是服务端套接字另一个是客户端套接字）文件描述符复制给了子进程。<br />调用 fork 函数时赋值**父进程的所有资源**，但是套接字不是归进程所有的，而是**归操作系统所有**，只是进程拥有代表相应套接字的文件描述符。<br />![](https://camo.githubusercontent.com/e8059964da650325509a86c00916dc588b147221b21e0355ca13e6ee8126f667/68747470733a2f2f73322e617831782e636f6d2f323031392f30312f32312f6b5037526a782e706e67#from=url&id=SMxPg&originHeight=363&originWidth=513&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)<br />如图所示，1 个套接字存在 2 个文件描述符时，只有 2 个文件描述符都终止（销毁）后，才能销毁套接字。如果维持图中的状态，即使**子进程销毁了与客户端连接的套接字文件描述符，也无法销毁套接字**（服务器套接字同样如此）。因此调用 fork 函数后，要将**无关紧要的套接字文件描述符关掉**，如图所示：<br />![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-11.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=dsY6g&originHeight=356&originWidth=505&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)
+示例中给出了通过 fork 函数复制文件描述符的过程。父进程将 2 个套接字（一个是服务端套接字另一个是客户端套接字）文件描述符复制给了子进程。<br />调用 fork 函数时赋值**父进程的所有资源**，但是套接字不是归进程所有的，而是**归操作系统所有**，只是进程拥有代表相应套接字的文件描述符。<br />![](https://camo.githubusercontent.com/e8059964da650325509a86c00916dc588b147221b21e0355ca13e6ee8126f667/68747470733a2f2f73322e617831782e636f6d2f323031392f30312f32312f6b5037526a782e706e67#from=url&id=SMxPg&originHeight=363&originWidth=513&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)<br />如图所示，1 个套接字存在 2 个文件描述符时，只有 2 个文件描述符都终止（销毁）后，才能销毁套接字。如果维持图中的状态，即使**子进程销毁了与客户端连接的套接字文件描述符，也无法销毁套接字**（服务器套接字同样如此）。因此调用 fork 函数后，要将**无关紧要的套接字文件描述符关掉**，如图所示：<br />![](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-11.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=dsY6g&originHeight=356&originWidth=505&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)
 ### 分割 TCP 的 I/O 程序
 我们已经实现的回声**客户端**的数据回声方式如下：
 > 向服务器传输数据，并等待服务器端回复。无条件等待，直到接收完服务器端的回声数据后，才能传输下一批数据。
 
-传输数据后要等待服务器端返回的数据，因为程序代码中重复调用了 read 和 write 函数。只能这么写的原因之一是，程序在 1 个进程中运行，现在可以创建多个进程，因此可以分割数据收发过程。分割后过程如下图所示：<br />![](https://camo.githubusercontent.com/60042284b80365905816ec0f9ca8bcf8695895916bad37b1d6d30a716e85ba0f/68747470733a2f2f73322e617831782e636f6d2f323031392f30312f32312f6b5062686b442e706e67#from=url&id=Qy4jl&originHeight=295&originWidth=459&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)<br />从图中可以看出，客户端的父进程负责接收数据，额外创建的子进程负责发送数据，分割后，父子进程分别负责输入输出，这样，无论客户端是否从服务器端接收完数据都可以进程传输。<br />分割 I/O 程序的另外一个好处是，可以提高频繁交换数据的程序性能，如下图所示：<br />![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/06/20230607220100-12.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=EtW4z&originHeight=374&originWidth=612&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)<br />根据上图显示可以看出，在网络不好的情况下，明显提升速度。
+传输数据后要等待服务器端返回的数据，因为程序代码中重复调用了 read 和 write 函数。只能这么写的原因之一是，程序在 1 个进程中运行，现在可以创建多个进程，因此可以分割数据收发过程。分割后过程如下图所示：<br />![](https://camo.githubusercontent.com/60042284b80365905816ec0f9ca8bcf8695895916bad37b1d6d30a716e85ba0f/68747470733a2f2f73322e617831782e636f6d2f323031392f30312f32312f6b5062686b442e706e67#from=url&id=Qy4jl&originHeight=295&originWidth=459&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)<br />从图中可以看出，客户端的父进程负责接收数据，额外创建的子进程负责发送数据，分割后，父子进程分别负责输入输出，这样，无论客户端是否从服务器端接收完数据都可以进程传输。<br />分割 I/O 程序的另外一个好处是，可以提高频繁交换数据的程序性能，如下图所示：<br />![](https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-12.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=EtW4z&originHeight=374&originWidth=612&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)<br />根据上图显示可以看出，在网络不好的情况下，明显提升速度。
 
 - [回声客户端的 I/O 分割的代码实现](https://github.com/riba2534/TCP-IP-NetworkNote/blob/master/ch10/echo_mpclient.c)

@@ -37,7 +37,7 @@ tags:
       - 使用样式。
       - 把操作符 “|” 替换成 “%7C”。
 
-![image.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/2022/0520220531224449.png?imageMogr2/format/webp|?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image.png](https://pic.keepjolly.com/halo/2022/0520220531224449.png?imageMogr2/format/webp|?watermark/3/type/3/text/a2VlcGpvbGx5)
 
 ## 提取盲水印
 因为需要别人拿我的照片，并且要上传到他的cos才能提取盲水印

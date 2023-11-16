@@ -20,7 +20,7 @@ website: www.keepjolly.com
 ## 进程间通信
 ### 进程间通信的基本概念
 #### 管道实现进程间通信
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />可以看出，为了完成进程间通信，需要创建管道。管道并非属于进程的资源，而是和套接字一样，属于操作系统（也就不是 fork 函数的复制对象）。所以，两个进程通过操作系统提供的内存空间进行通信。下面是创建管道的函数。
+![](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />可以看出，为了完成进程间通信，需要创建管道。管道并非属于进程的资源，而是和套接字一样，属于操作系统（也就不是 fork 函数的复制对象）。所以，两个进程通过操作系统提供的内存空间进行通信。下面是创建管道的函数。
 ```cpp
 #include <unistd.h>
 int pipe(int filedes[2]);
@@ -43,9 +43,9 @@ else {
     puts(buf);
 }
 ```
-![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 #### 双向通信
-![](https://cdn.nlark.com/yuque/0/2023/png/12600461/1686926856566-2572cdd9-7a1e-4f1b-b49f-1610e73b306f.png#averageHue=%23ebebeb&clientId=u146b6ba8-d8f8-4&from=paste&id=u7a0be122&originHeight=279&originWidth=477&originalType=url&ratio=1.25&rotation=0&showTitle=false&status=done&style=none&taskId=u0175482d-e892-498a-bc22-3038832ba0d&title=)<br />上述单个pipe可能会导致数据接收问题，即子进程把所有数据都读完，需要sleep函数。采用下述方法好一些，但是多加一个pipe<br />![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![](https://cdn.nlark.com/yuque/0/2023/png/12600461/1686926856566-2572cdd9-7a1e-4f1b-b49f-1610e73b306f.png#averageHue=%23ebebeb&clientId=u146b6ba8-d8f8-4&from=paste&id=u7a0be122&originHeight=279&originWidth=477&originalType=url&ratio=1.25&rotation=0&showTitle=false&status=done&style=none&taskId=u0175482d-e892-498a-bc22-3038832ba0d&title=)<br />上述单个pipe可能会导致数据接收问题，即子进程把所有数据都读完，需要sleep函数。采用下述方法好一些，但是多加一个pipe<br />![](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 ```cpp
 pipe(fds1), pipe(fds2);
     pid = fork();
@@ -66,18 +66,18 @@ pipe(fds1), pipe(fds2);
 进程间通信意味着两个不同的进程间可以交换数据。从内存上来说，就是两个进程可以访问同一个内存区域，然后通过这个内存区域数据的变化来进行通信。
 ## I/O 复用
 ### 基于 I/O 复用的服务器端
-多进程服务端的缺点：为了构建并发服务器，只要有客户端连接请求就会创建新进程。这的确是实际操作中采用的一种方案，但并非十全十美，因为创建进程要付出很大的代价。这需要大量的运算和内存空间，由于每个进程都具有独立的内存空间，所以相互间的数据交换也要采用相对复杂的方法（IPC 属于相对复杂的通信方法）。<br />I/O 复用技术可以解决这个问题。<br />![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />无论连接多少客户端，提供服务的进程只有一个。
+多进程服务端的缺点：为了构建并发服务器，只要有客户端连接请求就会创建新进程。这的确是实际操作中采用的一种方案，但并非十全十美，因为创建进程要付出很大的代价。这需要大量的运算和内存空间，由于每个进程都具有独立的内存空间，所以相互间的数据交换也要采用相对复杂的方法（IPC 属于相对复杂的通信方法）。<br />I/O 复用技术可以解决这个问题。<br />![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />无论连接多少客户端，提供服务的进程只有一个。
 ### 理解 select 函数并实现服务端
-select 函数是最具代表性的实现复用服务器的方法。在 Windows 平台下也有同名函数，所以具有很好的移植性。<br />select 函数的调用过程如下图所示：<br />![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+select 函数是最具代表性的实现复用服务器的方法。在 Windows 平台下也有同名函数，所以具有很好的移植性。<br />select 函数的调用过程如下图所示：<br />![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 ### 设置文件描述符
-利用 select 函数可以**同时监视多个文件描述符**。当然，监视文件描述符可以视为监视套接字。此时首先需要将要监视的文件描述符集中在一起。集中时也要按照监视项（**接收、传输、异常**）进行区分，即按照上述 3 种监视项分成 3 类。<br />利用 fd_set 数组变量执行此操作，如图所示，该数组是存有0和1的位数组。<br />![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />图中最左端表示文件描述符 0。如果该位设置为 1，则表示该文件描述符是监视对象。图中文件描述符 1 和 3是监视对象。在 fd_set 变量中注册或更改值的操作都由下列宏完成。
+利用 select 函数可以**同时监视多个文件描述符**。当然，监视文件描述符可以视为监视套接字。此时首先需要将要监视的文件描述符集中在一起。集中时也要按照监视项（**接收、传输、异常**）进行区分，即按照上述 3 种监视项分成 3 类。<br />利用 fd_set 数组变量执行此操作，如图所示，该数组是存有0和1的位数组。<br />![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />图中最左端表示文件描述符 0。如果该位设置为 1，则表示该文件描述符是监视对象。图中文件描述符 1 和 3是监视对象。在 fd_set 变量中注册或更改值的操作都由下列宏完成。
 
 - FD_ZERO(fd_set *fdset)：将 fd_set 变量所指的位全部初始化成0
 - FD_SET(int fd,fd_set *fdset)：在参数 fdset 指向的变量中注册文件描述符 fd 的信息
 - FD_CLR(int fd,fd_set *fdset)：从参数 fdset 指向的变量中清除文件描述符 fd 的信息
 - FD_ISSET(int fd,fd_set *fdset)：若参数 fdset 指向的变量中包含文件描述符 fd 的信息，则返回「真」
 
-![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 #### 设置检查（监视）范围及超时
 下面是 select 函数的定义：
 ```cpp
@@ -215,7 +215,7 @@ struct iovec
     size_t iov_len; //缓冲大小
 };
 ```
-![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-7.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />writev 的第一个参数，是文件描述符，因此‘1’代表向控制台输出数据，ptr 是存有待发送数据信息的 iovec 数组指针。第三个参数为 2，因此，从 ptr 指向的地址开始，共浏览 2 个 iovec 结构体变量，发送这些指针指向的缓冲数据。
+![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-7.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />writev 的第一个参数，是文件描述符，因此‘1’代表向控制台输出数据，ptr 是存有待发送数据信息的 iovec 数组指针。第三个参数为 2，因此，从 ptr 指向的地址开始，共浏览 2 个 iovec 结构体变量，发送这些指针指向的缓冲数据。
 ```cpp
 #include <stdio.h>
 #include <sys/uio.h>
@@ -276,7 +276,7 @@ int main(int argc, char *argv[])
 
 ```
 #### 合理使用 readv & writev 函数
-实际上，能使用该函数的所有情况都适用。例如，需要传输的数据分别位于不同缓冲（数组）时，需要多次调用 write 函数。此时可通过 1 次 writev 函数调用替代操作，当然会提高效率。同样，需要将输入缓冲中的数据读入不同位置时，可以不必多次调用 read 函数，而是利用 1 次 readv 函数就能大大提高效率。<br />其意义在于**减少数据包个数**。假设为了提高效率在服务器端明确禁用了 Nagle 算法。其实 writev 函数在不采用 Nagle 算法时更有价值，如图：<br />![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-8.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+实际上，能使用该函数的所有情况都适用。例如，需要传输的数据分别位于不同缓冲（数组）时，需要多次调用 write 函数。此时可通过 1 次 writev 函数调用替代操作，当然会提高效率。同样，需要将输入缓冲中的数据读入不同位置时，可以不必多次调用 read 函数，而是利用 1 次 readv 函数就能大大提高效率。<br />其意义在于**减少数据包个数**。假设为了提高效率在服务器端明确禁用了 Nagle 算法。其实 writev 函数在不采用 Nagle 算法时更有价值，如图：<br />![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-8.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 ## 多播与广播
 ### 多播
 多播（Multicast）方式的数据传输是**基于 UDP **完成的。因此 ，与 UDP 服务器端/客户端的实现方式非常接近。区别在于，UDP 数据传输以单一目标进行，而多播数据同时传递到加入（注册）特定组的大量主机。换言之，采用多播方式时，可以**同时向多个主机传递数据**。
@@ -290,9 +290,9 @@ int main(int argc, char *argv[])
 多播组是 D 类IP地址（224.0.0.0~239.255.255.255），「加入多播组」可以理解为通过程序完成如下声明：
 > 在 D 类IP地址中，我希望接收发往目标 239.234.218.234 的多播数据
 
-多播是基于 UDP 完成的，也就是说，多播数据包的格式与 UDP 数据包相同。只是与一般的 UDP 数据包不同。向网络传递 1 个多播数据包时，路由器将复制该数据包并传递到多个主机。像这样，多播需要借助路由器完成。如图所示：<br />[![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-9.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=FciD5&originHeight=319&originWidth=540&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-9.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />若通过 TCP 或 UDP 向 1000 个主机发送文件，则共需要传递 1000 次。但是此时如果用多播网络传输文件，则只需要发送一次。这时由 1000 台主机构成的网络中的路由器负责复制文件并传递到主机。就因为这种特性，多播主要用于「**多媒体数据实时传输**」。<br />另外，理论上可以完成多播通信，但是不少路由器并不支持多播，或即便支持也因网络拥堵问题故意阻断多播。因此，为了在不支持多播的路由器中完成多播通信，也会**使用隧道（Tunneling）技术**。
+多播是基于 UDP 完成的，也就是说，多播数据包的格式与 UDP 数据包相同。只是与一般的 UDP 数据包不同。向网络传递 1 个多播数据包时，路由器将复制该数据包并传递到多个主机。像这样，多播需要借助路由器完成。如图所示：<br />[![](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-9.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=FciD5&originHeight=319&originWidth=540&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-9.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />若通过 TCP 或 UDP 向 1000 个主机发送文件，则共需要传递 1000 次。但是此时如果用多播网络传输文件，则只需要发送一次。这时由 1000 台主机构成的网络中的路由器负责复制文件并传递到主机。就因为这种特性，多播主要用于「**多媒体数据实时传输**」。<br />另外，理论上可以完成多播通信，但是不少路由器并不支持多播，或即便支持也因网络拥堵问题故意阻断多播。因此，为了在不支持多播的路由器中完成多播通信，也会**使用隧道（Tunneling）技术**。
 #### 路由（Routing）和 TTL（Time to Live,生存时间），以及加入组的办法
-为了传递多播数据包，必须设置 TTL 。TTL 是 Time to Live的简写，是决定「数据包传递距离」的主要因素。TTL 用整数表示，并且**每经过一个路由器就减一**。TTL 变为 0 时，该数据包就无法再被传递，只能销毁。因此，TTL 的值设置过大将影响网络流量。当然，设置过小，也无法传递到目标。<br />![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-10.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />TTL 是可以通过第九章的套接字可选项完成的。与设置 TTL 相关的协议层为 IPPROTO_IP ，选项名为 IP_MULTICAST_TTL。用如下代码把 TTL 设置为 64: 
+为了传递多播数据包，必须设置 TTL 。TTL 是 Time to Live的简写，是决定「数据包传递距离」的主要因素。TTL 用整数表示，并且**每经过一个路由器就减一**。TTL 变为 0 时，该数据包就无法再被传递，只能销毁。因此，TTL 的值设置过大将影响网络流量。当然，设置过小，也无法传递到目标。<br />![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-10.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />TTL 是可以通过第九章的套接字可选项完成的。与设置 TTL 相关的协议层为 IPPROTO_IP ，选项名为 IP_MULTICAST_TTL。用如下代码把 TTL 设置为 64: 
 ```cpp
 int send_sock;
 int time_live = 64;
@@ -356,7 +356,7 @@ setsockopt(send_sock,SOL_SOCKET,SO_BROADCAST,(void*)&bcast,sizeof(bcast));
    - 有时可能频繁调用 fflush 函数
    - 需要以 FILE 结构体指针的形式返回文件描述符。
 
-创建套接字时，操作系统会准备 I/O 缓冲。此缓冲在执行 TCP 协议时发挥着非常重要的作用。此时若使用标准 I/O 函数，将得到**额外的缓冲支持**。如下图：<br />![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-11.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />假设使用 fputs 函数进行传输字符串 「Hello」时，首先将数据传递到标准 I/O 缓冲，然后将数据移动到套接字输出缓冲，最后fflush将字符串发送到对方主机。
+创建套接字时，操作系统会准备 I/O 缓冲。此缓冲在执行 TCP 协议时发挥着非常重要的作用。此时若使用标准 I/O 函数，将得到**额外的缓冲支持**。如下图：<br />![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-11.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />假设使用 fputs 函数进行传输字符串 「Hello」时，首先将数据传递到标准 I/O 缓冲，然后将数据移动到套接字输出缓冲，最后fflush将字符串发送到对方主机。
 ### 使用标准 I/O 函数
 #### 利用 fdopen 函数转换为 FILE 结构体指针
 ```cpp
@@ -400,7 +400,7 @@ int fileno(FILE *stream);
 - 可以通过区分读写模式降低实现难度
 - 通过区分 I/O 缓冲提高缓冲性能
 #### 「流」分离带来的 EOF 问题
-close()一个fdopen会关闭整个套接字<br />![图片.png](https://cdn.nlark.com/yuque/0/2023/png/12600461/1689249181825-0c3d1dcb-c148-4a37-895c-3847e35814bf.png#averageHue=%23d5d5d5&clientId=ud362a5e0-75d0-4&from=paste&height=165&id=u340713e9&originHeight=198&originWidth=470&originalType=binary&ratio=1.2&rotation=0&showTitle=false&size=70970&status=done&style=none&taskId=udc8d66f8-5e2c-407e-a380-e88a9cae3d2&title=&width=391.6666666666667)<br />![图片.png](https://cdn.nlark.com/yuque/0/2023/png/12600461/1689249194614-bbc5b267-3632-412f-8403-8be5fd246c3d.png#averageHue=%23d6d6d6&clientId=ud362a5e0-75d0-4&from=paste&height=174&id=ubec88290&originHeight=209&originWidth=463&originalType=binary&ratio=1.2&rotation=0&showTitle=false&size=80887&status=done&style=none&taskId=u58c328a6-bafc-40a1-b08b-011ea96fef9&title=&width=385.83333333333337)<br />只需要创建 FILE 指针前**先复制文件描述符**即可。复制后另外创建一个文件描述符，然后利用各自的文件描述符生成读模式的 FILE 指针和写模式的 FILE 指针。<br />![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-12.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />这就为半关闭创造好了环境，因为套接字和文件描述符具有如下关系：
+close()一个fdopen会关闭整个套接字<br />![图片.png](https://cdn.nlark.com/yuque/0/2023/png/12600461/1689249181825-0c3d1dcb-c148-4a37-895c-3847e35814bf.png#averageHue=%23d5d5d5&clientId=ud362a5e0-75d0-4&from=paste&height=165&id=u340713e9&originHeight=198&originWidth=470&originalType=binary&ratio=1.2&rotation=0&showTitle=false&size=70970&status=done&style=none&taskId=udc8d66f8-5e2c-407e-a380-e88a9cae3d2&title=&width=391.6666666666667)<br />![图片.png](https://cdn.nlark.com/yuque/0/2023/png/12600461/1689249194614-bbc5b267-3632-412f-8403-8be5fd246c3d.png#averageHue=%23d6d6d6&clientId=ud362a5e0-75d0-4&from=paste&height=174&id=ubec88290&originHeight=209&originWidth=463&originalType=binary&ratio=1.2&rotation=0&showTitle=false&size=80887&status=done&style=none&taskId=u58c328a6-bafc-40a1-b08b-011ea96fef9&title=&width=385.83333333333337)<br />只需要创建 FILE 指针前**先复制文件描述符**即可。复制后另外创建一个文件描述符，然后利用各自的文件描述符生成读模式的 FILE 指针和写模式的 FILE 指针。<br />![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-12.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />这就为半关闭创造好了环境，因为套接字和文件描述符具有如下关系：
 > 销毁所有文件描述符候才能销毁套接字
 
 也就是说，针对写模式 FILE 指针调用 fclose 函数时，只能销毁与该 FILE 指针相关的文件描述符，无法销毁套接字。<br />那么调用 fclose 函数候还剩下 1 个文件描述符，因此没有销毁套接字。那此时的状态是否为半关闭状态？不是！只是准备好了进入半关闭状态，而不是已经进入了半关闭状态。仔细观察，还剩下一个文件描述符。而该文件描述符可以同时进行 I/O 。因此，不但没有发送 EOF ，而且仍然可以利用文件描述符进行输出。
@@ -408,7 +408,7 @@ close()一个fdopen会关闭整个套接字<br />![图片.png](https://cdn.nlark
 
 1. 复制文件描述符，使用dup/dup2函数
 
-与调用 fork 函数不同，调用 fork 函数将复制整个进程，此处讨论的是同一进程内完成对完成描述符的复制。如图：<br />![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-13.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+与调用 fork 函数不同，调用 fork 函数将复制整个进程，此处讨论的是同一进程内完成对完成描述符的复制。如图：<br />![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-13.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 ```cpp
 #include <unistd.h>
 int dup(int fildes);
@@ -663,7 +663,7 @@ fcntl(fd, F_SETFL, flag | O_NONBLOCK);
 边缘触发方式可以做到这点：
 > 可以分离接收数据和处理数据的时间点！
 
-下面是边缘触发的图<br />[![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-14.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=WmjF3&originHeight=303&originWidth=377&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-14.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />运行流程如下：
+下面是边缘触发的图<br />[![](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-14.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=WmjF3&originHeight=303&originWidth=377&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-14.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />运行流程如下：
 
 - 服务器端分别从 A B C 接收数据
 - 服务器端按照 A B C 的顺序重新组合接收到的数据
@@ -694,17 +694,17 @@ fcntl(fd, F_SETFL, flag | O_NONBLOCK);
 - 线程的创建和上下文切换比进程的创建和上下文切换**更快（不是消除）**
 - 线程间交换数据无需特殊技术（进程pipe）
 #### 线程和进程的差异
-线程是为了解决：为了得到多条代码执行流而复制整个内存区域的负担太重。<br />每个进程的内存空间都由保存全局变量的「数据区」、向 malloc 等函数动态分配提供空间的堆（Heap）、函数运行时使用的栈（Stack）构成。每个进程都有独立的这种空间，多个进程的内存结构如图所示：<br />[![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-15.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=fc3E9&originHeight=270&originWidth=404&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-15.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />但如果以获得多个代码执行流为目的，则不应该像上图那样完全分离内存结构，而只需分离栈区域。通过这种方式可以获得如下优势：
+线程是为了解决：为了得到多条代码执行流而复制整个内存区域的负担太重。<br />每个进程的内存空间都由保存全局变量的「数据区」、向 malloc 等函数动态分配提供空间的堆（Heap）、函数运行时使用的栈（Stack）构成。每个进程都有独立的这种空间，多个进程的内存结构如图所示：<br />[![](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-15.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=fc3E9&originHeight=270&originWidth=404&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-15.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />但如果以获得多个代码执行流为目的，则不应该像上图那样完全分离内存结构，而只需分离栈区域。通过这种方式可以获得如下优势：
 
 - 上下文切换时不需要切换数据区和堆
 - 可以利用数据区和堆交换数据
 
-实际上这就是线程。线程为了保持多条代码执行流而隔开了栈区域，因此具有如下图所示的内存结构：<br />[![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-16.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=YP0bE&originHeight=327&originWidth=311&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-16.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />如图所示，多个线程共享数据区和堆。为了保持这种结构，线程将在进程内创建并运行。也就是说，进程和线程可以定义为如下形式：
+实际上这就是线程。线程为了保持多条代码执行流而隔开了栈区域，因此具有如下图所示的内存结构：<br />[![](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-16.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=YP0bE&originHeight=327&originWidth=311&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-16.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />如图所示，多个线程共享数据区和堆。为了保持这种结构，线程将在进程内创建并运行。也就是说，进程和线程可以定义为如下形式：
 
 - 进程：在操作系统构成单独执行流的单位
 - 线程：在进程构成单独执行流的单位
 
-如果说进程在操作系统内部生成多个执行流，那么线程就在同一进程内部创建多条执行流。因此，操作系统、进程、线程之间的关系可以表示为下图：<br />[![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-17.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=ZsCJA&originHeight=223&originWidth=343&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-17.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+如果说进程在操作系统内部生成多个执行流，那么线程就在同一进程内部创建多条执行流。因此，操作系统、进程、线程之间的关系可以表示为下图：<br />[![](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-17.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=ZsCJA&originHeight=223&originWidth=343&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-17.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 ### 线程创建及运行
 #### posix的由来
 可移植操作系统接口（英语：Portable Operating System Interface，缩写为POSIX）是IEEE为要在各种UNIX操作系统上运行软件，而定义API的一系列互相关联的标准的总称，其正式称呼为IEEE Std 1003，而国际标准名称为ISO/IEC 9945。此标准源于一个大约开始于1985年的项目。POSIX这个名称是由理查德·斯托曼（RMS）应IEEE的要求而提议的一个易于记忆的名称。它基本上是Portable Operating System Interface（可移植操作系统接口）的缩写，而X则表明其对Unix API的传承。<br />Linux基本上逐步实现了POSIX兼容，但并没有参加正式的POSIX认证。<br />微软的Windows NT声称部分实现了POSIX标准。<br />当前的POSIX主要分为四个部分：Base Definitions、System Interfaces、Shell and Utilities和Rationale。
@@ -727,7 +727,7 @@ arg : 通过第三个参数传递的调用函数时包含传递参数信息的�
 ```
 
 - [thread1.c](https://github.com/riba2534/TCP-IP-NetworkNote/blob/master/ch18/thread1.c)
-- ![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-18.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+- ![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-18.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 - 如果主进没有等待十秒，而是直接结束，这样也会强制结束线程，不论线程有没有运行完毕。
 
 调用该函数的进程（或线程）将进入等待状态，直到第一个参数为 ID 的线程终止为止。而且可以得到线程的** main 函数的返回值**。
@@ -742,7 +742,7 @@ status : 保存线程的 main 函数返回值的指针的变量地址值
 ```
 
 - [thread2.c](https://github.com/riba2534/TCP-IP-NetworkNote/blob/master/ch18/thread2.c)
-- ![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-19.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+- ![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-19.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 #### 可在临界区内调用的函数
 在同步的程序设计中，临界区块（Critical section）指的是一个访问共享资源（例如：共享设备或是共享存储器）的程序片段，而这些共享资源有**无法同时被多个线程访问**的特性。<br />根据临界区是否引起问题，函数可以分为以下 2 类：
 
@@ -754,7 +754,7 @@ status : 保存线程的 main 函数返回值的指针的变量地址值
 
 也无需特意更改源代码，可以在编译的时候指定编译参数来定义宏。<br />gcc -D_REENTRANT mythread.c -o mthread -lpthread
 #### 工作（Worker）线程模型
-计算从 1 到 10 的和，但并不是通过 main 函数进行运算，而是创建两个线程，其中一个线程计算 1 到 5 的和，另一个线程计算 6 到 10 的和，main 函数**只负责输出运算结果**。这种方式的线程模型称为「工作线程」。显示该程序的执行流程图：<br />![图片.png](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-20.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+计算从 1 到 10 的和，但并不是通过 main 函数进行运算，而是创建两个线程，其中一个线程计算 1 到 5 的和，另一个线程计算 6 到 10 的和，main 函数**只负责输出运算结果**。这种方式的线程模型称为「工作线程」。显示该程序的执行流程图：<br />![图片.png](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-20.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
 ### 线程存在的问题和临界区
 这种方式存在一个问题：
 > 2 个线程正在同时访问全局变量 num
@@ -870,11 +870,11 @@ thread : 终止的同时需要销毁的线程 ID
 #### 理解 Web 服务器端
 web服务器端就是要基于 HTTP 协议，将网页对应文件传输给客户端的服务器端。
 #### HTTP
-无状态的 Stateless 协议<br />[![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-21.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=XcoFX&originHeight=374&originWidth=309&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-21.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />从上图可以看出，服务器端相应客户端请求后立即断开连接。换言之，服务器端不会维持客户端状态。即使同一客户端再次发送请求，服务器端也无法辨认出是原先那个，而会以相同方式处理新请求。因此，HTTP 又称「无状态的 Stateless 协议」
+无状态的 Stateless 协议<br />[![](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-21.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=XcoFX&originHeight=374&originWidth=309&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-21.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />从上图可以看出，服务器端相应客户端请求后立即断开连接。换言之，服务器端不会维持客户端状态。即使同一客户端再次发送请求，服务器端也无法辨认出是原先那个，而会以相同方式处理新请求。因此，HTTP 又称「无状态的 Stateless 协议」
 #### 请求消息（Request Message）的结构
-下面是**客户端向服务端**发起请求消息的结构：<br />[![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-22.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=CMVff&originHeight=292&originWidth=391&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-22.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />从图中可以看出，请求消息可以分为**请求头、消息头、消息体** 3 个部分。其中，请求行含有请求方式（请求目的）信息。典型的请求方式有 GET 和 POST ，GET 主要用于请求数据，POST 主要用于传输数据。为了降低复杂度，我们实现只能响应 GET 请求的 Web 服务器端，下面解释图中的请求行信息。其中「GET/index.html HTTP/1.1」 具有如下含义：<br />请求（GET）index.html 文件，通常以 1.1 版本的 HTTP 协议进行通信。<br />**请求行只能通过 1 行（line）发送**，因此，服务器端很容易从 HTTP 请求中提取第一行，并分别分析请求行中的信息。<br />请求行下面的**消息头中包含发送请求的浏览器信息、用户认证信息等关于 HTTP 消息的附加信息**。最后的**消息体中装有客户端向服务端传输的数据**，为了装入数据，需要以 POST 方式发送请求。但是我们的目标是实现 GET 方式的服务器端，所以可以忽略这部分内容。另外，消息体和消息头与之间以空行隔开，因此不会发生边界问题。
+下面是**客户端向服务端**发起请求消息的结构：<br />[![](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-22.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=CMVff&originHeight=292&originWidth=391&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-22.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />从图中可以看出，请求消息可以分为**请求头、消息头、消息体** 3 个部分。其中，请求行含有请求方式（请求目的）信息。典型的请求方式有 GET 和 POST ，GET 主要用于请求数据，POST 主要用于传输数据。为了降低复杂度，我们实现只能响应 GET 请求的 Web 服务器端，下面解释图中的请求行信息。其中「GET/index.html HTTP/1.1」 具有如下含义：<br />请求（GET）index.html 文件，通常以 1.1 版本的 HTTP 协议进行通信。<br />**请求行只能通过 1 行（line）发送**，因此，服务器端很容易从 HTTP 请求中提取第一行，并分别分析请求行中的信息。<br />请求行下面的**消息头中包含发送请求的浏览器信息、用户认证信息等关于 HTTP 消息的附加信息**。最后的**消息体中装有客户端向服务端传输的数据**，为了装入数据，需要以 POST 方式发送请求。但是我们的目标是实现 GET 方式的服务器端，所以可以忽略这部分内容。另外，消息体和消息头与之间以空行隔开，因此不会发生边界问题。
 #### 24.1.4 响应消息（Response Message）的结构
-下面是 Web **服务器端向客户端**传递的响应信息的结构。从图中可以看出，该响应消息由状态行、头信息、消息体等 3 个部分组成。状态行中有关于请求的状态信息，这是与请求消息相比最为显著地区别。<br />[![](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-23.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=uKMdm&originHeight=287&originWidth=387&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://halo-1310118673.cos.ap-singapore.myqcloud.com/halo/blog/2023/08/20230813224506-23.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />第一个字符串**状态行中含有关于客户端请求的处理结果**。例如，客户端请求 index.html 文件时，表示 index.html 文件是否存在、服务端是否发生问题而无法响应等不同情况的信息写入状态行。图中的「HTTP/1.1 200 OK」具有如下含义：
+下面是 Web **服务器端向客户端**传递的响应信息的结构。从图中可以看出，该响应消息由状态行、头信息、消息体等 3 个部分组成。状态行中有关于请求的状态信息，这是与请求消息相比最为显著地区别。<br />[![](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-23.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5#from=url&id=uKMdm&originHeight=287&originWidth=387&originalType=binary&ratio=1.2&rotation=0&showTitle=false&status=done&style=none&title=)](https://pic.keepjolly.com/halo/blog/2023/08/20230813224506-23.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />第一个字符串**状态行中含有关于客户端请求的处理结果**。例如，客户端请求 index.html 文件时，表示 index.html 文件是否存在、服务端是否发生问题而无法响应等不同情况的信息写入状态行。图中的「HTTP/1.1 200 OK」具有如下含义：
 
 - 200 OK : 成功处理了请求!
 - 404 Not Found : 请求的文件不存在!
