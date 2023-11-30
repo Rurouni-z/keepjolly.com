@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/learn/公务员行测--言语理解.md",
-                "mode": "source",
+                "file": "content/posts/learn/CivilServant/公务员行测--言语理解.md",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/posts/learn/公务员行测--言语理解.md",
+                "file": "content/posts/learn/CivilServant/公务员行测--言语理解.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "content/posts/learn/公务员行测--言语理解.md",
+                "file": "content/posts/learn/CivilServant/公务员行测--言语理解.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/posts/learn/公务员行测--言语理解.md"
+                "file": "content/posts/learn/CivilServant/公务员行测--言语理解.md"
               }
             }
           },
@@ -158,9 +158,15 @@
   },
   "active": "9cc1fc8f9bfc8dab",
   "lastOpenFiles": [
+    "content/posts/learn/CivilServant/公务员行测--言语理解 copy.md",
+    "content/posts/learn/CivilServant/公务员行测--言语理解.md",
     "content/posts/learn/公务员行测--言语理解 copy.md",
-    "content/posts/learn/公务员行测--数量关系.md",
     "content/posts/learn/公务员行测--言语理解.md",
+    "content/posts/learn/CivilServant/公务员行测--资料分析.md",
+    "content/posts/learn/CivilServant/公务员行测--数量关系.md",
+    "content/posts/learn/公务员行测--数量关系.md",
+    "content/posts/learn/CivilServant",
+    "content/posts/learn/新建文件夹",
     "content/posts/learn/公务员行测--资料分析.md",
     "content/posts/learn/C++学习.md",
     "content/posts/learn/第3、4讲：实现一个基于TCP的RTP同时传输h264和aac的RTSP服务器.md",
