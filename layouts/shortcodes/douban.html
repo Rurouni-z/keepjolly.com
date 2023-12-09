@@ -8,7 +8,10 @@
     {{ $dbType = $dbUrl }}
     {{ $dbApiUrl = "https://neodb.social/api/catalog/fetch?url=" }}
 {{ end }}
-
+{{ if not .Site.IsServer }}
+<p style="text-align: center;"><small>远程获取内容失败，请检查 API 有效性。</small></p>
+{{ else }}
+    
 {{ $dbFetch := getJSON $dbApiUrl $dbType }}
 
 {{ if $dbFetch }}
@@ -27,3 +30,4 @@
 {{else}}
     <p style="text-align: center;"><small>远程获取内容失败，请检查 API 有效性。</small></p>
 {{end}}
+{{ end }}
