@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/learn/CivilServant/公务员行测--判断推理.md",
+                "file": "content/posts/learn/CivilServant/公务员行测--资料分析.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "09457a6e9753b9d1",
@@ -85,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/posts/learn/CivilServant/公务员行测--判断推理.md",
+                "file": "content/posts/learn/CivilServant/公务员行测--资料分析.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "content/posts/learn/CivilServant/公务员行测--判断推理.md",
+                "file": "content/posts/learn/CivilServant/公务员行测--资料分析.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/posts/learn/CivilServant/公务员行测--判断推理.md"
+                "file": "content/posts/learn/CivilServant/公务员行测--资料分析.md"
               }
             }
           },
@@ -158,8 +159,8 @@
   },
   "active": "9cc1fc8f9bfc8dab",
   "lastOpenFiles": [
-    "content/posts/learn/CivilServant/公务员行测--数量关系.md",
     "content/posts/learn/CivilServant/公务员行测--判断推理.md",
+    "content/posts/learn/CivilServant/公务员行测--数量关系.md",
     "content/posts/learn/CivilServant/公务员行测--资料分析.md",
     "content/posts/life/记录第一次团建.md",
     "content/posts/learn/CivilServant/公务员行测--言语理解.md",
