@@ -1,3 +1,5 @@
 {
-  "strictLineBreaks": true
+  "strictLineBreaks": true,
+  "livePreview": true,
+  "defaultViewMode": "source"
 }

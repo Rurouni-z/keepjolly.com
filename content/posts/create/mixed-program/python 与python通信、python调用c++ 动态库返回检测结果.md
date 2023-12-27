@@ -279,7 +279,7 @@ lib.Detect_Run(det, pi)  # 检测结果
 参考链接：[python调用c/C++ 时传递结构体参数](https://www.cnblogs.com/pyse/p/8590829.html)
 ### 小难点1：嵌套结构体传输/读取指针值/ctypes BUG？
 注意C++ 结构体的**变量顺序**和**变量类型**必须与python的类一致！！！！一定要仔细校对，其他应该没有什么问题
-C++ 端
+C++ 端（可能是C的字节对齐原因）
 ```cpp
 typedef enum AttributeType
 {

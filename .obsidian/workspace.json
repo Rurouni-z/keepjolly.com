@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "09457a6e9753b9d1",
@@ -136,7 +135,9 @@
             "state": {
               "type": "all-properties",
               "state": {
-                "sortOrder": "frequency"
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
               }
             }
           }
@@ -159,12 +160,12 @@
   },
   "active": "9cc1fc8f9bfc8dab",
   "lastOpenFiles": [
+    "content/posts/learn/CivilServant/公务员行测--言语理解.md",
     "content/posts/learn/CivilServant/公务员行测--判断推理.md",
     "content/posts/learn/CivilServant/公务员行测--数量关系.md",
+    "content/posts/learn/CivilServant/公务员行测--言语理解 copy.md",
     "content/posts/learn/CivilServant/公务员行测--资料分析.md",
     "content/posts/life/记录第一次团建.md",
-    "content/posts/learn/CivilServant/公务员行测--言语理解.md",
-    "content/posts/learn/CivilServant/公务员行测--言语理解 copy.md",
     "content/posts/learn/公务员行测--言语理解 copy.md",
     "content/posts/learn/公务员行测--言语理解.md",
     "content/posts/learn/公务员行测--数量关系.md",
