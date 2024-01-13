@@ -1,4 +1,4 @@
 ---
-title: My Hatred of Error
+title: My Bugs
 description: 错误归纳。
 ---

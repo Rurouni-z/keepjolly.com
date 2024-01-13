@@ -4,7 +4,7 @@ date: 2022-04-24 14:27:55.812
 updated: 2022-04-24 14:28:45.165
 url: /archives/leetcode-week-1
 categories: 
-- algorithm
+- other
 tags: 
 - Python
 - LeetCode

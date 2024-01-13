@@ -8,7 +8,7 @@ slug: stl-summary
 toc: true
 rightToc: false
 categories: 
-- algorithm
+- learn
 tags: 
 - C++
 original: false

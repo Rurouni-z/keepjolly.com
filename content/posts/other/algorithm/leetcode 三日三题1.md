@@ -4,7 +4,7 @@ date: 2022-03-30 14:53:45.377
 updated: 2022-03-30 14:53:45.377
 url: /archives/leetcodethree-day-three-code
 categories: 
-- algorithm
+- other
 tags: 
 - Python
 - LeetCode

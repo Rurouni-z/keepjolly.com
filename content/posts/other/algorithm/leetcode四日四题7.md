@@ -4,7 +4,7 @@ date: 2022-04-12 10:45:54.126
 updated: 2022-04-12 10:45:54.126
 url: /archives/leetcode-four-day-four-answer-1
 categories: 
-- algorithm
+- other
 tags: 
 - Python
 - LeetCode

@@ -4,7 +4,7 @@ date: 2022-03-26 10:02:04.603
 updated: 2022-04-03 19:00:49.63
 url: /archives/leetcode-one-question-per-day
 categories: 
-- algorithm
+- other
 tags: 
 - Python
 - LeetCode

@@ -4,7 +4,7 @@ date: 2022-04-13 13:04:48.387
 updated: 2022-04-13 13:04:48.387
 url: /archives/leetcode-si-ri-si-ti
 categories: 
-- algorithm
+- other
 tags: 
 ---
 
