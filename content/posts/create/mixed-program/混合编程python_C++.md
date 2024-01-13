@@ -15,7 +15,7 @@ original: true
 author: Rurouni
 website: www.keepjolly.com
 ---
-[上个版本](https://keepjolly.com/posts/create/python-client-c-server/): 只是用到ctypes进行传输, 这次将python服务端更改为C++服务端,方便后续维护.
+[上个版本](https://keepjolly.com/posts/create/ctype-with-threading/): 只是用到ctypes进行传输, 这次将python服务端更改为C++服务端,方便后续维护.
 本文实现功能: python传输图片给C++, C++接受图片后对图片进行处理,并将结果返回给python客户端, pass image from python to C++
 ## C++ 服务端
 ### .h文件
