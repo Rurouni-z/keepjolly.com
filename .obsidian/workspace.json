@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "2e654e7f89458e2c",
+        "id": "42fc9a8d71e664f9",
         "type": "tabs",
         "children": [
           {
-            "id": "9cc1fc8f9bfc8dab",
+            "id": "dafcbbe76d275354",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/learn/CivilServant/公务员行测--资料分析.md",
+                "file": "content/posts/create/毕业论文格式小技巧.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/posts/learn/CivilServant/公务员行测--资料分析.md",
+                "file": "content/posts/create/毕业论文格式小技巧.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "content/posts/learn/CivilServant/公务员行测--资料分析.md",
+                "file": "content/posts/create/毕业论文格式小技巧.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/posts/learn/CivilServant/公务员行测--资料分析.md"
+                "file": "content/posts/create/毕业论文格式小技巧.md"
               }
             }
           },
@@ -158,13 +158,15 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "9cc1fc8f9bfc8dab",
+  "active": "dafcbbe76d275354",
   "lastOpenFiles": [
+    "().md",
+    "content/posts/create/毕业论文格式小技巧.md",
+    "content/posts/learn/CivilServant/公务员行测--资料分析.md",
     "content/posts/learn/CivilServant/公务员行测--言语理解.md",
     "content/posts/learn/CivilServant/公务员行测--判断推理.md",
     "content/posts/learn/CivilServant/公务员行测--数量关系.md",
     "content/posts/learn/CivilServant/公务员行测--言语理解 copy.md",
-    "content/posts/learn/CivilServant/公务员行测--资料分析.md",
     "content/posts/life/记录第一次团建.md",
     "content/posts/learn/公务员行测--言语理解 copy.md",
     "content/posts/learn/公务员行测--言语理解.md",
