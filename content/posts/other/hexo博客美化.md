@@ -1,3 +1,21 @@
+---
+title: hexo博客美化
+date: 2024-04-01 09:31:54 +0800
+lastmod: 
+summary: 
+url: 
+slug: hexo-custom
+toc: true
+rightToc: false
+categories: 
+- other
+tags: 
+- Blog
+- Hugo
+original: true
+author: Rurouni
+website: www.keepjolly.com
+---
 记录一些我没用到但是[butterfly](https://butterfly.js.org)上是true的选项
 ## Page Front-matter
 [PFM](https://butterfly.js.org/posts/dc584b87/#Front-matter)
@@ -102,4 +120,3 @@ fields:
 - tags
 - title
 ```
-
