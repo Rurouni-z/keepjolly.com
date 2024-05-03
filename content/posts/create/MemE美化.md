@@ -66,7 +66,7 @@ categoryBy = "sections"
 #      `content/categories/_index.md`
 #      文件。
 ```
-![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230527195030.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/05/20230527195030.png?imageMogr2/format/webp%7C)
 ## 列表页面
 此处页面在点击分类页中任意文件夹名即可显示
 ## 设置网址图标
@@ -145,7 +145,7 @@ enableFooter = true
 displayFooter = false
 ```
 [底部留白](https://github.com/reuixiy/hugo-theme-meme/issues/357)
-![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230527195030-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/05/20230527195030-1.png?imageMogr2/format/webp%7C)
 ## life & tech 模板
 该处建议参考主题作者的[config.toml](https://github.com/reuixiy/io-oi.me/blob/master/config.toml#L232) 中的menu，以及content文件夹下的文件组织路径，注意，其中的zh文件夹是为了后续的中英文转换，如不需要，直接在content下创建life & tech文件夹
 注意文件夹为英文，否则路径会带有中文，Permalink不知道作用

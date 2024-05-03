@@ -44,12 +44,12 @@ PCM(Pulse Code Modulation)也被称为 脉码编码调制。PCM中的声音数�
 
 如果是双声道的文件，采样数据按时间先后顺序交叉地存入。如图所示:
 
-![图片.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449.png?imageMogr2/format/webp%7C)
 
 ## aac的码流格式
 [AAC的ADTS头文件信息介绍](https://blog.csdn.net/jay100500/article/details/52955232)、[C++ 解析aac-adts的头部信息](https://blog.csdn.net/u013113678/article/details/123134860)、[AAC ADTS格式分析](https://www.cnblogs.com/zhangxuan/p/8809245.html)、[保留用](https://xie.infoq.cn/article/403c31f46c2ee5e39fdbede0e)
 
-![图片.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449-1.png?imageMogr2/format/webp%7C)
 
 AAC音频格式：Advanced Audio Coding(高级音频解码)，是一种由MPEG-4标准定义的有损音频压缩格式，由Fraunhofer发展，Dolby, Sony和AT&T是主要的贡献者。
 
@@ -64,15 +64,15 @@ AAC音频格式：Advanced Audio Coding(高级音频解码)，是一种由MPEG-4
 - profile：表示使用哪个级别的AAC
    - profile的值等于 Audio Object Type的值减1. 但是有17个，2bit能表示？
    - profile = MPEG-4 Audio Object Type - 1
-   - ![图片.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+   - ![image](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449-2.png?imageMogr2/format/webp%7C)
 - sampling_frequency_index：采样率的下标
-   - ![图片.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+   - ![image](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449-3.png?imageMogr2/format/webp%7C)
 - channel_configuration：声道数，比如2表示立体声双声道
-   - ![图片.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+   - ![image](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449-4.png?imageMogr2/format/webp%7C)
 
 接下来看下adts_variable_header();
 
-![图片.png](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/05/20230526210449-5.png?imageMogr2/format/webp%7C)
 
 - aac_frame_length：一个ADTS帧的长度包括ADTS头和AAC原始流。
    - frame length, this value must include 7 or 9 bytes of header length:

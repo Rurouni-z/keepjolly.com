@@ -15,7 +15,7 @@ tags:
 ## 初阶知识
 ### 变量
 #### 加法运算
-![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230311202016.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/03/20230311202016.png?imageMogr2/format/webp%7C)
 #### 浮点数/byte/布尔值
 
 - 浮点数 = 符号位 +指数位 +尾数位
@@ -88,7 +88,7 @@ System.out.print(-2>>>2);
 
 - switch中表达式的返回值必须是：byte, short, int, char, enum, String
 - break/continue 可以通过标签指明终止/跳过哪一层语句块（不建议使用）
-   - ![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230311202016-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+   - ![image](https://pic.keepjolly.com/halo/blog/2023/03/20230311202016-1.png?imageMogr2/format/webp%7C)
 - "lucky".equals(type) // 避免空指针
 ### 数组/排序/查找
 #### 二维数组
@@ -112,7 +112,7 @@ for (int i = 0, j = 0; i<arrNew.length; ++i){
 ### 对象
 #### 对象内存布局
 加载cat类信息从第一句代码就执行
-![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230311202016-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/03/20230311202016-2.png?imageMogr2/format/webp%7C)
 #### Java内存的结构分析
 
 - 栈：一般存放基本数据类型（局部变量）

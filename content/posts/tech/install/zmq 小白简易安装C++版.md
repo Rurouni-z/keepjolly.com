@@ -32,7 +32,7 @@ website: www.keepjolly.com
 上述安装完成后查看头文件和库文件路径
 > 如果当前在用户路径下 cd ../../user
 
-> 头文件路径 ： /usr/local/include
+> 头文件路径 ： /usr/local/include  
 > 库文件路径 : /usr/local/lib
 
 ### CMakeList.txt

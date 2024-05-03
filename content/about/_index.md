@@ -35,7 +35,7 @@ You just have to get up, get up, get up, get up<br>
 
 网站主题：[MemE](https://github.com/reuixiy/hugo-theme-meme)
 
-网站部署平台：[github](www.github.com)
+网站部署平台：[github](https://www.github.com)
 
 如有侵权，欢迎联系
 

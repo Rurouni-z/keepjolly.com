@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/create/毕业论文格式小技巧.md",
+                "file": "content/posts/life/腾讯云高消费.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/posts/create/毕业论文格式小技巧.md",
+                "file": "content/posts/life/腾讯云高消费.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "content/posts/create/毕业论文格式小技巧.md",
+                "file": "content/posts/life/腾讯云高消费.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/posts/create/毕业论文格式小技巧.md"
+                "file": "content/posts/life/腾讯云高消费.md"
               }
             }
           },
@@ -160,8 +160,12 @@
   },
   "active": "dafcbbe76d275354",
   "lastOpenFiles": [
-    "().md",
+    "content/posts/life/文字摘录.md",
+    "content/posts/life/腾讯云高消费.md",
+    "content/posts/life/2023年小记.md",
+    "content/posts/life/《太空堡垒卡拉狄加》终极无剧透观影顺序指南+下载链接.md",
     "content/posts/create/毕业论文格式小技巧.md",
+    "().md",
     "content/posts/learn/CivilServant/公务员行测--资料分析.md",
     "content/posts/learn/CivilServant/公务员行测--言语理解.md",
     "content/posts/learn/CivilServant/公务员行测--判断推理.md",

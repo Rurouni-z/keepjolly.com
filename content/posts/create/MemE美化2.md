@@ -107,7 +107,7 @@ algoliaIndexName = ""
 # 说明：https://www.algolia.com/
 ```
 ### algolia官网查找key
-![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230527195908.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/05/20230527195908.png?imageMogr2/format/webp%7C)
 或者登录后访问[网址](https://www.algolia.com/account/api-keys)，然后找到对应Application ID、ApiKey、IndexName，找不到可以自行在参考博客中查找。
 ### 覆盖index.algolia.json配置
 然后在博客主目录/layouts下新建index.algolia.json来覆盖meme中的配置，此处内容参考[dreamsafari的json](https://github.com/dreamsafari/LoveIt/blob/master/layouts/_default/list.algolia.json)
@@ -119,7 +119,7 @@ algoliaIndexName = ""
 ```
 ### 修改algolia搜索配置
 此处配置搜索选项，参考[修改algolia的设置](https://www.dreamsafari.info/2020/04/hugo-loveit-mod/#23-%E4%BF%AE%E6%94%B9algolia%E7%9A%84%E8%AE%BE%E7%BD%AE)
-![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230527195908-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/05/20230527195908-1.png?imageMogr2/format/webp%7C)
 ### 自动上传algolia.json
 详见github action处
 ## 配置about页及视频

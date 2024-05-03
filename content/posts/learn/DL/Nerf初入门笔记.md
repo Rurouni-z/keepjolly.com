@@ -16,7 +16,7 @@ tags:
 ## NeRF 是做什么的
 通过使用稀疏的输入视图优化底层的的连续辐射体积场函数，实现**复杂场景的新视角合成**
 ## NeRF 是怎么做的
-![Nerf pipeline: (a)，(b)生成射线，(c)立体渲染，(d)算 mse loss。](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5 "Nerf pipeline: (a)，(b)生成射线，(c)立体渲染，(d)算 mse loss。")
+![image](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051.jpg?imageMogr2/format/webp%7C)，(b)生成射线，(c)立体渲染，(d)算 mse loss。")
 ### Pipeline
 [nerf(二)---工作流程与基本原理](https://github.com/yangkang2021/nerf-learn/blob/master/nerf/02.%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E4%B8%8E%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.md)
 
@@ -69,7 +69,7 @@ tags:
 > 1. 场景是由一团发光粒子组成的，这里粒子密度的空间分布会发生变化
 > 2. 发射的光（每一个体素都会向四周均匀发出光）不随观察视角而改变
 
-假设**距离** $t$ 的近场边界和远场边界分别为 $t_n$ 和 $t_f$ ，那么对于一条射线，它的期望颜色表达式应该如下：<br />$C(\mathbf{r})=\int_{t_n}^{t_f} T(t) \sigma(\mathbf{r}(t)) \mathbf{c}(\mathbf{r}(t), \mathbf{d}) d t, \text{ where } T(t)=\exp \left(-\int_{t_n}^t \sigma(\mathbf{r}(s)) d s\right)$<br />函数 $T(t)$ 表示的是光线在 $t_n$ 到 $t$ 距离内的透射率，即光线在不碰到任何其他粒子的情况下能够传播的概率<br />一张示例图：<br />![image.png](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />从连续的 NeRF 中渲染视图需要估计相机光线追踪的每个像素的积分 $C(\mathbf{r})$
+假设**距离** $t$ 的近场边界和远场边界分别为 $t_n$ 和 $t_f$ ，那么对于一条射线，它的期望颜色表达式应该如下：<br />$C(\mathbf{r})=\int_{t_n}^{t_f} T(t) \sigma(\mathbf{r}(t)) \mathbf{c}(\mathbf{r}(t), \mathbf{d}) d t, \text{ where } T(t)=\exp \left(-\int_{t_n}^t \sigma(\mathbf{r}(s)) d s\right)$<br />函数 $T(t)$ 表示的是光线在 $t_n$ 到 $t$ 距离内的透射率，即光线在不碰到任何其他粒子的情况下能够传播的概率<br />一张示例图：<br />![image](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-1.png?imageMogr2/format/webp%7C)<br />从连续的 NeRF 中渲染视图需要估计相机光线追踪的每个像素的积分 $C(\mathbf{r})$
 > _这个很好理解，因为 2D 图像的每一个像素值实际上是相机发出的一条射线上的所有点累积叠加的结果_
 
 文中估计积分的方法是 [数值积分(Quadrature)](https://zh.wikipedia.org/wiki/%E9%AB%98%E6%96%AF%E6%B1%82%E7%A7%AF)<br />简单来说，就是分层抽样，把 $[t_n, t_f]$ 等分成 $\mathbf{N}$ 个区间，然后从每个区间内均匀随机地抽取一个样本
@@ -133,7 +133,7 @@ $t_i \sim \mathcal{U}\left[t_n+\frac{i-1}{N}\left(t_f-t_n\right), t_n+\frac{i}{N
 - 点云表示的缺点：由于缺少底层网格的连接结构，需要额外的后处理来从模型中提取三维几何图形。
 - 网格表示的缺点：现有的网格表示通常基于对一个模板网格的变形，因此不允许任意拓扑。
 
-[Occupancy Networks](https://blog.csdn.net/weixin_45616624/article/details/122790729)基于对连续三维占据函数进行直接学习的三维重建新方法。利用神经网络实现对任意分辨率的占据函数的预测。训练时大大降低了内存，推理时利用简单的多分辨率等值面提取算法从学习的模型中提取网格。<br />![1.jpg](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-2.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+[Occupancy Networks](https://blog.csdn.net/weixin_45616624/article/details/122790729)基于对连续三维占据函数进行直接学习的三维重建新方法。利用神经网络实现对任意分辨率的占据函数的预测。训练时大大降低了内存，推理时利用简单的多分辨率等值面提取算法从学习的模型中提取网格。<br />![image](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-2.jpg?imageMogr2/format/webp%7C)
 ### a neural 3D texture field
 a [Texture Field](https://arxiv.org/abs/1905.07259) as a mapping from 3D point p, shape embedding s and condition z to color c:
 ### light field sample interpolation techniques
@@ -145,13 +145,13 @@ optimize mesh representations to reproduce a set of input images<br />可参考�
 ### discretization artifacts
 搞不懂,离散化伪影?<br />41 24 论文 他们用的是什么方法
 ### view-dependent
-view-dependent就是加入了direction（θ,ϕ），可以使得每个方向都有独立的颜色变化<br />![1.jpg](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-3.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+view-dependent就是加入了direction（θ,ϕ），可以使得每个方向都有独立的颜色变化<br />![image](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-3.jpg?imageMogr2/format/webp%7C)
 ### 如何看图三
 图三表示不同方向下，展示的结果会不一致，有镜面反射的效果<br />[In the case of a fully Lambertian surface](https://blog.devgenius.io/paper-explained-nerf-representing-scenes-as-neural-radiance-fields-for-view-synthesis-e16567180531) ( imagine an ideal “matte” surface like a terracotta vase), when a light ray hits a point the light enters slightly into the surface of the object and **is scattered in all directions**. In this case, I can look at the point from any direction and its color will be about the same. At the opposite extreme we have a perfect mirror: in this case each light ray is reflected in only one direction and this makes that, for example, when we look at a mirror what we see changes depending on where we are looking from. Fig. 3 of the paper shows the effect of the viewing direction
 ### inverse transform sampling
 已知PDF和CDF后, 就可以求逆函数, 再通过采样均匀分布的点，将其代入到逆函数，进而得到服从指数分布的样本点(最终目标).<br />[采样理论概述（逆变换采样、拒绝采样）](https://zhuanlan.zhihu.com/p/396618080)
 ### DeepSDF
-[推荐博客](https://blog.csdn.net/qq_43420530/article/details/122404223)、[论文](https://openaccess.thecvf.com/content_CVPR_2019/papers/Park_DeepSDF_Learning_Continuous_Signed_Distance_Functions_for_Shape_Representation_CVPR_2019_paper.pdf)<br />[传统的sdf，文中也介绍了ray tracing、ray marching。。。](https://www.jianshu.com/p/d34afd45f28e)<br />![BV1Nv4y1m7hJ](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-4.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5 "BV1Nv4y1m7hJ")<br />正式介绍DeepSDF：
+[推荐博客](https://blog.csdn.net/qq_43420530/article/details/122404223)、[论文](https://openaccess.thecvf.com/content_CVPR_2019/papers/Park_DeepSDF_Learning_Continuous_Signed_Distance_Functions_for_Shape_Representation_CVPR_2019_paper.pdf)<br />[传统的sdf，文中也介绍了ray tracing、ray marching。。。](https://www.jianshu.com/p/d34afd45f28e)<br />![image](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-4.jpg?imageMogr2/format/webp%7C)<br />正式介绍DeepSDF：
 
 1. 首先，我们可以用SDF（Signed Distance Function）这样一个函数来隐式地表示一个三维物体，输入是空间中点的三维坐标，输出是这个点离我们想表示的物体表面的最近距离，如果在外部就是正，内部就是负。**显然只要SDF找的好，从理论上来说，我们就能够简单粗暴地表示任意复杂且连续的物体**，这也是物体的隐式表示方式与用点云、体素、网格等表示方式相比最大的好处。
 
@@ -160,13 +160,13 @@ $S D F(\boldsymbol{x})=s: \boldsymbol{x} \in \mathbb{R}^{3}, s \in \mathbb{R}$<b
 2. 现在假定我们有几个离散的SDF函数的输入与输出，我们想要通过某种方式得到这个完整的SDF函数，最终就能实现根据这几个离散的采样点来重建整个三维物体了，这也是本文的根本目的。本文提出的DeepSDF思想便是，用**神经网络当做SDF函数的拟合器**，训练完（或者说拟合完）之后，输入大量自定义的三维空间采样点，再提取出所有值为0的点组成面，就能够重建整个三维物体了。因为神经网络是万能函数拟合器，所以说这种方法可以表示任意精度的，连续的三维物体，只不过是得取决于你的采样点数量与神经网络的层数罢了
 3. 很显然，基于上面的思想我们很自然地想到这种结构：
 
-![1.jpg](https://cdn.nlark.com/yuque/0/2023/jpeg/12600461/1685605681470-8fe98fb6-6bad-41a4-bfe3-db8edec29925.jpeg#averageHue=%23f7f1eb&clientId=u11484f18-29d5-4&from=ui&height=219&id=BHKkM&originHeight=261&originWidth=442&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=12333&status=done&style=none&taskId=u517107bc-b88c-4d70-a7a4-1a1cc2147d5&title=&width=371)<br />在这里，神经网络的作用不是去实现某种功能，而是**去表示物体或场景本身**，因此也会导致后续的各种训练上和我们正常认知的神经网络训练方式有些许的区别（关于这两者区别建议看一下[《用神经网络表示物体或场景与用神经网络完成任务的区别与联系》](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-5..png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)）
+![image](https://cdn.nlark.com/yuque/0/2023/jpeg/12600461/1685605681470-8fe98fb6-6bad-41a4-bfe3-db8edec29925.jpeg#averageHue=%23f7f1eb&clientId=u11484f18-29d5-4&from=ui&height=219&id=BHKkM&originHeight=261&originWidth=442&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=12333&status=done&style=none&taskId=u517107bc-b88c-4d70-a7a4-1a1cc2147d5&title=&width=371)<br />在这里，神经网络的作用不是去实现某种功能，而是**去表示物体或场景本身**，因此也会导致后续的各种训练上和我们正常认知的神经网络训练方式有些许的区别（关于这两者区别建议看一下[《用神经网络表示物体或场景与用神经网络完成任务的区别与联系》](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-5..png?imageMogr2/format/webp%7C)）
 
 4. 这样就万事大吉了吗？并没有，因为如果用这种方法，并不是数据驱动的，而更像是一种数学的方法，我们**每次进行重建的时候都得重新训练一个神经网络得到表示这个物体的专属SDF**，比如给我一个轿车的若干采样点，我给训练出来了，你要是再给我一个卡车的采样点，我还得重新训练，虽说这样我们根本不需要数据集，但是缺点显而易见：我是希望在神经网络中引入对三维数据集的一些先验来辅助拟合，以便于更好地进行三维重建的，比如你就给我8个采样点，分别代表正方体的8个顶点，如果不引入数据集（如汽车数据集）的先验的话，最终拟合出来的东西肯定就是一个正方体（或者是个球体）之类的东西，而不是像个汽车的样子。
 5. 因此，本文提出了下面的架构：
 
-![1.jpg](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-6.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)<br />假定数据集中的某类数据被编码成latent code进行表示，这样我将这个latent code和三维坐标同时丢入神经网络查询得到sdf值，其实就能够得到某类中某个具体的三维物体的SDF函数表示了
+![image](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-6.jpg?imageMogr2/format/webp%7C)<br />假定数据集中的某类数据被编码成latent code进行表示，这样我将这个latent code和三维坐标同时丢入神经网络查询得到sdf值，其实就能够得到某类中某个具体的三维物体的SDF函数表示了
 
    1. auto-coder
 
-![1.jpg](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-7.jpg?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/06/20230607220051-7.jpg?imageMogr2/format/webp%7C)

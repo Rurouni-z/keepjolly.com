@@ -32,17 +32,17 @@ To get an automated installation you can use the [Git Chocolatey package](https:
 
    4. Confirm that the command prints the installed version of Go.
 
-![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230524215116.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/05/20230524215116.png?imageMogr2/format/webp%7C)
 ## 安装hugo
 [官方文档](https://gohugo.io/installation/windows/)
 Prebuilt binaries are available for a variety of operating systems and architectures. Visit the [latest release](https://github.com/gohugoio/hugo/releases/latest) page, and scroll down to the Assets section.
-![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230524215116-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/05/20230524215116-1.png?imageMogr2/format/webp%7C)
 
 1. Download the archive for the desired [edition](https://gohugo.io/installation/windows/#editions), operating system, and architecture
 2. Extract the archive
 3. Move the executable to the desired directory
 4. Add this directory to the PATH environment variable
-   1. ![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230524215116-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+   1. ![image](https://pic.keepjolly.com/halo/blog/2023/05/20230524215116-2.png?imageMogr2/format/webp%7C)
    2. 不想配置Path可以在hugo安装位置处点击文件夹路径再输入cmd
 5. Verify that you have execute permission on the file
 
@@ -50,7 +50,7 @@ Please consult your operating system documentation if you need help setting file
 If you do not see a prebuilt binary for the desired edition, operating system, and architecture, install Hugo using one of the methods described below.
 ## 创建hugo文件 && 创建MemE主题
 在你的博客文件夹中右键git bash here
-![image.png](https://pic.keepjolly.com/halo/blog/2023/05/20230524215116-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/05/20230524215116-3.png?imageMogr2/format/webp%7C)
 输入
 > hugo new site blog （创建blog文件夹并放入hugo文件）
 
@@ -62,7 +62,7 @@ If you do not see a prebuilt binary for the desired edition, operating system, a
 3. git submodule add --depth 1 https://github.com/reuixiy/hugo-theme-meme.git themes/meme
 4. rm config.toml && cp themes/meme/config-examples/zh-cn/config.toml config.toml
 ### 新建文章
-hugo new "posts/hello-world.md"
+hugo new "posts/hello-world.md"  
 hugo new "about/_index.md"
 ### 启动服务
 hugo server -D

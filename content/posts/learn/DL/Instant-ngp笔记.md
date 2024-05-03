@@ -19,7 +19,7 @@ website: www.keepjolly.com
 ## Instant-ngp 是做什么的
 Given a fully connected neural network$m(\mathbf{y} ; \Phi)$ we are interested in **an encoding** of its inputs ${y}=\operatorname{enc}(\mathbf{x} ; \theta)$ that **improves the approximation quality and training speed** **across a wide range of applications** without incurring a notable performance overhead.  
 ## Instant-ngp 是怎么做的
-![image.png](https://pic.keepjolly.com/halo/blog/2023/06/20230609222700.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/06/20230609222700.png?imageMogr2/format/webp%7C)
 ### Pipeline
 > 定义一个$L\  resolution\  levels$ 的d维网格。其中红色框处在$1/ N_1$分辨率下，同理蓝色框处在$1/N_0$。以下都为2维网格，每个网格四个顶点。
 > 每个$l\  resolution\  level$关联T个F维特征向量。(F是entry维数，d是图片的维数)

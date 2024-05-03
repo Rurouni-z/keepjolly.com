@@ -1,7 +1,7 @@
 ---
 title: C++学习
 date: 2023-03-26 09:06:56.507
-updated: 2023-03-26 09:41:29.925
+updated: 2024-04-09 21:15:28 +0800
 url: /archives/cplusplus-learn
 toc: false
 rightToc: true
@@ -28,12 +28,12 @@ C++缺点：
 
 1. 机器语言，汇编语言
 2. 编译型语言 C++，C
-   1. ![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+   1. ![image](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137.png?imageMogr2/format/webp%7C)
 3. 解释型语言 Basic Python Java
 4. 脚本语言 bash csh
 - 逐级运行效率低，更易理解
 ### 数据类型
-![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-1.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-1.png?imageMogr2/format/webp%7C)
 疑问，为什么64位三个字节对齐
 ### 常量
 定义常量的方法：
@@ -43,24 +43,24 @@ C++缺点：
    - MA(1 + (a + b)) = 1+(a+b)*(1+(a+b)-1)
 - const：const double PI = 3.14159 （推荐）
 
-整数常量前缀：0x 十六进制、0 八进制、0b
-整数常量后缀：u(unsigned)、l(long)、可组合使用，大小写任意
-字符常量：单引号括起来，用L（必须大写）表示宽字符常量
+整数常量前缀：0x 十六进制、0 八进制、0b  
+整数常量后缀：u(unsigned)、l(long)、可组合使用，大小写任意  
+字符常量：单引号括起来，用L（必须大写）表示宽字符常量  
 ## 运算符与表达式
 ### 关系运算符
-A == B 其值为bool类型 而直接判断为1为int类型，注意空间大小
+A == B 其值为bool类型 而直接判断为1为int类型，注意空间大小  
 ### 杂项运算符
 ，：顺序执行一系列运算后，取最后一个表达式的值（int o = a,b,c）
 ### 补码
-正数原补反码一致
-负数
+正数原补反码一致  
+负数  
 
 - 反码是原码除符号位取反，补码=反码+1，反码=补码-1
 - 二进制to补码：$B 2 T_{w}(\vec{x}) \stackrel{.}{=} x_{w-1} 2^{w-1}+\sum_{i=0}^{w-2} x_{i} 2^{i}$
 
 [一文搞清二进制补码](https://bbs.huaweicloud.com/blogs/280855)
 ### 字节序
-一个字在内存中如何以byte存放
+一个字在内存中如何以byte存放  
 
 - 大端法：大多数IBM机器、网络传输，正序存放 8f ff ff ff
 - 小端法：Intel兼容机，逆序存放，但字节内正序 ff ff ff 8f
@@ -137,9 +137,9 @@ void main()
 }
 ```
 ### 移位问题
-问题：
-逻辑右移还是算数右移  -> 右移只对无符号数
-移位操作位数的限制 -> 移位数大于0， 小于位数
+问题：  
+逻辑右移还是算数右移  -> 右移只对无符号数  
+移位操作位数的限制 -> 移位数大于0， 小于位数  
 
 - C中需要考虑整数移位上下文情况（有无符号数，类型占字节数）
 ```cpp
@@ -175,15 +175,15 @@ int main() {
 }
 ```
 ### 类型转换问题
-C缺陷：隐式转换问题（sizeof(unsigned long long) 跟int比较，int转换为unsigned int）、double除法问题
-C++改进：static_cast、const_cast、dynamic_cast、reinterpret_cast，建议尽量少使用转换，多长啊
+C缺陷：隐式转换问题（sizeof(unsigned long long) 跟int比较，int转换为unsigned int）、double除法问题  
+C++改进：static_cast、const_cast、dynamic_cast、reinterpret_cast，建议尽量少使用转换，多长啊  
 ### 溢出问题
-C整数固定为int所占字节，溢出会有问题
-C++：使用boost库的cpp_int
+C整数固定为int所占字节，溢出会有问题  
+C++：使用boost库的cpp_int  
 ### 字符串问题
-C 以'\0'结尾，遇到即停止，忽视其后面的值，运行效率低，只能以'\0'表示字符串结束
-C++：string库（仍保留'\0'）、redis库（用多个结构体优化存储空间，并用len防止'\0'问题）
-字符串比较 >< 比较的是首地址大小
+C 以'\0'结尾，遇到即停止，忽视其后面的值，运行效率低，只能以'\0'表示字符串结束  
+C++：string库（仍保留'\0'）、redis库（用多个结构体优化存储空间，并用len防止'\0'问题）  
+字符串比较 >< 比较的是首地址大小  
 ### 头文件顺序
 
 - 系统的头文件要放在最前面；
@@ -197,16 +197,16 @@ C++：string库（仍保留'\0'）、redis库（用多个结构体优化存储�
 - off-by-one error
    -  解决思路：先考虑简单特例，然后外推结果；仔细计算边界
    - 判断范围时采取左闭右开，使其相减为元素个数 for (int i =0; i<10; i++)
-   - ![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-2.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+   - ![image](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-2.png?imageMogr2/format/webp%7C)
 
-[数组的下标访问和指针访问方式效率分析](https://blog.csdn.net/caomiao2006/article/details/7401833)
-二维数组访问时的原则：尽可能满足空间局部性
+[数组的下标访问和指针访问方式效率分析](https://blog.csdn.net/caomiao2006/article/details/7401833)  
+二维数组访问时的原则：尽可能满足空间局部性  
 
 - 在一个小的时间窗口内，访问的变量地址越接近越好，执行速度越快
 - 一般将最长的循环放最内层，最短的放最外层，以减少CPU跨切循环层的次数
 #### vector
 ### 字符串
-表示Unicode字符集：
+表示Unicode字符集：  
 
 - UTF-8：1byte表示字符，兼容ASCII码；特点是存储效率高，变长（不方便内部随机访问），无字节序问题（作为外部编码，供其他平台使用Linux）
    - 微软平台下又细分为UTF-8-BOM，二进制首位为EF BB BF，可能在其他平台有问题，可以删去首位来适配
@@ -214,7 +214,7 @@ C++：string库（仍保留'\0'）、redis库（用多个结构体优化存储�
    - BD文件的二进制首位为FE FF、LD为FF FE（正序）
 - UTF-32：分为UTF-32BD、UTF-32LD；特点同上
 
-字符串的指针表示方法
+字符串的指针表示方法  
 
 - char[] 和 char*的区别：
    1. char[] 地址不可变 其内的值可变
@@ -225,14 +225,14 @@ C++：string库（仍保留'\0'）、redis库（用多个结构体优化存储�
 - 修改为strlen_s、strcpy_s等函数
 - 调试时加入_CRT_SECURE_NO_WARNINGS
 ### String 和 char* 
-char* / char[] ：
+char* / char[] ：  
 
 - strcpy_s 拷贝
 - strlen 字符串长度
 - strcat 拼接
 - strcmp 比较ASCII码
 
-String：
+String：  
 
 - =
 - str.size() \ str.length()
@@ -240,25 +240,25 @@ String：
 - == 
 - str.capacity() 容量，自动扩容
 
-相比来说String 性能不是特别好
+相比来说String 性能不是特别好  
 ## C++指针
-指针占用空间由操作系统位数决定，因为要指向所有地址
+指针占用空间由操作系统位数决定，因为要指向所有地址  
 ### 左值与右值
-左值为编译器为其单独分配一块存储空间，可以取其地址。可以放在任意侧赋值运算符
+左值为编译器为其单独分配一块存储空间，可以取其地址。可以放在任意侧赋值运算符  
 
-- 函数或数据成员的名字
+- 函数或数据成员的名字  
 
-右值为数据本身，不能取其地址。只能放在赋值运算符右侧。
+右值为数据本身，不能取其地址。只能放在赋值运算符右侧。  
 
 - 没有标识符(变量名)，不可以&取地址的表达式，一般称为“临时对象”。
 ### 指针分类
 #### 数组指针
-array of pointers：
+array of pointers：  
 
 - int* a[4]，包含四个指针的a数组
 - 输出结果：*(a[3])
 
-a pointer to an array：
+a pointer to an array：  
 
 - int (*a)[4]，指向一个包含四个值的数组，其中4要与数组个数匹配
 - 输出结果：(*a)[3] -> array[3]  <=> *(array+3)  <=> array[3]
@@ -266,7 +266,7 @@ a pointer to an array：
    - int *a = array
    - 输出结果：*(a+3)
 #### const指针
-const修饰的部分为不可修改内容，其修饰的部分看左侧最近的部分，如果左侧没有，则看右侧
+const修饰的部分为不可修改内容，其修饰的部分看左侧最近的部分，如果左侧没有，则看右侧  
 ```cpp
 #include "stdafx.h"
 
@@ -354,7 +354,7 @@ char ch5 = ++*++cp; // 1.先cp地址+1, 2.得到其引用的值, 3.值+1, 4.赋�
 [delete and delete[]](https://www.iteye.com/blog/hzdiy-736816)、删除指针后并不会置为nullptr
 对于像 int/char/long/int*/struct 等等简单数据类型，由于对象没有 destructor，所以用 delete 和 delete [] 是一样的！但是如果是C++ 对象数组就不同了！
 ### 内存分配
-![](https://pic.keepjolly.com/halo/blog/2023/05/20230527212359.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/05/20230527212359.png?imageMogr2/format/webp%7C)
 
 - stack：由程序分配地址
 - heap：由程序员分配地址 new/delete
@@ -399,24 +399,24 @@ unique_ptr:
 - 会带来额外的存储开 销
 - weak_ptr用于防止循环引用
 ### 引用
-一个特殊的指针，可以看作是变量的别名，但会同时修改变量的值，且不可更换指针对象
-有了指针为什么还要引用？为了支持函数运算符重载
-有了引用为什么还用指针？为了兼容C
-函数传参说明：
+一个特殊的指针，可以看作是变量的别名，但会同时修改变量的值，且不可更换指针对象  
+有了指针为什么还要引用？为了支持函数运算符重载  
+有了引用为什么还用指针？为了兼容C  
+函数传参说明：  
 
 - 对内置基础类型（如int，double）而言，函数传递时pass by value更高效，直接传值而不是指针/引用
 - 对面向对象中的自定义类型而言，传递时pass by reference to const更高效，因为防止传递大数据而使用地址占用空间更小，const为了防止无意的修改
 ## C++基础语法
 ### if
-if将命中率高（更容易判true/false）的条件放首位，使得判断条件更快
-与switch比较
-使用场景：
+if将命中率高（更容易判true/false）的条件放首位，使得判断条件更快  
+与switch比较  
+使用场景：  
 
 - switch只支持常量值固定相等的分支判断
 - if可以判断区间
 - switch是if的特集
 
-性能比较：
+性能比较：  
 
 - 分支较少时，差别不大；分支多时，switch更快，因为是汇编是查表的形式
 - if多分支的开始几个分支效果高，之后效率递减；因为汇编下需要不断判断再跳转
@@ -457,13 +457,13 @@ do while更快 while 次之 for最慢，但实际开发不重视速度的话，�
 - 一般形式：数据类型(*指针变量名)(参数表)
 - bool ProcessNum(int i, int j, int(*p)(int a, int b))   // 回调函数
 ### 命名空间
-namespace 空间名{ ... }
-注意使用using namespace std，会引入所有空间内方法，可能会导致方法名冲突
+namespace 空间名{ ... }  
+注意使用using namespace std，会引入所有空间内方法，可能会导致方法名冲突  
 
 - 建议引入特定空间内方法名，using namespace std::cout;
 - 或直接指定该方法是该空间内，std::cout << 
 ### 函数体heck过程
-函数调用方式：_cdecl(/Gd) (C/C++→高级→调用约定)
+函数调用方式：_cdecl(/Gd) (C/C++→高级→调用约定)  
 
 | 低地址 | esp |
 | --- | --- |
@@ -471,9 +471,9 @@ namespace 空间名{ ... }
 | （地址向上递减） | ebx （栈向上增长） |
 | 高地址 | ebp |
 
-传参时为什么默认参数要在最右边，因为汇编时先push最右边的值（不同调用方式有差别）
+传参时为什么默认参数要在最右边，因为汇编时先push最右边的值（不同调用方式有差别）  
 ### 内联函数inline 
-用空间换时间，复杂函数可能不会内联
+用空间换时间，复杂函数可能不会内联  
 ### 递归
 四个基本法则：
 
@@ -494,8 +494,8 @@ namespace 空间名{ ... }
 - 使用动态规划，空间换时间
 ## C++高级语法
 ### 类
-C++使用struct、class定义类
-struct默认成员权限是public、class默认private
+C++使用struct、class定义类  
+struct默认成员权限是public、class默认private  
 ### 运算符重载
 #### 临时对象
 ```cpp
@@ -513,7 +513,7 @@ Complex Complex::operator+ (const Complex& c) const
 	//return Complex(_real + c._real, _image + c._image);
 }
 ```
-临时对象的处理：
+临时对象的处理：  
 ```cpp
 // 1. 自建拷贝构造
 Complex::Complex(const Complex& c)
@@ -619,7 +619,7 @@ bool CopyFile(const string& src, const string& dst)
 // 优点：防止宏重复；缺点：可移植性不好
 ```
 ### 深拷贝 浅拷贝 move操作
-浅拷贝：只拷贝指针地址，C++默认拷贝构造函数与赋值运算符重载都是浅拷贝；节省空间，但会引发多次释放。
+浅拷贝：只拷贝指针地址，C++默认拷贝构造函数与赋值运算符重载都是浅拷贝；节省空间，但会引发多次释放。  
 深拷贝：重新分配堆内存，拷贝指针指向内容。浪费空间，但不会多次释放。
 ```cpp
 String::String(const String &other){  // 拷贝构造函数
@@ -644,7 +644,7 @@ String& String::operator= (const String &other){  // 赋值函数
 	return *this;
 }
 ```
-兼有两者优点：1. 计数，2. move操作
+兼有两者优点：1. 计数，2. move操作  
 move：当旧指针不用时，资源让渡给新指针，即move操作
 ```cpp
 // 调用
@@ -700,11 +700,11 @@ private:
 	double _len;
 };
 ```
-![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-3.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
-所以sizeof(s1) = 16 = 8+4+4
+![image](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-3.png?imageMogr2/format/webp%7C)  
+所以sizeof(s1) = 16 = 8+4+4  
 ### 三大特性
-封装、继承、多态
-![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-4.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+封装、继承、多态  
+![image](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-4.png?imageMogr2/format/webp%7C)
 ## 编程思想
 ### 单例模式
 ```cpp
@@ -742,7 +742,7 @@ Singleton::~Singleton(){}
 ```
 [懒汉模式和恶汉模式 null/new](https://cloud.tencent.com/developer/article/1670804)
 ### 观察者模式
-观察者关注被观察者动态，如果被观察者动态更新，则通知观察者做出相应处理。
+观察者关注被观察者动态，如果被观察者动态更新，则通知观察者做出相应处理。  
 ### void*、nullptr
 ```cpp
 // C
@@ -761,10 +761,10 @@ Singleton::~Singleton(){}
 const_cast：用于将const转换成非const
 
 - const变量传给带非const参数的函数
-
-reinterpret_cast：重新解释类型，两者内存空间必须一致，不检查指向的内容和其指针类型
-static_cast：基本类型转换，有继承关系的类对象和类指针转换，由程序员来检查是否错误，没有动态转换的类型安全检查开销
-dynamic_cast：只用于包含虚函数的类，用于多态中，向上向下转换时，错误则置空，增加检查开销
+ 
+reinterpret_cast：重新解释类型，两者内存空间必须一致，不检查指向的内容和其指针类型  
+static_cast：基本类型转换，有继承关系的类对象和类指针转换，由程序员来检查是否错误，没有动态转换的类型安全检查开销  
+dynamic_cast：只用于包含虚函数的类，用于多态中，向上向下转换时，错误则置空，增加检查开销  
 ### 适配器模式
 将一个类的接口或实现类转化成客户要求的另一个新功能接口，实现复用。
 
@@ -835,8 +835,8 @@ RectangleAdapter ra(x, y, w, h);
 Rectangle* pR = &ra;
 ```
 ### 泛型编程
-::方法名() 调用自己的函数
-泛型编程是一种静态期多态，通过编译器生成最直接的代码。
+::方法名() 调用自己的函数  
+泛型编程是一种静态期多态，通过编译器生成最直接的代码。  
 ```cpp
 template<Class T1, class T2>
 int max(T1 a, T2 b){
@@ -903,7 +903,7 @@ cout << endl;
 ## Linux编程
 ### makefile
 [https://www.gnu.org/software/make/manual/](https://www.gnu.org/software/make/manual/)
-![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-5.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-5.png?imageMogr2/format/webp%7C)
 
 - **Makefile基本规则**
 ```cpp
@@ -938,7 +938,7 @@ install:
 uninstall:
 	rm /usr/local/bin/mainTest
 ```
-![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-6.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-6.png?imageMogr2/format/webp%7C)
 
 - **Makefile动态库**
 ```makefile
@@ -963,7 +963,7 @@ clean:
 
 - 自动变量和模式变量
 
-![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-7.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-7.png?imageMogr2/format/webp%7C)
 ```makefile
 TARGET = main
 OBJS = test.o
@@ -986,6 +986,6 @@ clean:
 在qt项目下新建bat文件，输入qmake -tp vc 项目名.pro 即可生成sln文件
 ## 调试
 ### 汇编语言
-![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-8.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
-![image.png](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-9.png?imageMogr2/format/webp%7C?watermark/3/type/3/text/a2VlcGpvbGx5)
+![image](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-8.png?imageMogr2/format/webp%7C)
+![image](https://pic.keepjolly.com/halo/blog/2023/03/20230326090137-9.png?imageMogr2/format/webp%7C)
  
