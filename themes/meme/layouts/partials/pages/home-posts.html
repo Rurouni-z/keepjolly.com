@@ -5,7 +5,7 @@
             {{ $pages = where $pages ".Params.hideInHomepage" "ne" true }}
         {{ end }}
 
-        {{ $paginator := .Paginate $pages }}
+        {{ $paginator := .pagination.pagerSize $pages }}
         {{ range $paginator.Pages }}
             <article class="content post home h-entry">
                 <h2 class="post-title p-name">
