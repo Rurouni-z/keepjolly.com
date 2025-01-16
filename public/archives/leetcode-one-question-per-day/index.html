@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>(leetcode) 三日三题 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="作为第一篇力扣每日一题，要好好坚持，广大网友给我监督！！(后记，没坚持下去😅)
+图片平滑器 图片平滑器
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 # 速度有点拉跨 def imageSmoother(self, img): import numpy as np import copy # 利用pad填充原矩阵，并且防止原矩阵有0，故填充-1 padList = np.pad(img, ((1, 1), (1, 1)), &#39;constant&#39;, constant_values=-1) # 不用深拷贝会报错 # https://leetcode-cn.com/problems/image-smoother/comments/1461270 newImg = copy.deepcopy(img) # 获取img的行列 m, n = len(img), len(img[0]) for i in range(m): for j in range(n): # 深拷贝，防止后续修改padList zeroList = copy.deepcopy(padList[i: i &#43; 3, j:j &#43; 3]) # 计算9个元素中哪些元素是原数组，即非 -1 就是原元素 count = 9 - np.sum(zeroList == -1) # 遮罩层，重新置为0方便sum求和 # 或者得到-1的个数重新加回去，减小内存开销 mask = (zeroList == -1) zeroList[mask] = 0 # 计算值 newImg[i][j] = np.sum(zeroList) // count return newImg # 修改版 def imageSmoother(self, img): import numpy as np padList = np.pad(img, ((1, 1), (1, 1)), &#39;constant&#39;, constant_values=-1) newImg = img m, n = len(img), len(img[0]) for i in range(m): for j in range(n): zeroList = padList[i: i &#43; 3, j:j &#43; 3] count = np.sum(zeroList &gt; -1) mask = (zeroList &gt; -1) newImg[i][j] = np.sum(zeroList[mask])//count return newImg 大佬题解 Link
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/archives/leetcode-one-question-per-day/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2022-03-26T10:02:04+00:00",
+        "dateModified": "2024-01-13T22:40:27+08:00",
+        "url": "http://localhost:1313/archives/leetcode-one-question-per-day/",
+        "headline": "(leetcode) 三日三题",
+        "description": "作为第一篇力扣每日一题，要好好坚持，广大网友给我监督！！(后记，没坚持下去😅)\n图片平滑器 图片平滑器\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 # 速度有点拉跨 def imageSmoother(self, img): import numpy as np import copy # 利用pad填充原矩阵，并且防止原矩阵有0，故填充-1 padList = np.pad(img, ((1, 1), (1, 1)), 'constant', constant_values=-1) # 不用深拷贝会报错 # https://leetcode-cn.com/problems/image-smoother/comments/1461270 newImg = copy.deepcopy(img) # 获取img的行列 m, n = len(img), len(img[0]) for i in range(m): for j in range(n): # 深拷贝，防止后续修改padList zeroList = copy.deepcopy(padList[i: i + 3, j:j + 3]) # 计算9个元素中哪些元素是原数组，即非 -1 就是原元素 count = 9 - np.sum(zeroList == -1) # 遮罩层，重新置为0方便sum求和 # 或者得到-1的个数重新加回去，减小内存开销 mask = (zeroList == -1) zeroList[mask] = 0 # 计算值 newImg[i][j] = np.sum(zeroList) // count return newImg # 修改版 def imageSmoother(self, img): import numpy as np padList = np.pad(img, ((1, 1), (1, 1)), 'constant', constant_values=-1) newImg = img m, n = len(img), len(img[0]) for i in range(m): for j in range(n): zeroList = padList[i: i + 3, j:j + 3] count = np.sum(zeroList \u003e -1) mask = (zeroList \u003e -1) newImg[i][j] = np.sum(zeroList[mask])//count return newImg 大佬题解 Link\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  2169 ,
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+
+    
+
+
+
+<meta property="og:title" content="(leetcode) 三日三题" />
+<meta property="og:description" content="作为第一篇力扣每日一题，要好好坚持，广大网友给我监督！！(后记，没坚持下去😅)
+图片平滑器 图片平滑器
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 # 速度有点拉跨 def imageSmoother(self, img): import numpy as np import copy # 利用pad填充原矩阵，并且防止原矩阵有0，故填充-1 padList = np.pad(img, ((1, 1), (1, 1)), &#39;constant&#39;, constant_values=-1) # 不用深拷贝会报错 # https://leetcode-cn.com/problems/image-smoother/comments/1461270 newImg = copy.deepcopy(img) # 获取img的行列 m, n = len(img), len(img[0]) for i in range(m): for j in range(n): # 深拷贝，防止后续修改padList zeroList = copy.deepcopy(padList[i: i &#43; 3, j:j &#43; 3]) # 计算9个元素中哪些元素是原数组，即非 -1 就是原元素 count = 9 - np.sum(zeroList == -1) # 遮罩层，重新置为0方便sum求和 # 或者得到-1的个数重新加回去，减小内存开销 mask = (zeroList == -1) zeroList[mask] = 0 # 计算值 newImg[i][j] = np.sum(zeroList) // count return newImg # 修改版 def imageSmoother(self, img): import numpy as np padList = np.pad(img, ((1, 1), (1, 1)), &#39;constant&#39;, constant_values=-1) newImg = img m, n = len(img), len(img[0]) for i in range(m): for j in range(n): zeroList = padList[i: i &#43; 3, j:j &#43; 3] count = np.sum(zeroList &gt; -1) mask = (zeroList &gt; -1) newImg[i][j] = np.sum(zeroList[mask])//count return newImg 大佬题解 Link
+……" />
+<meta property="og:url" content="http://localhost:1313/archives/leetcode-one-question-per-day/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2022-03-26T10:02:04&#43;00:00" />
+    <meta property="article:modified_time" content="2024-01-13T22:40:27&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">(leetcode) 三日三题</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:图片平滑器" href="#图片平滑器">图片平滑器</a>
+      <ol>
+        <li><a id="contents:大佬题解" href="#大佬题解">大佬题解</a></li>
+        <li><a id="contents:python性能好版" href="#python性能好版">python性能好版</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:阶乘后的零" href="#阶乘后的零">阶乘后的零</a></li>
+    <li><a id="contents:棒球比赛" href="#棒球比赛">棒球比赛</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <p>作为第一篇力扣每日一题，要好好坚持，广大网友给我监督！！(后记，没坚持下去😅)</p>
+<h2 id="图片平滑器"><a href="#图片平滑器" class="anchor-link">#</a><a href="#contents:图片平滑器" class="headings">图片平滑器</a></h2>
+<p><a href="https://leetcode-cn.com/problems/image-smoother/" target="_blank" rel="noopener">图片平滑器</a></p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 速度有点拉跨</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">imageSmoother</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">import</span> <span class="nn">copy</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 利用pad填充原矩阵，并且防止原矩阵有0，故填充-1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">padList</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">    <span class="c1"># 不用深拷贝会报错</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># https://leetcode-cn.com/problems/image-smoother/comments/1461270</span>
+</span></span><span class="line"><span class="cl">    <span class="n">newImg</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取img的行列</span>
+</span></span><span class="line"><span class="cl">    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 深拷贝，防止后续修改padList</span>
+</span></span><span class="line"><span class="cl">            <span class="n">zeroList</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">padList</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span><span class="n">j</span> <span class="o">+</span> <span class="mi">3</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 计算9个元素中哪些元素是原数组，即非 -1 就是原元素</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span> <span class="o">=</span> <span class="mi">9</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">zeroList</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 遮罩层，重新置为0方便sum求和</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 或者得到-1的个数重新加回去，减小内存开销</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">zeroList</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">zeroList</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 计算值</span>
+</span></span><span class="line"><span class="cl">            <span class="n">newImg</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">zeroList</span><span class="p">)</span> <span class="o">//</span> <span class="n">count</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">newImg</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 修改版</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">imageSmoother</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl">    <span class="n">padList</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">newImg</span> <span class="o">=</span> <span class="n">img</span>
+</span></span><span class="line"><span class="cl">    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">zeroList</span> <span class="o">=</span> <span class="n">padList</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span><span class="n">j</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">zeroList</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">zeroList</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">newImg</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">zeroList</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span><span class="o">//</span><span class="n">count</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">newImg</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="大佬题解"><a href="#大佬题解" class="anchor-link">#</a><a href="#contents:大佬题解" class="headings">大佬题解</a></h3>
+<p><a href="https://leetcode-cn.com/problems/image-smoother/solution/100-zhao-dao-shang-xia-xian-yu-zuo-you-xian-by-ooo/" target="_blank" rel="noopener">Link</a></p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">newImg</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 除以n非m</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cur_r</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">//</span> <span class="n">n</span>  <span class="c1"># r行</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cur_c</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">%</span> <span class="n">n</span>  <span class="c1"># c列</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">cur_r</span><span class="p">,</span> <span class="n">cur_c</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">cur_r</span><span class="p">,</span> <span class="n">cur_c</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sum1</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">cur_r</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 上限 (-1, 0)    往上走不行</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x1</span> <span class="o">=</span> <span class="n">cur_r</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">cur_r</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">:</span>  <span class="c1"># 下限 (m+1, 0)   往下走不行</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x2</span> <span class="o">=</span> <span class="n">cur_r</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">cur_c</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 左限 (0, -1)    往左走不行</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y1</span> <span class="o">=</span> <span class="n">cur_c</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">cur_c</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>  <span class="c1"># 右限 (0, n+1)   往右走不行</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y2</span> <span class="o">=</span> <span class="n">cur_c</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="n">y2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sum1</span> <span class="o">+=</span> <span class="n">img</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count</span> <span class="o">=</span> <span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">sum1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">newImg</span><span class="p">[</span><span class="n">cur_r</span><span class="p">][</span><span class="n">cur_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">sum1</span> <span class="o">//</span> <span class="n">count</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">newImg</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="python性能好版"><a href="#python性能好版" class="anchor-link">#</a><a href="#contents:python性能好版" class="headings">python性能好版</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># list版 占13.9mb</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">imageSmoother</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">expand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">expand</span> <span class="o">=</span> <span class="n">expand</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">l2</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l1</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">nine</span> <span class="o">=</span> <span class="p">[</span><span class="n">expand</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">num</span> <span class="o">=</span> <span class="n">nine</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">nine</span><span class="p">)</span> <span class="o">+</span> <span class="n">num</span><span class="p">)</span> <span class="o">//</span> <span class="p">(</span><span class="mi">9</span> <span class="o">-</span> <span class="n">num</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">res</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># numpy版 占25.3mb</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">imageSmoother</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl">    <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">expand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">expand</span> <span class="o">=</span> <span class="n">expand</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">l2</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l1</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">nine</span> <span class="o">=</span> <span class="p">[</span><span class="n">expand</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">expand</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">num</span> <span class="o">=</span> <span class="n">nine</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">nine</span><span class="p">)</span> <span class="o">+</span> <span class="n">num</span><span class="p">)</span> <span class="o">//</span> <span class="p">(</span><span class="mi">9</span> <span class="o">-</span> <span class="n">num</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">res</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ul>
+<li>numpy操作可能比list操作占内存大</li>
+<li>注意python的浅拷贝！！</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">img</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl"><span class="n">copyImg</span> <span class="o">=</span> <span class="n">img</span>
+</span></span><span class="line"><span class="cl"><span class="n">copyImg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># 则img也同步修改</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 新建一个m*n列表</span>
+</span></span><span class="line"><span class="cl"><span class="n">newImg</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>回顾一遍</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">4 6 6 4
+</span></span></span><span class="line"><span class="cl"><span class="s2">6 9 9 6 
+</span></span></span><span class="line"><span class="cl"><span class="s2">6 9 9 6 
+</span></span></span><span class="line"><span class="cl"><span class="s2">4 6 6 4
+</span></span></span><span class="line"><span class="cl"><span class="s2">考虑46的情况可知x1y1,x2y2的坐标
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">tryImageAgain</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ans</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span>
+</span></span><span class="line"><span class="cl">            <span class="n">y1</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">j</span><span class="p">,</span> <span class="n">j</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 计算满足条件的x1y1x2y2的值</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 如果计算违反条件的值，需要考虑的变量多</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 如i-1&lt;0时，表明当前在第一行，如果是[0][0]需要修改x2y2，如果是[0][1]需要修改x1y1x2y2，</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 如果在左上角，则x1y1不用变，考虑后两个if</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span>  <span class="c1"># 如果[i][j]在第一行之后行，则左上标为[i-1][j]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span>  <span class="c1"># 如果[i][j]在第一列之后列，则左上标为[i][j-1] 在第二行第二列则[i-1][j-1]</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 如果在右下角，则x2y2不用变，考虑前两个if</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">:</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>  <span class="c1"># 如果[i][j]在第m行之前行，则右下标为[i+1][j]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span>  <span class="c1"># 如果[i][j]在第n列之前列，则右下标为[i][j+1]</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 妙啊</span>
+</span></span><span class="line"><span class="cl">            <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">s</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y1</span><span class="p">:</span><span class="n">y2</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">div</span> <span class="o">=</span> <span class="p">(</span><span class="n">y2</span><span class="o">-</span><span class="n">y1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x2</span><span class="o">-</span><span class="n">x1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ans</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span> <span class="o">//</span> <span class="n">div</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ans</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="阶乘后的零"><a href="#阶乘后的零" class="anchor-link">#</a><a href="#contents:阶乘后的零" class="headings">阶乘后的零</a></h2>
+<p><a href="https://leetcode-cn.com/problems/factorial-trailing-zeroes/" target="_blank" rel="noopener">阶乘后的零</a>
+本质就是求质因数，考数学题，<del>太难了</del>
+n! = 1 * 2 * 3 * 4 * (1 * 5) * ... * (2 * 5) * ... * (3 * 5) *... * n
+因为<strong>每隔 5 个数出现一个 5，所以计算n!中出现了多少个 5，我们只需要用 n/5 就可以算出来</strong>。即n=5，1；n=10，2.
+n! = ... * (1 * 5) * ... * (1 * 5 * 5) * ... * (2 * 5 * 5) * ... * (3 * 5 * 5) * ... * n
+每隔 25 个数字，出现的是两个 5，所以除了每隔 5 个数算作一个 5，每隔 25 个数，还需要多算一个 5。
+也就是我们需要再加上 n / 25 个 5。
+同理我们还会发现每隔 5 * 5 * 5 = 125 个数字，会出现 3 个 5，所以我们还需要再加上 n / 125 。
+最后，规律就是**每隔 5 个数，出现一个 5，每隔 25 个数，出现 2 个 5，每隔 125 个数，出现 3 个 5... 以此类推。**即 n / 5 + n / 25 + n / 125 ...
+又因为呈现递进关系，每次 ÷5 更新n的值，使其一直处于n/5的状态。
+<a href="https://leetcode-cn.com/problems/factorial-trailing-zeroes/solution/jie-cheng-hou-de-ling-by-leetcode-soluti-1egk/1462453" target="_blank" rel="noopener">例子</a>：
+第一次：5，10，15，…，130，至少包含1个5的数为26个
+第二次：25，50，75，100，125，至少包含2个5的数有这5个
+第三次：125，它至少包含3个5（其实也只包含3个5）
+思路：<a href="https://leetcode-cn.com/problems/factorial-trailing-zeroes/solution/xiang-xi-tong-su-de-si-lu-fen-xi-by-windliang-3/" target="_blank" rel="noopener">Link</a></p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">trailingZeroes</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># 用p代替5，即可以推广到n!中p因子的个数</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># p += n/5  # 直观解法</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># n/=5  # 使其维持n/p的格式，求n!中只含一个p的个数</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># 否则需要计算n/p+n/2*p+n/3*p...</span>
+</span></span><span class="line"><span class="cl">        <span class="n">n</span> <span class="o">//=</span> <span class="n">p</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">count</span> <span class="o">+=</span> <span class="n">n</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">count</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 递归解法，来自力扣宫水三叶</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">trailingZeroes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">5</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">trailingZeroes</span><span class="p">(</span><span class="n">n</span> <span class="o">//</span> <span class="mi">5</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 官解朴素版</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># n!中质因子 5 的个数等于 [1,n] 的每个数的质因子 5 的个数之和，</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 我们可以通过遍历 [1,n] 的所有 5 的倍数求出。</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">trailingZeroes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">i</span> <span class="o">//=</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ans</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ans</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="棒球比赛"><a href="#棒球比赛" class="anchor-link">#</a><a href="#contents:棒球比赛" class="headings">棒球比赛</a></h2>
+<p><a href="https://leetcode-cn.com/problems/baseball-game/" target="_blank" rel="noopener">棒球比赛</a>
+唯一注意的点就是python一些语法，如<code>del 列表元素</code>、<code>sum(列表)</code>、match case只在python3.10支持即switch case、将字符串转整形</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calPoints</span><span class="p">(</span><span class="n">ops</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">del</span> <span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">i</span> <span class="o">-=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ops</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">ops</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ops</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ops</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">ops</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div>
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/python/" rel="tag" class="post-tag-link">#python</a> <a href="/tags/leetcode/" rel="tag" class="post-tag-link">#leetcode</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

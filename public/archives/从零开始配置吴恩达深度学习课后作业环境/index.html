@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>从零开始 配置吴恩达深度学习课后作业/编程/jupyter环境 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="​ 安装anaconda后 Anaconda | Individual Edition ​
+将文件路径放入环境变量中
+​​
+创建吴恩达课后作业的python环境 conda创建虚拟环境 conda创建虚拟环境：Anaconda创建环境、删除环境、激活环境、退出环境
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/archives/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E9%85%8D%E7%BD%AE%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%AF%BE%E5%90%8E%E4%BD%9C%E4%B8%9A%E7%8E%AF%E5%A2%83/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2022-02-22T16:47:58+00:00",
+        "dateModified": "2023-05-27T18:00:39+08:00",
+        "url": "http://localhost:1313/archives/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E9%85%8D%E7%BD%AE%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%AF%BE%E5%90%8E%E4%BD%9C%E4%B8%9A%E7%8E%AF%E5%A2%83/",
+        "headline": "从零开始 配置吴恩达深度学习课后作业/编程/jupyter环境",
+        "description": "​ 安装anaconda后 Anaconda | Individual Edition ​\n将文件路径放入环境变量中\n​​\n创建吴恩达课后作业的python环境 conda创建虚拟环境 conda创建虚拟环境：Anaconda创建环境、删除环境、激活环境、退出环境\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  565 ,
+        "image": ["https://img-blog.csdnimg.cn/20210321231028426.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MjE0Njcx,size_16,color_FFFFFF,t_70","https://img-blog.csdnimg.cn/7737e8ecd6b94fcba1a6c0bdf29700e2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAWl90aW1lcg==,size_20,color_FFFFFF,t_70,g_se,x_16","https://img-blog.csdnimg.cn/8d2c6dd34d5f491fa737ad454bd44aa7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAWl90aW1lcg==,size_20,color_FFFFFF,t_70,g_se,x_16"],
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="从零开始 配置吴恩达深度学习课后作业/编程/jupyter环境" />
+<meta property="og:description" content="​ 安装anaconda后 Anaconda | Individual Edition ​
+将文件路径放入环境变量中
+​​
+创建吴恩达课后作业的python环境 conda创建虚拟环境 conda创建虚拟环境：Anaconda创建环境、删除环境、激活环境、退出环境
+……" />
+<meta property="og:url" content="http://localhost:1313/archives/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E9%85%8D%E7%BD%AE%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%AF%BE%E5%90%8E%E4%BD%9C%E4%B8%9A%E7%8E%AF%E5%A2%83/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://img-blog.csdnimg.cn/20210321231028426.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MjE0Njcx,size_16,color_FFFFFF,t_70" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2022-02-22T16:47:58&#43;00:00" />
+    <meta property="article:modified_time" content="2023-05-27T18:00:39&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">从零开始 配置吴恩达深度学习课后作业/编程/jupyter环境</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:创建吴恩达课后作业的python环境" href="#创建吴恩达课后作业的python环境">创建吴恩达课后作业的python环境</a>
+      <ol>
+        <li><a id="contents:conda创建虚拟环境" href="#conda创建虚拟环境">conda创建虚拟环境</a></li>
+        <li><a id="contents:安装tensorflowkeras" href="#安装tensorflowkeras">安装tensorflow、keras</a></li>
+        <li><a id="contents:最后" href="#最后">最后</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <p>​
+安装anaconda后 <a href="https://www.anaconda.com/products/individual" target="_blank" rel="noopener">Anaconda | Individual Edition ​</a></p>
+<p>将文件路径放入环境变量中</p>
+<p><img src="https://img-blog.csdnimg.cn/20210321231028426.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MjE0Njcx,size_16,color_FFFFFF,t_70" alt="">
+​​</p>
+<h2 id="创建吴恩达课后作业的python环境"><a href="#创建吴恩达课后作业的python环境" class="anchor-link">#</a><a href="#contents:创建吴恩达课后作业的python环境" class="headings">创建吴恩达课后作业的python环境</a></h2>
+<h3 id="conda创建虚拟环境"><a href="#conda创建虚拟环境" class="anchor-link">#</a><a href="#contents:conda创建虚拟环境" class="headings">conda创建虚拟环境</a></h3>
+<p>conda创建虚拟环境：<a href="https://blog.csdn.net/H_O_W_E/article/details/77370456" target="_blank" rel="noopener">Anaconda创建环境、删除环境、激活环境、退出环境</a></p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Batchfile" data-lang="Batchfile"><span class="line"><span class="cl"> conda create -n dl_wu python=3.6
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><blockquote>
+<p>如果遇到CondaHTTPError: HTTP 000 CONNECTION FAILED for url <a href="https://repo.anaconda.com/pkgs/main/win-64/current_repodata.json" target="_blank" rel="noopener">https://repo.anaconda.com/pkgs/main/win-64/current_repodata.json</a>
+Elapsed: -这个问题。</p>
+</blockquote>
+<p>解决方法：</p>
+<ol>
+<li>conda config --add channels r</li>
+<li>将文件内容改成
+channels:
+  - <a href="http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="noopener">http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a>
+ssl_verify: true
+show_channel_urls: true
+<img src="https://img-blog.csdnimg.cn/7737e8ecd6b94fcba1a6c0bdf29700e2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAWl90aW1lcg==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="">
+参考网址：
+<a href="https://www.cnblogs.com/Yefudaling/p/12422210.html" target="_blank" rel="noopener">CondaHTTPError: HTTP 000 CONNECTION FAILED for url &lt;https://repo.anaconda.com/pkgs/main/win-64/current_repodata.json Elapsed: &gt;-错误解决方法</a>
+<a href="https://blog.csdn.net/weixin_44510468/article/details/107103783" target="_blank" rel="noopener">Anaconda 解决 “CondaHTTPError: HTTP 000 CONNECTION FAILED for url“ 问题 | 解决spyder无法更新到最新版本</a></li>
+</ol>
+<h3 id="安装tensorflowkeras"><a href="#安装tensorflowkeras" class="anchor-link">#</a><a href="#contents:安装tensorflowkeras" class="headings">安装tensorflow、keras</a></h3>
+<p>python和tensorflow对应的版本：<a href="https://blog.csdn.net/baishuiniyaonulia/article/details/118977952" target="_blank" rel="noopener">TensorFlow的历史版本与对应Python版本</a>
+keras和tensorflow对应的版本：<a href="https://blog.csdn.net/weixin_43360896/article/details/114333831" target="_blank" rel="noopener">Tensorflow | TF与Keras版本对应</a></p>
+<p>这里我装的是<strong>tensorflow1.14和python3.6</strong></p>
+<p>（不小心删掉pip的话 我是更新失败了就没了：<a href="https://blog.csdn.net/myhes/article/details/106582262" target="_blank" rel="noopener">python pip报错 Cannot open Scripts\pip-script.py</a>
+更新用这个语句：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-batchfile" data-lang="batchfile"><span class="line"><span class="cl">python -m pip install --upgrade pip
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>）</p>
+<p>另外装tensorflow的时候遇到这个问题
+<img src="https://img-blog.csdnimg.cn/8d2c6dd34d5f491fa737ad454bd44aa7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAWl90aW1lcg==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="">
+解决方法：pip config set install.trusted-host <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="noopener">https://pypi.tuna.tsinghua.edu.cn/simple</a>
+（清华源感觉不好用 可以试试豆瓣源）
+（小技巧：win键+v 调出粘贴板，旁边三个小点点可以选择固定）
+参考链接：<a href="https://blog.csdn.net/qq_31720305/article/details/106386078" target="_blank" rel="noopener">公司内网 pip 永久设置 指定源和trusted-host</a></p>
+<h3 id="最后"><a href="#最后" class="anchor-link">#</a><a href="#contents:最后" class="headings">最后</a></h3>
+<p>其他包 缺啥安啥就行
+豆瓣源：pip install -i <a href="https://pypi.douban.com/simple/" target="_blank" rel="noopener">https://pypi.douban.com/simple/</a> 包名</p>
+<p>​</p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/python/" rel="tag" class="post-tag-link">#python</a> <a href="/tags/computervision/" rel="tag" class="post-tag-link">#computervision</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

@@ -569,7 +569,7 @@ xxx\layouts\shortcodes 下创建douban.md
     {{ $dbApiUrl = "https://neodb.social/api/catalog/fetch?url=" }}
 {{ end }}
 
-{{ $dbFetch := getJSON $dbApiUrl $dbType }}
+<!-- {{ $dbFetch := getJSON $dbApiUrl $dbType }} -->
 
 {{ if $dbFetch }}
     {{ $itemRating := 0 }}{{ with $dbFetch.rating }}{{ $itemRating = . }}{{ end }}

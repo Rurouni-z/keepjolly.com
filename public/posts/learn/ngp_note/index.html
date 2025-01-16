@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>Instant-ngp笔记 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="Rurouni" /><meta name="description" content="翻译、思维导图（good）
+Instant-ngp 是做什么的 Given a fully connected neural network$m(\mathbf{y} ; \Phi)$ we are interested in an encoding of its inputs ${y}=\operatorname{enc}(\mathbf{x} ; \theta)$ that improves the approximation quality and training speed across a wide range of applications without incurring a notable performance overhead.
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/learn/ngp_note/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2023-06-09T22:28:26+08:00",
+        "dateModified": "2024-05-03T14:50:48+08:00",
+        "url": "http://localhost:1313/posts/learn/ngp_note/",
+        "headline": "Instant-ngp笔记",
+        "description": "翻译、思维导图（good）\nInstant-ngp 是做什么的 Given a fully connected neural network$m(\\mathbf{y} ; \\Phi)$ we are interested in an encoding of its inputs ${y}=\\operatorname{enc}(\\mathbf{x} ; \\theta)$ that improves the approximation quality and training speed across a wide range of applications without incurring a notable performance overhead.\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  1371 ,
+        "image": ["https://pic.keepjolly.com/halo/blog/2023/06/20230609222700.png?imageMogr2/format/webp%7C"],
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="Instant-ngp笔记" />
+<meta property="og:description" content="翻译、思维导图（good）
+Instant-ngp 是做什么的 Given a fully connected neural network$m(\mathbf{y} ; \Phi)$ we are interested in an encoding of its inputs ${y}=\operatorname{enc}(\mathbf{x} ; \theta)$ that improves the approximation quality and training speed across a wide range of applications without incurring a notable performance overhead.
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/learn/ngp_note/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://pic.keepjolly.com/halo/blog/2023/06/20230609222700.png?imageMogr2/format/webp%7C" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2023-06-09T22:28:26&#43;08:00" />
+    <meta property="article:modified_time" content="2024-05-03T14:50:48&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">Instant-ngp笔记</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:instant-ngp-是做什么的" href="#instant-ngp-是做什么的">Instant-ngp 是做什么的</a></li>
+    <li><a id="contents:instant-ngp-是怎么做的" href="#instant-ngp-是怎么做的">Instant-ngp 是怎么做的</a>
+      <ol>
+        <li><a id="contents:pipeline" href="#pipeline">Pipeline</a></li>
+        <li><a id="contents:哈希表" href="#哈希表">哈希表</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:instant-ngp-做的结果怎么样" href="#instant-ngp-做的结果怎么样">Instant-ngp 做的结果怎么样</a>
+      <ol>
+        <li><a id="contents:优势" href="#优势">优势</a></li>
+        <li><a id="contents:不足" href="#不足">不足</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:instant-ngp-讨论与展望" href="#instant-ngp-讨论与展望">Instant-ngp 讨论与展望</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <p><a href="https://blog.csdn.net/qq_43620967/article/details/124382650" target="_blank" rel="noopener">翻译</a>、<a href="https://blog.csdn.net/qq_32981275/article/details/125888274" target="_blank" rel="noopener">思维导图（good）</a></p>
+<h2 id="instant-ngp-是做什么的"><a href="#instant-ngp-是做什么的" class="anchor-link">#</a><a href="#contents:instant-ngp-是做什么的" class="headings">Instant-ngp 是做什么的</a></h2>
+<p>Given a fully connected neural network$m(\mathbf{y} ; \Phi)$ we are interested in <strong>an encoding</strong> of its inputs ${y}=\operatorname{enc}(\mathbf{x} ; \theta)$ that <strong>improves the approximation quality and training speed</strong> <strong>across a wide range of applications</strong> without incurring a notable performance overhead.</p>
+<h2 id="instant-ngp-是怎么做的"><a href="#instant-ngp-是怎么做的" class="anchor-link">#</a><a href="#contents:instant-ngp-是怎么做的" class="headings">Instant-ngp 是怎么做的</a></h2>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230609222700.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="pipeline"><a href="#pipeline" class="anchor-link">#</a><a href="#contents:pipeline" class="headings">Pipeline</a></h3>
+<blockquote>
+<p>定义一个$L\  resolution\  levels$ 的d维网格。其中红色框处在$1/ N_1$分辨率下，同理蓝色框处在$1/N_0$。以下都为2维网格，每个网格四个顶点。
+每个$l\  resolution\  level$关联T个F维特征向量。(F是entry维数，d是图片的维数)</p>
+</blockquote>
+<ol>
+<li>对于给定的<strong>输入坐标x</strong>，我们在$level \ l$上找到周围的<strong>体素</strong>(d维网格)。即x落在$l_0$上的右下网格，落在$l_1$上的中间网格 。</li>
+<li>将$level \ l$上的体素的<strong>整数</strong>顶点映射成哈希表$\theta_{l}$的索引值。</li>
+</ol>
+<blockquote>
+<p>给定$level \ l$的顶点数是$V=(N_l+1)^d$，例如对于level 1，有 (3 + 1)² = 16 个顶点。如果 V ≤ T，对应level的顶点和特征向量之间是 1:1 的映射。在更精细的level，其中 V &gt; T，使用哈希函数将每个d维顶点映射到对应level的 T 个特征向量中。其中的特征向量就是网络要更新的参数。</p>
+</blockquote>
+<ol start="3">
+<li>从哈希表$\theta_{l}$中查找四个索引值对应的<strong>F维</strong>特征向量，进行d-linearly interpolate。</li>
+<li>将**每个 level **插值后的特征向量以及辅助向量$\xi \in \mathbb{R}^{E}$<strong>concat</strong>，产生编码的MLP输入$y \in \mathbb{R}^{L F+E}$。（那么一张图片提取到的所有x，pipeline后都作为一个y样本送入网络中）</li>
+<li>输入后进入全连接神经网络。之后就跟<a href="https://keepjolly.com/posts/learn/nerf_note/#pipeline" target="_blank" rel="noopener">Nerf</a>差不多</li>
+</ol>
+<h3 id="哈希表"><a href="#哈希表" class="anchor-link">#</a><a href="#contents:哈希表" class="headings">哈希表</a></h3>
+<p>详细介绍参考<a href="https://www.bilibili.com/video/BV11e4y1V77L" target="_blank" rel="noopener">视频</a>，以及<a href="https://www.bilibili.com/video/BV1GD4y1Y754" target="_blank" rel="noopener">补充视频</a></p>
+<ul>
+<li>速度 vs 质量。随着哈希表大小 T 增大会带来高质量低速度，但是到一定瓶颈后，T带来的质量就没那么明显了，在文中 $T=2^{19}$效果最好。另外分辨率等级 L 和 特征维度 F 也有影响，文中$F=2,L=16$效果最好。</li>
+<li>隐式哈希碰撞。重建效果这么好的关键是不同分辨率下带来不同的效果，可以互相弥补。在coarser下，哈希映射是一对一的，不会遇到哈希碰撞；但是在finer下，会经常造成哈希碰撞。文中作者指出越重要的区域对梯度的影响越大，越稀疏的区域对梯度影响较小，互相影响下梯度会趋于平均。在网络学习中自动从密集的区域内提取样本，而不是从更大范围内提取样本，从而避免哈希碰撞。</li>
+<li>训练适应性。多分辨率哈希编码可以自动适应样本数据分布。</li>
+<li>d-linear interpolation。确保编码 enc(x; 𝜃) 以及通过链式法则后它与神经网络 𝑚(enc(x; 𝜃); Φ) 的组合是连续的。</li>
+</ul>
+<h2 id="instant-ngp-做的结果怎么样"><a href="#instant-ngp-做的结果怎么样" class="anchor-link">#</a><a href="#contents:instant-ngp-做的结果怎么样" class="headings">Instant-ngp 做的结果怎么样</a></h2>
+<h3 id="优势"><a href="#优势" class="anchor-link">#</a><a href="#contents:优势" class="headings">优势</a></h3>
+<ul>
+<li>提高效率</li>
+<li>范用性强，适合多个任务</li>
+<li>适合现代GPU并行计算</li>
+<li>减少control flow 和 pointer chasing</li>
+</ul>
+<h3 id="不足"><a href="#不足" class="anchor-link">#</a><a href="#contents:不足" class="headings">不足</a></h3>
+<ul>
+<li>无法避免的哈希碰撞会导致表面产生大量颗粒</li>
+<li>适用于高几何细节场景，在复杂的、依赖于反射的场景下需要更大的MLP，带来速度上的降低</li>
+</ul>
+<h2 id="instant-ngp-讨论与展望"><a href="#instant-ngp-讨论与展望" class="anchor-link">#</a><a href="#contents:instant-ngp-讨论与展望" class="headings">Instant-ngp 讨论与展望</a></h2>
+<ul>
+<li>concat and reduct. concat适合并行处理，而reduct适合神经网络更大，比编码还要expensive。</li>
+<li>由哈希碰撞引起的微观变化。通过我们的编码在sdf上实现最先进的质量的关键将是找到一种克服这种微观结构的方法，例如通过过滤哈希表查找或通过在损失之前施加额外的平滑性。</li>
+<li>优化哈希函数。两种途径是开发解析微分的连续哈希函数，或者有效探索离散函数空间的进化优化算法。</li>
+<li>生成网络。因为特征与规则的点网格不是互相映射，无法进行生成式网络。</li>
+<li>外部的空白空间、内部的固体空间以及其表面的稀疏细节，非常适合我们的编码。</li>
+</ul>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/computervision/" rel="tag" class="post-tag-link">#computervision</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

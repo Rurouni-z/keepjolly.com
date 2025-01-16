@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>面试之CPP基础知识-6 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="int main(int argc, char *argv[])里的参数，你了解吗？ 参数的含义是程序在命令行下运行的时候，输入了argc 个参数，每个参数以char*类型存入 argv[]，第一个参数为程序的名称。
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/other/interview-basic-cpp-6/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2024-01-13T21:55:29+08:00",
+        "dateModified": "2024-04-07T17:18:17+08:00",
+        "url": "http://localhost:1313/posts/other/interview-basic-cpp-6/",
+        "headline": "面试之CPP基础知识-6",
+        "description": "int main(int argc, char *argv[])里的参数，你了解吗？ 参数的含义是程序在命令行下运行的时候，输入了argc 个参数，每个参数以char*类型存入 argv[]，第一个参数为程序的名称。\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  3880 ,
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+
+    
+
+
+
+<meta property="og:title" content="面试之CPP基础知识-6" />
+<meta property="og:description" content="int main(int argc, char *argv[])里的参数，你了解吗？ 参数的含义是程序在命令行下运行的时候，输入了argc 个参数，每个参数以char*类型存入 argv[]，第一个参数为程序的名称。
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/other/interview-basic-cpp-6/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2024-01-13T21:55:29&#43;08:00" />
+    <meta property="article:modified_time" content="2024-04-07T17:18:17&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">面试之CPP基础知识-6</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:int-mainint-argc-char-argv里的参数你了解吗" href="#int-mainint-argc-char-argv里的参数你了解吗">int main(int argc, char *argv[])里的参数，你了解吗？</a></li>
+    <li><a id="contents:volatile关键字的作用" href="#volatile关键字的作用">volatile关键字的作用？</a></li>
+    <li><a id="contents:如果有一个空类它会默认添加哪些函数" href="#如果有一个空类它会默认添加哪些函数">如果有一个空类，它会默认添加哪些函数？</a></li>
+    <li><a id="contents:c中标准库是什么" href="#c中标准库是什么">C++中标准库是什么？</a></li>
+    <li><a id="contents:const-char-与string之间的关系" href="#const-char-与string之间的关系">const char* 与string之间的关系？</a></li>
+    <li><a id="contents:你什么情况用指针当参数什么时候用引用为什么" href="#你什么情况用指针当参数什么时候用引用为什么">你什么情况用指针当参数，什么时候用引用，为什么？</a></li>
+    <li><a id="contents:静态绑定和动态绑定" href="#静态绑定和动态绑定">静态绑定和动态绑定？</a></li>
+    <li><a id="contents:如何设计一个计算仅单个子类的对象个数" href="#如何设计一个计算仅单个子类的对象个数">如何设计一个计算仅单个子类的对象个数？</a></li>
+    <li><a id="contents:怎么快速定位错误出现的地方" href="#怎么快速定位错误出现的地方">怎么快速定位错误出现的地方?</a></li>
+    <li><a id="contents:成员初始化列表会在什么时候用到它的调用过程是什么" href="#成员初始化列表会在什么时候用到它的调用过程是什么">成员初始化列表会在什么时候用到？它的调用过程是什么？</a></li>
+    <li><a id="contents:进行函数参数以及返回值传递时使用引用的好处有哪些" href="#进行函数参数以及返回值传递时使用引用的好处有哪些">进行函数参数以及返回值传递时，使用引用的好处有哪些？</a></li>
+    <li><a id="contents:说一说strcpysprintf与memcpy这三个函数的不同之处" href="#说一说strcpysprintf与memcpy这三个函数的不同之处">说一说strcpy、sprintf与memcpy这三个函数的不同之处</a></li>
+    <li><a id="contents:将引用作为函数参数有哪些好处" href="#将引用作为函数参数有哪些好处">将引用作为函数参数有哪些好处？</a></li>
+    <li><a id="contents:你知道数组和指针的区别吗" href="#你知道数组和指针的区别吗">你知道数组和指针的区别吗？</a></li>
+    <li><a id="contents:如何阻止一个类被实例化有哪些方法" href="#如何阻止一个类被实例化有哪些方法">如何阻止一个类被实例化？有哪些方法？</a></li>
+    <li><a id="contents:如何禁止程序自动生成拷贝构造函数" href="#如何禁止程序自动生成拷贝构造函数">如何禁止程序自动生成拷贝构造函数？</a></li>
+    <li><a id="contents:拓展a-a-和-a-a的区别" href="#拓展a-a-和-a-a的区别">拓展：A a() 和 A a的区别</a></li>
+    <li><a id="contents:debug和release的区别" href="#debug和release的区别">Debug和Release的区别？</a></li>
+    <li><a id="contents:main函数的返回值" href="#main函数的返回值">main函数的返回值？</a></li>
+    <li><a id="contents:写一个比较大小的模板函数" href="#写一个比较大小的模板函数">写一个比较大小的模板函数</a></li>
+    <li><a id="contents:strcpy函数和strncpy函数的区别哪个函数更安全" href="#strcpy函数和strncpy函数的区别哪个函数更安全">strcpy函数和strncpy函数的区别？哪个函数更安全？</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <h2 id="int-mainint-argc-char-argv里的参数你了解吗"><a href="#int-mainint-argc-char-argv里的参数你了解吗" class="anchor-link">#</a><a href="#contents:int-mainint-argc-char-argv里的参数你了解吗" class="headings">int main(int argc, char *argv[])里的参数，你了解吗？</a></h2>
+<p>参数的含义是程序在命令行下运行的时候，输入了argc 个参数，每个参数以char*类型存入 argv[]，第一个参数为程序的名称。</p>
+<h2 id="volatile关键字的作用"><a href="#volatile关键字的作用" class="anchor-link">#</a><a href="#contents:volatile关键字的作用" class="headings">volatile关键字的作用？</a></h2>
+<p>volatile 关键字是一种类型修饰符，用它声明的类型变量表示可以被某些编译器未知的因素更改，系统总是重新从它所在的内存读取数据。可以用在多线程中，每次读取到修改后的值。</p>
+<h2 id="如果有一个空类它会默认添加哪些函数"><a href="#如果有一个空类它会默认添加哪些函数" class="anchor-link">#</a><a href="#contents:如果有一个空类它会默认添加哪些函数" class="headings">如果有一个空类，它会默认添加哪些函数？</a></h2>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Empty</span><span class="p">();</span>  <span class="c1">// 缺省构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Empty</span><span class="p">(</span> <span class="k">const</span> <span class="n">Empty</span><span class="o">&amp;</span> <span class="p">);</span>  <span class="c1">// 拷贝构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">~</span><span class="n">Empty</span><span class="p">();</span>  <span class="c1">// 析构函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Empty</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span> <span class="k">const</span> <span class="n">Empty</span><span class="o">&amp;</span> <span class="p">);</span> <span class="c1">// 赋值运算符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Empty</span><span class="o">*</span> <span class="k">operator</span><span class="o">&amp;</span><span class="p">();</span> <span class="c1">// 取址运算符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="n">Empty</span><span class="o">*</span> <span class="k">operator</span><span class="o">&amp;</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span> <span class="c1">// 取址运算符 const
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>只有你需要用到这些函数并且你又没有显示的声明这些函数的时候，编译器才会贴心的自动声明相应的函数。</p>
+<p><a href="https://developer.aliyun.com/article/3763" target="_blank" rel="noopener">https://developer.aliyun.com/article/3763</a></p>
+<h2 id="c中标准库是什么"><a href="#c中标准库是什么" class="anchor-link">#</a><a href="#contents:c中标准库是什么" class="headings">C++中标准库是什么？</a></h2>
+<p>C++ 标准库可以分为两部分：</p>
+<p>标准函数库： 这个库是由通用的、独立的、不属于任何类的函数组成的。函数库继承自 C 语言。</p>
+<ul>
+<li>输入/输出 I/O、字符串和字符处理、数学、时间、日期和本地化、动态分配、其他、宽字符函数</li>
+</ul>
+<p>面向对象类库： 这个库是类及其相关函数的集合。</p>
+<ul>
+<li>标准的 C++ I/O 类、String 类、数值类、STL 容器类、STL 算法、STL 函数对象、STL 迭代器、STL 分配器、本地化库、异常处理类、杂项支持库</li>
+</ul>
+<p><a href="https://www.runoob.com/cplusplus/cpp-standard-library.html" target="_blank" rel="noopener">https://www.runoob.com/cplusplus/cpp-standard-library.html</a></p>
+<h2 id="const-char-与string之间的关系"><a href="#const-char-与string之间的关系" class="anchor-link">#</a><a href="#contents:const-char-与string之间的关系" class="headings">const char* 与string之间的关系？</a></h2>
+<ol>
+<li>
+<p>string 是c++标准库提供的字符串类，封装了对字符串的操作</p>
+</li>
+<li>
+<p>const char *是指向一个常量字符串的指针</p>
+</li>
+<li>
+<p>可以用const char*给string类初始化，用string.c_str()给const char *初始化。</p>
+</li>
+<li>
+<p>三者的转化关系如下所示：</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// a)  string转const char* 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#34;abc&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">c_s</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl"><span class="c1">// b)  const char* 转string，直接赋值即可 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">c_s</span> <span class="o">=</span> <span class="s">&#34;abc&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="nf">s</span><span class="p">(</span><span class="n">c_s</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="c1">// c)  string 转char* 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#34;abc&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="kt">char</span><span class="o">*</span> <span class="n">c</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">len</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span> 
+</span></span><span class="line"><span class="cl"><span class="n">strcpy</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">s</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span> 
+</span></span><span class="line"><span class="cl"><span class="c1">// d)  char* 转string 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span> <span class="n">c</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&#34;abc&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="nf">s</span><span class="p">(</span><span class="n">c</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="c1">// e)  const char* 转char* 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">cpc</span> <span class="o">=</span> <span class="s">&#34;abc&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="kt">char</span><span class="o">*</span> <span class="n">pc</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">cpc</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span> 
+</span></span><span class="line"><span class="cl"><span class="n">strcpy</span><span class="p">(</span><span class="n">pc</span><span class="p">,</span><span class="n">cpc</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// f)  char* 转const char*，直接赋值即可 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span> <span class="n">c</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&#34;abc&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">cpc</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="你什么情况用指针当参数什么时候用引用为什么"><a href="#你什么情况用指针当参数什么时候用引用为什么" class="anchor-link">#</a><a href="#contents:你什么情况用指针当参数什么时候用引用为什么" class="headings">你什么情况用指针当参数，什么时候用引用，为什么？</a></h2>
+<p>用指针的情况一是你考虑到存在不指向任何对象的可能（在这种情况下，你能够设置指针为空），二是你需要能够在不同的时刻指向不同的对象（在这种情况下，你能改变指针的指向），其他情况一般都使用引用，它可以避免判断是否为空提高效率，并且不会像普通的值传递还需要拷贝实参。</p>
+<p><a href="https://blog.csdn.net/wyg1065395142" target="_blank" rel="noopener">https://blog.csdn.net/wyg1065395142</a></p>
+<p><a href="https://blog.csdn.net/lyd_253261362" target="_blank" rel="noopener">https://blog.csdn.net/lyd_253261362</a></p>
+<h2 id="静态绑定和动态绑定"><a href="#静态绑定和动态绑定" class="anchor-link">#</a><a href="#contents:静态绑定和动态绑定" class="headings">静态绑定和动态绑定？</a></h2>
+<ul>
+<li>静态类型：对象在声明时采用的类型，在编译期既已确定；</li>
+<li>动态类型：通常是指一个指针或引用，目前所指对象的类型，是在<a href="https://blog.csdn.net/m0_37264397/article/details/76697237" target="_blank" rel="noopener">运行期</a>决定的；</li>
+<li>静态绑定：绑定的是静态类型，所对应的函数或属性依赖于对象的静态类型，发生在编译期；</li>
+<li>动态绑定：绑定的是动态类型，所对应的函数或属性依赖于对象的动态类型，发生在运行期；
+<ul>
+<li>在继承体系中只有虚函数使用的是动态绑定，其他的全部是静态绑定；</li>
+</ul>
+</li>
+</ul>
+<h2 id="如何设计一个计算仅单个子类的对象个数"><a href="#如何设计一个计算仅单个子类的对象个数" class="anchor-link">#</a><a href="#contents:如何设计一个计算仅单个子类的对象个数" class="headings">如何设计一个计算仅单个子类的对象个数？</a></h2>
+<p>1、为类设计一个static静态变量count作为计数器；</p>
+<p>2、类外初始化count;</p>
+<p>3、在构造函数~~、拷贝构造函数、赋值构造函数~~中对count进行+1;</p>
+<p>4、在析构函数中对count进行-1；</p>
+<h2 id="怎么快速定位错误出现的地方"><a href="#怎么快速定位错误出现的地方" class="anchor-link">#</a><a href="#contents:怎么快速定位错误出现的地方" class="headings">怎么快速定位错误出现的地方?</a></h2>
+<ul>
+<li>
+<p>查看错误信息和日志：首先，仔细阅读错误信息和日志，它们通常会提供关于错误类型、发生位置和相关调用栈的信息。错误信息可能包含文件名、行号、函数名等，这些信息可以帮助你快速定位到错误的源代码位置。</p>
+</li>
+<li>
+<p>使用调试器：调试器是一种强大的工具，可以逐行跟踪代码的执行过程，查看变量的值、调用堆栈等信息。通过在出现错误的地方设置断点，你可以在运行时停止程序并检查当前的状态，帮助你找到问题所在。</p>
+</li>
+<li>
+<p>日志输出和断言：在代码中适当地添加日志输出和断言语句，可以帮助你追踪程序的执行过程，并在特定条件下中断程序执行。通过在关键位置输出日志信息，你可以了解程序的执行流程和变量的值，从而更容易定位错误。</p>
+</li>
+<li>
+<p>缩小搜索范围：如果你已经确定错误发生在某个函数或代码块内部，可以采用二分法或逐步注释法来缩小搜索范围。通过逐渐注释掉代码段或只保留关键部分，可以确定错误发生的具体位置。</p>
+</li>
+<li>
+<p>使用工具和技术：利用各种可用的工具和技术来辅助定位错误，如代码静态分析工具、内存泄漏检测工具、性能分析器等。这些工具可以提供更详细的分析和报告，帮助你找出潜在的问题所在。</p>
+</li>
+<li>
+<p>与他人讨论和协作：如果你遇到困难或无法确定错误的来源，寻求他人的帮助是一个明智的选择。与其他开发者或论坛社区交流，描述你的问题和尝试过的解决方法，他们可能会提供新的思路和建议。</p>
+</li>
+</ul>
+<p><a href="https://zhiruili.github.io/posts/cpp-error-handling/" target="_blank" rel="noopener">mark</a></p>
+<h2 id="成员初始化列表会在什么时候用到它的调用过程是什么"><a href="#成员初始化列表会在什么时候用到它的调用过程是什么" class="anchor-link">#</a><a href="#contents:成员初始化列表会在什么时候用到它的调用过程是什么" class="headings">成员初始化列表会在什么时候用到？它的调用过程是什么？</a></h2>
+<ol>
+<li>
+<p>当初始化一个引用成员变量时；</p>
+</li>
+<li>
+<p>初始化一个const成员变量时；</p>
+</li>
+<li>
+<p>初始化没有默认构造函数的成员对象或者基类对象；</p>
+</li>
+<li>
+<p>考虑性能的时候，列表初始化减少一次拷贝</p>
+</li>
+<li>
+<p>调用过程？不知道，初始化参数过程：按照类中定义变量的顺序进行初始化
+<a href="https://blog.csdn.net/wy1550365215/article/details/77930637" target="_blank" rel="noopener">代码</a></p>
+</li>
+</ol>
+<h2 id="进行函数参数以及返回值传递时使用引用的好处有哪些"><a href="#进行函数参数以及返回值传递时使用引用的好处有哪些" class="anchor-link">#</a><a href="#contents:进行函数参数以及返回值传递时使用引用的好处有哪些" class="headings">进行函数参数以及返回值传递时，使用引用的好处有哪些？</a></h2>
+<p>对比值传递，引用传参的好处：</p>
+<ul>
+<li>在函数内部可以直接对实参修改</li>
+<li>提高函数调用和运行的效率（因为没有了传值和生成副本的时间和空间消耗）</li>
+</ul>
+<p>用引用作为返回值最大的好处就是在内存中不产生被返回值的副本。</p>
+<p>但是不能返回局部变量的引用。因为函数返回以后局部变量就会被销毁。</p>
+<h2 id="说一说strcpysprintf与memcpy这三个函数的不同之处"><a href="#说一说strcpysprintf与memcpy这三个函数的不同之处" class="anchor-link">#</a><a href="#contents:说一说strcpysprintf与memcpy这三个函数的不同之处" class="headings">说一说strcpy、sprintf与memcpy这三个函数的不同之处</a></h2>
+<ol>
+<li>操作对象不同</li>
+</ol>
+<p>①   strcpy的两个操作对象均为字符串</p>
+<p>②   sprintf的操作源对象可以是多种数据类型，目的操作对象是字符串</p>
+<p>③   memcpy的两个对象就是两个任意可操作的内存地址，并不限于何种数据类型。</p>
+<ol start="2">
+<li>执行效率不同</li>
+</ol>
+<p>memcpy最高，strcpy次之，sprintf的效率最低。</p>
+<ol start="3">
+<li>实现功能不同</li>
+</ol>
+<p>①   strcpy主要实现字符串变量间的拷贝</p>
+<p>②   sprintf主要实现其他数据类型格式到字符串的转化</p>
+<p>③   memcpy主要是内存块间的拷贝。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">str</span> <span class="p">[</span><span class="mi">50</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">n</span><span class="o">=</span><span class="n">sprintf</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="s">&#34;%d plus %d is %d&#34;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">cpy</span><span class="p">[</span><span class="mi">80</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="n">strcpy</span><span class="p">(</span><span class="n">cpy</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">memcpy</span><span class="p">(</span><span class="n">cpy</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="mi">80</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="将引用作为函数参数有哪些好处"><a href="#将引用作为函数参数有哪些好处" class="anchor-link">#</a><a href="#contents:将引用作为函数参数有哪些好处" class="headings">将引用作为函数参数有哪些好处？</a></h2>
+<ul>
+<li>在函数内部可以对此参数进行修改</li>
+<li>提高函数调用和运行的效率（因为没有了传值和生成副本的时间和空间消耗）</li>
+<li>用指针的情况
+<ul>
+<li>一是你考虑到存在不指向任何对象的可能（在这种情况下，你能够设置指针为空），</li>
+<li>二是你需要能够在不同的时刻指向不同的对象（在这种情况下，你能改变指针的指向），</li>
+</ul>
+</li>
+</ul>
+<h2 id="你知道数组和指针的区别吗"><a href="#你知道数组和指针的区别吗" class="anchor-link">#</a><a href="#contents:你知道数组和指针的区别吗" class="headings">你知道数组和指针的区别吗？</a></h2>
+<ul>
+<li>用运算符sizeof 可以计算出数组的容量（字节数）。sizeof(p)，p 为指针得到的是一个指针变量的字节数。</li>
+<li>在向函数传递参数的时候，如果实参是一个数组，数组会退化成指针，指向数组的首地址。</li>
+<li>对数组取地址操作后，必须用pointer to array来接受。</li>
+</ul>
+<h2 id="如何阻止一个类被实例化有哪些方法"><a href="#如何阻止一个类被实例化有哪些方法" class="anchor-link">#</a><a href="#contents:如何阻止一个类被实例化有哪些方法" class="headings">如何阻止一个类被实例化？有哪些方法？</a></h2>
+<ol>
+<li>将类定义为抽象基类（抽象类含有纯虚函数）</li>
+<li>构造函数声明为private</li>
+</ol>
+<h2 id="如何禁止程序自动生成拷贝构造函数"><a href="#如何禁止程序自动生成拷贝构造函数" class="anchor-link">#</a><a href="#contents:如何禁止程序自动生成拷贝构造函数" class="headings">如何禁止程序自动生成拷贝构造函数？</a></h2>
+<ul>
+<li>手动去<strong>重写</strong>这两个函数，并将他们<strong>设置成<a href="https://stackoverflow.com/questions/5513881/meaning-of-delete-after-function-declaration" target="_blank" rel="noopener">delete</a></strong>。</li>
+<li><a href="https://blog.csdn.net/qq_29422251/article/details/77850312" target="_blank" rel="noopener">声明</a>这两个函数，并加上private访问权限，一旦使用在编译阶段就报错。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Uncopyable</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Uncopyable</span><span class="p">(){}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">Uncopyable</span><span class="p">(){}</span>
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Uncopyable</span><span class="p">(</span><span class="k">const</span> <span class="n">Uncopyable</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Uncopyable</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="n">Uncopyable</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Uncopyable</span><span class="p">(</span><span class="k">const</span> <span class="n">Uncopyable</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Uncopyable</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="n">Uncopyable</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="拓展a-a-和-a-a的区别"><a href="#拓展a-a-和-a-a的区别" class="anchor-link">#</a><a href="#contents:拓展a-a-和-a-a的区别" class="headings">拓展：A a() 和 A a的区别</a></h2>
+<p>不要想当然的认为a()会调用默认构造函数，实际上它只是声明，而a才是会调用那个默认构造函数，即定义。</p>
+<p><a href="https://blog.csdn.net/m0_37166947/article/details/72856841" target="_blank" rel="noopener">https://blog.csdn.net/m0_37166947/article/details/72856841</a></p>
+<hr>
+<p>在C++中，<code>A a()</code>和<code>A a</code>有不同的含义和行为。</p>
+<ol>
+<li>
+<p><code>A a()</code>：</p>
+<ul>
+<li>这是一个函数声明的语法，而不是对象的定义或创建。</li>
+<li>它声明了一个名为<code>a</code>的函数，该函数没有参数并返回类型为<code>A</code>的值。</li>
+<li>这种语法在某些情况下可能会引起误解，因为它看起来像是在创建一个名为<code>a</code>的对象，但实际上它是一个函数声明。</li>
+<li>要创建一个对象，应该使用<code>A a;</code>或<code>A a{};</code>的形式。</li>
+</ul>
+</li>
+<li>
+<p><code>A a</code>：</p>
+<ul>
+<li>这是一个对象的定义和创建。</li>
+<li>它声明了一个名为<code>a</code>的对象，类型为<code>A</code>。</li>
+<li>如果<code>A</code>是一个类类型，则会调用默认构造函数来初始化对象<code>a</code>。</li>
+<li>对象<code>a</code>的生命周期将根据其定义的作用域和存储位置进行管理。</li>
+</ul>
+</li>
+</ol>
+<p>from GPT3.5</p>
+<h2 id="debug和release的区别"><a href="#debug和release的区别" class="anchor-link">#</a><a href="#contents:debug和release的区别" class="headings">Debug和Release的区别？</a></h2>
+<ol>
+<li>
+<p>调试版本，<strong>包含调试信息</strong>，所以容量比Release大很多，并且<strong>不进行任何优化</strong>（优化会使调试复杂化，因为源代码和生成的指令间关系会更复杂），便于程序员调试。Debug模式下生成两个文件，除了.exe或.dll文件外，还有一个.pdb文件，该文件记录了代码中断点等调试信息；</p>
+</li>
+<li>
+<p>发布版本，不对源代码进行调试，<strong>编译时对应用程序的速度进行优化</strong>，使得程序在代码大小和运行速度上都是最优的。（调试信息可在单独的PDB文件中生成）。Release模式下生成一个文件.exe或.dll文件。</p>
+</li>
+<li>
+<p>实际上，Debug 和 Release 并没有本质的界限，他们只是一组编译选项的集合，编译器只是按照预定的选项行动。事实上，我们甚至可以修改这些选项，从而得到优化过的调试版本或是带跟踪语句的发布版本。</p>
+</li>
+</ol>
+<h2 id="main函数的返回值"><a href="#main函数的返回值" class="anchor-link">#</a><a href="#contents:main函数的返回值" class="headings">main函数的返回值？</a></h2>
+<p>程序运行过程入口是main函数，main()函数返回值类型必须是int，这样返回值才能传递给程序激活者（如操作系统）表示程序正常退出。</p>
+<p><del>main（int args, char **argv） 参数的传递。参数的处理，一般会调用getopt（）函数处理，但实践中，这仅仅是一部分，不会经常用到的技能点。</del></p>
+<h2 id="写一个比较大小的模板函数"><a href="#写一个比较大小的模板函数" class="anchor-link">#</a><a href="#contents:写一个比较大小的模板函数" class="headings">写一个比较大小的模板函数</a></h2>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">T</span> <span class="n">Max</span><span class="p">(</span><span class="n">T</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="o">?</span> <span class="nl">a</span> <span class="p">:</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="strcpy函数和strncpy函数的区别哪个函数更安全"><a href="#strcpy函数和strncpy函数的区别哪个函数更安全" class="anchor-link">#</a><a href="#contents:strcpy函数和strncpy函数的区别哪个函数更安全" class="headings">strcpy函数和strncpy函数的区别？哪个函数更安全？</a></h2>
+<ol>
+<li>函数原型</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">char</span><span class="o">*</span> <span class="n">strcpy</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">strDest</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">strSrc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span> <span class="o">*</span><span class="n">strncpy</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">dest</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">src</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">n</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ul>
+<li>strcpy函数: 如果参数 dest 所指的内存空间不够大，可能会造成缓冲溢出(buffer Overflow)的错误情况。</li>
+<li>strncpy函数：用来复制源字符串的前n个字符，但是它不会在目标字符串<strong>追加结束符</strong>，容易出现意想不到的输出结果。如果n比较大，会一直填充结束符直到n，效率不太好。
+<a href="https://blog.csdn.net/qq_26093511/article/details/73338036" target="_blank" rel="noopener">https://blog.csdn.net/qq_26093511/article/details/73338036</a></li>
+</ul>
+<p>因此推荐使用strdup，在堆上开辟，或者strdupa，在栈上开辟，或者用string</p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/interview/" rel="tag" class="post-tag-link">#interview</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

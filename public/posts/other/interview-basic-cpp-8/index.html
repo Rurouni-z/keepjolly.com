@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>面试之CPP基础知识-8 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="类的对象存储空间？ 类的非静态成员变量大小，静态成员不占据类的空间，成员函数也不占据类的空间大小；
+内存对齐另外分配的空间大小；
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/other/interview-basic-cpp-8/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2024-01-13T21:56:13+08:00",
+        "dateModified": "2024-05-03T14:50:48+08:00",
+        "url": "http://localhost:1313/posts/other/interview-basic-cpp-8/",
+        "headline": "面试之CPP基础知识-8",
+        "description": "类的对象存储空间？ 类的非静态成员变量大小，静态成员不占据类的空间，成员函数也不占据类的空间大小；\n内存对齐另外分配的空间大小；\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  3020 ,
+        "image": ["https://pic.keepjolly.com/halo/blog/2024/01/20240113210303.png?imageMogr2/format/webp%7C"],
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="面试之CPP基础知识-8" />
+<meta property="og:description" content="类的对象存储空间？ 类的非静态成员变量大小，静态成员不占据类的空间，成员函数也不占据类的空间大小；
+内存对齐另外分配的空间大小；
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/other/interview-basic-cpp-8/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://pic.keepjolly.com/halo/blog/2024/01/20240113210303.png?imageMogr2/format/webp%7C" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2024-01-13T21:56:13&#43;08:00" />
+    <meta property="article:modified_time" content="2024-05-03T14:50:48&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">面试之CPP基础知识-8</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:类的对象存储空间" href="#类的对象存储空间">类的对象存储空间？</a></li>
+    <li><a id="contents:简要说明c的内存分区" href="#简要说明c的内存分区">简要说明C++的内存分区</a></li>
+    <li><a id="contents:什么是内存池如何实现" href="#什么是内存池如何实现">什么是内存池，如何实现</a></li>
+    <li><a id="contents:c的内存管理" href="#c的内存管理">C++的内存管理？</a></li>
+    <li><a id="contents:c中类的数据成员和成员函数内存分布情况" href="#c中类的数据成员和成员函数内存分布情况">C++中类的数据成员和成员函数内存分布情况</a></li>
+    <li><a id="contents:关于this指针你知道什么" href="#关于this指针你知道什么">关于this指针你知道什么？</a></li>
+    <li><a id="contents:内存泄漏的后果如何监测解决方法" href="#内存泄漏的后果如何监测解决方法">内存泄漏的后果？如何监测？解决方法？</a></li>
+    <li><a id="contents:在成员函数中调用delete-this会出现什么问题对象还可以使用吗" href="#在成员函数中调用delete-this会出现什么问题对象还可以使用吗">在成员函数中调用delete this会出现什么问题？对象还可以使用吗？</a></li>
+    <li><a id="contents:你知道空类的大小是多少吗" href="#你知道空类的大小是多少吗">你知道空类的大小是多少吗？</a></li>
+    <li><a id="contents:这几个类的大小是多少" href="#这几个类的大小是多少">这几个类的大小是多少？</a></li>
+    <li><a id="contents:this指针调用成员变量时堆栈会发生什么变化" href="#this指针调用成员变量时堆栈会发生什么变化">this指针调用成员变量时，堆栈会发生什么变化？</a></li>
+    <li><a id="contents:类对象的大小受哪些因素影响" href="#类对象的大小受哪些因素影响">类对象的大小受哪些因素影响？</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <h2 id="类的对象存储空间"><a href="#类的对象存储空间" class="anchor-link">#</a><a href="#contents:类的对象存储空间" class="headings">类的对象存储空间？</a></h2>
+<ol>
+<li>
+<p>类的非静态成员变量大小，静态成员不占据类的空间，成员函数也不占据类的空间大小；</p>
+</li>
+<li>
+<p>内存对齐另外分配的空间大小；</p>
+</li>
+<li>
+<p>虚函数会在类对象插入vptr指针，加上指针大小；</p>
+</li>
+<li>
+<p>基类的数据成员也会存在派生类中的空间。</p>
+</li>
+</ol>
+<h2 id="简要说明c的内存分区"><a href="#简要说明c的内存分区" class="anchor-link">#</a><a href="#contents:简要说明c的内存分区" class="headings">简要说明C++的内存分区</a></h2>
+<p>C++中的内存分区，分别是堆、栈、全局/静态存储区、常量存储区和代码区。如下图所示</p>
+<p><img src="https://pic.keepjolly.com/halo/blog/2024/01/20240113210303.png?imageMogr2/format/webp%7C" alt="image"></p>
+<p><strong>栈</strong>：在执行函数时，函数内局部变量的存储单元都可以在栈上创建，函数执行结束时这些存储单元自动被释放。栈内存分配运算内置于处理器的指令集中，效率很高，但是分配的内存容量有限</p>
+<p><strong>堆</strong>：由 <code>new</code>分配的内存块，需要应用程序去控制，<code>new</code>和 <code>delete</code>要对应。如果程序员没有释放掉，那么在程序结束后，操作系统会自动回收</p>
+<p><strong>全局/静态存储区</strong>：全局变量和静态变量被分配到同一块内存中，~~在以前的C语言中，全局变量和静态变量又分为初始化的和未初始化的，在C++里面没有这个区分了，~~在该区定义的变量若没有初始化，则会被自动初始化，例如int型变量自动初始为0</p>
+<p><strong>常量存储区</strong>：这是一块比较特殊的存储区，这里面存放的是常量，不允许修改</p>
+<p><strong>代码区</strong>：存放函数体的二进制代码</p>
+<h2 id="什么是内存池如何实现"><a href="#什么是内存池如何实现" class="anchor-link">#</a><a href="#contents:什么是内存池如何实现" class="headings">什么是内存池，如何实现</a></h2>
+<ul>
+<li>内存池（Memory Pool）是一种动态内存分配与管理技术，通常情况下，程序员习惯直接使用new，delete，malloc,free等API申请和释放内存，这样导致的后果就是：当程序运行的时间很长的时候，由于所申请的内存块的大小不定，频繁使用时会造成大量的内存碎片从而降低程序和操作系统的性能。</li>
+<li>内存池则是在真正使用内存之前，先申请分配一大块内存（内存池）留作备用。当程序员申请内存时，从池中取出一块动态分配，当程序员释放时，将释放的内存放回到池内，再次申请，就可以从池里取出来使用，并尽量与周边的空闲内存块合并。若内存池不够时，则自动扩大内存池，从操作系统中申请更大的内存池。</li>
+</ul>
+<p><a href="https://zhuanlan.zhihu.com/p/523216209" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/523216209</a></p>
+<h2 id="c的内存管理"><a href="#c的内存管理" class="anchor-link">#</a><a href="#contents:c的内存管理" class="headings">C++的内存管理？</a></h2>
+<p>在C++中，内存分成5个区，他们分别是堆、栈、全局/静态存储区和常量存储区和代码区。</p>
+<p><strong>栈</strong>：在执行函数时，函数内局部变量的存储单元都可以在栈上创建，函数执行结束时这些存储单元自动被释放。栈内存分配运算内置于处理器的指令集中，效率很高，但是分配的内存容量有限</p>
+<p><strong>堆</strong>：由 <code>new</code>分配的内存块，需要应用程序去控制，<code>new</code>和 <code>delete</code>要对应。如果程序员没有释放掉，那么在程序结束后，操作系统会自动回收</p>
+<p><strong>全局/静态存储区</strong>：全局变量和静态变量被分配到同一块内存中，<del>在以前的C语言中，全局变量和静态变量又分为初始化的和未初始化的，在C++里面没有这个区分了，</del> 在该区定义的变量若没有初始化，则会被自动初始化，例如int型变量自动初始为0</p>
+<p><strong>常量存储区</strong>：这是一块比较特殊的存储区，这里面存放的是常量，不允许修改</p>
+<p><strong>代码区</strong>：存放函数体的二进制代码</p>
+<h2 id="c中类的数据成员和成员函数内存分布情况"><a href="#c中类的数据成员和成员函数内存分布情况" class="anchor-link">#</a><a href="#contents:c中类的数据成员和成员函数内存分布情况" class="headings">C++中类的数据成员和成员函数内存分布情况</a></h2>
+<p>类的首地址为声明的第一个成员变量的地址。成员变量保存在栈或堆中，成员函数保存在<strong>代码段</strong>。</p>
+<p><a href="https://zhuanlan.zhihu.com/p/512762755" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/512762755</a></p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Person</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Person</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">age</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">printAge</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">age</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">Person</span><span class="p">(){}</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">age</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Person</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;对象地址：&#34;</span><span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">p</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;age地址：&#34;</span><span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">age</span><span class="p">)</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;对象大小：&#34;</span><span class="o">&lt;&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//输出结果
+</span></span></span><span class="line"><span class="cl"><span class="c1">//对象地址：0x7fffec0f15a8
+</span></span></span><span class="line"><span class="cl"><span class="c1">//age地址：0x7fffec0f15a8
+</span></span></span><span class="line"><span class="cl"><span class="c1">//对象大小：8
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><strong>所有函数</strong>都存放在代码区，静态函数也不例外。一看到 static 这个单词就主观的认为是存放在全局数据区，那是不对的。</p>
+<h2 id="关于this指针你知道什么"><a href="#关于this指针你知道什么" class="anchor-link">#</a><a href="#contents:关于this指针你知道什么" class="headings">关于this指针你知道什么？</a></h2>
+<ol>
+<li><code>this</code> 指针是一个隐含于每一个非静态成员函数中的特殊指针。它指向调用该成员函数的那个对象。</li>
+<li><code>this</code> 指针被隐含地声明为: <code>ClassName *const this</code>，这意味着<strong>不能给 <code>this</code>指针赋值</strong></li>
+<li><code>this</code> 并不是一个常规变量，而<strong>是个右值</strong>，所以<strong>不能取得 <code>this</code>的地址</strong>。</li>
+<li>this在成员函数的开始执行前构造，在成员函数的执行结束后清除。</li>
+<li>A a; a.fun(); // aka a.fun(this)</li>
+<li>在以下场景中，经常需要使用 <code>this</code> 指针：
+<ol>
+<li>为实现对象的<a href="https://juejin.cn/post/6991016494561755173" target="_blank" rel="noopener">链式引用</a>；</li>
+<li>为避免对同一对象进行赋值操作；</li>
+<li>在实现一些数据结构时，如 <code>list</code>。</li>
+</ol>
+</li>
+</ol>
+<h2 id="内存泄漏的后果如何监测解决方法"><a href="#内存泄漏的后果如何监测解决方法" class="anchor-link">#</a><a href="#contents:内存泄漏的后果如何监测解决方法" class="headings">内存泄漏的后果？如何监测？解决方法？</a></h2>
+<p>你觉得会问吗</p>
+<p><strong>1)  内存泄漏</strong></p>
+<p>内存泄漏是指由于疏忽或错误造成了程序未能释放掉不再使用的内存的情况，导致程序无法再次利用这段内存。</p>
+<p><strong>2)  后果</strong></p>
+<p>只发生一次小的内存泄漏可能不被注意，但泄漏大量内存的程序将会出现各种症状：性能下降到内存逐渐用完，导致另一个程序失败；</p>
+<p><strong>3)  如何排除</strong></p>
+<p>使用工具软件BoundsChecker，BoundsChecker是一个运行时错误检测工具，它主要定位程序运行时期发生的各种错误；</p>
+<p>调试运行DEBUG版程序，运用以下技术：CRT(C run-time libraries)、运行时函数调用堆栈、内存泄漏时提示的内存分配序号(集成开发环境OUTPUT窗口)，综合分析内存泄漏的原因，排除内存泄漏。</p>
+<p><strong>4)  解决方法</strong></p>
+<p>智能指针。</p>
+<p><strong>5)  检查、定位内存泄漏</strong></p>
+<p>检查方法：在main函数最后面一行，加上一句_CrtDumpMemoryLeaks()。调试程序，自然关闭程序让其退出，查看输出：</p>
+<p>输出这样的格式{453}normal block at 0x02432CA8,868 bytes long</p>
+<p>被{}包围的453就是我们需要的内存泄漏定位值，868 bytes long就是说这个地方有868比特内存没有释放。</p>
+<p>定位代码位置</p>
+<p>在main函数第一行加上_CrtSetBreakAlloc(453);意思就是在申请453这块内存的位置中断。然后调试程序，程序中断了，查看调用堆栈。加上头文件#include &lt;crtdbg.h&gt;</p>
+<h2 id="在成员函数中调用delete-this会出现什么问题对象还可以使用吗"><a href="#在成员函数中调用delete-this会出现什么问题对象还可以使用吗" class="anchor-link">#</a><a href="#contents:在成员函数中调用delete-this会出现什么问题对象还可以使用吗" class="headings">在成员函数中调用delete this会出现什么问题？对象还可以使用吗？</a></h2>
+<p>当 调用delete this时，类对象的内存空间被释放。在delete this之后进行的其他任何函数调用，只要不涉及到this指针的内容，都能够正常运行。一旦涉及到this指针，如<strong>操作数据成员，调用虚函数</strong>等，就会出现<strong>不可预期</strong>的问题。</p>
+<p>为什么是不可预期的问题？</p>
+<p>这个问题牵涉到操作系统的内存管理策略。delete this释放了类对象的内存空间，但是内存空间却并<strong>不是马上被回收到系统中</strong>，可能是缓冲或者其他什么原因，导致这段内存空间暂时并没有被系统收回。此时这段内存是可以访问的，你可以加上100，加上200，但是其中的值却是不确定的。当你获取数据成员，可能得到的是一串很长的未初始化的随机数；访问虚函数表，指针无效的可能性非常高，造成系统崩溃。</p>
+<p>在析构函数中调用delete this 会导致堆栈溢出，因为delete调用析构，而析构再次调用delete。</p>
+<p><a href="https://blog.csdn.net/qq_39661275/article/details/106373853" target="_blank" rel="noopener">https://blog.csdn.net/qq_39661275/article/details/106373853</a></p>
+<h2 id="你知道空类的大小是多少吗"><a href="#你知道空类的大小是多少吗" class="anchor-link">#</a><a href="#contents:你知道空类的大小是多少吗" class="headings">你知道空类的大小是多少吗？</a></h2>
+<p>笔试做到过</p>
+<ol>
+<li>空类(没有非静态数据成员)的对象的<a href="https://www.zhihu.com/question/266041176" target="_blank" rel="noopener">size为1</a>, 当作为基类时, size为0。因为标准规定是0，因为每个类需要独一无二的地址，防止出现除0错误。</li>
+<li>带有虚函数的C++类大小不为1，因为每一个对象会有一个vptr指向虚函数表，具体大小根据指针大小确定；</li>
+</ol>
+<h2 id="这几个类的大小是多少"><a href="#这几个类的大小是多少" class="anchor-link">#</a><a href="#contents:这几个类的大小是多少" class="headings">这几个类的大小是多少？</a></h2>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span><span class="p">{</span> <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">func</span><span class="p">(){}</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">C</span><span class="p">{</span> <span class="k">static</span> <span class="kt">int</span> <span class="n">a</span><span class="p">;</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="k">sizeof</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span><span class="c1">// 输出 1; 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="k">sizeof</span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span><span class="c1">// 输出 8;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="k">sizeof</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span><span class="c1">// 输出 1;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="this指针调用成员变量时堆栈会发生什么变化"><a href="#this指针调用成员变量时堆栈会发生什么变化" class="anchor-link">#</a><a href="#contents:this指针调用成员变量时堆栈会发生什么变化" class="headings">this指针调用成员变量时，堆栈会发生什么变化？</a></h2>
+<p>this指针首先入栈，然后成员函数的参数从右向左进行入栈，最后函数返回地址入栈。</p>
+<h2 id="类对象的大小受哪些因素影响"><a href="#类对象的大小受哪些因素影响" class="anchor-link">#</a><a href="#contents:类对象的大小受哪些因素影响" class="headings">类对象的大小受哪些因素影响？</a></h2>
+<ol>
+<li>
+<p>类的非静态成员变量大小，静态成员不占据类的空间，成员函数也不占据类的空间大小；</p>
+</li>
+<li>
+<p>内存对齐另外分配的空间大小；</p>
+</li>
+<li>
+<p>虚函数会在类对象插入vptr指针，加上指针大小；</p>
+</li>
+<li>
+<p>基类的数据成员也会存在派生类中的空间。</p>
+</li>
+<li>
+<p><a href="http://baiy.cn/doc/cpp/inside_rtti.htm" target="_blank" rel="noopener">http://baiy.cn/doc/cpp/inside_rtti.htm</a></p>
+</li>
+</ol>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/interview/" rel="tag" class="post-tag-link">#interview</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

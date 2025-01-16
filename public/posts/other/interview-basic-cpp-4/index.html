@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>面试之CPP基础知识-4 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="什么是内存泄露，如何检测与避免 内存泄露
+用new/malloc申请了内存，但是没有用delete/free释放内存。而其他程序就无法再申请该块空间
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/other/interview-basic-cpp-4/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2024-01-13T21:52:43+08:00",
+        "dateModified": "2024-01-13T22:30:36+08:00",
+        "url": "http://localhost:1313/posts/other/interview-basic-cpp-4/",
+        "headline": "面试之CPP基础知识-4",
+        "description": "什么是内存泄露，如何检测与避免 内存泄露\n用new/malloc申请了内存，但是没有用delete/free释放内存。而其他程序就无法再申请该块空间\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  5232 ,
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+
+    
+
+
+
+<meta property="og:title" content="面试之CPP基础知识-4" />
+<meta property="og:description" content="什么是内存泄露，如何检测与避免 内存泄露
+用new/malloc申请了内存，但是没有用delete/free释放内存。而其他程序就无法再申请该块空间
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/other/interview-basic-cpp-4/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2024-01-13T21:52:43&#43;08:00" />
+    <meta property="article:modified_time" content="2024-01-13T22:30:36&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">面试之CPP基础知识-4</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:什么是内存泄露如何检测与避免" href="#什么是内存泄露如何检测与避免">什么是内存泄露，如何检测与避免</a></li>
+    <li><a id="contents:对象复用的了解零拷贝的了解" href="#对象复用的了解零拷贝的了解">对象复用的了解，零拷贝的了解</a></li>
+    <li><a id="contents:介绍面向对象的三大特性并且举例说明" href="#介绍面向对象的三大特性并且举例说明">介绍面向对象的三大特性，并且举例说明</a></li>
+    <li><a id="contents:c的四种强制转换" href="#c的四种强制转换">C++的四种强制转换</a></li>
+    <li><a id="contents:c函数调用的压栈过程" href="#c函数调用的压栈过程">C++函数调用的压栈过程</a></li>
+    <li><a id="contents:coredump-遇到过吗怎么调试这个错误" href="#coredump-遇到过吗怎么调试这个错误">coredump 遇到过吗？怎么调试这个错误？</a></li>
+    <li><a id="contents:说说移动构造函数" href="#说说移动构造函数">说说移动构造函数</a></li>
+    <li><a id="contents:c中将临时变量作为返回值时的处理过程" href="#c中将临时变量作为返回值时的处理过程">C++中将临时变量作为返回值时的处理过程</a></li>
+    <li><a id="contents:如何获得结构成员相对于结构开头的字节偏移量" href="#如何获得结构成员相对于结构开头的字节偏移量">如何获得结构成员相对于结构开头的字节偏移量</a></li>
+    <li><a id="contents:静态类型和动态类型静态绑定和动态绑定的介绍" href="#静态类型和动态类型静态绑定和动态绑定的介绍">静态类型和动态类型，静态绑定和动态绑定的介绍</a></li>
+    <li><a id="contents:引用是否能实现动态绑定为什么可以实现" href="#引用是否能实现动态绑定为什么可以实现">引用是否能实现动态绑定，为什么可以实现？</a></li>
+    <li><a id="contents:全局变量和局部变量有什么区别" href="#全局变量和局部变量有什么区别">全局变量和局部变量有什么区别？</a></li>
+    <li><a id="contents:指针加减计算要注意什么" href="#指针加减计算要注意什么">指针加减计算要注意什么？</a></li>
+    <li><a id="contents:怎样判断两个浮点数是否相等" href="#怎样判断两个浮点数是否相等">怎样判断两个浮点数是否相等？</a></li>
+    <li><a id="contents:方法调用的原理栈汇编" href="#方法调用的原理栈汇编">方法调用的原理（栈，汇编）</a></li>
+    <li><a id="contents:c中的指针参数传递和引用参数传递有什么区别底层原理你知道吗" href="#c中的指针参数传递和引用参数传递有什么区别底层原理你知道吗">C++中的指针参数传递和引用参数传递有什么区别？底层原理你知道吗？</a></li>
+    <li><a id="contents:类如何实现只能静态分配和只能动态分配" href="#类如何实现只能静态分配和只能动态分配">类如何实现只能静态分配和只能动态分配</a></li>
+    <li><a id="contents:如果想将某个类用作基类为什么该类必须定义而非声明" href="#如果想将某个类用作基类为什么该类必须定义而非声明">如果想将某个类用作基类，为什么该类必须定义而非声明？</a></li>
+    <li><a id="contents:继承机制中对象之间如何转换指针和引用之间如何转换" href="#继承机制中对象之间如何转换指针和引用之间如何转换">继承机制中对象之间如何转换？指针和引用之间如何转换？</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <h2 id="什么是内存泄露如何检测与避免"><a href="#什么是内存泄露如何检测与避免" class="anchor-link">#</a><a href="#contents:什么是内存泄露如何检测与避免" class="headings">什么是内存泄露，如何检测与避免</a></h2>
+<p><strong>内存泄露</strong></p>
+<p>用new/malloc申请了内存，但是没有用delete/free释放内存。而其他程序就无法再申请该块空间</p>
+<p><strong>避免内存泄露的几种方式</strong></p>
+<ul>
+<li>使用shared_ptr管理对象。</li>
+<li>将基类的析构函数声明为<strong>虚函数</strong></li>
+<li>对象数组的释放用<strong>delete []</strong></li>
+<li>有new就有delete，有malloc就有free，保证它们一定成对出现</li>
+</ul>
+<p><strong>检测工具</strong></p>
+<ul>
+<li>Linux下可以使用<strong>Valgrind工具</strong></li>
+<li>Windows下可以使用<strong>CRT库</strong></li>
+</ul>
+<h2 id="对象复用的了解零拷贝的了解"><a href="#对象复用的了解零拷贝的了解" class="anchor-link">#</a><a href="#contents:对象复用的了解零拷贝的了解" class="headings">对象复用的了解，零拷贝的了解</a></h2>
+<p><strong>对象复用</strong></p>
+<p>对象复用其本质是一种设计模式：Flyweight享元模式。</p>
+<p>通过将对象存储到“对象池”中实现对象的重复利用，这样可以避免多次创建重复对象的开销，节约系统资源。</p>
+<p><strong>零拷贝</strong></p>
+<p>零拷贝就是一种避免 CPU 将数据从一块存储拷贝到另外一块存储的技术。</p>
+<p>零拷贝技术可以减少数据拷贝和共享总线操作的次数。</p>
+<p>在C++中，vector的一个成员函数**emplace_back()**很好地体现了零拷贝技术，它跟push_back()函数一样可以将一个元素插入容器尾部，区别在于：<strong>使用push_back()函数需要调用拷贝构造函数和转移构造函数，而使用emplace_back()插入的元素原地构造，不需要触发拷贝构造和转移构造</strong>，效率更高。举个例子：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Person</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">age</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//初始构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Person</span><span class="p">(</span><span class="n">string</span> <span class="n">p_name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_age</span><span class="p">)</span><span class="o">:</span> <span class="n">name</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">p_name</span><span class="p">)),</span> <span class="n">age</span><span class="p">(</span><span class="n">p_age</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;I have been constructed&#34;</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">     <span class="c1">//拷贝构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>     <span class="n">Person</span><span class="p">(</span><span class="k">const</span> <span class="n">Person</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span><span class="o">:</span> <span class="n">name</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">name</span><span class="p">)),</span> <span class="n">age</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;I have been copy constructed&#34;</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">     <span class="c1">//转移构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>     <span class="n">Person</span><span class="p">(</span><span class="n">Person</span><span class="o">&amp;&amp;</span> <span class="n">other</span><span class="p">)</span><span class="o">:</span> <span class="n">name</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">name</span><span class="p">)),</span> <span class="n">age</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;I have been moved&#34;</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;emplace_back:&#34;</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">e</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="s">&#34;Jane&#34;</span><span class="p">,</span> <span class="mi">23</span><span class="p">);</span> <span class="c1">//不用构造类对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;push_back:&#34;</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Person</span><span class="p">(</span><span class="s">&#34;Mike&#34;</span><span class="p">,</span><span class="mi">36</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//输出结果：
+</span></span></span><span class="line"><span class="cl"><span class="c1">//emplace_back:
+</span></span></span><span class="line"><span class="cl"><span class="c1">//I have been constructed
+</span></span></span><span class="line"><span class="cl"><span class="c1">//push_back:
+</span></span></span><span class="line"><span class="cl"><span class="c1">//I have been constructed
+</span></span></span><span class="line"><span class="cl"><span class="c1">//I am being moved.
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="介绍面向对象的三大特性并且举例说明"><a href="#介绍面向对象的三大特性并且举例说明" class="anchor-link">#</a><a href="#contents:介绍面向对象的三大特性并且举例说明" class="headings">介绍面向对象的三大特性，并且举例说明</a></h2>
+<p>三大特性：封装 继承 多态</p>
+<p><strong>（1）继承</strong></p>
+<p><strong>让派生类获得基类的属性和方法。</strong></p>
+<p>它可以使用现有类的所有功能，并在类中对这些功能进行扩展</p>
+<p>例如，将人定义为一个抽象类，拥有姓名、性别、年龄等公共属性，吃饭、睡觉、走路等公共方法，在定义一个具体的人时，就可以继承这个抽象类，既保留了公共属性和方法，也可以在此基础上扩展跳舞、唱歌等特有方法</p>
+<p>（2）封装</p>
+<p>封装，也就是<strong>把客观事物封装成抽象的类，并且给类的属性和方法设置访问权限</strong>，例如：将公共的数据或方法使用public修饰，而不希望被访问的数据或方法采用private修饰。</p>
+<p>（3）多态</p>
+<p>同一事物表现出不同事物的能力，即向不同对象发送同一消息，不同的对象在接收时会产生不同的行为**（重载实现编译时多态，虚函数实现运行时多态）** 。</p>
+<blockquote>
+<p>允许将子类类型的指针赋值给父类类型的指针</p>
+</blockquote>
+<p>实现多态有二种方式：覆盖（override），重载（overload）。</p>
+<p>覆盖：是指子类重新定义父类的虚函数的做法。</p>
+<p>重载：是指允许存在多个同名函数，而这些函数的参数类型不同或者个数不同。</p>
+<h2 id="c的四种强制转换"><a href="#c的四种强制转换" class="anchor-link">#</a><a href="#contents:c的四种强制转换" class="headings">C++的四种强制转换</a></h2>
+<blockquote>
+<p><a href="https://msdn.microsoft.com/zh-CN/library/5f6c9f8h.aspx" target="_blank" rel="noopener">MSDN . 强制转换运算符</a></p>
+</blockquote>
+<div class="table-container"><table>
+  <thead>
+      <tr>
+          <th><a href="https://en.cppreference.com/w/cpp/language/static_cast" target="_blank" rel="noopener">static_cast</a></th>
+          <th><a href="https://learn.microsoft.com/zh-cn/cpp/cpp/dynamic-cast-operator?view=msvc-170" target="_blank" rel="noopener">dynamic_cast</a></th>
+          <th><a href="https://learn.microsoft.com/zh-cn/cpp/cpp/const-cast-operator?view=msvc-170" target="_blank" rel="noopener">const_cast</a></th>
+          <th><a href="https://learn.microsoft.com/zh-cn/cpp/cpp/reinterpret-cast-operator?view=msvc-170" target="_blank" rel="noopener">reinterpret_cast</a></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>一般用于数值转换</td>
+          <td>用于指针和引用</td>
+          <td>删除const特性</td>
+          <td>指针间转换</td>
+      </tr>
+      <tr>
+          <td>不执行运行时类型检查</td>
+          <td>执行检查</td>
+          <td>删除volatile特性</td>
+          <td>整数类型转指针</td>
+      </tr>
+      <tr>
+          <td>类指针可以向上转换</td>
+          <td>向上/下转换</td>
+          <td>不能用于函数指针</td>
+          <td>指针转整数类型</td>
+      </tr>
+      <tr>
+          <td>不安全</td>
+          <td>转换失败返回null</td>
+          <td></td>
+          <td>不安全</td>
+      </tr>
+  </tbody>
+</table></div>
+<h2 id="c函数调用的压栈过程"><a href="#c函数调用的压栈过程" class="anchor-link">#</a><a href="#contents:c函数调用的压栈过程" class="headings">C++函数调用的压栈过程</a></h2>
+<p>跳过。</p>
+<p>从代码入手，解释这个过程：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">n</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">func</span><span class="p">(</span><span class="kt">int</span> <span class="n">param1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">param2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">var1</span> <span class="o">=</span> <span class="n">param1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">var2</span> <span class="o">=</span> <span class="n">param2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;var1=%d,var2=%d&#34;</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">var1</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">var2</span><span class="p">));</span><span class="c1">//如果将printf换为cout进行输出，输出结果则刚好相反
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//输出结果
+</span></span></span><span class="line"><span class="cl"><span class="c1">//2
+</span></span></span><span class="line"><span class="cl"><span class="c1">//1
+</span></span></span><span class="line"><span class="cl"><span class="c1">//var1=1,var2=2
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>当函数从入口函数main函数开始执行时，编译器会将我们操作系统的运行状态，main函数的返回地址、main的参数、mian函数中的变量、进行依次压栈；</p>
+<p>当main函数开始调用func()函数时，编译器此时会将main函数的运行状态进行压栈，再将func()函数的返回地址、func()函数的参数从右到左、func()定义变量依次压栈；</p>
+<p>当func()调用f()的时候，编译器此时会将func()函数的运行状态进行压栈，再将f()的返回地址、函数的参数从右到左、定义变量依次压栈。</p>
+<p>从代码的输出结果可以看出，函数f(var1)、f(var2)依次入栈，而后先执行f(var2)，再执行f(var1)，最后打印整个字符串，将栈中的变量依次弹出，最后主函数返回。</p>
+<h2 id="coredump-遇到过吗怎么调试这个错误"><a href="#coredump-遇到过吗怎么调试这个错误" class="anchor-link">#</a><a href="#contents:coredump-遇到过吗怎么调试这个错误" class="headings">coredump 遇到过吗？怎么调试这个错误？</a></h2>
+<p>coredump是程序由于异常或者bug在运行时异常退出或者终止，在一定的条件下生成的一个叫做core的文件，~~这个core文件会记录程序在运行时的内存，寄存器状态，内存指针和函数堆栈信息等等。~~对这个文件进行分析可以定位到程序异常的时候对应的堆栈调用信息。</p>
+<p>使用gdb命令对core文件进行调试</p>
+<pre tabindex="0"><code>gdb &lt;可执行文件路径&gt; &lt;core文件路径&gt;
+</code></pre><p><a href="https://cppguide.cn/pages/323439/" target="_blank" rel="noopener">gdb 调试准备</a></p>
+<h2 id="说说移动构造函数"><a href="#说说移动构造函数" class="anchor-link">#</a><a href="#contents:说说移动构造函数" class="headings">说说移动构造函数</a></h2>
+<p><a href="https://learn.microsoft.com/zh-cn/cpp/cpp/move-constructors-and-move-assignment-operators-cpp?view=msvc-170" target="_blank" rel="noopener">移动构造函数</a>使右值对象拥有的资源无需复制即可移动到左值中。可以搭配std::move将变量转为右值。</p>
+<h2 id="c中将临时变量作为返回值时的处理过程"><a href="#c中将临时变量作为返回值时的处理过程" class="anchor-link">#</a><a href="#contents:c中将临时变量作为返回值时的处理过程" class="headings">C++中将临时变量作为返回值时的处理过程</a></h2>
+<ul>
+<li>临时变量在函数调用过程中是先被压到程序进程的栈中</li>
+<li>当函数退出时，临时变量出栈，销毁临时变量，但是临时变量占用的内存空间没有被清空，可以被分配给其他变量</li>
+<li>所以有可能在函数退出时，该内存已经被修改了，对于临时变量来说已经是没有意义的值了</li>
+</ul>
+<p>所以<a href="https://www.cnblogs.com/FLYMANJB/p/13357702.html" target="_blank" rel="noopener">建议不再函数中返回局部变量</a>。
+硬要返回用new个局部指针并外部接受后再delete、声明为static、用全局变量（推荐）</p>
+<h2 id="如何获得结构成员相对于结构开头的字节偏移量"><a href="#如何获得结构成员相对于结构开头的字节偏移量" class="anchor-link">#</a><a href="#contents:如何获得结构成员相对于结构开头的字节偏移量" class="headings">如何获得结构成员相对于结构开头的字节偏移量</a></h2>
+<p>使用&lt;stddef.h&gt;头文件中的，<a href="https://interviewguide.cn/notes/03-hunting_job/02-interview/01-01-04-basic.html#_70%E3%80%81%E5%A6%82%E4%BD%95%E8%8E%B7%E5%BE%97%E7%BB%93%E6%9E%84%E6%88%90%E5%91%98%E7%9B%B8%E5%AF%B9%E4%BA%8E%E7%BB%93%E6%9E%84%E5%BC%80%E5%A4%B4%E7%9A%84%E5%AD%97%E8%8A%82%E5%81%8F%E7%A7%BB%E9%87%8F" target="_blank" rel="noopener">offsetof宏</a>。</p>
+<h2 id="静态类型和动态类型静态绑定和动态绑定的介绍"><a href="#静态类型和动态类型静态绑定和动态绑定的介绍" class="anchor-link">#</a><a href="#contents:静态类型和动态类型静态绑定和动态绑定的介绍" class="headings">静态类型和动态类型，静态绑定和动态绑定的介绍</a></h2>
+<ul>
+<li>
+<p>静态类型：对象在声明时采用的类型，在编译期确定；</p>
+</li>
+<li>
+<p>动态类型：通常是指一个指针或引用，具体所指对象的类型，是在<a href="https://blog.csdn.net/m0_37264397/article/details/76697237" target="_blank" rel="noopener">运行期</a>决定的；</p>
+</li>
+<li>
+<p>静态绑定：绑定的是静态类型，所对应的函数或属性依赖于对象的静态类型，发生在编译期；</p>
+</li>
+<li>
+<p>动态绑定：绑定的是动态类型，所对应的函数或属性依赖于对象的动态类型，发生在运行期；</p>
+</li>
+<li>
+<p>在继承体系中只有虚函数使用的是动态绑定，其他的全部是静态绑定；</p>
+</li>
+</ul>
+<h2 id="引用是否能实现动态绑定为什么可以实现"><a href="#引用是否能实现动态绑定为什么可以实现" class="anchor-link">#</a><a href="#contents:引用是否能实现动态绑定为什么可以实现" class="headings">引用是否能实现动态绑定，为什么可以实现？</a></h2>
+<p>可以。因为<a href="https://zhuanlan.zhihu.com/p/89175296" target="_blank" rel="noopener">引用在运行期确定其指向的对象</a>，在访问虚函数时，编译器会根据其所绑定的对象类型决定要调用哪个函数。</p>
+<p>注意只能调用虚函数。举个例子：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Base</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span>  <span class="n">fun</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;base :: fun()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Son</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span>  <span class="n">fun</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;son :: fun()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">func</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;son :: not virtual function&#34;</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Son</span> <span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Base</span><span class="o">&amp;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span> <span class="c1">// 基类类型引用绑定已经存在的Son对象，引用必须初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">s</span><span class="p">.</span><span class="n">fun</span><span class="p">();</span> <span class="c1">//son::fun()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">b</span><span class="p">.</span><span class="n">fun</span><span class="p">();</span> <span class="c1">//son :: fun()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><strong>需要说明的是虚函数才具有动态绑定</strong>，上面代码中，Son类中还有一个非虚函数func()，这在b对象中是无法调用的，如果使用基类<strong>指针</strong>来指向子类也是一样的。</p>
+<h2 id="全局变量和局部变量有什么区别"><a href="#全局变量和局部变量有什么区别" class="anchor-link">#</a><a href="#contents:全局变量和局部变量有什么区别" class="headings">全局变量和局部变量有什么区别？</a></h2>
+<p>生命周期不同：全局变量的生命周期跟主程序一样；局部变量的生命周期超出大括号就不存在了；</p>
+<p>全局变量保存在内存的全局存储区中，占用静态的存储单元；局部变量保存在栈中，只有在所在函数被调用时才动态地为变量分配存储单元。</p>
+<h2 id="指针加减计算要注意什么"><a href="#指针加减计算要注意什么" class="anchor-link">#</a><a href="#contents:指针加减计算要注意什么" class="headings">指针加减计算要注意什么？</a></h2>
+<p>指针加减本质是对其所指地址的移动，移动的步长跟<strong>指针的类型大小一致</strong>。</p>
+<p>遇到指针的计算，需要明确的是指针每移动一位，它实际跨越的内存间隔是指针类型的长度，建议都转成10进制计算，计算结果除以类型长度取得结果</p>
+<h2 id="怎样判断两个浮点数是否相等"><a href="#怎样判断两个浮点数是否相等" class="anchor-link">#</a><a href="#contents:怎样判断两个浮点数是否相等" class="headings">怎样判断两个浮点数是否相等？</a></h2>
+<p>两个浮点数比较只能通过相减取绝对值后与预先设定的精度比较。浮点数与0的比较也应该注意。这是计算机浮点数表示法精度导致的问题。
+<a href="https://blog.csdn.net/bitekong/article/details/119933898" target="_blank" rel="noopener">https://blog.csdn.net/bitekong/article/details/119933898</a></p>
+<h2 id="方法调用的原理栈汇编"><a href="#方法调用的原理栈汇编" class="anchor-link">#</a><a href="#contents:方法调用的原理栈汇编" class="headings">方法调用的原理（栈，汇编）</a></h2>
+<p>pass</p>
+<ol>
+<li>
+<p>机器用栈来传递过程参数、存储返回信息、保存寄存器用于以后恢复，以及本地存储。而为单个过程分配的那部分栈称为帧栈；帧栈可以认为是程序栈的一段，它有两个端点，一个标识起始地址，一个标识着结束地址，两个指针结束地址指针esp，开始地址指针ebp;</p>
+</li>
+<li>
+<p>由一系列栈帧构成，这些栈帧对应一个过程，而且每一个栈指针+4的位置存储函数返回地址；每一个栈帧都建立在调用者的下方，当被调用者执行完毕时，这一段栈帧会被释放。由于栈帧是向地址递减的方向延伸，因此如果我们将栈指针减去一定的值，就相当于给栈帧分配了一定空间的内存。如果将栈指针加上一定的值，也就是向上移动，那么就相当于压缩了栈帧的长度，也就是说内存被释放了。</p>
+</li>
+<li>
+<p>过程实现</p>
+</li>
+</ol>
+<p>①   备份原来的帧指针，调整当前的栈帧指针到栈指针位置；</p>
+<p>②   建立起来的栈帧就是为被调用者准备的，当被调用者使用栈帧时，需要给临时变量分配预留内存；</p>
+<p>③   使用建立好的栈帧，比如读取和写入，一般使用mov，push以及pop指令等等。</p>
+<p>④   恢复被调用者寄存器当中的值，这一过程其实是从栈帧中将备份的值再恢复到寄存器，不过此时这些值可能已经不在栈顶了</p>
+<p>⑤   恢复被调用者寄存器当中的值，这一过程其实是从栈帧中将备份的值再恢复到寄存器，不过此时这些值可能已经不在栈顶了。</p>
+<p>⑥   释放被调用者的栈帧，释放就意味着将栈指针加大，而具体的做法一般是直接将栈指针指向帧指针，因此会采用类似下面的汇编代码处理。</p>
+<p>⑦   恢复调用者的栈帧，恢复其实就是调整栈帧两端，使得当前栈帧的区域又回到了原始的位置。</p>
+<p>⑧   弹出返回地址，跳出当前过程，继续执行调用者的代码。</p>
+<ol start="4">
+<li>过程调用和返回指令</li>
+</ol>
+<p>①   call指令</p>
+<p>②   leave指令</p>
+<p>③   ret指令</p>
+<p>​</p>
+<h2 id="c中的指针参数传递和引用参数传递有什么区别底层原理你知道吗"><a href="#c中的指针参数传递和引用参数传递有什么区别底层原理你知道吗" class="anchor-link">#</a><a href="#contents:c中的指针参数传递和引用参数传递有什么区别底层原理你知道吗" class="headings">C++中的指针参数传递和引用参数传递有什么区别？底层原理你知道吗？</a></h2>
+<p>指针传递是将<strong>参数的内存地址</strong>传递给函数，需要使用*操作符对指针所指向的数据进行修改，从而改变实参的值。</p>
+<p>引用传递是将<strong>参数的别名</strong>传递给函数，可以直接使用该别名来修改实参的数据。</p>
+<hr>
+<ol>
+<li>指针参数传递本质上是值传递，它所传递的是一个地址值。</li>
+</ol>
+<p>值传递过程中，被调函数的形参作为被调函数的局部变量处理，会在栈中开辟内存空间以存放由主调函数传递进来的实参值，从而形成了实参的一个副本（替身）。</p>
+<p>值传递的特点是，被调函数对形式参数的任何操作都是作为局部变量进行的，不会影响主调函数的实参变量的值（形参指针变了，实参指针不会变）。</p>
+<ol start="2">
+<li>引用参数传递过程中，被调函数的形参也作为局部变量在栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。</li>
+</ol>
+<p>被调函数对形参（本体）的任何操作都被处理成间接寻址，即通过栈中存放的地址访问主调函数中的实参变量（根据别名找到主调函数中的本体）。</p>
+<p>因此，被调函数对形参的任何操作都会影响主调函数中的实参变量。</p>
+<ol start="3">
+<li>引用传递和指针传递是不同的，虽然他们都是在被调函数栈空间上的一个局部变量，但是任何对于引用参数的处理都会通过一个间接寻址的方式操作到主调函数中的相关变量。</li>
+</ol>
+<p>而对于指针传递的参数，如果改变被调函数中的指针地址，它将应用不到主调函数的相关变量。如果想通过指针参数传递来改变主调函数中的相关变量（地址），那就得使用指向指针的指针或者指针引用。</p>
+<ol start="4">
+<li>从编译的角度来讲，程序在编译时分别将指针和引用添加到符号表上，符号表中记录的是变量名及变量所对应地址。</li>
+</ol>
+<p>指针变量在符号表上对应的地址值为指针变量的地址值，而引用在符号表上对应的地址值为引用对象的地址值（与实参名字不同，地址相同）。</p>
+<p>符号表生成之后就不会再改，因此指针可以改变其指向的对象（指针变量中的值可以改），而引用对象则不能修改。</p>
+<p><a href="https://zhuanlan.zhihu.com/p/130464385" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/130464385</a></p>
+<h2 id="类如何实现只能静态分配和只能动态分配"><a href="#类如何实现只能静态分配和只能动态分配" class="anchor-link">#</a><a href="#contents:类如何实现只能静态分配和只能动态分配" class="headings">类如何实现只能静态分配和只能动态分配</a></h2>
+<blockquote>
+<p><a href="https://www.nowcoder.com/questionTerminal/0a584aa13f804f3ea72b442a065a7618" target="_blank" rel="noopener">如何定义一个只能在堆上（栈上）生成对象的类?</a></p>
+</blockquote>
+<p>只能在堆上（动态分配）</p>
+<p>方法：将析构函数设置为私有</p>
+<p>原因：C++ 是静态绑定语言，编译器管理栈上对象的生命周期，<strong>编译器在为类对象分配栈空间时，会先检查类的析构函数的访问性</strong>。若析构函数不可访问，则不能在栈上创建对象。</p>
+<p>只能在栈上（静态分配）</p>
+<p>方法：将 new 和 delete 重载为私有</p>
+<p>原因：在堆上生成对象，其过程分为两阶段：第一阶段，<strong>使用 new 在堆上寻找可用内存，分配给对象</strong>；第二阶段，调用构造函数生成对象。将 new 操作设置为私有，那么第一阶段就无法完成，就不能够在堆上生成对象。</p>
+<h2 id="如果想将某个类用作基类为什么该类必须定义而非声明"><a href="#如果想将某个类用作基类为什么该类必须定义而非声明" class="anchor-link">#</a><a href="#contents:如果想将某个类用作基类为什么该类必须定义而非声明" class="headings">如果想将某个类用作基类，为什么该类必须定义而非声明？</a></h2>
+<p>派生类为了使用从基类继承而来的成员，必须知道他们的具体实现，而定义可以提供这些成员的具体实现。</p>
+<p>来自GPT3.5。</p>
+<h2 id="继承机制中对象之间如何转换指针和引用之间如何转换"><a href="#继承机制中对象之间如何转换指针和引用之间如何转换" class="anchor-link">#</a><a href="#contents:继承机制中对象之间如何转换指针和引用之间如何转换" class="headings">继承机制中对象之间如何转换？指针和引用之间如何转换？</a></h2>
+<ul>
+<li>向上类型转换
+<ul>
+<li>将派生类指针或引用转换为基类的指针或引用被称为向上类型转换，向上类型转换会自动进行，而且向上类型转换是安全的。</li>
+<li>内存里面：基类对象相当于只是换了个地址。换成了派生类对象中存储基类成员的内存地址。但是派生类对象中有的，基类没有的那些变量仍然留在了内存中。（保留了再次从基类转换成派生类的可能性）</li>
+</ul>
+</li>
+<li>向下类型转换
+<ul>
+<li>将基类指针或引用转换为派生类指针或引用被称为向下类型转换，向下类型转换不会自动进行，因为一个基类对应几个派生类，所以需要使用dynamic_cast进行向下类型转换。（一般来说<a href="https://blog.csdn.net/m0_37701628/article/details/117573791" target="_blank" rel="noopener">先向上转换后，才能使用向下转换</a>，将基类重新变为派生类，执行派生类的额外方法）</li>
+<li>内存里面：相当于把基类起始地址赋值给派生类对象，因为基类有的成员，派生类中也一定有。</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://blog.csdn.net/baidu_35679960/article/details/80821222" target="_blank" rel="noopener">https://blog.csdn.net/baidu_35679960/article/details/80821222</a></p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/interview/" rel="tag" class="post-tag-link">#interview</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

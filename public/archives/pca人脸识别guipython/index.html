@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>PCA人脸识别&#43;GUI&#43;python | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="​ 参考：基于PCA的人脸识别方法——特征脸法
+参考：人脸识别之主成分分析（PCA）
+简易 系统展示 迁移后图片丢失
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 import sys import os import numpy as np import cv2 as cv from PyQt5 import QtCore, QtWidgets, QtGui from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog root_dir = &#39;FaceDB_orl&#39; def createDataBase(path): print(&#39;--------正在获取数据--------&#39;) path1 = [] X = [] for dirpath, dirnames, filenames in os.walk(path): for file in filenames: temp_path = os.path.join(dirpath, file) path1.append(temp_path) for img_path in path1: img = cv.imread(img_path, cv.IMREAD_GRAYSCALE) # img = cv.resize(img, crop_size) temp = img.reshape(-1, 1) X.append(temp) X = np.array(X) # print(X.shape[0]) # m个数据 print(&#39;--------获取数据结束--------&#39;) return X.reshape(X.shape[0], X.shape[1]).T # (row*col, 400) def eigenface(X, k1=0, k2=0): print(&#39;--------正在特征提取--------&#39;) m = X.shape[1] # 400 # 计算平均脸及中心化 X_mean = np.mean(X, 1) # (r*l, 1) X_mean = np.reshape(X_mean, (-1, 1)) X = X - X_mean # (r*l, 400) # 计算协方差矩阵的特征值、特征向量 L_mat = np.dot(X.T, X) / (m - 1) # (400, 400) [W, V] = np.linalg.eig(L_mat) # 求取特征向量eiv以及特征值eic # 取出特征值大的特征向量 作为特征脸 L_eig_vec = [] if k1 != 0: # 根据特征值的值来选取向量 for i in range(len(V)): if W[i] &gt; k1: L_eig_vec.append(V[:, i]) if k2 != 0: # 选取从大到小的k2个向量 index = np.argsort(W)[::-1] L_eig_vec = V[index[:k2], :] # (k2, 400) L_eig_vec = np.array(L_eig_vec) # print(L_eig_vec.shape) # 得到协方差矩阵的特征向量组成的投影子空间(脸空间) Ei_Face = np.dot(X, L_eig_vec.T) # (r*l, 399) print(&#39;--------特征提取结束--------&#39;) return X_mean, X, Ei_Face def recognition(TestImage, X_mean, X, Ei_Face): print(&#39;----------正在识别----------&#39;) # 将训练数据投影到脸空间内 EI_Num = Ei_Face.shape[1] # 合格个数 m ProjectImage = np.dot(Ei_Face.T, X[:, :EI_Num]) # (m, m) 每一列是一个特征脸 # 读取输入图片 灰度读取 input_image = cv.imread(TestImage, cv.IMREAD_GRAYSCALE) image = input_image.reshape(-1, 1) # (row*col, 1) # 输入图片 中心化 同PCA的第一步 difference = image - X_mean # print(difference) # 输入图片投影到脸空间中 同PCA的最后一步 ProjectedTestImage = np.dot(difference.T, Ei_Face).T # (399, 1) 变成列向量 # print(ProjectedTestImage.shape) # 计算欧式距离 将每行数据(axis=0) - 输入图片 计算欧式距离 Euclidean_dist = np.linalg.norm(ProjectedTestImage - ProjectImage, axis=0) # 识别图片 距离最相近 Recognized_index = np.argmin(Euclidean_dist, axis=0) # print(Euclidean_dist[Recognized_index]) OutputName = Recognized_index &#43; 1 print(&#39;----------识别结束----------&#39;) return OutputName class PcaUI(object): img_path = &#39;&#39; k1 = 1 k2 = 0 def setUI(self, Form): Form.setObjectName(&#34;Form&#34;) Form.resize(1000, 600) # 选择特征获取方式：按值分类 [ ] 按序分类 [ ] self.label1_1 = QtWidgets.QLabel(Form) self.label1_1.setGeometry(QtCore.QRect(250, 50, 150, 40)) self.label1_2 = QtWidgets.QLabel(Form) self.label1_2.setGeometry(QtCore.QRect(390, 50, 80, 40)) self.label1_3 = QtWidgets.QLabel(Form) self.label1_3.setGeometry(QtCore.QRect(640, 50, 80, 40)) self.textEdit1_1 = QtWidgets.QTextEdit(Form) self.textEdit1_1.setGeometry(QtCore.QRect(465, 58, 150, 28)) self.textEdit1_2 = QtWidgets.QTextEdit(Form) self.textEdit1_2.setGeometry(QtCore.QRect(715, 58, 150, 28)) # 选择测试图片： [ ] 浏览文件 self.label2 = QtWidgets.QLabel(Form) self.label2.setGeometry(QtCore.QRect(250, 150, 150, 40)) self.textEdit2 = QtWidgets.QTextEdit(Form) self.textEdit2.setGeometry(QtCore.QRect(390, 158, 280, 28)) self.pushButton2 = QtWidgets.QPushButton(Form) self.pushButton2.setGeometry(QtCore.QRect(773, 154, 71, 31)) # 测试图片 预测图片 开始识别 self.label3_3 = QtWidgets.QLabel(Form) self.label3_3.setGeometry(QtCore.QRect(250, 230, 80, 40)) self.label3_1 = QtWidgets.QLabel(Form) self.label3_1.setGeometry(QtCore.QRect(250, 260, 92, 112)) self.label3_1.setStyleSheet(&#34;background-color: cyan;&#34;) self.label3_1.setAlignment(QtCore.Qt.AlignCenter) self.label3_4 = QtWidgets.QLabel(Form) self.label3_4.setGeometry(QtCore.QRect(460, 230, 80, 40)) self.label3_2 = QtWidgets.QLabel(Form) self.label3_2.setGeometry(QtCore.QRect(460, 260, 92, 112)) self.label3_2.setStyleSheet(&#34;background-color: cyan;&#34;) self.label3_2.setAlignment(QtCore.Qt.AlignCenter) self.pushButton3 = QtWidgets.QPushButton(Form) self.pushButton3.setGeometry(QtCore.QRect(773, 260, 71, 31)) self.pushButton2.clicked.connect(self.openfile) self.pushButton3.clicked.connect(self.runPCA) self.reTranslateUI(Form) QtCore.QMetaObject.connectSlotsByName(Form) def openfile(self): fname = QFileDialog.getOpenFileName(None, &#34;打开文件&#34;, &#34;./&#34;, &#34;*.png;;All Files(*)&#34;) self.img_path = fname[0] s = fname[0].find(&#39;pca&#39;) self.textEdit2.setText(fname[0][s:]) def runPCA(self): if self.textEdit1_2.toPlainText() != &#39;&#39;: self.k1 = int(self.textEdit1_1.toPlainText()) if self.textEdit1_2.toPlainText() != &#39;&#39;: self.k2 = int(self.textEdit1_2.toPlainText()) png = QtGui.QPixmap(self.img_path).scaled(self.label3_1.width(), self.label3_1.height()) self.label3_1.setPixmap(png) X = createDataBase(root_dir) X_mean, X_cen, Ei_Face = eigenface(X, 300) image_No = recognition(self.img_path, X_mean, X_cen, Ei_Face) print(&#39;识别的图片是：&#39; &#43; str(image_No) &#43; &#39;.png&#39;) img = X[:, image_No - 1].reshape(112, 92) cv.imwrite(&#39;./result.png&#39;, img, [int(cv.IMWRITE_JPEG_QUALITY), 95]) png = QtGui.QPixmap(&#39;./result.png&#39;).scaled(self.label3_2.width(), self.label3_2.height()) self.label3_2.setPixmap(png) def reTranslateUI(self, Form): &#34;&#34;&#34; 选择特征获取方式：按值分类 [ ] 按序分类 [ ] 选择测试图片： [ ] 浏览文件 测试图片 预测图片 开始识别 &#34;&#34;&#34; _translate = QtCore.QCoreApplication.translate Form.setWindowTitle(_translate(&#34;Form&#34;, &#34;人脸识别--PCA&#34;)) self.label1_1.setText(_translate(&#34;Form&#34;, &#34;选择特征获取方式：&#34;)) self.label1_2.setText(_translate(&#34;Form&#34;, &#34;按值分类&#34;)) self.label1_3.setText(_translate(&#34;Form&#34;, &#34;按序分类&#34;)) self.textEdit1_1.setPlaceholderText(&#39;k1(默认为1)&#39;) self.textEdit1_2.setPlaceholderText(&#39;k2(≤400)&#39;) self.label2.setText(_translate(&#34;Form&#34;, &#34;选择测试图片：&#34;)) self.pushButton2.setText(_translate(&#34;Form&#34;, &#34;浏览文件&#34;)) self.label3_3.setText(_translate(&#34;Form&#34;, &#34;测试图片&#34;)) self.label3_1.setText(_translate(&#34;Form&#34;, &#34;测试图片&#34;)) self.label3_4.setText(_translate(&#34;Form&#34;, &#34;预测图片&#34;)) self.label3_2.setText(_translate(&#34;Form&#34;, &#34;预测图片&#34;)) self.pushButton3.setText(_translate(&#34;Form&#34;, &#34;开始识别&#34;)) if __name__ == &#39;__main__&#39;: app = QApplication(sys.argv) MainWindow = QMainWindow() ui = PcaUI() ui.setUI(MainWindow) MainWindow.show() sys.exit(app.exec_()) 🐱‍🏍学有余力的话 建议修改界面或添加一些新的功能哦~ ​
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/archives/pca%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%ABguipython/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2022-02-22T16:17:36+00:00",
+        "dateModified": "2023-05-27T17:48:58+08:00",
+        "url": "http://localhost:1313/archives/pca%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%ABguipython/",
+        "headline": "PCA人脸识别+GUI+python",
+        "description": "​ 参考：基于PCA的人脸识别方法——特征脸法\n参考：人脸识别之主成分分析（PCA）\n简易 系统展示 迁移后图片丢失\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 import sys import os import numpy as np import cv2 as cv from PyQt5 import QtCore, QtWidgets, QtGui from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog root_dir = 'FaceDB_orl' def createDataBase(path): print('--------正在获取数据--------') path1 = [] X = [] for dirpath, dirnames, filenames in os.walk(path): for file in filenames: temp_path = os.path.join(dirpath, file) path1.append(temp_path) for img_path in path1: img = cv.imread(img_path, cv.IMREAD_GRAYSCALE) # img = cv.resize(img, crop_size) temp = img.reshape(-1, 1) X.append(temp) X = np.array(X) # print(X.shape[0]) # m个数据 print('--------获取数据结束--------') return X.reshape(X.shape[0], X.shape[1]).T # (row*col, 400) def eigenface(X, k1=0, k2=0): print('--------正在特征提取--------') m = X.shape[1] # 400 # 计算平均脸及中心化 X_mean = np.mean(X, 1) # (r*l, 1) X_mean = np.reshape(X_mean, (-1, 1)) X = X - X_mean # (r*l, 400) # 计算协方差矩阵的特征值、特征向量 L_mat = np.dot(X.T, X) / (m - 1) # (400, 400) [W, V] = np.linalg.eig(L_mat) # 求取特征向量eiv以及特征值eic # 取出特征值大的特征向量 作为特征脸 L_eig_vec = [] if k1 != 0: # 根据特征值的值来选取向量 for i in range(len(V)): if W[i] \u003e k1: L_eig_vec.append(V[:, i]) if k2 != 0: # 选取从大到小的k2个向量 index = np.argsort(W)[::-1] L_eig_vec = V[index[:k2], :] # (k2, 400) L_eig_vec = np.array(L_eig_vec) # print(L_eig_vec.shape) # 得到协方差矩阵的特征向量组成的投影子空间(脸空间) Ei_Face = np.dot(X, L_eig_vec.T) # (r*l, 399) print('--------特征提取结束--------') return X_mean, X, Ei_Face def recognition(TestImage, X_mean, X, Ei_Face): print('----------正在识别----------') # 将训练数据投影到脸空间内 EI_Num = Ei_Face.shape[1] # 合格个数 m ProjectImage = np.dot(Ei_Face.T, X[:, :EI_Num]) # (m, m) 每一列是一个特征脸 # 读取输入图片 灰度读取 input_image = cv.imread(TestImage, cv.IMREAD_GRAYSCALE) image = input_image.reshape(-1, 1) # (row*col, 1) # 输入图片 中心化 同PCA的第一步 difference = image - X_mean # print(difference) # 输入图片投影到脸空间中 同PCA的最后一步 ProjectedTestImage = np.dot(difference.T, Ei_Face).T # (399, 1) 变成列向量 # print(ProjectedTestImage.shape) # 计算欧式距离 将每行数据(axis=0) - 输入图片 计算欧式距离 Euclidean_dist = np.linalg.norm(ProjectedTestImage - ProjectImage, axis=0) # 识别图片 距离最相近 Recognized_index = np.argmin(Euclidean_dist, axis=0) # print(Euclidean_dist[Recognized_index]) OutputName = Recognized_index + 1 print('----------识别结束----------') return OutputName class PcaUI(object): img_path = '' k1 = 1 k2 = 0 def setUI(self, Form): Form.setObjectName(\"Form\") Form.resize(1000, 600) # 选择特征获取方式：按值分类 [ ] 按序分类 [ ] self.label1_1 = QtWidgets.QLabel(Form) self.label1_1.setGeometry(QtCore.QRect(250, 50, 150, 40)) self.label1_2 = QtWidgets.QLabel(Form) self.label1_2.setGeometry(QtCore.QRect(390, 50, 80, 40)) self.label1_3 = QtWidgets.QLabel(Form) self.label1_3.setGeometry(QtCore.QRect(640, 50, 80, 40)) self.textEdit1_1 = QtWidgets.QTextEdit(Form) self.textEdit1_1.setGeometry(QtCore.QRect(465, 58, 150, 28)) self.textEdit1_2 = QtWidgets.QTextEdit(Form) self.textEdit1_2.setGeometry(QtCore.QRect(715, 58, 150, 28)) # 选择测试图片： [ ] 浏览文件 self.label2 = QtWidgets.QLabel(Form) self.label2.setGeometry(QtCore.QRect(250, 150, 150, 40)) self.textEdit2 = QtWidgets.QTextEdit(Form) self.textEdit2.setGeometry(QtCore.QRect(390, 158, 280, 28)) self.pushButton2 = QtWidgets.QPushButton(Form) self.pushButton2.setGeometry(QtCore.QRect(773, 154, 71, 31)) # 测试图片 预测图片 开始识别 self.label3_3 = QtWidgets.QLabel(Form) self.label3_3.setGeometry(QtCore.QRect(250, 230, 80, 40)) self.label3_1 = QtWidgets.QLabel(Form) self.label3_1.setGeometry(QtCore.QRect(250, 260, 92, 112)) self.label3_1.setStyleSheet(\"background-color: cyan;\") self.label3_1.setAlignment(QtCore.Qt.AlignCenter) self.label3_4 = QtWidgets.QLabel(Form) self.label3_4.setGeometry(QtCore.QRect(460, 230, 80, 40)) self.label3_2 = QtWidgets.QLabel(Form) self.label3_2.setGeometry(QtCore.QRect(460, 260, 92, 112)) self.label3_2.setStyleSheet(\"background-color: cyan;\") self.label3_2.setAlignment(QtCore.Qt.AlignCenter) self.pushButton3 = QtWidgets.QPushButton(Form) self.pushButton3.setGeometry(QtCore.QRect(773, 260, 71, 31)) self.pushButton2.clicked.connect(self.openfile) self.pushButton3.clicked.connect(self.runPCA) self.reTranslateUI(Form) QtCore.QMetaObject.connectSlotsByName(Form) def openfile(self): fname = QFileDialog.getOpenFileName(None, \"打开文件\", \"./\", \"*.png;;All Files(*)\") self.img_path = fname[0] s = fname[0].find('pca') self.textEdit2.setText(fname[0][s:]) def runPCA(self): if self.textEdit1_2.toPlainText() != '': self.k1 = int(self.textEdit1_1.toPlainText()) if self.textEdit1_2.toPlainText() != '': self.k2 = int(self.textEdit1_2.toPlainText()) png = QtGui.QPixmap(self.img_path).scaled(self.label3_1.width(), self.label3_1.height()) self.label3_1.setPixmap(png) X = createDataBase(root_dir) X_mean, X_cen, Ei_Face = eigenface(X, 300) image_No = recognition(self.img_path, X_mean, X_cen, Ei_Face) print('识别的图片是：' + str(image_No) + '.png') img = X[:, image_No - 1].reshape(112, 92) cv.imwrite('./result.png', img, [int(cv.IMWRITE_JPEG_QUALITY), 95]) png = QtGui.QPixmap('./result.png').scaled(self.label3_2.width(), self.label3_2.height()) self.label3_2.setPixmap(png) def reTranslateUI(self, Form): \"\"\" 选择特征获取方式：按值分类 [ ] 按序分类 [ ] 选择测试图片： [ ] 浏览文件 测试图片 预测图片 开始识别 \"\"\" _translate = QtCore.QCoreApplication.translate Form.setWindowTitle(_translate(\"Form\", \"人脸识别--PCA\")) self.label1_1.setText(_translate(\"Form\", \"选择特征获取方式：\")) self.label1_2.setText(_translate(\"Form\", \"按值分类\")) self.label1_3.setText(_translate(\"Form\", \"按序分类\")) self.textEdit1_1.setPlaceholderText('k1(默认为1)') self.textEdit1_2.setPlaceholderText('k2(≤400)') self.label2.setText(_translate(\"Form\", \"选择测试图片：\")) self.pushButton2.setText(_translate(\"Form\", \"浏览文件\")) self.label3_3.setText(_translate(\"Form\", \"测试图片\")) self.label3_1.setText(_translate(\"Form\", \"测试图片\")) self.label3_4.setText(_translate(\"Form\", \"预测图片\")) self.label3_2.setText(_translate(\"Form\", \"预测图片\")) self.pushButton3.setText(_translate(\"Form\", \"开始识别\")) if __name__ == '__main__': app = QApplication(sys.argv) MainWindow = QMainWindow() ui = PcaUI() ui.setUI(MainWindow) MainWindow.show() sys.exit(app.exec_()) 🐱‍🏍学有余力的话 建议修改界面或添加一些新的功能哦~ ​\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  1637 ,
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+
+    
+
+
+
+<meta property="og:title" content="PCA人脸识别&#43;GUI&#43;python" />
+<meta property="og:description" content="​ 参考：基于PCA的人脸识别方法——特征脸法
+参考：人脸识别之主成分分析（PCA）
+简易 系统展示 迁移后图片丢失
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 import sys import os import numpy as np import cv2 as cv from PyQt5 import QtCore, QtWidgets, QtGui from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog root_dir = &#39;FaceDB_orl&#39; def createDataBase(path): print(&#39;--------正在获取数据--------&#39;) path1 = [] X = [] for dirpath, dirnames, filenames in os.walk(path): for file in filenames: temp_path = os.path.join(dirpath, file) path1.append(temp_path) for img_path in path1: img = cv.imread(img_path, cv.IMREAD_GRAYSCALE) # img = cv.resize(img, crop_size) temp = img.reshape(-1, 1) X.append(temp) X = np.array(X) # print(X.shape[0]) # m个数据 print(&#39;--------获取数据结束--------&#39;) return X.reshape(X.shape[0], X.shape[1]).T # (row*col, 400) def eigenface(X, k1=0, k2=0): print(&#39;--------正在特征提取--------&#39;) m = X.shape[1] # 400 # 计算平均脸及中心化 X_mean = np.mean(X, 1) # (r*l, 1) X_mean = np.reshape(X_mean, (-1, 1)) X = X - X_mean # (r*l, 400) # 计算协方差矩阵的特征值、特征向量 L_mat = np.dot(X.T, X) / (m - 1) # (400, 400) [W, V] = np.linalg.eig(L_mat) # 求取特征向量eiv以及特征值eic # 取出特征值大的特征向量 作为特征脸 L_eig_vec = [] if k1 != 0: # 根据特征值的值来选取向量 for i in range(len(V)): if W[i] &gt; k1: L_eig_vec.append(V[:, i]) if k2 != 0: # 选取从大到小的k2个向量 index = np.argsort(W)[::-1] L_eig_vec = V[index[:k2], :] # (k2, 400) L_eig_vec = np.array(L_eig_vec) # print(L_eig_vec.shape) # 得到协方差矩阵的特征向量组成的投影子空间(脸空间) Ei_Face = np.dot(X, L_eig_vec.T) # (r*l, 399) print(&#39;--------特征提取结束--------&#39;) return X_mean, X, Ei_Face def recognition(TestImage, X_mean, X, Ei_Face): print(&#39;----------正在识别----------&#39;) # 将训练数据投影到脸空间内 EI_Num = Ei_Face.shape[1] # 合格个数 m ProjectImage = np.dot(Ei_Face.T, X[:, :EI_Num]) # (m, m) 每一列是一个特征脸 # 读取输入图片 灰度读取 input_image = cv.imread(TestImage, cv.IMREAD_GRAYSCALE) image = input_image.reshape(-1, 1) # (row*col, 1) # 输入图片 中心化 同PCA的第一步 difference = image - X_mean # print(difference) # 输入图片投影到脸空间中 同PCA的最后一步 ProjectedTestImage = np.dot(difference.T, Ei_Face).T # (399, 1) 变成列向量 # print(ProjectedTestImage.shape) # 计算欧式距离 将每行数据(axis=0) - 输入图片 计算欧式距离 Euclidean_dist = np.linalg.norm(ProjectedTestImage - ProjectImage, axis=0) # 识别图片 距离最相近 Recognized_index = np.argmin(Euclidean_dist, axis=0) # print(Euclidean_dist[Recognized_index]) OutputName = Recognized_index &#43; 1 print(&#39;----------识别结束----------&#39;) return OutputName class PcaUI(object): img_path = &#39;&#39; k1 = 1 k2 = 0 def setUI(self, Form): Form.setObjectName(&#34;Form&#34;) Form.resize(1000, 600) # 选择特征获取方式：按值分类 [ ] 按序分类 [ ] self.label1_1 = QtWidgets.QLabel(Form) self.label1_1.setGeometry(QtCore.QRect(250, 50, 150, 40)) self.label1_2 = QtWidgets.QLabel(Form) self.label1_2.setGeometry(QtCore.QRect(390, 50, 80, 40)) self.label1_3 = QtWidgets.QLabel(Form) self.label1_3.setGeometry(QtCore.QRect(640, 50, 80, 40)) self.textEdit1_1 = QtWidgets.QTextEdit(Form) self.textEdit1_1.setGeometry(QtCore.QRect(465, 58, 150, 28)) self.textEdit1_2 = QtWidgets.QTextEdit(Form) self.textEdit1_2.setGeometry(QtCore.QRect(715, 58, 150, 28)) # 选择测试图片： [ ] 浏览文件 self.label2 = QtWidgets.QLabel(Form) self.label2.setGeometry(QtCore.QRect(250, 150, 150, 40)) self.textEdit2 = QtWidgets.QTextEdit(Form) self.textEdit2.setGeometry(QtCore.QRect(390, 158, 280, 28)) self.pushButton2 = QtWidgets.QPushButton(Form) self.pushButton2.setGeometry(QtCore.QRect(773, 154, 71, 31)) # 测试图片 预测图片 开始识别 self.label3_3 = QtWidgets.QLabel(Form) self.label3_3.setGeometry(QtCore.QRect(250, 230, 80, 40)) self.label3_1 = QtWidgets.QLabel(Form) self.label3_1.setGeometry(QtCore.QRect(250, 260, 92, 112)) self.label3_1.setStyleSheet(&#34;background-color: cyan;&#34;) self.label3_1.setAlignment(QtCore.Qt.AlignCenter) self.label3_4 = QtWidgets.QLabel(Form) self.label3_4.setGeometry(QtCore.QRect(460, 230, 80, 40)) self.label3_2 = QtWidgets.QLabel(Form) self.label3_2.setGeometry(QtCore.QRect(460, 260, 92, 112)) self.label3_2.setStyleSheet(&#34;background-color: cyan;&#34;) self.label3_2.setAlignment(QtCore.Qt.AlignCenter) self.pushButton3 = QtWidgets.QPushButton(Form) self.pushButton3.setGeometry(QtCore.QRect(773, 260, 71, 31)) self.pushButton2.clicked.connect(self.openfile) self.pushButton3.clicked.connect(self.runPCA) self.reTranslateUI(Form) QtCore.QMetaObject.connectSlotsByName(Form) def openfile(self): fname = QFileDialog.getOpenFileName(None, &#34;打开文件&#34;, &#34;./&#34;, &#34;*.png;;All Files(*)&#34;) self.img_path = fname[0] s = fname[0].find(&#39;pca&#39;) self.textEdit2.setText(fname[0][s:]) def runPCA(self): if self.textEdit1_2.toPlainText() != &#39;&#39;: self.k1 = int(self.textEdit1_1.toPlainText()) if self.textEdit1_2.toPlainText() != &#39;&#39;: self.k2 = int(self.textEdit1_2.toPlainText()) png = QtGui.QPixmap(self.img_path).scaled(self.label3_1.width(), self.label3_1.height()) self.label3_1.setPixmap(png) X = createDataBase(root_dir) X_mean, X_cen, Ei_Face = eigenface(X, 300) image_No = recognition(self.img_path, X_mean, X_cen, Ei_Face) print(&#39;识别的图片是：&#39; &#43; str(image_No) &#43; &#39;.png&#39;) img = X[:, image_No - 1].reshape(112, 92) cv.imwrite(&#39;./result.png&#39;, img, [int(cv.IMWRITE_JPEG_QUALITY), 95]) png = QtGui.QPixmap(&#39;./result.png&#39;).scaled(self.label3_2.width(), self.label3_2.height()) self.label3_2.setPixmap(png) def reTranslateUI(self, Form): &#34;&#34;&#34; 选择特征获取方式：按值分类 [ ] 按序分类 [ ] 选择测试图片： [ ] 浏览文件 测试图片 预测图片 开始识别 &#34;&#34;&#34; _translate = QtCore.QCoreApplication.translate Form.setWindowTitle(_translate(&#34;Form&#34;, &#34;人脸识别--PCA&#34;)) self.label1_1.setText(_translate(&#34;Form&#34;, &#34;选择特征获取方式：&#34;)) self.label1_2.setText(_translate(&#34;Form&#34;, &#34;按值分类&#34;)) self.label1_3.setText(_translate(&#34;Form&#34;, &#34;按序分类&#34;)) self.textEdit1_1.setPlaceholderText(&#39;k1(默认为1)&#39;) self.textEdit1_2.setPlaceholderText(&#39;k2(≤400)&#39;) self.label2.setText(_translate(&#34;Form&#34;, &#34;选择测试图片：&#34;)) self.pushButton2.setText(_translate(&#34;Form&#34;, &#34;浏览文件&#34;)) self.label3_3.setText(_translate(&#34;Form&#34;, &#34;测试图片&#34;)) self.label3_1.setText(_translate(&#34;Form&#34;, &#34;测试图片&#34;)) self.label3_4.setText(_translate(&#34;Form&#34;, &#34;预测图片&#34;)) self.label3_2.setText(_translate(&#34;Form&#34;, &#34;预测图片&#34;)) self.pushButton3.setText(_translate(&#34;Form&#34;, &#34;开始识别&#34;)) if __name__ == &#39;__main__&#39;: app = QApplication(sys.argv) MainWindow = QMainWindow() ui = PcaUI() ui.setUI(MainWindow) MainWindow.show() sys.exit(app.exec_()) 🐱‍🏍学有余力的话 建议修改界面或添加一些新的功能哦~ ​
+……" />
+<meta property="og:url" content="http://localhost:1313/archives/pca%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%ABguipython/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2022-02-22T16:17:36&#43;00:00" />
+    <meta property="article:modified_time" content="2023-05-27T17:48:58&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">PCA人脸识别+GUI+python</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents"></nav><hr></hr><div class="post-body e-content">
+                <p>​
+参考：<a href="https://www.chimaoshu.top/%E5%9F%BA%E4%BA%8EPCA%E7%9A%84%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E6%96%B9%E6%B3%95%E2%80%94%E2%80%94%E7%89%B9%E5%BE%81%E8%84%B8%E6%B3%95/" target="_blank" rel="noopener">基于PCA的人脸识别方法——特征脸法</a></p>
+<p>参考：<a href="https://zhuanlan.zhihu.com/p/26652435" target="_blank" rel="noopener">人脸识别之主成分分析（PCA）</a></p>
+<p><strong>简易</strong> 系统展示
+迁移后图片丢失</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">cv2</span> <span class="k">as</span> <span class="nn">cv</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtGui</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QMainWindow</span><span class="p">,</span> <span class="n">QFileDialog</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">root_dir</span> <span class="o">=</span> <span class="s1">&#39;FaceDB_orl&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">createDataBase</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------正在获取数据--------&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path1</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">X</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">path1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">img_path</span> <span class="ow">in</span> <span class="n">path1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">img</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">img_path</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># img = cv.resize(img, crop_size)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">temp</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">X</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(X.shape[0])  # m个数据</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------获取数据结束--------&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># (row*col, 400)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">eigenface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------正在特征提取--------&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 400</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 计算平均脸及中心化</span>
+</span></span><span class="line"><span class="cl">    <span class="n">X_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># (r*l, 1)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">X_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_mean</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">X</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">X_mean</span>  <span class="c1"># (r*l, 400)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 计算协方差矩阵的特征值、特征向量</span>
+</span></span><span class="line"><span class="cl">    <span class="n">L_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># (400, 400)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="n">W</span><span class="p">,</span> <span class="n">V</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">L_mat</span><span class="p">)</span>  <span class="c1"># 求取特征向量eiv以及特征值eic</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 取出特征值大的特征向量 作为特征脸</span>
+</span></span><span class="line"><span class="cl">    <span class="n">L_eig_vec</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">k1</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 根据特征值的值来选取向量</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">V</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">k1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">L_eig_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">V</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">k2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 选取从大到小的k2个向量</span>
+</span></span><span class="line"><span class="cl">        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">W</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">L_eig_vec</span> <span class="o">=</span> <span class="n">V</span><span class="p">[</span><span class="n">index</span><span class="p">[:</span><span class="n">k2</span><span class="p">],</span> <span class="p">:]</span>  <span class="c1"># (k2, 400)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">L_eig_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">L_eig_vec</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(L_eig_vec.shape)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 得到协方差矩阵的特征向量组成的投影子空间(脸空间)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Ei_Face</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">L_eig_vec</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># (r*l, 399)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------特征提取结束--------&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">X_mean</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Ei_Face</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">recognition</span><span class="p">(</span><span class="n">TestImage</span><span class="p">,</span> <span class="n">X_mean</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Ei_Face</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------正在识别----------&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 将训练数据投影到脸空间内</span>
+</span></span><span class="line"><span class="cl">    <span class="n">EI_Num</span> <span class="o">=</span> <span class="n">Ei_Face</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 合格个数 m</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ProjectImage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Ei_Face</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">:</span><span class="n">EI_Num</span><span class="p">])</span>  <span class="c1"># (m, m) 每一列是一个特征脸</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 读取输入图片 灰度读取</span>
+</span></span><span class="line"><span class="cl">    <span class="n">input_image</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">TestImage</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">image</span> <span class="o">=</span> <span class="n">input_image</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># (row*col, 1)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 输入图片 中心化 同PCA的第一步</span>
+</span></span><span class="line"><span class="cl">    <span class="n">difference</span> <span class="o">=</span> <span class="n">image</span> <span class="o">-</span> <span class="n">X_mean</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(difference)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 输入图片投影到脸空间中 同PCA的最后一步</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ProjectedTestImage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">difference</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Ei_Face</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># (399, 1) 变成列向量</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(ProjectedTestImage.shape)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 计算欧式距离 将每行数据(axis=0) - 输入图片 计算欧式距离</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Euclidean_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ProjectedTestImage</span> <span class="o">-</span> <span class="n">ProjectImage</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 识别图片 距离最相近</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Recognized_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">Euclidean_dist</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(Euclidean_dist[Recognized_index])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">OutputName</span> <span class="o">=</span> <span class="n">Recognized_index</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------识别结束----------&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">OutputName</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">PcaUI</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">img_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">k1</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">k2</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">setUI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Form</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Form</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Form</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 选择特征获取方式：按值分类 [  ]  按序分类  [   ]</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label1_1</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label1_1</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label1_2</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label1_2</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">390</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label1_3</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label1_3</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">textEdit1_1</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTextEdit</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">textEdit1_1</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">465</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">28</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">textEdit1_2</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTextEdit</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">textEdit1_2</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">715</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">28</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 选择测试图片： [   ]    浏览文件</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label2</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label2</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">textEdit2</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTextEdit</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">textEdit2</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">390</span><span class="p">,</span> <span class="mi">158</span><span class="p">,</span> <span class="mi">280</span><span class="p">,</span> <span class="mi">28</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton2</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton2</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">773</span><span class="p">,</span> <span class="mi">154</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">31</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 测试图片   预测图片   开始识别</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_3</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_3</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_1</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_1</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">112</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_1</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&#34;background-color: cyan;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_1</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_4</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_4</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">460</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_2</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_2</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">460</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">112</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_2</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&#34;background-color: cyan;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_2</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton3</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton3</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">773</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">31</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton2</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">openfile</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton3</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runPCA</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">reTranslateUI</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">QtCore</span><span class="o">.</span><span class="n">QMetaObject</span><span class="o">.</span><span class="n">connectSlotsByName</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">openfile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">fname</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&#34;打开文件&#34;</span><span class="p">,</span> <span class="s2">&#34;./&#34;</span><span class="p">,</span> <span class="s2">&#34;*.png;;All Files(*)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">img_path</span> <span class="o">=</span> <span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">s</span> <span class="o">=</span> <span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;pca&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">textEdit2</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">s</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">runPCA</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">textEdit1_2</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">k1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textEdit1_1</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">textEdit1_2</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">k2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textEdit1_2</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">png</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_path</span><span class="p">)</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label3_1</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">label3_1</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_1</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">png</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">X</span> <span class="o">=</span> <span class="n">createDataBase</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">X_mean</span><span class="p">,</span> <span class="n">X_cen</span><span class="p">,</span> <span class="n">Ei_Face</span> <span class="o">=</span> <span class="n">eigenface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">image_No</span> <span class="o">=</span> <span class="n">recognition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_path</span><span class="p">,</span> <span class="n">X_mean</span><span class="p">,</span> <span class="n">X_cen</span><span class="p">,</span> <span class="n">Ei_Face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;识别的图片是：&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_No</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">img</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">image_No</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">112</span><span class="p">,</span> <span class="mi">92</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">cv</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="s1">&#39;./result.png&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">IMWRITE_JPEG_QUALITY</span><span class="p">),</span> <span class="mi">95</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">png</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;./result.png&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label3_2</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">label3_2</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_2</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">png</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">reTranslateUI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Form</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">        选择特征获取方式：按值分类 [  ]  按序分类  [   ]
+</span></span></span><span class="line"><span class="cl"><span class="s2">        选择测试图片： [   ]    浏览文件
+</span></span></span><span class="line"><span class="cl"><span class="s2">        测试图片   预测图片   开始识别
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">_translate</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Form</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">,</span> <span class="s2">&#34;人脸识别--PCA&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label1_1</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">,</span> <span class="s2">&#34;选择特征获取方式：&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label1_2</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">,</span> <span class="s2">&#34;按值分类&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label1_3</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">,</span> <span class="s2">&#34;按序分类&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">textEdit1_1</span><span class="o">.</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s1">&#39;k1(默认为1)&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">textEdit1_2</span><span class="o">.</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s1">&#39;k2(≤400)&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label2</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">,</span> <span class="s2">&#34;选择测试图片：&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton2</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">,</span> <span class="s2">&#34;浏览文件&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_3</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">,</span> <span class="s2">&#34;测试图片&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_1</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">,</span> <span class="s2">&#34;测试图片&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_4</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">,</span> <span class="s2">&#34;预测图片&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label3_2</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">,</span> <span class="s2">&#34;预测图片&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton3</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&#34;Form&#34;</span><span class="p">,</span> <span class="s2">&#34;开始识别&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MainWindow</span> <span class="o">=</span> <span class="n">QMainWindow</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ui</span> <span class="o">=</span> <span class="n">PcaUI</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ui</span><span class="o">.</span><span class="n">setUI</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MainWindow</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>🐱‍🏍学有余力的话 <strong>建议修改界面或添加一些新的功能哦~</strong>
+​</p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/python/" rel="tag" class="post-tag-link">#python</a> <a href="/tags/pca/" rel="tag" class="post-tag-link">#pca</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

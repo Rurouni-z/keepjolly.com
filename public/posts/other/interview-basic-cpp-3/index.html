@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>面试之CPP基础知识-3 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="C&#43;&#43;中有几种类型的new 在C&#43;&#43;中，new有三种典型的使用方法：plain new，nothrow new和placement new
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/other/interview-basic-cpp-3/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2024-01-13T21:52:47+08:00",
+        "dateModified": "2024-01-13T22:30:31+08:00",
+        "url": "http://localhost:1313/posts/other/interview-basic-cpp-3/",
+        "headline": "面试之CPP基础知识-3",
+        "description": "C++中有几种类型的new 在C++中，new有三种典型的使用方法：plain new，nothrow new和placement new\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  5627 ,
+        "image": ["http://oss.interviewguide.cn/img/202205212342667.png"],
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="面试之CPP基础知识-3" />
+<meta property="og:description" content="C&#43;&#43;中有几种类型的new 在C&#43;&#43;中，new有三种典型的使用方法：plain new，nothrow new和placement new
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/other/interview-basic-cpp-3/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="http://oss.interviewguide.cn/img/202205212342667.png" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2024-01-13T21:52:47&#43;08:00" />
+    <meta property="article:modified_time" content="2024-01-13T22:30:31&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">面试之CPP基础知识-3</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:c中有几种类型的new" href="#c中有几种类型的new">C++中有几种类型的new</a></li>
+    <li><a id="contents:c的异常处理的方法" href="#c的异常处理的方法">C++的异常处理的方法</a></li>
+    <li><a id="contents:形参与实参的区别" href="#形参与实参的区别">形参与实参的区别？</a></li>
+    <li><a id="contents:值传递指针传递引用传递的区别和效率" href="#值传递指针传递引用传递的区别和效率">值传递、指针传递、引用传递的区别和效率</a></li>
+    <li><a id="contents:静态变量什么时候初始化" href="#静态变量什么时候初始化">静态变量什么时候初始化</a></li>
+    <li><a id="contents:什么是类的继承" href="#什么是类的继承">什么是类的继承？</a></li>
+    <li><a id="contents:从汇编层去解释一下引用" href="#从汇编层去解释一下引用">从汇编层去解释一下引用</a></li>
+    <li><a id="contents:delete-pdelete--pallocator都有什么作用" href="#delete-pdelete--pallocator都有什么作用">delete p、delete [] p、allocator都有什么作用？</a></li>
+    <li><a id="contents:new和delete的实现原理-delete是如何知道释放内存的大小的" href="#new和delete的实现原理-delete是如何知道释放内存的大小的">new和delete的实现原理， delete是如何知道释放内存的大小的？</a></li>
+    <li><a id="contents:malloc申请的存储空间能用delete释放吗" href="#malloc申请的存储空间能用delete释放吗">malloc申请的存储空间能用delete释放吗?</a></li>
+    <li><a id="contents:malloc与free的实现原理" href="#malloc与free的实现原理">malloc与free的实现原理？</a></li>
+    <li><a id="contents:mallocrealloccalloc的区别" href="#mallocrealloccalloc的区别">malloc、realloc、calloc的区别</a></li>
+    <li><a id="contents:类成员初始化方式为什么用成员初始化列表会快一些" href="#类成员初始化方式为什么用成员初始化列表会快一些">类成员初始化方式？为什么用成员初始化列表会快一些？</a></li>
+    <li><a id="contents:构造函数的执行顺序-" href="#构造函数的执行顺序-">构造函数的执行顺序 ？</a></li>
+    <li><a id="contents:有哪些情况必须用到成员列表初始化顺序是什么" href="#有哪些情况必须用到成员列表初始化顺序是什么">有哪些情况必须用到成员列表初始化？顺序是什么？</a></li>
+    <li><a id="contents:c中新增了string它与c语言中的-char-有什么区别吗它是如何实现的" href="#c中新增了string它与c语言中的-char-有什么区别吗它是如何实现的">C++中新增了string，它与C语言中的 char *有什么区别吗？它是如何实现的？</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <h2 id="c中有几种类型的new"><a href="#c中有几种类型的new" class="anchor-link">#</a><a href="#contents:c中有几种类型的new" class="headings">C++中有几种类型的new</a></h2>
+<p>在C++中，new有三种典型的使用方法：plain new，nothrow new和placement new</p>
+<p>（1）<strong>plain new</strong>
+如果分配空间失败，会抛出异常<strong>std::bad_alloc</strong>。
+定义如下：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="nf">new</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">)</span> <span class="k">throw</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bad_alloc</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="k">operator</span> <span class="nf">delete</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span> <span class="k">throw</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>例子：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">char</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="mf">10e11</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">		<span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">bad_alloc</span> <span class="o">&amp;</span><span class="n">ex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ex</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//执行结果：bad allocation
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>（2）<strong>nothrow new</strong></p>
+<p>nothrow new在空间分配失败的情况下是不抛出异常，而是返回NULL，定义如下：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span> <span class="k">operator</span> <span class="nf">new</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">,</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">nothrow_t</span><span class="o">&amp;</span><span class="p">)</span> <span class="k">throw</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="k">operator</span> <span class="nf">delete</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="k">throw</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>举个例子：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span><span class="p">(</span><span class="n">nothrow</span><span class="p">)</span> <span class="kt">char</span><span class="p">[</span><span class="mf">10e11</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;alloc failed&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//运行结果：alloc failed
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>（3）<strong>placement new</strong></p>
+<p>这种new允许在一块已经分配成功的内存上重新构造对象或对象数组。placement new不用担心内存分配失败，因为它根本不分配内存，它做的唯一一件事情就是调用对象的构造函数。定义如下：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="nf">new</span><span class="p">(</span><span class="n">size_t</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="k">operator</span> <span class="nf">delete</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>使用placement new需要注意两点：</p>
+<ul>
+<li>
+<p>palcement new的主要用途就是反复使用一块较大的动态分配的内存来构造不同类型的对象或者他们的数组</p>
+</li>
+<li>
+<p>placement new构造起来的对象数组，要显式的调用他们的析构函数来销毁（析构函数并不释放对象的内存），千万不要使用delete，这是因为placement new构造起来的对象或数组大小并不一定等于原来分配的内存大小，使用delete会造成内存泄漏或者之后释放内存时出现运行时错误。</p>
+</li>
+</ul>
+<p>举个例子：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ADT</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">ADT</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">j</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;ADT construct i=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;j=&#34;</span><span class="o">&lt;&lt;</span><span class="n">j</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="o">~</span><span class="n">ADT</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;ADT destruct&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span><span class="p">(</span><span class="n">nothrow</span><span class="p">)</span> <span class="kt">char</span><span class="p">[</span><span class="k">sizeof</span> <span class="n">ADT</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;alloc failed&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">ADT</span> <span class="o">*</span><span class="n">q</span> <span class="o">=</span> <span class="k">new</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="n">ADT</span><span class="p">;</span>  <span class="c1">//placement new:不必担心失败，只要p所指对象的的空间足够ADT创建即可
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//delete q;//错误!不能在此处调用delete q;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">q</span><span class="o">-&gt;</span><span class="n">ADT</span><span class="o">::~</span><span class="n">ADT</span><span class="p">();</span><span class="c1">//显示调用析构函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">delete</span><span class="p">[]</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//输出结果：
+</span></span></span><span class="line"><span class="cl"><span class="c1">//ADT construct i=10j=100
+</span></span></span><span class="line"><span class="cl"><span class="c1">//ADT destruct
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="c的异常处理的方法"><a href="#c的异常处理的方法" class="anchor-link">#</a><a href="#contents:c的异常处理的方法" class="headings">C++的异常处理的方法</a></h2>
+<p>通过在代码中使用 try-catch 块，程序可以在遇到异常时跳转到异常处理代码。</p>
+<ul>
+<li>避免程序崩溃和数据损坏。</li>
+<li>使程序的调试和维护更加容易。</li>
+<li>提高代码的可读性和可维护性。</li>
+</ul>
+<p><a href="https://www.zhihu.com/tardis/zm/art/610549350?source_id=1003" target="_blank" rel="noopener">https://www.zhihu.com/tardis/zm/art/610549350?source_id=1003</a></p>
+<hr>
+<p>在程序执行过程中，由于程序员的疏忽或是系统资源紧张等因素都有可能导致异常，任何程序都无法保证绝对的稳定，常见的异常有：</p>
+<ul>
+<li>数组下标越界</li>
+<li>除法计算时除数为0</li>
+<li>动态分配空间时空间不足</li>
+<li>...</li>
+</ul>
+<p>如果不及时对这些异常进行处理，程序多数情况下都会崩溃。</p>
+<p><strong>（1）try、throw和catch关键字</strong></p>
+<p>C++中的异常处理机制主要使用<strong>try</strong>、<strong>throw</strong>和<strong>catch</strong>三个关键字，其在程序中的用法如下：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;before dividing.&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">throw</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">//抛出int型异常
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">throw</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">;</span>  <span class="c1">//拋出 double 型异常
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m</span> <span class="o">/</span> <span class="n">n</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;after dividing.&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">catch</span> <span class="p">(</span><span class="kt">double</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;catch (double)&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">d</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">catch</span> <span class="p">(...)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;catch (...)&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;finished&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//运行结果
+</span></span></span><span class="line"><span class="cl"><span class="c1">//before dividing.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//catch (...)
+</span></span></span><span class="line"><span class="cl"><span class="c1">//finished
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>代码中，对两个数进行除法计算，其中除数为0。可以看到以上三个关键字，程序的执行流程是先执行try包裹的语句块，如果执行过程中没有异常发生，则不会进入任何catch包裹的语句块，如果发生异常，则使用throw进行异常抛出，再由catch进行捕获，throw可以抛出各种数据类型的信息，代码中使用的是数字，也可以自定义异常class。<strong>catch根据throw抛出的数据类型进行精确捕获（不会出现类型转换），如果匹配不到就直接报错，可以使用catch(...)的方式捕获任何异常（不推荐）。</strong> 当然，如果catch了异常，当前函数如果不进行处理，或者已经处理了想通知上一层的调用者，可以在catch里面再throw异常。（注意，匹配不是最佳匹配，如果基类异常在派生类异常之前，则会一直匹配基类异常）</p>
+<p><strong>（2）函数的异常声明列表</strong></p>
+<p>有时候，程序员在定义函数的时候知道函数可能发生的异常，可以在函数声明和定义时，指出所能抛出异常的列表，写法如下：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">fun</span><span class="p">()</span> <span class="k">throw</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">double</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">){...};</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>这种写法表名函数可能会抛出int,double型或者A、B、C三种类型的异常，如果throw中为空，表明不会抛出任何异常，如果没有throw则可能抛出任何异常</p>
+<p><strong>（3）C++标准异常类  exception</strong></p>
+<p>C++ 标准库中有一些类代表异常，这些类都是从 exception 类派生而来的，如下图所示</p>
+<p><img src="http://oss.interviewguide.cn/img/202205212342667.png" alt=""></p>
+<ul>
+<li>bad_typeid：使用typeid运算符，如果其操作数是一个多态类的指针，而该指针的值为 NULL，则会拋出此异常，例如：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;typeinfo&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="k">virtual</span> <span class="o">~</span><span class="n">A</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">A</span><span class="o">*</span> <span class="n">a</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="k">typeid</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">).</span><span class="n">name</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// Error condition
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">bad_typeid</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">  		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Object is NULL&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//运行结果：bject is NULL
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><ul>
+<li>bad_cast：在用 dynamic_cast 进行从多态基类对象（或引用）到派生类的引用的强制类型转换时，如果转换是不安全的，则会拋出此异常</li>
+<li>bad_alloc：在用 new 运算符进行动态内存分配时，如果没有足够的内存，则会引发此异常</li>
+<li>out_of_range:用 vector 或 string的at 成员函数根据下标访问元素时，如果下标越界，则会拋出此异常</li>
+</ul>
+<h2 id="形参与实参的区别"><a href="#形参与实参的区别" class="anchor-link">#</a><a href="#contents:形参与实参的区别" class="headings">形参与实参的区别？</a></h2>
+<ol>
+<li>
+<p>形参只有在<strong>被调用时才分配内存单元</strong>，在调用结束时， 即刻释放所分配的内存单元。因此，形参只有在函数内部有效。 函数调用结束返回主调函数后则不能再使用该形参变量。</p>
+</li>
+<li>
+<p>实参可以是常量、变量、表达式、函数等， 无论实参是何种类型的量，在<strong>进行函数调用时，实参应该具有确定的值</strong>， 以便把这些值传送给形参。</p>
+</li>
+<li>
+<p>实参和形参在数量上，类型上，顺序上应严格一致， 否则会发生“类型不匹配”的错误。</p>
+</li>
+<li>
+<p>函数调用中发生的<strong>数据传送是单向</strong>的。 即只能把实参的值传送给形参，而不能把形参的值反向地传送给实参。 因此在函数调用过程中，形参的值发生改变，而实参中的值不会变化。</p>
+</li>
+<li>
+<p>当形参和实参不是指针/引用类型时，在该函数运行时，<strong>形参和实参是不同的变量</strong>，他们在内存中位于不同的位置，形参将实参的内容复制一份，在该函数运行结束的时候形参被释放，而实参内容不会改变。</p>
+</li>
+</ol>
+<h2 id="值传递指针传递引用传递的区别和效率"><a href="#值传递指针传递引用传递的区别和效率" class="anchor-link">#</a><a href="#contents:值传递指针传递引用传递的区别和效率" class="headings">值传递、指针传递、引用传递的区别和效率</a></h2>
+<ol>
+<li>
+<p>值传递：形参会拷贝整个实参，如果值传递的对象是类对象   或是大的结构体对象，将耗费一定的时间和空间。（传值）</p>
+</li>
+<li>
+<p>指针传递：形参会拷贝实参的地址。（传值，传递的是地址值）</p>
+</li>
+<li>
+<p>引用传递：形参等同于实参。（传地址）</p>
+</li>
+<li>
+<p>效率上讲，指针传递和引用传递比值传递效率高。一般主张使用引用传递，代码逻辑上更加紧凑、清晰。</p>
+</li>
+</ol>
+<h2 id="静态变量什么时候初始化"><a href="#静态变量什么时候初始化" class="anchor-link">#</a><a href="#contents:静态变量什么时候初始化" class="headings">静态变量什么时候初始化</a></h2>
+<p>静态局部变量和局部对象都在<strong>函数首次执行</strong>到对象定义时进行初始化；
+全局变量和对象在程序启动时进行初始化。</p>
+<h2 id="什么是类的继承"><a href="#什么是类的继承" class="anchor-link">#</a><a href="#contents:什么是类的继承" class="headings">什么是类的继承？</a></h2>
+<ol>
+<li>类与类之间的关系</li>
+</ol>
+<p>has-A包含关系，用以描述<strong>一个类由多个部件类构成</strong>，实现has-A关系用类的成员属性，即一个类的成员属性是另一个已经定义好的类；</p>
+<p>use-A，<strong>一个类使用另一个类</strong>，通过类之间的成员函数相互联系，定义友元或者通过传递参数的方式来实现；</p>
+<p>is-A，继承关系，关系具有传递性；子类拥有父类的所有属性和方法，子类可以拥有父类没有的属性和方法，子类对象可以当做父类对象使用；</p>
+<h2 id="从汇编层去解释一下引用"><a href="#从汇编层去解释一下引用" class="anchor-link">#</a><a href="#contents:从汇编层去解释一下引用" class="headings">从汇编层去解释一下引用</a></h2>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="mi">9</span><span class="o">:</span>      <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mo">0040104</span><span class="mi">8</span>  <span class="n">mov</span>     <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">4</span><span class="p">],</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mi">10</span><span class="o">:</span>     <span class="kt">int</span> <span class="o">&amp;</span><span class="n">b</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mf">0040104F</span>   <span class="n">lea</span>     <span class="n">eax</span><span class="p">,[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mo">00401052</span>  <span class="n">mov</span>     <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">8</span><span class="p">],</span><span class="n">eax</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>x的地址为ebp-4，b的地址为ebp-8，因为栈内的变量内存是从高往低进行分配的，所以b的地址比x的低。</p>
+<p>lea eax,[ebp-4] 这条语句将x的地址ebp-4放入eax寄存器</p>
+<p>mov dword ptr [ebp-8],eax 这条语句将eax的值放入b的地址</p>
+<p>ebp-8中上面两条汇编的作用即：将x的地址存入变量b中，这不和将某个变量的地址存入指针变量是一样的吗？所以从汇编层次来看，的确引用是通过指针来实现的。</p>
+<h2 id="delete-pdelete--pallocator都有什么作用"><a href="#delete-pdelete--pallocator都有什么作用" class="anchor-link">#</a><a href="#contents:delete-pdelete--pallocator都有什么作用" class="headings">delete p、delete [] p、allocator都有什么作用？</a></h2>
+<ul>
+<li><code>delete p</code>：用于释放使用<code>new</code>运算符动态分配的单个对象的内存。<code>delete p</code>会调用对象的析构函数，并释放对象占用的内存。</li>
+<li><code>delete [] p</code>：用于释放使用<code>new[]</code>运算符动态分配的数组的内存。<code>delete [] p</code>会按照数组元素的逆序调用每个元素的析构函数，并释放数组占用的内存。</li>
+<li><code>allocator</code>：是C++标准库中的一个类模板，用于动态分配和释放内存，可以用于分配单个对象或数组。</li>
+</ul>
+<h2 id="new和delete的实现原理-delete是如何知道释放内存的大小的"><a href="#new和delete的实现原理-delete是如何知道释放内存的大小的" class="anchor-link">#</a><a href="#contents:new和delete的实现原理-delete是如何知道释放内存的大小的" class="headings">new和delete的实现原理， delete是如何知道释放内存的大小的？</a></h2>
+<ul>
+<li>new先调用operator new分配内存，然后调用构造函数初始化内存，返回该内存的指针</li>
+<li>delete先调用析构函数再调用operator delete释放指针指向的内存</li>
+<li>new[]先调用operator new[]分配内存，然后在内存块的首地址放入数组大小，然后依次调用数组元素的构造函数来初始化每个对象，返回该内存的指针。</li>
+<li>delete[]获得内存首地址的数组大小，调用析构函数后，再调用operator delete 释放内存。</li>
+</ul>
+<p><a href="https://blog.csdn.net/passion_wu128/article/details/38966581" target="_blank" rel="noopener">https://blog.csdn.net/passion_wu128/article/details/38966581</a></p>
+<h2 id="malloc申请的存储空间能用delete释放吗"><a href="#malloc申请的存储空间能用delete释放吗" class="anchor-link">#</a><a href="#contents:malloc申请的存储空间能用delete释放吗" class="headings">malloc申请的存储空间能用delete释放吗?</a></h2>
+<p>混合使用<code>malloc</code>和<code>delete</code>会导致未定义的行为，可能引发内存泄漏或其他问题。建议malloc配套free使用。</p>
+<h2 id="malloc与free的实现原理"><a href="#malloc与free的实现原理" class="anchor-link">#</a><a href="#contents:malloc与free的实现原理" class="headings">malloc与free的实现原理？</a></h2>
+<ol>
+<li>
+<p><code>malloc</code>的实现原理：</p>
+<ul>
+<li><code>malloc</code>函数通过调用底层的操作系统函数（如<code>brk</code>或<code>mmap</code>）来请求一块指定大小的内存空间。</li>
+<li>操作系统会在进程的地址空间中找到足够大小的连续内存块，并将其起始地址分配给<code>malloc</code>函数。</li>
+<li><code>malloc</code>函数返回起始地址给变量。</li>
+</ul>
+</li>
+<li>
+<p><code>free</code>的实现原理：</p>
+<ul>
+<li><code>free</code>函数接收一个指针作为参数，该指针指向通过<code>malloc</code>分配的内存块的起始地址。</li>
+<li><code>free</code>函数将释放该内存块，并将它标记为可重新使用。</li>
+<li>内存管理子系统（如堆管理器）会将这块内存标记为可供后续的<code>malloc</code>调用使用</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>from GPT3.5</li>
+</ul>
+<hr>
+<p>1、 在标准C库中，提供了malloc/free函数分配释放内存，这两个函数底层是由brk、mmap、，munmap这些系统调用实现的;</p>
+<p>2、 brk是将「堆顶」指针向高地址移动，获得新的内存空间,mmap是在进程的虚拟地址空间中（堆和栈中间，称为文件映射区域的地方）找一块空闲的虚拟内存。这两种方式分配的都是虚拟内存，没有分配物理内存。在第一次访问已分配的虚拟地址空间的时候，发生缺页中断，操作系统负责分配物理内存，然后建立虚拟内存和物理内存之间的映射关系；</p>
+<p>3、 malloc小于128k的内存，使用brk分配内存，将「堆顶」指针往高地址推；malloc大于128k的内存，使用mmap分配内存，在堆和栈之间找一块空闲内存分配；brk分配的内存需要等到高地址内存释放以后才能释放，而mmap分配的内存可以单独释放。当最高地址空间的空闲内存超过128K（可由M_TRIM_THRESHOLD选项调节）时，执行内存紧缩操作（trim）。在上一个步骤free的时候，发现最高地址空闲内存超过128K，于是内存紧缩。</p>
+<p>4、 malloc是从堆里面申请内存，也就是说函数返回的指针是指向堆里面的一块内存。操作系统中有一个记录空闲内存地址的链表。当操作系统收到程序的申请时，就会遍历该链表，然后就寻找第一个空间大于所申请空间的堆结点，然后就将该结点从空闲结点链表中删除，并将该结点的空间分配给程序。</p>
+<h2 id="mallocrealloccalloc的区别"><a href="#mallocrealloccalloc的区别" class="anchor-link">#</a><a href="#contents:mallocrealloccalloc的区别" class="headings">malloc、realloc、calloc的区别</a></h2>
+<ol>
+<li>malloc函数</li>
+</ol>
+<p>需要指定需要的内存空间，其内的值是随机的。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span><span class="o">*</span> <span class="nf">malloc</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">num_size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mi">20</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span><span class="err">申请</span><span class="mi">20</span><span class="err">个</span><span class="n">int类型的空间</span><span class="err">；</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ol start="2">
+<li>calloc函数</li>
+</ol>
+<p>省去了人为空间计算；申请的空间的值是初始化为0</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span><span class="o">*</span> <span class="nf">calloc</span><span class="p">(</span><span class="n">size_t</span> <span class="n">n</span><span class="p">,</span><span class="n">size_t</span> <span class="n">size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">calloc</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ol start="3">
+<li>realloc函数</li>
+</ol>
+<p>给动态分配的空间分配额外的空间，用于扩充容量</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">realloc</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">new_size</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="类成员初始化方式为什么用成员初始化列表会快一些"><a href="#类成员初始化方式为什么用成员初始化列表会快一些" class="anchor-link">#</a><a href="#contents:类成员初始化方式为什么用成员初始化列表会快一些" class="headings">类成员初始化方式？为什么用成员初始化列表会快一些？</a></h2>
+<ol>
+<li>构造函数初始化，通过在构造函数体内进行赋值初始化；</li>
+<li>列表初始化，在冒号后使用初始化列表进行初始化。</li>
+<li>声明时初始化（也称就地初始化，c++11后支持），声明时直接初始化。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 声明时初始化 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 列表初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">A</span><span class="p">(</span><span class="kt">int</span> <span class="n">a_</span><span class="p">)</span><span class="o">:</span><span class="n">a</span><span class="p">(</span><span class="n">a_</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 构造函数初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">A</span><span class="p">(</span><span class="kt">int</span> <span class="n">_b</span><span class="p">)</span> <span class="p">{</span><span class="n">b</span> <span class="o">=</span> <span class="n">_b</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>成员变量的初始化顺序是：</p>
+<p><strong>声明时初始化-&gt;初始化列表-&gt;构造函数初始化</strong></p>
+<p>因为列表初始化不需要再进行一次赋值，不会构建临时变量。
+<a href="https://bbs.huaweicloud.com/blogs/281096" target="_blank" rel="noopener">https://bbs.huaweicloud.com/blogs/281096</a></p>
+<h2 id="构造函数的执行顺序-"><a href="#构造函数的执行顺序-" class="anchor-link">#</a><a href="#contents:构造函数的执行顺序-" class="headings">构造函数的执行顺序 ？</a></h2>
+<p>一个派生类构造函数的执行顺序如下：</p>
+<ol>
+<li>先执行静态成员的构造函数~~，如果静态成员只是在类定义中声明了，而没有定义，是不用构造的。必须初始化后才执行其构造函数。~~</li>
+<li>任何虚拟继承基类的构造函数按照它们被继承的顺序构造（不是初始化列表中的顺序）</li>
+<li>任何非虚拟继承基类的构造函数按照它们被继承的顺序构造（不是初始化列表中的顺序）</li>
+<li>任何成员对象的构造函数按照它们声明的顺序构造</li>
+<li>类自己的构造函数</li>
+</ol>
+<p><a href="https://blog.csdn.net/Watson2016/article/details/77891766" target="_blank" rel="noopener">代码</a></p>
+<h2 id="有哪些情况必须用到成员列表初始化顺序是什么"><a href="#有哪些情况必须用到成员列表初始化顺序是什么" class="anchor-link">#</a><a href="#contents:有哪些情况必须用到成员列表初始化顺序是什么" class="headings">有哪些情况必须用到成员列表初始化？顺序是什么？</a></h2>
+<p>必须使用列表初始化的情况</p>
+<ul>
+<li>初始化引用成员</li>
+<li>初始化const成员</li>
+<li>初始化成员对象
+<ul>
+<li>不包含默认构造函数时</li>
+</ul>
+</li>
+<li>基类的构造函数需要参数
+<ul>
+<li>不包含默认构造函数时</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">OtherClass</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">OtherClass</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 构造函数体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">BaseClass</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">BaseClass</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 基类构造函数体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MyClass</span><span class="o">:</span> <span class="k">public</span> <span class="n">BaseClass</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MyClass</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">,</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">ref</span><span class="p">)</span> <span class="o">:</span> <span class="n">myConst</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">myRef</span><span class="p">(</span><span class="n">ref</span><span class="p">),</span> <span class="n">myObject</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">BaseClass</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 构造函数体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">int</span> <span class="n">myConst</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">&amp;</span> <span class="n">myRef</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">OtherClass</span> <span class="n">myObject</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>成员初始化的顺序</p>
+<ul>
+<li>列表初始化的顺序是由<strong>先基类，再按照类中的成员声明顺序</strong>决定的，不是由初始化列表的顺序决定的；</li>
+</ul>
+<p><a href="https://blog.csdn.net/lanchunhui/article/details/50987384" target="_blank" rel="noopener">https://blog.csdn.net/lanchunhui/article/details/50987384</a></p>
+<h2 id="c中新增了string它与c语言中的-char-有什么区别吗它是如何实现的"><a href="#c中新增了string它与c语言中的-char-有什么区别吗它是如何实现的" class="anchor-link">#</a><a href="#contents:c中新增了string它与c语言中的-char-有什么区别吗它是如何实现的" class="headings">C++中新增了string，它与C语言中的 char *有什么区别吗？它是如何实现的？</a></h2>
+<ol>
+<li>
+<p>在实现上，<code>std::string</code> 内部通常会使用动态数组来存储字符串，可以动态地分配内存。<del>同时，<code>std::string</code> 还可能使用一些优化技术，如内部缓存和rope等，以提高字符串操作的效率。具体的实现细节可能会因不同的 C++ 编译器和标准库实现而有所不同。</del></p>
+</li>
+<li>
+<p>内存管理：string会自动管理内存，即在使用完成后会自动释放内存。而char *需要手动管理内存。</p>
+</li>
+<li>
+<p>安全性：string提供了更多的安全性措施，比如支持多线程安全、内存泄漏检测等。</p>
+</li>
+<li>
+<p>字符串操作：<code>std::string</code> 提供了一系列的成员函数，可以方便地进行字符串的拼接、子串提取、查找等操作，而 <code>char*</code> 则需要使用一些 C 语言的字符串操作函数（如 <code>strcat</code>、<code>strchr</code> 等）或者手动进行指针操作。</p>
+</li>
+</ol>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/interview/" rel="tag" class="post-tag-link">#interview</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

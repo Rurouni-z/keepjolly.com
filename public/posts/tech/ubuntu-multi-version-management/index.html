@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>ubuntu多版本管理 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="Rurouni" /><meta name="description" content="ubuntu多版本管理GCC、OpenCV、Cuda" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/tech/ubuntu-multi-version-management/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2023-05-28T09:33:29+08:00",
+        "dateModified": "2023-06-10T22:41:12+08:00",
+        "url": "http://localhost:1313/posts/tech/ubuntu-multi-version-management/",
+        "headline": "ubuntu多版本管理",
+        "description": "ubuntu多版本管理GCC、OpenCV、Cuda",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  456 ,
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+
+    
+
+
+
+<meta property="og:title" content="ubuntu多版本管理" />
+<meta property="og:description" content="ubuntu多版本管理GCC、OpenCV、Cuda" />
+<meta property="og:url" content="http://localhost:1313/posts/tech/ubuntu-multi-version-management/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2023-05-28T09:33:29&#43;08:00" />
+    <meta property="article:modified_time" content="2023-06-10T22:41:12&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">ubuntu多版本管理</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:管理gcc" href="#管理gcc">管理GCC</a></li>
+    <li><a id="contents:管理opencv" href="#管理opencv">管理opencv</a></li>
+    <li><a id="contents:管理cuda" href="#管理cuda">管理cuda</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <blockquote>
+<p>默认已安装
+sudo apt-get install build-essential
+sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev</p>
+</blockquote>
+<h2 id="管理gcc"><a href="#管理gcc" class="anchor-link">#</a><a href="#contents:管理gcc" class="headings">管理GCC</a></h2>
+<ol>
+<li>前提是安装了多个gcc版本，可采取如下命令</li>
+</ol>
+<blockquote>
+<p>sudo apt-get install gcc-11 g++-11</p>
+</blockquote>
+<ol start="2">
+<li>然后选择要使用的gcc版本</li>
+</ol>
+<blockquote>
+<p>update-alternatives <em>--config gcc</em></p>
+</blockquote>
+<ol start="3">
+<li>输入你想使用的版本的序号，如1</li>
+<li>查看当前版本</li>
+</ol>
+<blockquote>
+<p>gcc -v</p>
+</blockquote>
+<p><a href="https://lantern.cool/tool-linux-muti-gcc/index.html" target="_blank" rel="noopener">参考链接</a></p>
+<h2 id="管理opencv"><a href="#管理opencv" class="anchor-link">#</a><a href="#contents:管理opencv" class="headings">管理opencv</a></h2>
+<ol>
+<li>下载<a href="https://github.com/opencv/opencv/archive/3.4.15.zip" target="_blank" rel="noopener">源文件</a>，本文选的是opencv3.4.15 <code><em class="emphasis-point">source</em></code>版本</li>
+<li>在任意目录下创建存放opencv安装路径</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">conda deactivate
+</span></span><span class="line"><span class="cl">mkdir otherpackages
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> otherpackages
+</span></span><span class="line"><span class="cl">mkdir opencv3.4.15
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ol start="3">
+<li>解压缩opencv-3.4.15.zip文件</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> opencv-3.4.15
+</span></span><span class="line"><span class="cl">mkdir build
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> build
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ol start="4">
+<li>cmake opencv</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cmake -D <span class="nv">CMAKE_BUILD_TYPE</span><span class="o">=</span>RELEASE -D <span class="nv">CMAKE_INSTALL_PREFIX</span><span class="o">=</span><span class="s2">&#34;/home/yourusername/otherpackages/opencv3.4.15&#34;</span>  ..
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ol start="5">
+<li>编译 &amp;&amp; 安装</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">make -j8 <span class="o">&amp;&amp;</span> sudo make install
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>没报其他错误的话，OpenCV已经顺利被安装到自定义路径otherpackages/opencv3.4.15中了</p>
+<ol start="6">
+<li>使用opencv
+<ol>
+<li>将otherpackages中的opencv3.4.15复制到项目路径
+<ol>
+<li>在qt.pro中粘贴代码</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">INCLUDEPATH</span> <span class="o">+=</span> ./opencv3415/include <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>            ./opencv3415/include/opencv <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>            ./opencv3415/include/opencv2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">LIBS</span> <span class="o">+=</span> -L./opencv3415/lib -lopencv_core -lopencv_highgui <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>      -lopencv_imgcodecs -lopencv_imgproc -lopencv_videoio <span class="se">\
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><ol start="2">
+<li>如果是cmake</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">include_directories<span class="o">(</span>
+</span></span><span class="line"><span class="cl"><span class="si">${</span><span class="nv">CMAKE_SOURCE_DIR</span><span class="si">}</span>/./opencv3415/include
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">set<span class="o">(</span>link_libs  <span class="si">${</span><span class="nv">CMAKE_SOURCE_DIR</span><span class="si">}</span>/./opencv3415/lib/libopencv_core.so
+</span></span><span class="line"><span class="cl">            <span class="si">${</span><span class="nv">CMAKE_SOURCE_DIR</span><span class="si">}</span>/./opencv3415/lib/libopencv_highgui.so
+</span></span><span class="line"><span class="cl">            <span class="si">${</span><span class="nv">CMAKE_SOURCE_DIR</span><span class="si">}</span>/./opencv3415/lib/libopencv_imgcodecs.so
+</span></span><span class="line"><span class="cl">            <span class="si">${</span><span class="nv">CMAKE_SOURCE_DIR</span><span class="si">}</span>/./opencv3415/lib/libopencv_imgproc.so
+</span></span><span class="line"><span class="cl">            <span class="si">${</span><span class="nv">CMAKE_SOURCE_DIR</span><span class="si">}</span>/./opencv3415/lib/libopencv_videoio.so
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">add_executable<span class="o">(</span>main  ./main.cpp<span class="o">)</span>
+</span></span><span class="line"><span class="cl">target_link_libraries<span class="o">(</span>main <span class="si">${</span><span class="nv">link_libs</span><span class="si">}</span><span class="o">)</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div></li>
+</ol>
+</li>
+</ol>
+<p><a href="https://zhuanlan.zhihu.com/p/510292490" target="_blank" rel="noopener">参考博客</a></p>
+<h2 id="管理cuda"><a href="#管理cuda" class="anchor-link">#</a><a href="#contents:管理cuda" class="headings">管理cuda</a></h2>
+<ol>
+<li>删除原软链接</li>
+</ol>
+<blockquote>
+<p>cd /usr/local</p>
+<p>sudo unlink cuda</p>
+</blockquote>
+<ol>
+<li>建立新链接</li>
+</ol>
+<blockquote>
+<p>sudo ln -snf /usr/local/<code><em class="emphasis-point">cuda-xx</em></code> /usr/local/cuda</p>
+<p>cuda-xx是文件夹名</p>
+</blockquote>
+<ol>
+<li>查看当前版本</li>
+</ol>
+<blockquote>
+<p>nvcc -V</p>
+</blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/410764884" target="_blank" rel="noopener">参考链接</a></p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/ubuntu/" rel="tag" class="post-tag-link">#ubuntu</a> <a href="/tags/c-/" rel="tag" class="post-tag-link">#c</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

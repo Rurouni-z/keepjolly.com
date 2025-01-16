@@ -20,7 +20,7 @@
         <author>
             <name>{{ . }}</name>
             <uri>{{ "" | absLangURL }}</uri>
-            {{ with $.Site.Params.Author.email }}
+            {{ with $.Site.Author.email }}
                 <email>{{ . }}</email>
             {{ end -}}
         </author>

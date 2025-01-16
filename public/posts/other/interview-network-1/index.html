@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>面试之计算机网络-1 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="未标明出处的，均来自小林coding、阿秀的学习笔记、GPT3.5
+OSI 的七层模型分别是？各自的功能是什么？ 物理层：负责传输比特流，处理物理介质和电信号。 数据链路层：提供可靠的点对点数据传输，处理帧和物理地址。 网络层：将数据包从源主机传输到目标主机，处理路由和寻址。 传输层：提供端口到端口的可靠数据传输，处理连接和流控制。 会话层：管理应用程序之间的会话。 表示层：处理数据的表示和格式转换，提供加密和压缩功能。 应用层：给用户提供网络应用服务，如HTTP、FTP等。 说明
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/other/interview-network-1/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2024-01-13T21:56:32+08:00",
+        "dateModified": "2024-01-13T22:30:53+08:00",
+        "url": "http://localhost:1313/posts/other/interview-network-1/",
+        "headline": "面试之计算机网络-1",
+        "description": "未标明出处的，均来自小林coding、阿秀的学习笔记、GPT3.5\nOSI 的七层模型分别是？各自的功能是什么？ 物理层：负责传输比特流，处理物理介质和电信号。 数据链路层：提供可靠的点对点数据传输，处理帧和物理地址。 网络层：将数据包从源主机传输到目标主机，处理路由和寻址。 传输层：提供端口到端口的可靠数据传输，处理连接和流控制。 会话层：管理应用程序之间的会话。 表示层：处理数据的表示和格式转换，提供加密和压缩功能。 应用层：给用户提供网络应用服务，如HTTP、FTP等。 说明\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  4287 ,
+        "image": ["http://oss.interviewguide.cn/img/202205220036790.png"],
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="面试之计算机网络-1" />
+<meta property="og:description" content="未标明出处的，均来自小林coding、阿秀的学习笔记、GPT3.5
+OSI 的七层模型分别是？各自的功能是什么？ 物理层：负责传输比特流，处理物理介质和电信号。 数据链路层：提供可靠的点对点数据传输，处理帧和物理地址。 网络层：将数据包从源主机传输到目标主机，处理路由和寻址。 传输层：提供端口到端口的可靠数据传输，处理连接和流控制。 会话层：管理应用程序之间的会话。 表示层：处理数据的表示和格式转换，提供加密和压缩功能。 应用层：给用户提供网络应用服务，如HTTP、FTP等。 说明
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/other/interview-network-1/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="http://oss.interviewguide.cn/img/202205220036790.png" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2024-01-13T21:56:32&#43;08:00" />
+    <meta property="article:modified_time" content="2024-01-13T22:30:53&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">面试之计算机网络-1</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:osi-的七层模型分别是各自的功能是什么" href="#osi-的七层模型分别是各自的功能是什么">OSI 的七层模型分别是？各自的功能是什么？</a></li>
+    <li><a id="contents:一次完整的http请求过程" href="#一次完整的http请求过程">一次完整的HTTP请求过程？</a></li>
+    <li><a id="contents:dns是" href="#dns是">DNS是？</a></li>
+    <li><a id="contents:dns的工作原理" href="#dns的工作原理">DNS的工作原理？</a></li>
+    <li><a id="contents:为什么域名解析用udp协议" href="#为什么域名解析用udp协议">为什么域名解析用UDP协议？</a></li>
+    <li><a id="contents:为什么区域传送用tcp协议" href="#为什么区域传送用tcp协议">为什么区域传送用TCP协议？</a></li>
+    <li><a id="contents:http长连接和短连接的区别" href="#http长连接和短连接的区别">HTTP长连接和短连接的区别</a></li>
+    <li><a id="contents:什么是tcp粘包拆包发生的原因" href="#什么是tcp粘包拆包发生的原因">什么是TCP粘包/拆包？发生的原因？</a></li>
+    <li><a id="contents:为什么服务器会缓存如何实现的" href="#为什么服务器会缓存如何实现的">为什么服务器会缓存?如何实现的？</a></li>
+    <li><a id="contents:http请求方法你知道多少" href="#http请求方法你知道多少">HTTP请求方法你知道多少？</a></li>
+    <li><a id="contents:get-和-post-的区别你知道哪些" href="#get-和-post-的区别你知道哪些">GET 和 POST 的区别，你知道哪些？</a></li>
+    <li><a id="contents:一个tcp连接可以对应几个http请求" href="#一个tcp连接可以对应几个http请求">一个TCP连接可以对应几个HTTP请求？</a></li>
+    <li><a id="contents:一个-tcp-连接中-http-请求发送可以一起发送么" href="#一个-tcp-连接中-http-请求发送可以一起发送么">一个 TCP 连接中 HTTP 请求发送可以一起发送么？</a></li>
+    <li><a id="contents:浏览器对同一-host-建立-tcp-连接的数量有没有限制" href="#浏览器对同一-host-建立-tcp-连接的数量有没有限制">浏览器对同一 Host 建立 TCP 连接的数量有没有限制？</a></li>
+    <li><a id="contents:在浏览器中输入url地址后显示主页的过程" href="#在浏览器中输入url地址后显示主页的过程">在浏览器中输入url地址后显示主页的过程?</a></li>
+    <li><a id="contents:在浏览器地址栏输入一个url后回车背后会进行哪些技术步骤" href="#在浏览器地址栏输入一个url后回车背后会进行哪些技术步骤">在浏览器地址栏输入一个URL后回车，背后会进行哪些技术步骤？</a></li>
+    <li><a id="contents:dns负载均衡是什么策略" href="#dns负载均衡是什么策略">DNS负载均衡是什么策略？</a></li>
+    <li><a id="contents:https和http的区别" href="#https和http的区别">HTTPS和HTTP的区别</a></li>
+    <li><a id="contents:什么是ssltls-" href="#什么是ssltls-">什么是SSL/TLS ？</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <p>未标明出处的，均来自<a href="https://xiaolincoding.com/" target="_blank" rel="noopener">小林coding</a>、<a href="https://interviewguide.cn/" target="_blank" rel="noopener">阿秀的学习笔记</a>、<a href="https://poe.com/" target="_blank" rel="noopener">GPT3.5</a></p>
+<h2 id="osi-的七层模型分别是各自的功能是什么"><a href="#osi-的七层模型分别是各自的功能是什么" class="anchor-link">#</a><a href="#contents:osi-的七层模型分别是各自的功能是什么" class="headings">OSI 的七层模型分别是？各自的功能是什么？</a></h2>
+<ol>
+<li>物理层：负责传输比特流，处理物理介质和电信号。</li>
+<li>数据链路层：提供可靠的点对点数据传输，处理帧和物理地址。</li>
+<li>网络层：将数据包从源主机传输到目标主机，处理路由和寻址。</li>
+<li>传输层：提供端口到端口的可靠数据传输，处理连接和流控制。</li>
+<li>会话层：管理应用程序之间的会话。</li>
+<li>表示层：处理数据的表示和格式转换，提供加密和压缩功能。</li>
+<li>应用层：给用户提供网络应用服务，如HTTP、FTP等。</li>
+</ol>
+<p>说明</p>
+<ul>
+<li>传输层数据被称作<strong>tcp报文段或udp用户数据报</strong>（Segments）；</li>
+<li>网络层数据被称做<strong>包</strong>（Packages）；</li>
+<li>数据链路层数据被称为<strong>帧</strong>（Frames）；</li>
+<li>物理层数据被称为<strong>比特流</strong>（Bits）。</li>
+</ul>
+<p>总结</p>
+<ul>
+<li>网络七层模型是一个标准，而非实现。</li>
+<li>网络四层模型是一个实现的应用模型。</li>
+<li>网络四层模型由七层模型简化合并而来。</li>
+</ul>
+<h2 id="一次完整的http请求过程"><a href="#一次完整的http请求过程" class="anchor-link">#</a><a href="#contents:一次完整的http请求过程" class="headings">一次完整的HTTP请求过程？</a></h2>
+<blockquote>
+<ul>
+<li>根据域名，进行DNS域名解析；</li>
+<li>拿到解析的IP地址，建立TCP连接；</li>
+<li>向IP地址发送HTTP请求；</li>
+<li>服务器处理请求，返回响应结果；</li>
+<li>浏览器解析HTML；</li>
+<li>浏览器渲染页面；</li>
+<li>关闭TCP连接；</li>
+</ul>
+</blockquote>
+<h2 id="dns是"><a href="#dns是" class="anchor-link">#</a><a href="#contents:dns是" class="headings">DNS是？</a></h2>
+<p>DNS（Domain Name System，域名系统），是因特网上作为<strong>域名和IP地址相互映射</strong>的一个<strong>分布式数据库</strong>，能够使用户更方便的访问互联网。</p>
+<h2 id="dns的工作原理"><a href="#dns的工作原理" class="anchor-link">#</a><a href="#contents:dns的工作原理" class="headings">DNS的工作原理？</a></h2>
+<p>将主机域名转换为ip地址，属于应用层协议，使用UDP传输。（DNS应用层协议，以前有个考官问过）</p>
+<p><img src="http://oss.interviewguide.cn/img/202205220036790.png" alt="">
+过程：
+总结： 浏览器缓存，系统缓存，路由器缓存，IPS服务器缓存，根域名服务器缓存，顶级域名服务器缓存，主域名服务器缓存。
+<del>一、主机向本地域名服务器的查询一般都是采用递归查询。
+二、本地域名服务器向根域名服务器的查询的迭代查询。</del></p>
+<ol>
+<li>当用户输入域名时，浏览器先检查自己的缓存中是否包含这个域名映射的ip地址，有解析结束。</li>
+<li>若没命中，则检查操作系统缓存（如Windows的hosts）中有没有解析过的结果，有解析结束。</li>
+<li>若无命中，则请求本地域名服务器递归解析（LDNS）。</li>
+<li>若LDNS没有命中就进行迭代解析。请求根域名服务器，根域名服务器返回给LDNS一个顶级域名服务器地址。</li>
+<li>此时LDNS再发送请求给顶级域名服务器， 接受请求的顶级域名服务器查找并返回这个域名对应的权威服务器的地址</li>
+<li>LDNS再请求权威服务器，接受的权威服务器根据映射关系表找到目标ip，返回给LDNS</li>
+<li>LDNS缓存这个域名和对应的ip， 把解析的结果返回给用户，用户再缓存到本地系统缓存中。</li>
+</ol>
+<h2 id="为什么域名解析用udp协议"><a href="#为什么域名解析用udp协议" class="anchor-link">#</a><a href="#contents:为什么域名解析用udp协议" class="headings">为什么域名解析用UDP协议？</a></h2>
+<p>客户端向DNS服务器查询域名，一般返回的内容都<a href="https://taifua.com/udp-512bytes-limit.html" target="_blank" rel="noopener">不超过512字节</a>，用UDP传输即可。不用经过TCP三次握手，这样DNS服务器负载更低，响应更快。在某些情况下，域名解析可能会使用TCP来处理较为复杂的查询或处理大型响应。</p>
+<h2 id="为什么区域传送用tcp协议"><a href="#为什么区域传送用tcp协议" class="anchor-link">#</a><a href="#contents:为什么区域传送用tcp协议" class="headings">为什么区域传送用TCP协议？</a></h2>
+<p>区域传送（Zone Transfer）是指将一个DNS域的完整副本从一个DNS服务器传输到另一个DNS服务器的过程。需要确保可靠性和完整性，并且这个副本往往包含大量数据，适合用TCP传输。</p>
+<h2 id="http长连接和短连接的区别"><a href="#http长连接和短连接的区别" class="anchor-link">#</a><a href="#contents:http长连接和短连接的区别" class="headings">HTTP长连接和短连接的区别</a></h2>
+<p>长连接：长连接，指在一个连接上可以处理多个请求，在连接保持期间，如果没有数据包发送，需要双方发链路检测包。</p>
+<p>短连接：指的是一个连接上只能处理一个请求，之后断开此连接，即每次连接只完成一项业务的发送。</p>
+<p>长连接的优点是减少了连接的建立和关闭的开销，节省了时间和资源。它可以提高性能和效率，特别是在需要频繁通信的场景下。然而，长连接也需要维护连接的状态和资源，可能会导致服务器负担增加。</p>
+<h2 id="什么是tcp粘包拆包发生的原因"><a href="#什么是tcp粘包拆包发生的原因" class="anchor-link">#</a><a href="#contents:什么是tcp粘包拆包发生的原因" class="headings">什么是TCP粘包/拆包？发生的原因？</a></h2>
+<p>一个完整的业务可能会被TCP拆分成多个包进行发送，也有可能把多个小的包封装成一个大的数据包发送，这个就是TCP的拆包和粘包问题。</p>
+<p>原因</p>
+<p>1、应用程序写入数据的字节大小大于套接字发送缓冲区的大小.</p>
+<p>2、进行MSS大小的TCP分段。( MSS=TCP报文段长度-TCP首部长度)</p>
+<p>3、进行MTU大小的IP分片。</p>
+<p>解决方案</p>
+<p>1、消息定长。</p>
+<p>2、在包尾部增加回车或者空格符等特殊字符进行分割</p>
+<p>3、将消息分为消息头和消息尾</p>
+<h2 id="为什么服务器会缓存如何实现的"><a href="#为什么服务器会缓存如何实现的" class="anchor-link">#</a><a href="#contents:为什么服务器会缓存如何实现的" class="headings">为什么服务器会缓存?如何实现的？</a></h2>
+<p><strong>原因</strong></p>
+<ul>
+<li>缓解服务器压力；</li>
+<li>降低客户端获取资源的延迟~~：缓存通常位于内存中，读取缓存的速度更快。并且缓存服务器在地理位置上也有可能比源服务器来得近，例如浏览器缓存。~~</li>
+</ul>
+<p><strong>实现方法</strong></p>
+<ul>
+<li>让代理服务器进行缓存；</li>
+<li>让客户端浏览器进行缓存。</li>
+</ul>
+<h2 id="http请求方法你知道多少"><a href="#http请求方法你知道多少" class="anchor-link">#</a><a href="#contents:http请求方法你知道多少" class="headings">HTTP请求方法你知道多少？</a></h2>
+<p>客户端发送的   <strong>请求报文</strong>   第一行为请求行，包含了请求方法字段。</p>
+<p>HTTP1.0 定义了三种请求方法： GET, POST 和 HEAD方法。</p>
+<p>HTTP1.1 新增了六种请求方法：OPTIONS、PUT、PATCH、DELETE、TRACE 和 CONNECT 方法。</p>
+<div class="table-container"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">序  号</th>
+          <th style="text-align: left">方法</th>
+          <th style="text-align: left">描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">1</td>
+          <td style="text-align: left">GET</td>
+          <td style="text-align: left">【<strong>获取资源</strong>】请求指定的页面信息，并返回实体主体。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2</td>
+          <td style="text-align: left">HEAD</td>
+          <td style="text-align: left">【<strong>获得报文首部</strong>】类似于 GET 请求，只不过返回的响应中没有具体的内容，用于获取报头</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">3</td>
+          <td style="text-align: left">POST</td>
+          <td style="text-align: left">【<strong>传输实体文本</strong>】向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。<strong>POST 请求可能会导致新的资源的建立和/或已有资源的修改</strong>。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">4</td>
+          <td style="text-align: left">PUT</td>
+          <td style="text-align: left">【<strong>传输文件</strong>】从客户端向服务器传送的数据取代指定的文档的内容。PUT通常指定了资源的存放位置，而POST则没有</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">5</td>
+          <td style="text-align: left">DELETE</td>
+          <td style="text-align: left">【<strong>删除文件</strong>】请求服务器删除指定的页面。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">6</td>
+          <td style="text-align: left">CONNECT</td>
+          <td style="text-align: left">【<strong>要求用管道协议连接代理服务器</strong>】HTTP/1.1 协议中预留给能够将连接改为管道方式的代理服务器。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">7</td>
+          <td style="text-align: left">OPTIONS</td>
+          <td style="text-align: left">【<strong>询问支持的方法</strong>】客户端询问服务器可以提交哪些请求方法。这个方法很有趣，它用于获取当前URL所支持的方法。若请求成功，则它会在HTTP头中包含一个名为“Allow”的头，值是所支持的方法，如“GET, POST”。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">8</td>
+          <td style="text-align: left">TRACE</td>
+          <td style="text-align: left">【<strong>追踪路径</strong>】回显服务器收到的请求，主要用于测试或诊断。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">9</td>
+          <td style="text-align: left">PATCH</td>
+          <td style="text-align: left">【<strong>局部更新文件</strong>】是对 PUT 方法的补充，用来对已知资源进行局部更新 。</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><a href="https://blog.csdn.net/demo_yo/article/details/123596028" target="_blank" rel="noopener">https://blog.csdn.net/demo_yo/article/details/123596028</a></p>
+<h2 id="get-和-post-的区别你知道哪些"><a href="#get-和-post-的区别你知道哪些" class="anchor-link">#</a><a href="#contents:get-和-post-的区别你知道哪些" class="headings">GET 和 POST 的区别，你知道哪些？</a></h2>
+<ol>
+<li>
+<p>get是请求数据，post是传输实体文本，可能导致新资源的建立或者已有资源的修改</p>
+</li>
+<li>
+<p><del>get提交的数据有限制最大是2k（ 限制实际上取决于浏览器）， post理论上没有限制。</del></p>
+</li>
+<li>
+<p>GET请求会被浏览器主动缓存，而POST不会，除非手动设置。</p>
+</li>
+<li>
+<p>本质区别：GET是幂等的，而POST不是幂等的</p>
+</li>
+<li>
+<p>GET只允许ASCII字符，POST没有限制。</p>
+<blockquote>
+<p>这里的幂等性：幂等性是指一次和多次请求某一个资源应该具有同样的副作用。简单来说意味着对同一URL的多个请求应该返回同样的结果。
+正因为它们有这样的区别，所以不应该且<strong>不能用get请求做数据的增删改这些有副作用的操作</strong>。因为get请求是幂等的，<strong>在网络不好的隧道中会尝试重试</strong>。如果用get请求增数据，会有<strong>重复操作</strong>的风险，而这种重复操作可能会导致副作用（浏览器和操作系统并不知道你会用get请求去做增操作）。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="一个tcp连接可以对应几个http请求"><a href="#一个tcp连接可以对应几个http请求" class="anchor-link">#</a><a href="#contents:一个tcp连接可以对应几个http请求" class="headings">一个TCP连接可以对应几个HTTP请求？</a></h2>
+<p>如果是长连接，一个 TCP 连接是可以发送多个 HTTP 请求的。如果关闭长连接，则只能一对一。</p>
+<h2 id="一个-tcp-连接中-http-请求发送可以一起发送么"><a href="#一个-tcp-连接中-http-请求发送可以一起发送么" class="anchor-link">#</a><a href="#contents:一个-tcp-连接中-http-请求发送可以一起发送么" class="headings">一个 TCP 连接中 HTTP 请求发送可以一起发送么？</a></h2>
+<p>（比如一起发三个请求，再三个响应一起接收）</p>
+<p>如果采用的是HTTP1.1,是不可行的，单个TCP连接在同一时刻只能处理一个请求，如果开启管道（pipelining）技术则可以实现多个http请求。</p>
+<p>如果采用的是http2则是可行的，因为http2具备多路复用（multiplexing）的功能，多个 HTTP 请求可以在同一个 TCP 连接中并行处理。</p>
+<blockquote>
+<p>那么在 HTTP/1.1 时代，浏览器是如何提高页面加载效率的呢？主要有下面两点：</p>
+<ul>
+<li>维持和服务器已经建立的 TCP 连接，在同一连接上顺序处理多个请求。</li>
+<li>和服务器建立多个 TCP 连接。</li>
+</ul>
+</blockquote>
+<h2 id="浏览器对同一-host-建立-tcp-连接的数量有没有限制"><a href="#浏览器对同一-host-建立-tcp-连接的数量有没有限制" class="anchor-link">#</a><a href="#contents:浏览器对同一-host-建立-tcp-连接的数量有没有限制" class="headings">浏览器对同一 Host 建立 TCP 连接的数量有没有限制？</a></h2>
+<p><strong>有。Chrome 最多允许对同一个 Host 建立六个 TCP 连接。不同的浏览器有一些区别。</strong></p>
+<p>拓展：
+如果图片都是 HTTPS 连接并且在同一个域名下，那么浏览器在 SSL 握手之后会和服务器商量能不能用 HTTP2，如果能的话就使用 Multiplexing 功能在这个连接上进行多路传输。不过也未必会所有挂在这个域名的资源都会使用一个 TCP 连接去获取，但是可以确定的是 Multiplexing 很可能会被用到。</p>
+<p>如果发现用不了 HTTP2 呢？或者用不了 HTTPS（现实中的 HTTP2 都是在 HTTPS 上实现的，所以也就是只能使用 HTTP/1.1）。那浏览器就会在一个 HOST 上建立多个 TCP 连接，连接数量的最大限制取决于浏览器设置，这些连接会在空闲的时候被浏览器用来发送新的请求，如果所有的连接都正在发送请求呢？那其他的请求就只能等等了。</p>
+<h2 id="在浏览器中输入url地址后显示主页的过程"><a href="#在浏览器中输入url地址后显示主页的过程" class="anchor-link">#</a><a href="#contents:在浏览器中输入url地址后显示主页的过程" class="headings">在浏览器中输入url地址后显示主页的过程?</a></h2>
+<blockquote>
+<ul>
+<li>根据域名，进行DNS域名解析；</li>
+<li>拿到解析的IP地址，建立TCP连接；</li>
+<li>向IP地址发送HTTP请求；</li>
+<li>服务器处理请求，返回响应结果；</li>
+<li>浏览器解析HTML；</li>
+<li>浏览器渲染页面；</li>
+<li>关闭TCP连接；</li>
+</ul>
+</blockquote>
+<h2 id="在浏览器地址栏输入一个url后回车背后会进行哪些技术步骤"><a href="#在浏览器地址栏输入一个url后回车背后会进行哪些技术步骤" class="anchor-link">#</a><a href="#contents:在浏览器地址栏输入一个url后回车背后会进行哪些技术步骤" class="headings">在浏览器地址栏输入一个URL后回车，背后会进行哪些技术步骤？</a></h2>
+<p><a href="https://mp.weixin.qq.com/s/9vGRSkUNgRQWO6tVmUisOw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/9vGRSkUNgRQWO6tVmUisOw</a></p>
+<p>应用层：</p>
+<ul>
+<li>浏览器封装 HTTP 请求报文</li>
+<li>DNS 解析域名获得目标服务器地址</li>
+</ul>
+<p>传输层：</p>
+<ul>
+<li>建立连接</li>
+<li>将HTTP请求封装成TCP或UDP包（将HTTP 请求报文进行分割，并在各个报文上加入标记序号及端口号）</li>
+</ul>
+<p>网络层：</p>
+<ul>
+<li>利用 ARP 协议根据 IP 地址获取目的地的 MAC 地址后将数据包转发给链路层进行传输</li>
+</ul>
+<p>服务端在链路层收到数据，按序往上层发送拆包，一直到应用层接收到浏览器发送来的 HTTP 请求报文，然后处理该请求并返回 HTTP 响应报文，浏览器接收到响应报文之后解析渲染界面。最后 TCP 断开连接。</p>
+<h2 id="dns负载均衡是什么策略"><a href="#dns负载均衡是什么策略" class="anchor-link">#</a><a href="#contents:dns负载均衡是什么策略" class="headings">DNS负载均衡是什么策略？</a></h2>
+<p>当一个网站有足够多的用户的时候，假如每次请求的资源都位于同一台机器上面，那么这台机器随时可能会崩掉。处理办法就是用DNS负载均衡技术，它的原理是在<strong>DNS服务器中为同一个主机名配置多个IP地址,在应答对该主机的DNS查询时,DNS服务器利用这些IP地址引导到不同的机器上去,使得不同的客户端访问不同的服务器</strong>,从而达到负载均衡的目的｡例如可以根据每台机器的负载量，该机器离用户地理位置的距离等等。</p>
+<h2 id="https和http的区别"><a href="#https和http的区别" class="anchor-link">#</a><a href="#contents:https和http的区别" class="headings">HTTPS和HTTP的区别</a></h2>
+<ul>
+<li>HTTP 是超文本传输协议，信息是明文传输，存在安全风险的问题。HTTPS 则解决 HTTP 不安全的缺陷，在 TCP 和 HTTP 网络层之间加入了 SSL/TLS 安全协议，使得报文能够加密传输。</li>
+<li>HTTP 连接建立相对简单。而 HTTPS 在 TCP 三次握手之后，还需进行 SSL/TLS 的握手过程，才可进入加密报文传输。</li>
+<li>两者的默认端口不一样，HTTP 默认端口号是 80，HTTPS 默认端口号是 443。</li>
+<li><del>HTTPS 协议需要向 CA（证书权威机构）申请数字证书，来保证服务器的身份是可信的。</del></li>
+</ul>
+<h2 id="什么是ssltls-"><a href="#什么是ssltls-" class="anchor-link">#</a><a href="#contents:什么是ssltls-" class="headings">什么是SSL/TLS ？</a></h2>
+<p>TLS协议采用<a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E5%BE%9E%E5%BC%8F%E6%9E%B6%E6%A7%8B" target="_blank" rel="noopener" title="主从式架构">主从式架构</a>模型，用于防止两个应用程序在交换数据时受到窃听及篡改。</p>
+<p>TLS协议的优势是与高层的<a href="https://zh.wikipedia.org/wiki/%E5%BA%94%E7%94%A8%E5%B1%82" target="_blank" rel="noopener" title="应用层">应用层</a>协议（如<a href="https://zh.wikipedia.org/wiki/%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE" target="_blank" rel="noopener" title="超文本传输协议">HTTP</a>、<a href="https://zh.wikipedia.org/wiki/%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE" target="_blank" rel="noopener" title="文件传输协议">FTP</a>、<a href="https://zh.wikipedia.org/wiki/Telnet" target="_blank" rel="noopener" title="Telnet">Telnet</a>等）无耦合。应用层协议传输的数据在通过TLS协议时都会被加密，从而保证通信的私密性。</p>
+<p>SSL/TLS协议作用：认证用户和服务，加密数据，维护数据的完整性。</p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/interview/" rel="tag" class="post-tag-link">#interview</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

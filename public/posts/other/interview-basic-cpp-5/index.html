@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>面试之CPP基础知识-5 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="知道C&#43;&#43;中的组合吗？它与继承相比有什么优缺点吗？ 一：继承
+继承是Is a 的关系。继承的优点是子类可以重写父类的方法来方便地实现对父类的扩展。
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/other/interview-basic-cpp-5/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2024-01-13T21:52:56+08:00",
+        "dateModified": "2024-01-13T22:30:39+08:00",
+        "url": "http://localhost:1313/posts/other/interview-basic-cpp-5/",
+        "headline": "面试之CPP基础知识-5",
+        "description": "知道C++中的组合吗？它与继承相比有什么优缺点吗？ 一：继承\n继承是Is a 的关系。继承的优点是子类可以重写父类的方法来方便地实现对父类的扩展。\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  4087 ,
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+
+    
+
+
+
+<meta property="og:title" content="面试之CPP基础知识-5" />
+<meta property="og:description" content="知道C&#43;&#43;中的组合吗？它与继承相比有什么优缺点吗？ 一：继承
+继承是Is a 的关系。继承的优点是子类可以重写父类的方法来方便地实现对父类的扩展。
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/other/interview-basic-cpp-5/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2024-01-13T21:52:56&#43;08:00" />
+    <meta property="article:modified_time" content="2024-01-13T22:30:39&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">面试之CPP基础知识-5</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:知道c中的组合吗它与继承相比有什么优缺点吗" href="#知道c中的组合吗它与继承相比有什么优缺点吗">知道C++中的组合吗？它与继承相比有什么优缺点吗？</a></li>
+    <li><a id="contents:函数指针" href="#函数指针">函数指针？</a></li>
+    <li><a id="contents:说一说你理解的内存对齐以及原因" href="#说一说你理解的内存对齐以及原因">说一说你理解的内存对齐以及原因</a></li>
+    <li><a id="contents:结构体变量比较是否相等" href="#结构体变量比较是否相等">结构体变量比较是否相等</a></li>
+    <li><a id="contents:函数调用过程栈的变化返回值和参数变量哪个先入栈" href="#函数调用过程栈的变化返回值和参数变量哪个先入栈">函数调用过程栈的变化，返回值和参数变量哪个先入栈？</a></li>
+    <li><a id="contents:defineconsttypedefinline的使用方法他们之间有什么区别" href="#defineconsttypedefinline的使用方法他们之间有什么区别">define、const、typedef、inline的使用方法？他们之间有什么区别？</a></li>
+    <li><a id="contents:你知道printf函数的实现原理是什么吗" href="#你知道printf函数的实现原理是什么吗">你知道printf函数的实现原理是什么吗？</a></li>
+    <li><a id="contents:为什么模板类一般都是放在一个h文件中" href="#为什么模板类一般都是放在一个h文件中">为什么模板类一般都是放在一个h文件中</a></li>
+    <li><a id="contents:cout和printf有什么区别" href="#cout和printf有什么区别">cout和printf有什么区别？</a></li>
+    <li><a id="contents:你知道重载运算符吗" href="#你知道重载运算符吗">你知道重载运算符吗？</a></li>
+    <li><a id="contents:当程序中有函数重载时函数的匹配原则和顺序是什么" href="#当程序中有函数重载时函数的匹配原则和顺序是什么">当程序中有函数重载时，函数的匹配原则和顺序是什么？</a></li>
+    <li><a id="contents:定义和声明的区别" href="#定义和声明的区别">定义和声明的区别</a></li>
+    <li><a id="contents:全局变量和static变量的区别" href="#全局变量和static变量的区别">全局变量和static变量的区别</a></li>
+    <li><a id="contents:静态成员与普通成员的区别是什么" href="#静态成员与普通成员的区别是什么">静态成员与普通成员的区别是什么？</a></li>
+    <li><a id="contents:说一下你理解的-ifdef---endif代表着什么" href="#说一下你理解的-ifdef---endif代表着什么">说一下你理解的 ifdef   endif代表着什么？</a></li>
+    <li><a id="contents:隐式转换如何消除隐式转换" href="#隐式转换如何消除隐式转换">隐式转换，如何消除隐式转换？</a></li>
+    <li><a id="contents:c如何处理多个异常的" href="#c如何处理多个异常的">C++如何处理多个异常的？</a></li>
+    <li><a id="contents:如何在不使用额外空间的情况下交换两个数你有几种方法" href="#如何在不使用额外空间的情况下交换两个数你有几种方法">如何在不使用额外空间的情况下，交换两个数？你有几种方法</a></li>
+    <li><a id="contents:你知道strcpy和memcpy的区别是什么吗" href="#你知道strcpy和memcpy的区别是什么吗">你知道strcpy和memcpy的区别是什么吗？</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <h2 id="知道c中的组合吗它与继承相比有什么优缺点吗"><a href="#知道c中的组合吗它与继承相比有什么优缺点吗" class="anchor-link">#</a><a href="#contents:知道c中的组合吗它与继承相比有什么优缺点吗" class="headings">知道C++中的组合吗？它与继承相比有什么优缺点吗？</a></h2>
+<p><strong>一：继承</strong></p>
+<p>继承是Is a 的关系。继承的优点是子类可以重写父类的方法来方便地实现对父类的扩展。</p>
+<p>继承的缺点：</p>
+<ul>
+<li>把父类的内部实现细节暴露给了子类， 子类的实现会和父类的实现紧密的绑定在一起， 结果是父类实现的改动，会导致子类也必须得改变。</li>
+</ul>
+<p><strong>二：组合</strong></p>
+<p>组合是has A的关系。也就是设计类的时候把要组合的类的对象加入到该类中作为自己的成员变量。</p>
+<p>组合的优点：</p>
+<ul>
+<li>组合的类的内部细节是不可见。</li>
+<li>相互依赖较小，低耦合。
+<ul>
+<li><a href="https://www.zhihu.com/question/21862257/answer/181179184" target="_blank" rel="noopener">例子</a></li>
+</ul>
+</li>
+</ul>
+<p>组合的缺点：</p>
+<ul>
+<li>容易产生过多的对象。</li>
+<li>为了能组合多个对象，必须仔细对接口进行定义。</li>
+</ul>
+<p><a href="https://blog.csdn.net/K346K346/article/details/55045295" target="_blank" rel="noopener">https://blog.csdn.net/K346K346/article/details/55045295</a></p>
+<div class="table-container"><table>
+  <thead>
+      <tr>
+          <th>组合</th>
+          <th>继承</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>has-a关系</td>
+          <td>is-a关系</td>
+      </tr>
+      <tr>
+          <td>运行期决定</td>
+          <td>编译期决定</td>
+      </tr>
+      <tr>
+          <td>不破坏封装，低耦合</td>
+          <td>破坏，子类依赖父类</td>
+      </tr>
+      <tr>
+          <td>支持扩展</td>
+          <td>扩展必须实现父类方法</td>
+      </tr>
+      <tr>
+          <td>动态选择组合类方法</td>
+          <td>复用父类方法</td>
+      </tr>
+  </tbody>
+</table></div>
+<h2 id="函数指针"><a href="#函数指针" class="anchor-link">#</a><a href="#contents:函数指针" class="headings">函数指针？</a></h2>
+<p><strong>1)  什么是函数指针?</strong></p>
+<p>函数指针就是一个指针指向某个函数，因为在程序中如果定义了一个函数，那么在编译时系统就会为这个函数代码分配一段存储空间，函数名表示的就是这个存储空间的首地址。</p>
+<p><strong>2)  函数指针的声明方法</strong></p>
+<p>函数返回值类型 (* 指针变量名) (函数参数列表);</p>
+<p><strong>3)  两种方法赋值：</strong></p>
+<p>指针名 = 函数名；  指针名 = &amp;函数名</p>
+<blockquote>
+<p>可以用于回调函数</p>
+</blockquote>
+<h2 id="说一说你理解的内存对齐以及原因"><a href="#说一说你理解的内存对齐以及原因" class="anchor-link">#</a><a href="#contents:说一说你理解的内存对齐以及原因" class="headings">说一说你理解的内存对齐以及原因</a></h2>
+<ol>
+<li><strong>分配内存的顺序是按照声明的顺序</strong>，不满对齐数则翻倍。</li>
+<li>Linux默认以4字节对齐，可通过#pragma pack(n) 修改对齐字节数。</li>
+<li>字节对齐后可以<strong>方便系统读取</strong></li>
+</ol>
+<p>对齐规则:</p>
+<ol>
+<li>基本类型的对齐值就是其sizeof值;</li>
+<li>结构体的对齐值是其成员的最大对齐值;</li>
+<li>编译器可以设置一个最大对齐值，类型的实际对齐值是该类型的对齐值与设置的对齐值取最小值得来。</li>
+</ol>
+<h2 id="结构体变量比较是否相等"><a href="#结构体变量比较是否相等" class="anchor-link">#</a><a href="#contents:结构体变量比较是否相等" class="headings">结构体变量比较是否相等</a></h2>
+<ol>
+<li>重载==操作符</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">foo</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">bool</span> <span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span> <span class="n">foo</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="k">const</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">(</span> <span class="n">a</span> <span class="o">==</span> <span class="n">rhs</span><span class="p">.</span><span class="n">a</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="n">rhs</span><span class="p">.</span><span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ol start="2">
+<li>
+<p>元素的话，一个个比；</p>
+</li>
+<li>
+<p>指针直接比较，如果保存的是同一个实例地址，则(p1==p2)为真；</p>
+</li>
+</ol>
+<h2 id="函数调用过程栈的变化返回值和参数变量哪个先入栈"><a href="#函数调用过程栈的变化返回值和参数变量哪个先入栈" class="anchor-link">#</a><a href="#contents:函数调用过程栈的变化返回值和参数变量哪个先入栈" class="headings">函数调用过程栈的变化，返回值和参数变量哪个先入栈？</a></h2>
+<ol>
+<li>调用方将函数的参数按照从右到左的顺序压入栈中。再将函数的返回地址压入栈中。</li>
+<li>调用方执行函数调用指令，将控制权转移到被调用函数。</li>
+<li>被调用函数为局部变量分配内存，并将它们按照定义顺序压入栈中。</li>
+<li>被调用函数执行完毕后，将返回值存储在约定的位置。</li>
+<li>被调用函数弹出栈中数据，直到弹出返回地址，然后跳回调用方的代码处。</li>
+<li>调用方从约定处取回返回值（如果有的话）。</li>
+</ol>
+<p>from GPT</p>
+<h2 id="defineconsttypedefinline的使用方法他们之间有什么区别"><a href="#defineconsttypedefinline的使用方法他们之间有什么区别" class="anchor-link">#</a><a href="#contents:defineconsttypedefinline的使用方法他们之间有什么区别" class="headings">define、const、typedef、inline的使用方法？他们之间有什么区别？</a></h2>
+<div class="table-container"><table>
+  <thead>
+      <tr>
+          <th>宏定义</th>
+          <th>typedef</th>
+          <th>const</th>
+          <th>inline</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>宏定义，相当于字符替换</td>
+          <td>定义类型别名</td>
+          <td>变量不能修改</td>
+          <td>调用处字符替换</td>
+      </tr>
+      <tr>
+          <td>预处理阶段</td>
+          <td>编译阶段</td>
+          <td>编译阶段</td>
+          <td>编译阶段</td>
+      </tr>
+      <tr>
+          <td>无类型安全检查</td>
+          <td>有类型安全检查</td>
+          <td>有</td>
+          <td>有</td>
+      </tr>
+      <tr>
+          <td>不是语句</td>
+          <td>是语句加分号</td>
+          <td>分配内存</td>
+          <td>分配内存</td>
+      </tr>
+      <tr>
+          <td>无</td>
+          <td></td>
+          <td></td>
+          <td>有返回值</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>#define p_int int * 显示 int*<br>
+typedef int *p_int; 显示p_int</p>
+<h2 id="你知道printf函数的实现原理是什么吗"><a href="#你知道printf函数的实现原理是什么吗" class="anchor-link">#</a><a href="#contents:你知道printf函数的实现原理是什么吗" class="headings">你知道printf函数的实现原理是什么吗？</a></h2>
+<p>C/C++的函数参数是通过压入栈的方式来给函数传参数的，并且从右到左入栈。printf第一个被找到的参数就是那个字符串指针，函数通过判断字符串里控制参数的个数来判断参数个数及数据类型，通过这些算出数据需要的堆栈指针的偏移量，然后依次弹出数据进行填充。</p>
+<h2 id="为什么模板类一般都是放在一个h文件中"><a href="#为什么模板类一般都是放在一个h文件中" class="anchor-link">#</a><a href="#contents:为什么模板类一般都是放在一个h文件中" class="headings">为什么模板类一般都是放在一个h文件中</a></h2>
+<p>将模板类的声明和定义放在头文件中是为了支持模板的编译和实例化，并提供更好的可读性和可维护性。</p>
+<p>from GPT</p>
+<hr>
+<ol>
+<li>模板定义很特殊。由template&lt;…&gt;处理的任何东西都意味着编译器在当时不为它分配存储空间，它一直处于等待状态直到被一个模板实例告知。在编译器和连接器的某一处，有一机制能去掉指定模板的多重定义。</li>
+</ol>
+<p>所以为了容易使用，几乎总是在头文件中放置全部的模板声明和定义。</p>
+<ol start="2">
+<li>在分离式编译的环境下，编译器编译某一个.cpp文件时并不知道另一个.cpp文件的存在，也不会去查找（当遇到未决符号时它会寄希望于连接器）。这种模式在没有模板的情况下运行良好，但遇到模板时就傻眼了，因为模板仅在需要的时候才会实例化出来。</li>
+</ol>
+<p>所以，当编译器只看到模板的声明时，它不能实例化该模板，只能创建一个具有外部连接的符号并期待连接器能够将符号的地址决议出来。</p>
+<p>然而当实现该模板的.cpp文件中没有用到模板的实例时，编译器懒得去实例化，所以，整个工程的.obj中就找不到一行模板实例的二进制代码，于是连接器也黔驴技穷了。</p>
+<h2 id="cout和printf有什么区别"><a href="#cout和printf有什么区别" class="anchor-link">#</a><a href="#contents:cout和printf有什么区别" class="headings">cout和printf有什么区别？</a></h2>
+<ol>
+<li>语法和用法：
+<ul>
+<li><code>cout</code> 是 C++ 中的<strong>输出流对象</strong>，可以使用流操作符 <code>&lt;&lt;</code> 来输出各种类型的数据。例如：<code>cout &lt;&lt; &quot;Hello, World!&quot;</code>。</li>
+<li><code>printf</code> 是 C语言中的<strong>函数</strong>，它使用格式化字符串来输出数据。例如：<code>printf(&quot;Hello, World!&quot;)</code>。</li>
+</ul>
+</li>
+<li>处理数据类型的方式：
+<ul>
+<li><code>cout</code> 能够<strong>自动推断输出对象的数据类型</strong>，并自动调用适当的输出运算符来进行输出。因此，它可以直接输出各种类型的数据，包括整数、浮点数、字符、字符串等。</li>
+<li><code>printf</code> 需要使用<strong>格式化字符串来指定输出的数据类型和格式</strong>，如 <code>%d</code> 表示整数，<code>%f</code> 表示浮点数，<code>%c</code> 表示字符等。</li>
+</ul>
+</li>
+<li>错误处理和安全：
+<ul>
+<li><code>cout</code> 具有<strong>更好的错误处理机制</strong>，它提供了许多重载的输出运算符，可以检查输出操作是否成功，并能够自动刷新输出缓冲区。</li>
+<li><code>printf</code> 通常直接将数据写入输出缓冲区，如果需要手动刷新缓冲区，或者在输出过程中进行错误处理，可以使用相关的库函数来实现。</li>
+</ul>
+</li>
+<li>标准库支持：
+<ul>
+<li><code>cout</code> 是 C++ 标准库的一部分，它提供了丰富的功能和灵活性，可以与其他标准库函数和类一起使用。</li>
+<li><code>printf</code> 是 C语言的标准库函数，它提供了一定的灵活性和功能，但相对于 <code>cout</code> 而言，它的功能相对较简单，且通常不与其他标准库函数和类一起使用。</li>
+</ul>
+</li>
+</ol>
+<h2 id="你知道重载运算符吗"><a href="#你知道重载运算符吗" class="anchor-link">#</a><a href="#contents:你知道重载运算符吗" class="headings">你知道重载运算符吗？</a></h2>
+<p>重载运算符是指在类中重新定义标准运算符的行为。通过重载运算符，可以使得类对象可以像内置类型一样进行运算操作，使得代码更加直观和易于理解。</p>
+<ul>
+<li>只能重载已有的运算符；并且符合其运算含义。如+-/*，&gt;&lt;=，++/--</li>
+<li><a href="https://learn.microsoft.com/zh-cn/cpp/cpp/general-rules-for-operator-overloading?view=msvc-170" target="_blank" rel="noopener">balabala</a></li>
+</ul>
+<h2 id="当程序中有函数重载时函数的匹配原则和顺序是什么"><a href="#当程序中有函数重载时函数的匹配原则和顺序是什么" class="anchor-link">#</a><a href="#contents:当程序中有函数重载时函数的匹配原则和顺序是什么" class="headings">当程序中有函数重载时，函数的匹配原则和顺序是什么？</a></h2>
+<p><a href="https://www.cnblogs.com/codemagiciant/p/17544859.html" target="_blank" rel="noopener">匹配原则</a></p>
+<p><a href="https://en.cppreference.com/w/cpp/language/overload_resolution#Best_viable_function" target="_blank" rel="noopener">Best_viable_function</a></p>
+<ol>
+<li>根据函数名选定候选函数
+<ol>
+<li>其声明在调用处可见</li>
+</ol>
+</li>
+<li>根据实参选定可行函数
+<ol>
+<li>形参数量和实参一致</li>
+<li>形参和实参类型相同，或能转换</li>
+</ol>
+</li>
+<li>根据匹配规则寻找最佳匹配
+<ol>
+<li>参数类型和个数完全一致</li>
+<li>底层const转化</li>
+<li>类型提升</li>
+<li>算数类型转换</li>
+<li>类类型转换</li>
+<li>按顺序进行依次匹配</li>
+</ol>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;const1&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// redefinition of ‘void f(int*)’
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 形参只是临时量，调用结束就被销毁，所以是否是常量不会影响实参，可以搜索形参为什么忽略顶层const
+</span></span></span><span class="line"><span class="cl"><span class="c1">// void f(int *const a) { cout &lt;&lt; &#34;const2&#34; &lt;&lt; endl; }
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;const3&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">a1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">a2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">a3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="p">(</span><span class="n">a1</span><span class="p">);</span>  <span class="c1">// 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f</span><span class="p">(</span><span class="n">a2</span><span class="p">);</span>  <span class="c1">// 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f</span><span class="p">(</span><span class="n">a3</span><span class="p">);</span>  <span class="c1">// 3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="定义和声明的区别"><a href="#定义和声明的区别" class="anchor-link">#</a><a href="#contents:定义和声明的区别" class="headings">定义和声明的区别</a></h2>
+<p><strong>如果是指变量的声明和定义：</strong>
+从编译原理上来说，声明是仅仅告诉编译器，有个某类型的变量会被使用，但是编译器并不会为它分配任何内存。而定义就是分配了内存。</p>
+<p><strong>如果是指函数的声明和定义：</strong>
+声明：一般在头文件里，只是让编译器知道这个函数的存在。
+定义：一般在源文件里，存放函数的具体实现。</p>
+<h2 id="全局变量和static变量的区别"><a href="#全局变量和static变量的区别" class="anchor-link">#</a><a href="#contents:全局变量和static变量的区别" class="headings">全局变量和static变量的区别</a></h2>
+<p>按存储区域分，全局变量、静态全局变量和静态局部变量都存放在内存的<strong>静态存储区域</strong>，局部变量存放在内存的栈区。</p>
+<p>主要区别：</p>
+<p>按作用域分，全局变量在<strong>整个工程文件</strong>内都有效；静态全局变量只在<strong>定义它的文件</strong>内有效；静态局部变量只在<strong>定义它的函数</strong>内有效。<del>并且程序仅分配一次内存，函数返回后，该变量不会消失；局部变量在定义它的函数内有效，但是函数返回后失效。</del></p>
+<p><a href="https://blog.csdn.net/mm_hh/article/details/77126878" target="_blank" rel="noopener">https://blog.csdn.net/mm_hh/article/details/77126878</a></p>
+<p>static函数与普通函数有什么区别？</p>
+<ul>
+<li>
+<p>static函数与普通的函数作用域不同。静态函数只在本文件内可使用，普通函数可以被其他文件共享</p>
+</li>
+<li>
+<p>static函数在内存中只有一份，普通函数在每个被调用中维持一份拷贝。</p>
+</li>
+</ul>
+<h2 id="静态成员与普通成员的区别是什么"><a href="#静态成员与普通成员的区别是什么" class="anchor-link">#</a><a href="#contents:静态成员与普通成员的区别是什么" class="headings">静态成员与普通成员的区别是什么？</a></h2>
+<ol>
+<li>生命周期</li>
+</ol>
+<p>静态成员变量存储在静态存储区，其生命周期和程序的生命周期一致；</p>
+<p>普通成员变量存储在堆或栈内，生命周期同创建的类的生命周期一致；</p>
+<ol start="2">
+<li>共享方式</li>
+</ol>
+<p>静态成员变量是全类共享；普通成员变量是每个对象单独享用的；</p>
+<ol start="3">
+<li>初始化位置</li>
+</ol>
+<p>普通成员变量在类中初始化；静态成员变量在类外初始化；</p>
+<h2 id="说一下你理解的-ifdef---endif代表着什么"><a href="#说一下你理解的-ifdef---endif代表着什么" class="anchor-link">#</a><a href="#contents:说一下你理解的-ifdef---endif代表着什么" class="headings">说一下你理解的 ifdef   endif代表着什么？</a></h2>
+<ol>
+<li>
+<p>指的是条件编译，它让程序满足一定的条件下才会编译该代码段，否则不编译或者编译另一个代码段。</p>
+</li>
+<li>
+<p>条件编译命令最常见的形式为：</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#ifdef 标识符  
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="err">程序段</span><span class="mi">1</span>  
+</span></span><span class="line"><span class="cl"><span class="cp">#else  
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="err">程序段</span><span class="mi">2</span>  
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>它的作用是：当标识符已经被定义过(一般是用#define命令定义)，则对程序段1进行编译，否则编译程序段2。</p>
+<ol start="3">
+<li>在头文件使用，可以避免“重定义”错误。</li>
+</ol>
+<h2 id="隐式转换如何消除隐式转换"><a href="#隐式转换如何消除隐式转换" class="anchor-link">#</a><a href="#contents:隐式转换如何消除隐式转换" class="headings">隐式转换，如何消除隐式转换？</a></h2>
+<p>隐式转换分为标准转换，用户自定义转换。标准准换即编译器内置的转换规则，如整数类型提升，数组退化成指针等。用户自定义转换包括转换构造函数，用于将其他类型转换为本类型，或者是自定义转换函数，用于将本类型转换为其他类型。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">A</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">B</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 转换构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">B</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">B</span><span class="p">(</span><span class="k">const</span> <span class="n">A</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="c1">// 用户定义转换函数，不需要显式指定返回值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">operator</span> <span class="nf">A</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">operator</span> <span class="nf">int</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>对于需要进行隐式转换的上下文，编译器会生成一个隐式转换序列：</p>
+<ol>
+<li>零个或一个由标准转换规则组成的标准转换序列，叫做初始标准转换序列</li>
+<li>零个或一个由用户自定义的转换规则构成的用户定义转换序列</li>
+<li>零个或一个由标准转换规则组成的标准转换序列，叫做第二标准转换序列</li>
+</ol>
+<p>C++中提供了explicit关键字，在构造函数声明的时候加上explicit关键字，能够禁止隐式转换。</p>
+<p><a href="https://www.cnblogs.com/apocelipes/p/14415033.html" target="_blank" rel="noopener">https://www.cnblogs.com/apocelipes/p/14415033.html</a></p>
+<h2 id="c如何处理多个异常的"><a href="#c如何处理多个异常的" class="anchor-link">#</a><a href="#contents:c如何处理多个异常的" class="headings">C++如何处理多个异常的？</a></h2>
+<p><a href="http://c.biancheng.net/view/2331.html" target="_blank" rel="noopener">http://c.biancheng.net/view/2331.html</a></p>
+<p>使用try，throw，catch语句</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Base</span><span class="p">{</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Derived</span><span class="o">:</span> <span class="k">public</span> <span class="n">Base</span><span class="p">{</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">throw</span> <span class="n">Derived</span><span class="p">();</span>  <span class="c1">//抛出自己的异常类型，实际上是创建一个Derived类型的匿名对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;Pass&#34;</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">catch</span><span class="p">(</span><span class="kt">int</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;Exception type: int&#34;</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">catch</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;Exception type: cahr *&#34;</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">catch</span><span class="p">(</span><span class="n">Base</span><span class="p">){</span>  <span class="c1">//匹配成功（向上转型）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;Exception type: Base&#34;</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">catch</span><span class="p">(</span><span class="n">Derived</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;Exception type: Derived&#34;</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="如何在不使用额外空间的情况下交换两个数你有几种方法"><a href="#如何在不使用额外空间的情况下交换两个数你有几种方法" class="anchor-link">#</a><a href="#contents:如何在不使用额外空间的情况下交换两个数你有几种方法" class="headings">如何在不使用额外空间的情况下，交换两个数？你有几种方法</a></h2>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 1) 算术
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 2) 异或
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="n">y</span><span class="p">;</span><span class="c1">// 只能对int,char..
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="n">y</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="你知道strcpy和memcpy的区别是什么吗"><a href="#你知道strcpy和memcpy的区别是什么吗" class="anchor-link">#</a><a href="#contents:你知道strcpy和memcpy的区别是什么吗" class="headings">你知道strcpy和memcpy的区别是什么吗？</a></h2>
+<ul>
+<li>复制的内容不同。strcpy只能复制字符串，而memcpy可以复制任意内容，例如字符数组、整型、结构体、类等。</li>
+<li>复制的方法不同。strcpy不需要指定长度，它遇到被复制的字符串结束符&quot;\0&quot;才结束，所以容易溢出。memcpy则是根据其第3个参数决定复制的长度。</li>
+</ul>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/interview/" rel="tag" class="post-tag-link">#interview</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

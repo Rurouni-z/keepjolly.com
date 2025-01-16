@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>hexo博客美化 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="Rurouni" /><meta name="description" content="记录一些我没用到但是butterfly上是true的选项
+Page Front-matter PFM
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 --- title: # 【必需】页面标题 date: #【必需】页面创建日期 updated: type: # 【必需】标签、分类和友情链接三个页面需要配置 comments: description: keywords: top_img: mathjax: katex: aside: aplayer: highlight_shrink: --- updated	【可选】页面更新日期
+description	【可选】页面描述
+keywords	【可选】页面关键字
+comments	【可选】显示页面评论模块 (默认 true)
+top_img	【可选】页面顶部图片
+mathjax	【可选】显示mathjax (当设置mathjax的per_page: false时，才需要配置，默认 false)
+katex	【可选】显示katex (当设置katex的per_page: false时，才需要配置，默认 false)
+aside	【可选】显示侧边栏 (默认 true)
+aplayer	【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置
+highlight_shrink	【可选】配置代码框是否展开 (true/false) (默认为设置中highlight_shrink的配置)
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/other/hexo-custom/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2024-04-01T09:31:54+08:00",
+        "dateModified": "2024-04-01T09:33:33+08:00",
+        "url": "http://localhost:1313/posts/other/hexo-custom/",
+        "headline": "hexo博客美化",
+        "description": "记录一些我没用到但是butterfly上是true的选项\nPage Front-matter PFM\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 --- title: # 【必需】页面标题 date: #【必需】页面创建日期 updated: type: # 【必需】标签、分类和友情链接三个页面需要配置 comments: description: keywords: top_img: mathjax: katex: aside: aplayer: highlight_shrink: --- updated\t【可选】页面更新日期\ndescription\t【可选】页面描述\nkeywords\t【可选】页面关键字\ncomments\t【可选】显示页面评论模块 (默认 true)\ntop_img\t【可选】页面顶部图片\nmathjax\t【可选】显示mathjax (当设置mathjax的per_page: false时，才需要配置，默认 false)\nkatex\t【可选】显示katex (当设置katex的per_page: false时，才需要配置，默认 false)\naside\t【可选】显示侧边栏 (默认 true)\naplayer\t【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置\nhighlight_shrink\t【可选】配置代码框是否展开 (true/false) (默认为设置中highlight_shrink的配置)\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  1372 ,
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+
+    
+
+
+
+<meta property="og:title" content="hexo博客美化" />
+<meta property="og:description" content="记录一些我没用到但是butterfly上是true的选项
+Page Front-matter PFM
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 --- title: # 【必需】页面标题 date: #【必需】页面创建日期 updated: type: # 【必需】标签、分类和友情链接三个页面需要配置 comments: description: keywords: top_img: mathjax: katex: aside: aplayer: highlight_shrink: --- updated	【可选】页面更新日期
+description	【可选】页面描述
+keywords	【可选】页面关键字
+comments	【可选】显示页面评论模块 (默认 true)
+top_img	【可选】页面顶部图片
+mathjax	【可选】显示mathjax (当设置mathjax的per_page: false时，才需要配置，默认 false)
+katex	【可选】显示katex (当设置katex的per_page: false时，才需要配置，默认 false)
+aside	【可选】显示侧边栏 (默认 true)
+aplayer	【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置
+highlight_shrink	【可选】配置代码框是否展开 (true/false) (默认为设置中highlight_shrink的配置)
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/other/hexo-custom/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2024-04-01T09:31:54&#43;08:00" />
+    <meta property="article:modified_time" content="2024-04-01T09:33:33&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">hexo博客美化</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:page-front-matter" href="#page-front-matter">Page Front-matter</a></li>
+    <li><a id="contents:post-front-matter" href="#post-front-matter">Post Front-matter</a></li>
+    <li><a id="contents:图库" href="#图库">图库</a></li>
+    <li><a id="contents:网址同步" href="#网址同步">网址同步</a></li>
+    <li><a id="contents:注意事项" href="#注意事项">注意事项</a>
+      <ol>
+        <li><a id="contents:配置algolia不显示在页面上" href="#配置algolia不显示在页面上">配置algolia不显示在页面上</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <p>记录一些我没用到但是<a href="https://butterfly.js.org" target="_blank" rel="noopener">butterfly</a>上是true的选项</p>
+<h2 id="page-front-matter"><a href="#page-front-matter" class="anchor-link">#</a><a href="#contents:page-front-matter" class="headings">Page Front-matter</a></h2>
+<p><a href="https://butterfly.js.org/posts/dc584b87/#Front-matter" target="_blank" rel="noopener">PFM</a></p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">title:   # 【必需】页面标题
+</span></span><span class="line"><span class="cl">date:  #【必需】页面创建日期
+</span></span><span class="line"><span class="cl">updated:
+</span></span><span class="line"><span class="cl">type:  # 【必需】标签、分类和友情链接三个页面需要配置
+</span></span><span class="line"><span class="cl">comments:  
+</span></span><span class="line"><span class="cl">description:
+</span></span><span class="line"><span class="cl">keywords:
+</span></span><span class="line"><span class="cl">top_img:
+</span></span><span class="line"><span class="cl">mathjax:
+</span></span><span class="line"><span class="cl">katex:
+</span></span><span class="line"><span class="cl">aside:
+</span></span><span class="line"><span class="cl">aplayer:
+</span></span><span class="line"><span class="cl">highlight_shrink:
+</span></span><span class="line"><span class="cl">---
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><strong>updated	【可选】页面更新日期</strong><br /><strong>description	【可选】页面描述</strong><br />keywords	【可选】页面关键字<br /><strong>comments	【可选】显示页面评论模块 (默认 true)</strong><br />top_img	【可选】页面顶部图片<br />mathjax	【可选】显示mathjax (当设置mathjax的per_page: false时，才需要配置，默认 false)<br />katex	【可选】显示katex (当设置katex的per_page: false时，才需要配置，默认 false)<br />aside	【可选】显示侧边栏 (默认 true)<br />aplayer	【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置<br />highlight_shrink	【可选】配置代码框是否展开 (true/false) (默认为设置中highlight_shrink的配置)</p>
+<h2 id="post-front-matter"><a href="#post-front-matter" class="anchor-link">#</a><a href="#contents:post-front-matter" class="headings">Post Front-matter</a></h2>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">title:  
+</span></span><span class="line"><span class="cl">date:  
+</span></span><span class="line"><span class="cl">updated:
+</span></span><span class="line"><span class="cl">tags:
+</span></span><span class="line"><span class="cl">categories:
+</span></span><span class="line"><span class="cl">keywords:
+</span></span><span class="line"><span class="cl">description:
+</span></span><span class="line"><span class="cl">top_img:
+</span></span><span class="line"><span class="cl">comments:
+</span></span><span class="line"><span class="cl">cover:
+</span></span><span class="line"><span class="cl">toc:
+</span></span><span class="line"><span class="cl">toc_number:
+</span></span><span class="line"><span class="cl">toc_style_simple:
+</span></span><span class="line"><span class="cl">copyright:
+</span></span><span class="line"><span class="cl">copyright_author:
+</span></span><span class="line"><span class="cl">copyright_author_href:
+</span></span><span class="line"><span class="cl">copyright_url:
+</span></span><span class="line"><span class="cl">copyright_info:
+</span></span><span class="line"><span class="cl">mathjax:
+</span></span><span class="line"><span class="cl">katex:
+</span></span><span class="line"><span class="cl">aplayer:
+</span></span><span class="line"><span class="cl">highlight_shrink:
+</span></span><span class="line"><span class="cl">aside:
+</span></span><span class="line"><span class="cl">abcjs:
+</span></span><span class="line"><span class="cl">---
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>title	 【必需】文章标题<br />date	 【必需】文章创建日期<br />updated	【可选】文章更新日期<br /><strong>tags	【可选】文章标签</strong><br /><strong>categories	【可选】文章分类</strong><br />keywords	【可选】文章关键字<br /><strong>description	【可选】文章描述</strong><br /><strong>top_img	【可选】文章顶部图片</strong><br />cover	【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false/图片地址/留空)<br /><strong>comments	【可选】显示文章评论模块(默认 true)</strong><br />toc	【可选】显示文章TOC(默认为设置中toc的enable配置)<br />toc_number	【可选】显示toc_number(默认为设置中toc的number配置)<br />toc_style_simple	【可选】显示 toc 简洁模式<br />copyright	【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)<br />copyright_author	【可选】文章版权模块的文章作者<br />copyright_author_href	【可选】文章版权模块的文章作者链接<br />copyright_url	【可选】文章版权模块的文章连结链接<br />copyright_info	【可选】文章版权模块的版权声明文字<br />mathjax	【可选】显示mathjax(当设置 mathjax 的 per_page: false 时，才需要配置，默认 false )<br />katex	【可选】显示 katex (当设置 katex 的 per_page: false 时，才需要配置，默认 false )<br />aplayer	【可选】在需要的页面加载 aplayer 的 js 和 css,请参考文章下面的音乐 配置<br />highlight_shrink	【可选】配置代码框是否展开(true/false)(默认为设置中 highlight_shrink 的配置)<br />aside	【可选】显示侧边栏 (默认 true)<br />abcjs	【可选】加载 abcjs (当设置 abcjs 的 per_page: false 时，才需要配置，默认 false )</p>
+<h2 id="图库"><a href="#图库" class="anchor-link">#</a><a href="#contents:图库" class="headings">图库</a></h2>
+<p><a href="https://butterfly.js.org/posts/dc584b87/#%E5%9C%96%E5%BA%AB" target="_blank" rel="noopener">https://butterfly.js.org/posts/dc584b87/#%E5%9C%96%E5%BA%AB</a></p>
+<h2 id="网址同步"><a href="#网址同步" class="anchor-link">#</a><a href="#contents:网址同步" class="headings">网址同步</a></h2>
+<p>因为我是从halo迁移过来，原主题的front-matter信息跟hexo不一致，多了一个url属性，表明文件路径</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># URL
+</span></span></span><span class="line"><span class="cl"><span class="gh"></span><span class="gu">## Set your site url here. For example, if you use GitHub Page, set url as &#39;https://username.github.io/project&#39;
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="gh"># https://blog.csdn.net/qq_45020818/article/details/126892843  https://hexo.io/zh-cn/docs/permalinks
+</span></span></span><span class="line"><span class="cl"><span class="gh"></span>url: http://yoursite.com
+</span></span><span class="line"><span class="cl"><span class="gh"># 除了下列变量外，您还可使用 Front-matter 中的**所有**属性。
+</span></span></span><span class="line"><span class="cl"><span class="gh"># **.html**防止下载当前网页
+</span></span></span><span class="line"><span class="cl"><span class="gh"></span>permalink: :url.html  
+</span></span><span class="line"><span class="cl">permalink_defaults:
+</span></span><span class="line"><span class="cl">pretty_urls:
+</span></span><span class="line"><span class="cl">  trailing_index: true # Set to false to remove trailing &#39;index.html&#39; from permalinks
+</span></span><span class="line"><span class="cl">  trailing_html: false # Set to false to remove trailing &#39;.html&#39; from permalinks
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gh"># 旧网址的front-matter
+</span></span></span><span class="line"><span class="cl"><span class="gh"></span>---
+</span></span><span class="line"><span class="cl">title: 三维重建之路上
+</span></span><span class="line"><span class="cl">date: 2023-03-26 09:07:02.96
+</span></span><span class="line"><span class="cl">updated: 2023-03-26 09:41:47.726
+</span></span><span class="line"><span class="cl">url: /archives/three-d-reconstruction-1
+</span></span><span class="line"><span class="cl">categories: 
+</span></span><span class="line"><span class="cl"><span class="k">-</span> 笔记
+</span></span><span class="line"><span class="cl">tags: 
+</span></span><span class="line"><span class="cl"><span class="k">-</span> 三维重建
+</span></span><span class="line"><span class="cl">---
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><a href="https://blog.csdn.net/Likianta/article/details/79343427" target="_blank" rel="noopener">参考博客，文中还附加了类别中英文转换，个人感觉网址应该不会重名就没设了</a></p>
+<h2 id="注意事项"><a href="#注意事项" class="anchor-link">#</a><a href="#contents:注意事项" class="headings">注意事项</a></h2>
+<h3 id="配置algolia不显示在页面上"><a href="#配置algolia不显示在页面上" class="anchor-link">#</a><a href="#contents:配置algolia不显示在页面上" class="headings">配置algolia不显示在页面上</a></h3>
+<p>在_config.butterfly.yml里已经放入algolia配置选项，不要重新在最底部复制，否则出错，并且配置的时候文档里需要什么，都得配置上去，我没加adminApiKey导致生成失败，我还以为加入环境变量就可以了。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">algolia:
+</span></span><span class="line"><span class="cl">appId: &#34;Z7A3XW4R2I&#34;  #must
+</span></span><span class="line"><span class="cl">apiKey: &#34;12db1ad54372045549ef465881c17e743&#34; #must
+</span></span><span class="line"><span class="cl">adminApiKey: &#34;40321c7c207e7f73b63a19aa24c4761b&#34; #must
+</span></span><span class="line"><span class="cl">chunkSize: 5000
+</span></span><span class="line"><span class="cl">indexName: &#34;my-hexo-blog&#34;
+</span></span><span class="line"><span class="cl">fields:
+</span></span><span class="line"><span class="cl">- content:strip:truncate,0,500
+</span></span><span class="line"><span class="cl">- excerpt:strip
+</span></span><span class="line"><span class="cl">- gallery
+</span></span><span class="line"><span class="cl">- permalink
+</span></span><span class="line"><span class="cl">- photos
+</span></span><span class="line"><span class="cl">- slug
+</span></span><span class="line"><span class="cl">- tags
+</span></span><span class="line"><span class="cl">- title
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div>
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/blog/" rel="tag" class="post-tag-link">#blog</a> <a href="/tags/hugo/" rel="tag" class="post-tag-link">#hugo</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

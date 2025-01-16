@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>面试之CPP基础知识-7 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="static_cast比C语言中的转换强在哪里？ 在编译期间就能发现转换错误 更容易检索到何处强制转换 不同的转换类型体现程序员的意图 https://blog.csdn.net/liji_digital/article/details/123148607
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/other/interview-basic-cpp-7/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2024-01-13T21:55:47+08:00",
+        "dateModified": "2024-01-13T22:30:48+08:00",
+        "url": "http://localhost:1313/posts/other/interview-basic-cpp-7/",
+        "headline": "面试之CPP基础知识-7",
+        "description": "static_cast比C语言中的转换强在哪里？ 在编译期间就能发现转换错误 更容易检索到何处强制转换 不同的转换类型体现程序员的意图 https://blog.csdn.net/liji_digital/article/details/123148607\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  4900 ,
+        "image": ["http://oss.interviewguide.cn/img/202205212343130.png","http://oss.interviewguide.cn/img/202205212343182.png","http://oss.interviewguide.cn/img/202205212343505.png"],
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="面试之CPP基础知识-7" />
+<meta property="og:description" content="static_cast比C语言中的转换强在哪里？ 在编译期间就能发现转换错误 更容易检索到何处强制转换 不同的转换类型体现程序员的意图 https://blog.csdn.net/liji_digital/article/details/123148607
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/other/interview-basic-cpp-7/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="http://oss.interviewguide.cn/img/202205212343130.png" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2024-01-13T21:55:47&#43;08:00" />
+    <meta property="article:modified_time" content="2024-01-13T22:30:48&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">面试之CPP基础知识-7</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:static_cast比c语言中的转换强在哪里" href="#static_cast比c语言中的转换强在哪里">static_cast比C语言中的转换强在哪里？</a></li>
+    <li><a id="contents:成员函数里memsetthis0sizeofthis会发生什么" href="#成员函数里memsetthis0sizeofthis会发生什么">成员函数里memset(this,0,sizeof(*this))会发生什么</a></li>
+    <li><a id="contents:回调函数是作用" href="#回调函数是作用">回调函数是？作用？</a></li>
+    <li><a id="contents:什么是一致性哈希" href="#什么是一致性哈希">什么是一致性哈希？</a></li>
+    <li><a id="contents:c从代码到可执行程序经历了什么" href="#c从代码到可执行程序经历了什么">C++从代码到可执行程序经历了什么？</a></li>
+    <li><a id="contents:为什么友元函数必须在类内部声明" href="#为什么友元函数必须在类内部声明">为什么友元函数必须在类内部声明？</a></li>
+    <li><a id="contents:友元函数和友元类的基本情况" href="#友元函数和友元类的基本情况">友元函数和友元类的基本情况</a></li>
+    <li><a id="contents:c实现c的三大特性" href="#c实现c的三大特性">C实现C++的三大特性</a></li>
+    <li><a id="contents:动态编译与静态编译" href="#动态编译与静态编译">动态编译与静态编译</a></li>
+    <li><a id="contents:helloc-程序的编译过程" href="#helloc-程序的编译过程">hello.c 程序的编译过程</a></li>
+    <li><a id="contents:介绍一下几种典型的锁" href="#介绍一下几种典型的锁">介绍一下几种典型的锁</a></li>
+    <li><a id="contents:delete和delete区别" href="#delete和delete区别">delete和delete[]区别？</a></li>
+    <li><a id="contents:为什么不能把所有的函数写成内联函数" href="#为什么不能把所有的函数写成内联函数">为什么不能把所有的函数写成内联函数?</a></li>
+    <li><a id="contents:为什么c没有垃圾回收机制这点跟java不太一样" href="#为什么c没有垃圾回收机制这点跟java不太一样">为什么C++没有垃圾回收机制？这点跟Java不太一样。</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <h2 id="static_cast比c语言中的转换强在哪里"><a href="#static_cast比c语言中的转换强在哪里" class="anchor-link">#</a><a href="#contents:static_cast比c语言中的转换强在哪里" class="headings">static_cast比C语言中的转换强在哪里？</a></h2>
+<ul>
+<li>在编译期间就能发现转换错误</li>
+<li>更容易检索到何处强制转换</li>
+<li>不同的转换类型体现程序员的意图</li>
+</ul>
+<p><a href="https://blog.csdn.net/liji_digital/article/details/123148607" target="_blank" rel="noopener">https://blog.csdn.net/liji_digital/article/details/123148607</a></p>
+<h2 id="成员函数里memsetthis0sizeofthis会发生什么"><a href="#成员函数里memsetthis0sizeofthis会发生什么" class="anchor-link">#</a><a href="#contents:成员函数里memsetthis0sizeofthis会发生什么" class="headings">成员函数里memset(this,0,sizeof(*this))会发生什么</a></h2>
+<p>有时候类里面定义了很多int,char,struct等c语言里的那些类型的变量，但是一句句的写太麻烦，在构造函数用memset(this, 0, sizeof *this);中<strong>将基本类型成员变量一次性初始化为0</strong>，但是下面几种情形是不可以这么使用的：</p>
+<ul>
+<li>类含有虚函数表：这么做会破坏虚函数表，后续对虚函数的调用都将出现异常；</li>
+<li>类中含有C++类型的对象：例如，类中定义了一个list的对象，由于在构造函数体的代码执行之前就对list对象完成了初始化，假设list在它的构造函数里分配了内存，那么我们这么一做就破坏了list对象的内存。</li>
+</ul>
+<p><a href="https://www.nowcoder.com/search/all?query=memset%28this,%200,%20sizeof%28%2athis%29%29&amp;type=all" target="_blank" rel="noopener">https://www.nowcoder.com/search/all?query=memset%28this,%200,%20sizeof%28%2athis%29%29&amp;type=all</a></p>
+<h2 id="回调函数是作用"><a href="#回调函数是作用" class="anchor-link">#</a><a href="#contents:回调函数是作用" class="headings">回调函数是？作用？</a></h2>
+<p><strong>回调函数是做为参数传递的一种函数</strong></p>
+<p>回调函数的创建步骤大概为：</p>
+<p>1，声明一个函数指针类型。</p>
+<p>2，实现一个使用回调函数的函数，将函数指针作为参数传递。</p>
+<p>3，实现一个符合函数指针类型的函数，将该函数的指针作为参数传递给使用它的函数。</p>
+<p>或者使用C++标准库的function和bind。std::funtion定义函数类型(输入、输出)，std::bind绑定特定的函数（具体的要调用的函数）（对于普通函数直接将函数名给function即可）。</p>
+<p>作用：把调用者与被调用者分开。调用者不关心谁是被调用者，它只需知道存在一个满足其需求的被调用函数。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// std::function&lt;returnType(argType, argType，...)&gt; func;
+</span></span></span><span class="line"><span class="cl"><span class="c1">// std::bind(&amp;funcName, std::placeholders::_1, ...);
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 类：std::bind(&amp;className::funcName, classPtr, std::placeholders::_1, ...);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">BrainToolBox</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">Add</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">CompareInt</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">bool</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">compareFunc</span> <span class="o">=</span> <span class="n">CompareInt</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">BrainToolBox</span><span class="o">&gt;</span> <span class="n">brain</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">BrainToolBox</span><span class="o">&gt;</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">addFunc</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">BrainToolBox</span><span class="o">::</span><span class="n">Add</span><span class="p">,</span> <span class="n">brain</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">　　 <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">addFunc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;c Value: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><a href="https://www.airchip.org.cn/index.php/2022/03/05/cpp-example-callback/" target="_blank" rel="noopener">https://www.airchip.org.cn/index.php/2022/03/05/cpp-example-callback/</a></p>
+<p><a href="https://blog.csdn.net/zhoupian/article/details/119495949" target="_blank" rel="noopener">https://blog.csdn.net/zhoupian/article/details/119495949</a></p>
+<h2 id="什么是一致性哈希"><a href="#什么是一致性哈希" class="anchor-link">#</a><a href="#contents:什么是一致性哈希" class="headings">什么是一致性哈希？</a></h2>
+<p>大厂双非硕简历过不了，不看。小厂就说不知道。</p>
+<h2 id="c从代码到可执行程序经历了什么"><a href="#c从代码到可执行程序经历了什么" class="anchor-link">#</a><a href="#contents:c从代码到可执行程序经历了什么" class="headings">C++从代码到可执行程序经历了什么？</a></h2>
+<p>（1）预编译</p>
+<p><strong>对源代码文件中的头文件、预编译语句（宏定义）进行分析和替换，生成预编译.ii文件。</strong> 处理规则见下：</p>
+<ol>
+<li>删除所有的#define，展开所有的宏定义。</li>
+<li>处理所有的条件预编译指令，如“#if”、“#endif”、“#ifdef”、“#elif”和“#else”。</li>
+<li>处理“#include”预编译指令，将文件内容替换到它的位置，这个过程是递归进行的，文件中包含其他文件。</li>
+<li>删除所有的注释，“//”和“/**/”。</li>
+<li>保留所有的#pragma 编译器指令，编译器需要用到他们，如：#pragma once 是为了防止有文件被重复引用。</li>
+<li>添加行号和文件标识，便于编译时编译器产生调试用的行号信息，和编译时产生编译错误或警告是能够显示行号。</li>
+</ol>
+<p>（2）编译</p>
+<p><strong>把预编译生成的文件，进行一系列词法分析、语法分析、语义分析及优化后，生成相应的汇编代码.s文件。</strong></p>
+<ol>
+<li>词法分析：利用类似于“有限状态机”的算法，将源代码程序输入到扫描机中，将其中的字符序列分割成一系列的记号。</li>
+<li>语法分析：语法分析器对由扫描器产生的记号，进行语法分析，产生语法树。由语法分析器输出的语法树是一种以表达式为节点的树。</li>
+<li>语义分析：语法分析器只是完成了对表达式语法层面的分析，语义分析器则对表达式是否有意义进行判断，其分析的语义是静态语义——在编译期能分期的语义，相对应的动态语义是在运行期才能确定的语义。</li>
+<li>优化：源代码级别的一个优化过程。</li>
+<li>目标代码生成：由代码生成器将中间代码转换成目标机器代码，生成一系列的代码序列——汇编语言表示。</li>
+<li>目标代码优化：目标代码优化器对上述的目标机器代码进行优化：寻找合适的寻址方式、使用位移来替代乘法运算、删除多余的指令等。</li>
+</ol>
+<p>（3）汇编</p>
+<p><strong>将汇编文件转化成机器码，生成可重定位目标文件</strong>xxx.o(Linux下)、xxx.obj(Window下)。只是根据汇编指令和机器指令的对照表一一翻译过来，汇编过程有汇编器as完成。</p>
+<p>（4）链接</p>
+<p><strong>将多个目标文件及所需要的库链接成最终的可执行目标文件(.out或.exe文件)。</strong> 又分为静态链接和动态链接</p>
+<ul>
+<li>
+<p>目标文件</p>
+<ul>
+<li>可执行目标文件：可以直接在内存中执行；</li>
+<li>可重定位目标文件：可与其它可重定位目标文件在链接阶段合并，创建一个可执行目标文件；</li>
+<li>共享目标文件：这是一种特殊的可重定位目标文件，可以在运行时被动态加载进内存并链接；</li>
+</ul>
+</li>
+<li>
+<p>静态链接</p>
+<ul>
+<li>函数和数据被编译进一个二进制文件。在使用静态库的情况下，在链接可执行文件时，链接器从库中复制这些函数和数据并把它们和应用程序的其它模块组合起来创建最终的可执行文件。</li>
+<li>空间浪费：因为每个可执行程序中对所有需要的目标文件都要有一份副本，所以如果多个程序对同一个目标文件都有依赖，会出现同一个目标文件都在内存存在多个副本；</li>
+<li>更新困难：每当库函数的代码修改了，这个时候就需要重新进行编译链接形成可执行程序。</li>
+<li>运行速度快：但是静态链接的优点就是，在可执行程序中已经具备了所有执行程序所需要的任何东西，在执行的时候运行速度快。</li>
+</ul>
+</li>
+<li>
+<p>动态链接</p>
+<ul>
+<li>动态链接的基本思想是把程序按照模块拆分成各个相对独立部分，在程序运行时才将它们链接在一起形成一个完整的程序，而不是像静态链接一样把所有程序模块都链接成一个单独的可执行文件。</li>
+<li>共享库：每个程序都依赖同一个库，但是该库不会像静态链接那样在内存中存在多份副本，而是这多个程序在执行时共享同一份副本；</li>
+<li>更新方便：更新时只需要替换原来的目标文件，而无需将所有的程序再重新链接一遍。当程序下一次运行时，新版本的目标文件会被自动加载到内存并且链接起来，程序就成了升级的目标。</li>
+<li>性能损耗：因为把链接推迟到了程序运行时，所以每次执行程序都需要进行链接，所以性能会有一定损失。</li>
+</ul>
+</li>
+</ul>
+<h2 id="为什么友元函数必须在类内部声明"><a href="#为什么友元函数必须在类内部声明" class="anchor-link">#</a><a href="#contents:为什么友元函数必须在类内部声明" class="headings">为什么友元函数必须在类内部声明？</a></h2>
+<p>因为这样友元函数才能知道访问的是哪个类的私有成员。</p>
+<h2 id="友元函数和友元类的基本情况"><a href="#友元函数和友元类的基本情况" class="anchor-link">#</a><a href="#contents:友元函数和友元类的基本情况" class="headings">友元函数和友元类的基本情况</a></h2>
+<p>通过友元可以<strong>访问类中的私有成员和保护成员</strong>。友元的正确使用能提高程序的运行效率（即减少了类型检查和安全性检查等需要的时间开销），但同时也破坏了类的封装性和隐藏性，导致程序可维护性变差。</p>
+<p><strong>友元关系是单向的</strong>（若要互为友元，必须显式地互相声明为友元）<strong>，不可继承、不可相互推导</strong>。</p>
+<p>1）友元函数</p>
+<p>友元函数分为普通函数和类成员函数。普通函数只需要在类内声明友元函数，并在类外实现函数即可。类成员函数需要先实现一个需要访问另一个类的私有成员的类，然后再使用friend关键字在另一个类中声明这些成员函数。</p>
+<p>具体过程如下：</p>
+<ol>
+<li>声明一个Me对象</li>
+<li>在MyFriend类中定义一个使用Me的私有成员的成员函数</li>
+<li>在Me类中声明MyFriend类中某些函数为友元函数</li>
+<li>这是在h，cpp分别实现的过程</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//MyFriend.h  声明 包含类成员函数作为友元函数 的类
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#pragma once
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Me</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//声明包含类成员友元函数的类
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">MyFriend</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">     <span class="n">MyFriend</span><span class="p">(</span><span class="kt">void</span><span class="p">){};</span>
+</span></span><span class="line"><span class="cl">     <span class="kt">void</span> <span class="nf">printMe</span><span class="p">(</span><span class="k">const</span> <span class="n">Me</span> <span class="o">&amp;</span><span class="n">pt</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="kt">double</span> <span class="nf">calcDist</span><span class="p">(</span><span class="k">const</span> <span class="n">Me</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Me</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// ----------------------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1">//Me.h  声明原始类Me
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#pragma once
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;MyFriend.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Me</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">     <span class="c1">//若此处不声明友元函数，则MyFriend类里对应的函数报错：不能访问Me私有变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>     <span class="k">friend</span> <span class="kt">void</span>     <span class="n">MyFriend</span><span class="o">::</span><span class="n">printMe</span><span class="p">(</span><span class="k">const</span> <span class="n">Me</span> <span class="o">&amp;</span><span class="n">pt</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="k">friend</span> <span class="kt">double</span>   <span class="n">MyFriend</span><span class="o">::</span><span class="n">calcDist</span><span class="p">(</span><span class="k">const</span> <span class="n">Me</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Me</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="k">friend</span> <span class="kt">void</span>     <span class="nf">globalFunc</span><span class="p">(</span><span class="k">const</span> <span class="n">Me</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">     <span class="n">Me</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">     <span class="kt">double</span> <span class="n">mX</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="kt">double</span> <span class="n">mY</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// ----------------------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1">//Me.cpp 定义原始类
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;Me.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">Me</span><span class="o">::</span><span class="n">Me</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mX</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mY</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// ----------------------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1">//MyFriend.cpp
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;MyFriend.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//在cpp中包含 原始类 头文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;Me.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">MyFriend</span><span class="o">::</span><span class="n">printMe</span><span class="p">(</span><span class="k">const</span> <span class="n">Me</span> <span class="o">&amp;</span><span class="n">pt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">     <span class="n">cout</span><span class="o">&lt;&lt;</span> <span class="s">&#34;(&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pt</span><span class="p">.</span><span class="n">mX</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;, &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pt</span><span class="p">.</span><span class="n">mY</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;)&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">double</span> <span class="n">MyFriend</span><span class="o">::</span><span class="n">calcDist</span><span class="p">(</span><span class="k">const</span> <span class="n">Me</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Me</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">     <span class="kt">double</span> <span class="n">deltX</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">mX</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">mX</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="kt">double</span> <span class="n">deltY</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">mY</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">mY</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="k">return</span> <span class="nf">sqrt</span><span class="p">(</span> <span class="n">deltX</span> <span class="o">*</span> <span class="n">deltX</span> <span class="o">-</span> <span class="n">deltY</span> <span class="o">*</span> <span class="n">deltY</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// ----------------------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1">//main.cpp
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;Me.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">globalFunc</span><span class="p">(</span><span class="k">const</span> <span class="n">Me</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;friend Global Func &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="p">.</span><span class="n">mX</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="p">.</span><span class="n">mY</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Me</span> <span class="n">p1</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Me</span> <span class="n">p2</span><span class="p">(</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">MyFriend</span> <span class="n">pc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pc</span><span class="p">.</span><span class="n">printMe</span><span class="p">(</span><span class="n">p1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pc</span><span class="p">.</span><span class="n">printMe</span><span class="p">(</span><span class="n">p2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">pc</span><span class="p">.</span><span class="n">calcDist</span><span class="p">(</span><span class="n">p2</span><span class="p">,</span> <span class="n">p1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;Distance between p1 and p2 is &#34;</span><span class="o">&lt;&lt;</span><span class="n">dist</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">globalFunc</span><span class="p">(</span><span class="n">p1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>一个函数可以是多个类的友元函数，但是每个类中都要声明这个函数。</p>
+<p>2）友元类</p>
+<p>当在某类中声明一个友元类，则该类中的所有成员均可以被友元类访问。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="k">friend</span> <span class="k">class</span> <span class="nc">C</span><span class="p">;</span>  <span class="c1">// 这是友元类的声明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">C</span> <span class="p">{</span>  <span class="c1">// 友元类定义，为了访问类A中的成员
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="n">set_show</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">A</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">		<span class="n">a</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="p">.</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">class</span> <span class="nc">A</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">class</span> <span class="nc">C</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">c</span><span class="p">.</span><span class="n">set_show</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><a href="https://blog.csdn.net/softworlds/article/details/101053577" target="_blank" rel="noopener">https://blog.csdn.net/softworlds/article/details/101053577</a></p>
+<h2 id="c实现c的三大特性"><a href="#c实现c的三大特性" class="anchor-link">#</a><a href="#contents:c实现c的三大特性" class="headings">C实现C++的三大特性</a></h2>
+<ul>
+<li>封装：使用函数指针把属性与方法封装到结构体中</li>
+<li>继承：结构体嵌套</li>
+<li>多态：子类使用函数指针绑定父类同名函数</li>
+</ul>
+<blockquote>
+<p><a href="https://blog.csdn.net/shanshangyouzhiyangM/article/details/79622480" target="_blank" rel="noopener">C语言实现C++的三大特性</a></p>
+</blockquote>
+<h2 id="动态编译与静态编译"><a href="#动态编译与静态编译" class="anchor-link">#</a><a href="#contents:动态编译与静态编译" class="headings">动态编译与静态编译</a></h2>
+<ol>
+<li>
+<p>静态编译：所有代码和库函数的实现都被复制到最终的可执行文件中，使可执行文件在运行时不需要依赖于外部库和环境。优点是运行速度快，缺点是空间浪费大，更新代码不方便，每次需要重新编译。</p>
+</li>
+<li>
+<p>动态编译：可执行文件在运行时，需要调用对应动态链接库的命令。优点是缩小了执行文件的体积，以及加快了编译速度，节省了系统资源。缺点是必须有对应动态库才能运行。</p>
+</li>
+</ol>
+<p><a href="https://www.cnblogs.com/lisuyun/p/3953589.html" target="_blank" rel="noopener">https://www.cnblogs.com/lisuyun/p/3953589.html</a></p>
+<hr>
+<p>静态链接器以一组可重定位目标文件为输入，生成一个完全链接的可执行目标文件作为输出。链接器主要完成以下两个任务：</p>
+<ul>
+<li>符号解析：每个符号对应于一个函数、一个全局变量或一个静态变量，符号解析的目的是将每个符号引用与一个符号定义关联起来。</li>
+<li>重定位：链接器通过把每个符号定义与一个内存位置关联起来，然后修改所有对这些符号的引用，使得它们指向这个内存位置。</li>
+</ul>
+<p><img src="http://oss.interviewguide.cn/img/202205212343130.png" alt=""></p>
+<p>静态库有以下两个问题：</p>
+<ul>
+<li>当静态库更新时那么整个程序都要重新进行链接；</li>
+<li>对于 printf 这种标准函数库，如果每个程序都要有代码，这会极大浪费资源。</li>
+</ul>
+<p>共享库是为了解决静态库的这两个问题而设计的，在 Linux 系统中通常用 .so 后缀来表示，Windows 系统上它们被称为 DLL。它具有以下特点：</p>
+<ul>
+<li>在给定的文件系统中一个库只有一个文件，所有引用该库的可执行目标文件都共享这个文件，它不会被复制到引用它的可执行文件中；</li>
+<li>在内存中，一个共享库的 .text 节（已编译程序的机器代码）的一个副本可以被不同的正在运行的进程共享。</li>
+</ul>
+<p><img src="http://oss.interviewguide.cn/img/202205212343182.png" alt=""></p>
+<h2 id="helloc-程序的编译过程"><a href="#helloc-程序的编译过程" class="anchor-link">#</a><a href="#contents:helloc-程序的编译过程" class="headings">hello.c 程序的编译过程</a></h2>
+<p>这个过程大致如下：</p>
+<p><img src="http://oss.interviewguide.cn/img/202205212343505.png" alt=""></p>
+<ul>
+<li>预编译阶段：对源代码文件中的头文件、预编译语句（宏定义）进行分析和替换，生成预编译.ii文件；</li>
+<li>编译阶段：把预编译生成的文件，进行一系列词法分析、语法分析、语义分析及优化后，生成相应的汇编代码.s文件；</li>
+<li>汇编阶段：将编译阶段生成的汇编文件转化成机器码，生成可重定位目标文件；</li>
+<li>链接阶段：将多个目标文件及所需要的库链接成最终的可执行目标文件(.out或.exe文件)。</li>
+</ul>
+<p><strong>源代码－－&gt;预处理－－&gt;编译－－&gt;优化－－&gt;汇编－－&gt;链接--&gt;可执行文件</strong></p>
+<p><a href="https://www.cnblogs.com/fuhang/p/8917395.html" target="_blank" rel="noopener">g++ 编译单个文件和多个文件</a></p>
+<h2 id="介绍一下几种典型的锁"><a href="#介绍一下几种典型的锁" class="anchor-link">#</a><a href="#contents:介绍一下几种典型的锁" class="headings">介绍一下几种典型的锁</a></h2>
+<p><strong>读写锁</strong></p>
+<ul>
+<li>多个读者可以同时进行读</li>
+<li>写者必须互斥（只允许一个写者写，也不能读者写者同时进行）</li>
+<li>写者优先于读者（一旦有写者，则后续读者必须等待，唤醒时优先考虑写者）</li>
+</ul>
+<p><strong>互斥锁</strong></p>
+<p>一次只能一个线程拥有互斥锁，其他线程只能休眠等待</p>
+<p><strong>条件变量</strong></p>
+<p>条件变量用于阻塞线程，当条件满足就会唤醒一个被阻塞线程。（使用while判断条件，防止线程被虚假唤醒）</p>
+<p><a href="https://blog.csdn.net/yizhiniu_xuyw/article/details/109635912" target="_blank" rel="noopener">https://blog.csdn.net/yizhiniu_xuyw/article/details/109635912</a></p>
+<p><strong>自旋锁</strong></p>
+<p>如果线程无法取得锁，线程不会立刻放弃CPU时间片，而是一直循环尝试获取锁，直到获取为止。如果别的线程长时期占有锁那么自旋就是在浪费CPU做无用功。但是自旋锁一般应用于加锁时间很短的场景，这个时候效率比较高。</p>
+<h2 id="delete和delete区别"><a href="#delete和delete区别" class="anchor-link">#</a><a href="#contents:delete和delete区别" class="headings">delete和delete[]区别？</a></h2>
+<ul>
+<li>
+<p>delete只会调用一次析构函数。</p>
+</li>
+<li>
+<p>delete[]会调用数组中每个元素的析构函数。</p>
+</li>
+</ul>
+<h2 id="为什么不能把所有的函数写成内联函数"><a href="#为什么不能把所有的函数写成内联函数" class="anchor-link">#</a><a href="#contents:为什么不能把所有的函数写成内联函数" class="headings">为什么不能把所有的函数写成内联函数?</a></h2>
+<p>内联函数以代码复杂为代价，省去函数调用的开销来提高执行效率。所以一方面如果内联函数体内代码执行时间相比<strong>函数调用</strong>开销较大，则没有太大的意义；另一方面每一处内联函数的调用都要复制代码，消耗更多的内存空间，因此以下情况不宜使用内联函数：</p>
+<ul>
+<li>
+<p>函数体内的代码比较长，将导致内存消耗代价</p>
+</li>
+<li>
+<p>函数体内有循环，函数执行时间要比函数调用开销大</p>
+</li>
+</ul>
+<h2 id="为什么c没有垃圾回收机制这点跟java不太一样"><a href="#为什么c没有垃圾回收机制这点跟java不太一样" class="anchor-link">#</a><a href="#contents:为什么c没有垃圾回收机制这点跟java不太一样" class="headings">为什么C++没有垃圾回收机制？这点跟Java不太一样。</a></h2>
+<ol>
+<li>性能：垃圾回收机制需要额外的内存和计算资源，这会引入一定的开销。<del>C++的设计目标之一是提供高效的性能，垃圾回收机制可能会对程序的性能产生负面影响。因此，C++没有内置的垃圾回收机制，以便程序员自行管理内存等资源。</del></li>
+<li>控制：C++强调程序的可预测性和确定性。垃圾回收机制会增加程序的复杂性和不确定性。</li>
+<li>生命周期管理：C++注重对资源的显式管理，可以精确地控制资源的生命周期，避免资源的浪费。</li>
+</ol>
+<p><a href="https://www.cnblogs.com/codemagiciant/p/17601843.html" target="_blank" rel="noopener">https://www.cnblogs.com/codemagiciant/p/17601843.html</a></p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/interview/" rel="tag" class="post-tag-link">#interview</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

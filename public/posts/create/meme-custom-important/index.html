@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>MemE关键美化 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="Rurouni" /><meta name="description" content="运用snippet简化配置front-matter；运用action简化配置algolia上传；修改about页加入视频和音频；创建toc右边显示，定制为页面级显示；加入豆瓣条目。" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/create/meme-custom-important/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2023-05-27T19:59:46+08:00",
+        "dateModified": "2025-01-16T20:32:25+08:00",
+        "url": "http://localhost:1313/posts/create/meme-custom-important/",
+        "headline": "MemE关键美化",
+        "description": "运用snippet简化配置front-matter；运用action简化配置algolia上传；修改about页加入视频和音频；创建toc右边显示，定制为页面级显示；加入豆瓣条目。",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  3440 ,
+        "image": ["https://pic.keepjolly.com/halo/blog/2023/05/20230527195908.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230527195908-1.png?imageMogr2/format/webp%7C"],
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="MemE关键美化" />
+<meta property="og:description" content="运用snippet简化配置front-matter；运用action简化配置algolia上传；修改about页加入视频和音频；创建toc右边显示，定制为页面级显示；加入豆瓣条目。" />
+<meta property="og:url" content="http://localhost:1313/posts/create/meme-custom-important/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://pic.keepjolly.com/halo/blog/2023/05/20230527195908.png?imageMogr2/format/webp%7C" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2023-05-27T19:59:46&#43;08:00" />
+    <meta property="article:modified_time" content="2025-01-16T20:32:25&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">MemE关键美化</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:hugo坑" href="#hugo坑">hugo坑</a></li>
+    <li><a id="contents:配置front-matter" href="#配置front-matter">配置front matter</a></li>
+    <li><a id="contents:配置搜索功能" href="#配置搜索功能">配置搜索功能</a>
+      <ol>
+        <li><a id="contents:配置configtoml" href="#配置configtoml">配置config.toml</a></li>
+        <li><a id="contents:algolia官网查找key" href="#algolia官网查找key">algolia官网查找key</a></li>
+        <li><a id="contents:覆盖indexalgoliajson配置" href="#覆盖indexalgoliajson配置">覆盖index.algolia.json配置</a></li>
+        <li><a id="contents:修改algolia搜索配置" href="#修改algolia搜索配置">修改algolia搜索配置</a></li>
+        <li><a id="contents:自动上传algoliajson" href="#自动上传algoliajson">自动上传algolia.json</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:配置about页及视频" href="#配置about页及视频">配置about页及视频</a>
+      <ol>
+        <li><a id="contents:视频" href="#视频">视频</a></li>
+        <li><a id="contents:音乐" href="#音乐">音乐</a>
+          <ol>
+            <li><a id="contents:配置视频介绍文字" href="#配置视频介绍文字">配置视频介绍文字</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:配置toc到页面右边" href="#配置toc到页面右边">配置toc到页面右边</a>
+      <ol>
+        <li><a id="contents:创建mytochtml" href="#创建mytochtml">创建mytoc.html</a></li>
+        <li><a id="contents:创建singlehtml" href="#创建singlehtml">创建single.html</a></li>
+        <li><a id="contents:修改_customscss样式" href="#修改_customscss样式">修改_custom.scss样式</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:配置豆瓣短码" href="#配置豆瓣短码">配置豆瓣短码</a>
+      <ol>
+        <li><a id="contents:创建doubanmd" href="#创建doubanmd">创建douban.md</a></li>
+        <li><a id="contents:修改customscss样式" href="#修改customscss样式">修改custom.scss样式</a></li>
+        <li><a id="contents:注意事项" href="#注意事项">注意事项</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <h2 id="hugo坑"><a href="#hugo坑" class="anchor-link">#</a><a href="#contents:hugo坑" class="headings">hugo坑</a></h2>
+<ul>
+<li>使用shortcode时，无论放何处都会生效，必须取消shortcode格式，如：
+<ul>
+<li>{a(加入a破坏shortcode){ music }}</li>
+<li>目前已知问题:目录跳转无法生效</li>
+</ul>
+</li>
+</ul>
+<h2 id="配置front-matter"><a href="#配置front-matter" class="anchor-link">#</a><a href="#contents:配置front-matter" class="headings">配置front matter</a></h2>
+<p>使用<a href="https://code.visualstudio.com/docs/editor/userdefinedsnippets" target="_blank" rel="noopener">vscode snippet</a>快捷生成front matter
+参考博客：<a href="https://moonbooth.com/hugo/vs-code/#vs-code-workflows-for-hugo" target="_blank" rel="noopener">vs-code-workflows-for-hugo</a>、 <a href="https://bingdoal.github.io/others/2021/12/markdown-snippets-not-working-in-vscode/" target="_blank" rel="noopener">markdown-snippets-not-working-in-vscode</a>
+在使用了obsidian后，加入一些插件如quickadd等，优化了文章撰写，但是obsidian不能在网页端登陆，虽然多个平台都有部署安装包，此外<strong>仅支持md文件</strong>使我不能继续使用下去。
+后来沉思一下现有写文章流程，缺点是什么，发现是不能生成front matter，故东找西找，甚至一度又回归到obsidian后，终于发现vscode的snippet，正好几乎完美符合我的需求（不能自动呈现所有tags）。
+目前我的写作流程是：</p>
+<ol>
+<li>语雀上写好文章后导出md</li>
+<li>用pic-go插件pic-migrate转换语雀图片并生成新md文件</li>
+<li>在vscode上加入front matter</li>
+<li>在vscode上上传至github</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&#34;hugo post template&#34;</span><span class="p">:{</span>
+</span></span><span class="line"><span class="cl">		<span class="nt">&#34;scope&#34;</span><span class="p">:</span> <span class="s2">&#34;markdown&#34;</span><span class="p">,</span>  <span class="c1">// Add comma separated ids of the languages where the snippet is applicable in the scope field.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nt">&#34;prefix&#34;</span><span class="p">:</span> <span class="s2">&#34;post&#34;</span><span class="p">,</span>  <span class="c1">// trigger the snippet
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nt">&#34;body&#34;</span><span class="p">:</span> <span class="p">[</span>  <span class="c1">// expanded and inserted where trigger
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="s2">&#34;---&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;title: ${TM_FILENAME/(.*)\\..+$/$1/}&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;date: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND +0800&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;lastmod: &#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;summary: &#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;slug: $2&#34;</span><span class="p">,</span> <span class="c1">// url: www.keepjolly.com/tags/:slug/
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="s2">&#34;toc: ${3|true,false|}&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;rightToc: ${4|false,true|}&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;categories: &#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;- ${5|tech,learn,algorithm,error,create,other,life|}&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;tags: &#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;- ${6|ComputerVision,C++,LeetCode,Blog,Others,Install|}&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;original: true&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;author: Rurouni&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;website: www.keepjolly.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;---&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&#34;update time&#34;</span><span class="p">:{</span>
+</span></span><span class="line"><span class="cl">		<span class="nt">&#34;scope&#34;</span><span class="p">:</span> <span class="s2">&#34;yaml&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nt">&#34;prefix&#34;</span><span class="p">:</span> <span class="s2">&#34;update&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nt">&#34;body&#34;</span><span class="p">:</span> <span class="s2">&#34;$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND +0800&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>完整可支持的<a href="https://github.com/reuixiy/hugo-theme-meme#supported-front-matter" target="_blank" rel="noopener">front-matter</a>，貌似也可以定制，自行百度吧</p>
+<h2 id="配置搜索功能"><a href="#配置搜索功能" class="anchor-link">#</a><a href="#contents:配置搜索功能" class="headings">配置搜索功能</a></h2>
+<p>参考博客：<a href="https://www.dreamsafari.info/2020/04/hugo-loveit-mod/#23-%E4%BF%AE%E6%94%B9algolia%E7%9A%84%E8%AE%BE%E7%BD%AE" target="_blank" rel="noopener">修改algolia的设置</a>、<a href="https://edward852.github.io/post/hugo%E6%B7%BB%E5%8A%A0algolia%E6%90%9C%E7%B4%A2%E6%94%AF%E6%8C%81/" target="_blank" rel="noopener">hugo添加algolia搜索支持</a></p>
+<h3 id="配置configtoml"><a href="#配置configtoml" class="anchor-link">#</a><a href="#contents:配置configtoml" class="headings">配置config.toml</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="c"># Algolia 的搜索索引</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">outputFormats</span><span class="p">.</span><span class="nx">Algolia</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">mediaType</span> <span class="p">=</span> <span class="s2">&#34;application/json&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">baseName</span> <span class="p">=</span> <span class="s2">&#34;algolia&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">isPlainText</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">notAlternative</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl"><span class="c"># 摘要的字数限制  此处用于algolia检索</span>
+</span></span><span class="line"><span class="cl"><span class="nx">summaryLength</span> <span class="p">=</span> <span class="mi">70</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># Hugo 的输出控制</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">outputs</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">page</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;HTML&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">home</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;HTML&#34;</span><span class="p">,</span> <span class="s2">&#34;SectionsAtom&#34;</span><span class="p">,</span> <span class="s2">&#34;SectionsRSS&#34;</span><span class="p">,</span> <span class="s2">&#34;SearchIndex&#34;</span><span class="p">,</span> <span class="s2">&#34;Algolia&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">section</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;HTML&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">taxonomy</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;HTML&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">term</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;HTML&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># 菜单配置</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">menu</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="c">## 菜单栏</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[[</span><span class="nx">menu</span><span class="p">.</span><span class="nx">main</span><span class="p">]]</span>  <span class="c"># 多加入一个搜索栏</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">weight</span> <span class="p">=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">identifier</span> <span class="p">=</span> <span class="s2">&#34;search&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">post</span> <span class="p">=</span> <span class="s2">&#34;search&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">######################################</span>
+</span></span><span class="line"><span class="cl"><span class="c"># Algolia search</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># 说明：需要开启 `Algolia` 在Hugo 的输出控制，且需要每</span>
+</span></span><span class="line"><span class="cl"><span class="c">#      次将生成的 algolia.json 文件上传到</span>
+</span></span><span class="line"><span class="cl"><span class="c">#      Algolia</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">enableAlgoliaSearch</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">algoliaAppId</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">algoliaApiKey</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">algoliaIndexName</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c"># 说明：https://www.algolia.com/</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="algolia官网查找key"><a href="#algolia官网查找key" class="anchor-link">#</a><a href="#contents:algolia官网查找key" class="headings">algolia官网查找key</a></h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230527195908.png?imageMogr2/format/webp%7C" alt="image">
+或者登录后访问<a href="https://www.algolia.com/account/api-keys" target="_blank" rel="noopener">网址</a>，然后找到对应Application ID、ApiKey、IndexName，找不到可以自行在参考博客中查找。</p>
+<h3 id="覆盖indexalgoliajson配置"><a href="#覆盖indexalgoliajson配置" class="anchor-link">#</a><a href="#contents:覆盖indexalgoliajson配置" class="headings">覆盖index.algolia.json配置</a></h3>
+<p>然后在博客主目录/layouts下新建index.algolia.json来覆盖meme中的配置，此处内容参考<a href="https://github.com/dreamsafari/LoveIt/blob/master/layouts/_default/list.algolia.json" target="_blank" rel="noopener">dreamsafari的json</a>
+此处需多加一个参数summary，内容为content内容，或者$page.Summary（但是此处显示会无法转义字符，目前无法解决，以后应该也不会解决，等有缘人），否则会显示undefined</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span><span class="err">{-</span> <span class="err">range</span> <span class="err">$i,</span> <span class="err">$c</span> <span class="err">:=</span> <span class="err">$chunked</span> <span class="err">-</span><span class="p">}</span><span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="err">{-</span> <span class="err">$index</span> <span class="err">=</span> <span class="err">$index</span> <span class="err">|</span> <span class="err">append</span> <span class="err">(dict</span> <span class="nt">&#34;objectID&#34;</span> <span class="err">(print</span> <span class="err">$page.File.UniqueID</span> <span class="s2">&#34;_&#34;</span> <span class="err">$i)</span> <span class="s2">&#34;order&#34;</span> <span class="err">$i</span> <span class="s2">&#34;title&#34;</span> <span class="err">$page.Title</span> <span class="s2">&#34;date&#34;</span> <span class="err">$page.Date</span> <span class="s2">&#34;url&#34;</span> <span class="err">$page.Permalink</span> <span class="s2">&#34;tags&#34;</span> <span class="err">$page.Params.tags</span> <span class="s2">&#34;categories&#34;</span> <span class="err">$page.Params.Categories</span> <span class="s2">&#34;summary&#34;</span> <span class="err">$c)</span> <span class="err">-</span><span class="p">}</span><span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="err">{-</span> <span class="err">end</span> <span class="err">-</span><span class="p">}</span><span class="err">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="修改algolia搜索配置"><a href="#修改algolia搜索配置" class="anchor-link">#</a><a href="#contents:修改algolia搜索配置" class="headings">修改algolia搜索配置</a></h3>
+<p>此处配置搜索选项，参考<a href="https://www.dreamsafari.info/2020/04/hugo-loveit-mod/#23-%E4%BF%AE%E6%94%B9algolia%E7%9A%84%E8%AE%BE%E7%BD%AE" target="_blank" rel="noopener">修改algolia的设置</a>
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230527195908-1.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="自动上传algoliajson"><a href="#自动上传algoliajson" class="anchor-link">#</a><a href="#contents:自动上传algoliajson" class="headings">自动上传algolia.json</a></h3>
+<p>详见github action处</p>
+<h2 id="配置about页及视频"><a href="#配置about页及视频" class="anchor-link">#</a><a href="#contents:配置about页及视频" class="headings">配置about页及视频</a></h2>
+<h3 id="视频"><a href="#视频" class="anchor-link">#</a><a href="#contents:视频" class="headings">视频</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">video</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;QmTz7jzWdGrTVKT7YwNwX9cEgfg4smNFHVxnaFDR82BrXt&#34;</span> <span class="na">poster</span><span class="o">=</span><span class="s">&#34;../images/Gypsy Heart.jpg&#34;</span> <span class="na">controls</span> <span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  如需下载：<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://gateway.pinata.cloud/ipfs/QmTz7jzWdGrTVKT7YwNwX9cEgfg4smNFHVxnaFDR82BrXt&#34;</span><span class="p">&gt;</span>MP4<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">video</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">config.toml
+</span></span><span class="line"><span class="cl"># 是否开启
+</span></span><span class="line"><span class="cl">enableVideoHost = true  # 相对路径获取图片，用于poster属性
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 视频外链地址
+</span></span><span class="line"><span class="cl">videoHostURL = &#34;https://gateway.pinata.cloud/ipfs/&#34;  # 用于src属性，使其链接干净
+</span></span><span class="line"><span class="cl"># !!必须src开头，否则无法识别到hash!!
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>为了使封面图poster与视频适配：
+<a href="https://stackoverflow.com/questions/10826784/make-html5-video-poster-be-same-size-as-video-itself" target="_blank" rel="noopener">设置object-fit: 无效</a>，被迫剪裁图片以适配视频。</p>
+<h3 id="音乐"><a href="#音乐" class="anchor-link">#</a><a href="#contents:音乐" class="headings">音乐</a></h3>
+<p>如果想配置<a href="https://tianheg.xyz/posts/hugo-toc-conflicts-with-aplayer/" target="_blank" rel="noopener">音乐</a></p>
+<ol>
+<li>根目录下的layouts\shortcodes\创建music.html</li>
+</ol>
+<p>该代码同时支持列表和单曲模式</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="o">&lt;!</span><span class="nt">--</span> <span class="nt">使用meting-js的方式</span>  <span class="nt">https</span><span class="o">://</span><span class="nt">immmmm</span><span class="p">.</span><span class="nc">com</span><span class="o">/</span><span class="nt">hugo-shortcodes-music</span><span class="o">/</span> <span class="nt">--</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;!</span><span class="nt">--</span> <span class="nt">require</span> <span class="nt">APlayer</span> <span class="nt">https</span><span class="o">://</span><span class="nt">aplayer</span><span class="p">.</span><span class="nc">js</span><span class="p">.</span><span class="nc">org</span><span class="o">/</span><span class="err">#</span><span class="o">/</span><span class="nt">zh-Hans</span><span class="o">/?</span><span class="nt">id</span><span class="o">=%</span><span class="nt">E5</span><span class="o">%</span><span class="nt">85</span><span class="o">%</span><span class="nt">A5</span><span class="o">%</span><span class="nt">E9</span><span class="o">%</span><span class="nt">97</span><span class="o">%</span><span class="nt">A8</span> <span class="nt">--</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nt">link</span> <span class="nt">rel</span><span class="o">=</span><span class="s2">&#34;stylesheet&#34;</span> <span class="nt">href</span><span class="o">=</span><span class="s2">&#34;https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nt">script</span> <span class="nt">src</span><span class="o">=</span><span class="s2">&#34;https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js&#34;</span><span class="o">&gt;&lt;/</span><span class="nt">script</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="err">{-</span> <span class="err">if</span> <span class="err">.IsNamedParams</span> <span class="err">-</span><span class="p">}</span><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nt">div</span> <span class="nt">id</span><span class="o">=</span><span class="s2">&#34;player&#34;</span><span class="o">&gt;&lt;/</span><span class="nt">div</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="err">{-</span> <span class="err">if</span> <span class="err">.Get</span> <span class="err">&#34;url&#34;</span> <span class="err">-</span><span class="p">}</span><span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nt">script</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">const</span> <span class="nt">ap1</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">APlayer</span><span class="o">(</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">container</span><span class="p">:</span> <span class="n">document</span><span class="o">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="s1">&#39;player&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lrcType</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">audio</span><span class="o">:</span> <span class="p">[</span><span class="err">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">name</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `name` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">artist</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `artist` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">url</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `url` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="kc">cover</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `cover` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">lrc</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `lrc` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">theme</span><span class="o">:</span> <span class="s1">&#39;#f44336&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="o">]</span>
+</span></span><span class="line"><span class="cl">    <span class="err">}</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="nt">script</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="err">{-</span> <span class="err">else</span> <span class="err">if</span> <span class="err">.Get</span> <span class="err">&#34;auto&#34;</span> <span class="err">-</span><span class="p">}</span><span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nt">script</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">const</span> <span class="nt">ap</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">APlayer</span><span class="o">(</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">container</span><span class="p">:</span> <span class="n">document</span><span class="o">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="s1">&#39;player&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mini</span><span class="o">:</span> <span class="n">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">autoplay</span><span class="o">:</span> <span class="n">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">theme</span><span class="o">:</span> <span class="s1">&#39;#FADFA3&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">loop</span><span class="o">:</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="k">order</span><span class="o">:</span> <span class="s1">&#39;random&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">preload</span><span class="o">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="k">volume</span><span class="o">:</span> <span class="mf">0.7</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mutex</span><span class="o">:</span> <span class="n">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">listFolded</span><span class="o">:</span> <span class="n">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">listMaxHeight</span><span class="o">:</span> <span class="mi">90</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lrcType</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">audio</span><span class="o">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="err">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">name</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `name1` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">artist</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `artist1` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">url</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `url1` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="kc">cover</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `cover1` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">lrc</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `lrc1` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">theme</span><span class="o">:</span> <span class="s1">&#39;#f44336&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;{{ .Get `name2` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">artist</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `artist2` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">url</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `url2` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="kc">cover</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `cover2` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">lrc</span><span class="o">:</span> <span class="s1">&#39;{{ .Get `lrc2` }}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">theme</span><span class="o">:</span> <span class="s1">&#39;#46718b&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">]</span>
+</span></span><span class="line"><span class="cl">    <span class="err">}</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="nt">script</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="err">{-</span> <span class="err">end</span> <span class="err">-</span><span class="p">}</span><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="err">{-</span> <span class="err">end</span> <span class="err">-</span><span class="p">}</span><span class="err">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ol start="2">
+<li>在about/_index.md中修改代码</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">{</span><span class="err">a(去掉a){&lt;</span> <span class="err">music</span> <span class="err">url=&#34;xxx.mp3&#34;</span> 
+</span></span><span class="line"><span class="cl"> <span class="err">name=&#34;Try&#34;</span> <span class="err">artist=&#34;Colbie</span> <span class="err">Caillat&#34;</span> <span class="err">cover=&#34;../songs/Gypsy</span> <span class="err">Heart</span> <span class="err">song.jpg&#34;</span> <span class="err">lrc=&#34;xxx.lrc&#34;&gt;</span><span class="p">}</span><span class="err">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ol start="3">
+<li>在assets\scss\custom_custom.scss中修改暗夜样式</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">Aplayer</span>
+</span></span><span class="line"><span class="cl"><span class="p">:</span><span class="nd">root</span><span class="o">[</span><span class="nt">data-theme</span><span class="o">=</span><span class="s2">&#34;light&#34;</span><span class="o">]</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">.aplayer-pic{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background-color</span><span class="p">:</span> <span class="mh">#b7daff</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">:</span><span class="nd">root</span><span class="o">[</span><span class="nt">data-theme</span><span class="o">=</span><span class="s2">&#34;dark&#34;</span><span class="o">]</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">.aplayer</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background</span><span class="p">:</span> <span class="mh">#212121</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span><span class="p">.</span><span class="nc">aplayer-withlist</span> <span class="p">.</span><span class="nc">aplayer-info</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">border-bottom-color</span><span class="p">:</span> <span class="mh">#5c5c5c</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span><span class="p">.</span><span class="nc">aplayer-fixed</span> <span class="p">.</span><span class="nc">aplayer-list</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">border-color</span><span class="p">:</span> <span class="mh">#5c5c5c</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-body</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background-color</span><span class="p">:</span> <span class="mh">#212121</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-info</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">border-top-color</span><span class="p">:</span> <span class="mh">#212121</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-info</span> <span class="p">.</span><span class="nc">aplayer-music</span> <span class="p">.</span><span class="nc">aplayer-title</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">color</span><span class="p">:</span> <span class="mh">#fff</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-info</span> <span class="p">.</span><span class="nc">aplayer-music</span> <span class="p">.</span><span class="nc">aplayer-author</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">color</span><span class="p">:</span> <span class="mh">#fff</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-info</span> <span class="p">.</span><span class="nc">aplayer-controller</span> <span class="p">.</span><span class="nc">aplayer-time</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">color</span><span class="p">:</span> <span class="mh">#eee</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-info</span> <span class="p">.</span><span class="nc">aplayer-controller</span> <span class="p">.</span><span class="nc">aplayer-time</span> <span class="p">.</span><span class="nc">aplayer-icon</span> <span class="nt">path</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">fill</span><span class="p">:</span> <span class="mh">#eee</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-list</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background-color</span><span class="p">:</span> <span class="mh">#212121</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-list</span><span class="p">::</span><span class="nd">-webkit-scrollbar-thumb</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background-color</span><span class="p">:</span> <span class="mh">#999</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-list</span><span class="p">::</span><span class="nd">-webkit-scrollbar-thumb</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background-color</span><span class="p">:</span> <span class="mh">#bbb</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-list</span> <span class="nt">li</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">color</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">border-top-color</span><span class="p">:</span> <span class="mh">#666</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-list</span> <span class="nt">li</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background</span><span class="p">:</span> <span class="mh">#4e4e4e</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-list</span> <span class="nt">li</span><span class="p">.</span><span class="nc">aplayer-list-light</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background</span><span class="p">:</span> <span class="mh">#6c6c6c</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-list</span> <span class="nt">li</span> <span class="p">.</span><span class="nc">aplayer-list-index</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">color</span><span class="p">:</span> <span class="mh">#ddd</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-list</span> <span class="nt">li</span> <span class="p">.</span><span class="nc">aplayer-list-author</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">color</span><span class="p">:</span> <span class="mh">#ddd</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-lrc</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">text-shadow</span><span class="p">:</span> <span class="mi">-1</span><span class="kt">px</span> <span class="mi">-1</span><span class="kt">px</span> <span class="mi">0</span> <span class="mh">#666</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-lrc</span><span class="p">:</span><span class="nd">before</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background</span><span class="p">:</span> <span class="kp">-moz-</span><span class="nb">linear-gradient</span><span class="p">(</span><span class="kc">top</span><span class="p">,</span> <span class="mh">#212121</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background</span><span class="p">:</span> <span class="kp">-webkit-</span><span class="nb">linear-gradient</span><span class="p">(</span><span class="kc">top</span><span class="p">,</span> <span class="mh">#212121</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background</span><span class="p">:</span> <span class="nb">linear-gradient</span><span class="p">(</span><span class="kc">to</span> <span class="kc">bottom</span><span class="p">,</span> <span class="mh">#212121</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">filter</span><span class="p">:</span> <span class="n">progid</span><span class="o">:</span><span class="n">DXImageTransform</span><span class="o">.</span><span class="n">Microsoft</span><span class="o">.</span><span class="nf">gradient</span><span class="p">(</span><span class="n">startColorstr</span><span class="err">=</span><span class="s1">&#39;#212121&#39;</span><span class="p">,</span> <span class="n">endColorstr</span><span class="err">=</span><span class="s1">&#39;#00212121&#39;</span><span class="p">,</span> <span class="n">GradientType</span><span class="err">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-lrc</span><span class="p">:</span><span class="nd">after</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background</span><span class="p">:</span> <span class="kp">-moz-</span><span class="nb">linear-gradient</span><span class="p">(</span><span class="kc">top</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background</span><span class="p">:</span> <span class="kp">-webkit-</span><span class="nb">linear-gradient</span><span class="p">(</span><span class="kc">top</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background</span><span class="p">:</span> <span class="nb">linear-gradient</span><span class="p">(</span><span class="kc">to</span> <span class="kc">bottom</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">filter</span><span class="p">:</span> <span class="n">progid</span><span class="o">:</span><span class="n">DXImageTransform</span><span class="o">.</span><span class="n">Microsoft</span><span class="o">.</span><span class="nf">gradient</span><span class="p">(</span><span class="n">startColorstr</span><span class="err">=</span><span class="s1">&#39;#00212121&#39;</span><span class="p">,</span> <span class="n">endColorstr</span><span class="err">=</span><span class="s1">&#39;#cc212121&#39;</span><span class="p">,</span> <span class="n">GradientType</span><span class="err">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-lrc</span> <span class="nt">p</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">color</span><span class="p">:</span> <span class="mh">#fff</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-miniswitcher</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background</span><span class="p">:</span> <span class="mh">#484848</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="p">.</span><span class="nc">aplayer</span> <span class="p">.</span><span class="nc">aplayer-miniswitcher</span> <span class="p">.</span><span class="nc">aplayer-icon</span> <span class="nt">path</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">fill</span><span class="p">:</span> <span class="mh">#eee</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h4 id="配置视频介绍文字"><a href="#配置视频介绍文字" class="anchor-link">#</a><a href="#contents:配置视频介绍文字" class="headings">配置视频介绍文字</a></h4>
+<ol>
+<li>_index.md</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">h2</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;try&#34;</span><span class="p">&gt;</span>Try<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!-- &lt;p style=&#34;text-align:center&#34; class=&#34;colbie&#34;&gt;Colbie Caillat&lt;/p&gt; --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;text-align:center&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">You don&#39;t have to try so hard<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">You don&#39;t have to, give it all away<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">You just have to get up, get up, get up, get up<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">You don&#39;t have to change a single thing<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ol start="2">
+<li>config.toml</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="c"># 网络字体链接</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fontsLink</span> <span class="p">=</span> <span class="s2">&#34;https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel+Decorative:wght@700&amp;display=swap&#34;</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><ol start="3">
+<li>assets/scss/custom/_custom.scss</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">about页</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">try</span> <span class="p">{</span>   <span class="err">//</span> <span class="err">io-oi.me</span>
+</span></span><span class="line"><span class="cl">      <span class="k">margin-top</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">font-family</span><span class="p">:</span> <span class="s1">&#39;Cinzel Decorative&#39;</span><span class="p">,</span> <span class="kc">serif</span> <span class="cp">!important</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">background-image</span><span class="p">:</span> <span class="nb">linear-gradient</span><span class="p">(</span><span class="mi">90</span><span class="kt">deg</span><span class="p">,</span> <span class="mh">#f37055</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">#ef4e7b</span> <span class="mi">40</span><span class="kt">%</span><span class="p">,</span> <span class="mh">#f37055</span> <span class="mi">45</span><span class="kt">%</span><span class="p">,</span> <span class="mh">#a166ab</span> <span class="mi">50</span><span class="kt">%</span><span class="p">,</span> <span class="mh">#f37055</span> <span class="mi">55</span><span class="kt">%</span><span class="p">,</span> <span class="mh">#ef4e7b</span> <span class="mi">60</span><span class="kt">%</span><span class="p">,</span> <span class="mh">#f37055</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">background-size</span><span class="p">:</span> <span class="kc">cover</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">background-clip</span><span class="p">:</span> <span class="kc">text</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="kp">-webkit-</span><span class="k">background-clip</span><span class="p">:</span> <span class="kc">text</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="kp">-webkit-</span><span class="n">text-fill-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">colbie</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-family</span><span class="p">:</span> <span class="s1">&#39;Cinzel Decorative&#39;</span><span class="p">,</span> <span class="kc">serif</span> <span class="cp">!important</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-image</span><span class="p">:</span> <span class="nb">linear-gradient</span><span class="p">(</span><span class="mi">90</span><span class="kt">deg</span><span class="p">,</span> <span class="mh">#f37055</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">#ef4e7b</span> <span class="mi">40</span><span class="kt">%</span><span class="p">,</span> <span class="mh">#f37055</span> <span class="mi">45</span><span class="kt">%</span><span class="p">,</span> <span class="mh">#a166ab</span> <span class="mi">50</span><span class="kt">%</span><span class="p">,</span> <span class="mh">#f37055</span> <span class="mi">55</span><span class="kt">%</span><span class="p">,</span> <span class="mh">#ef4e7b</span> <span class="mi">60</span><span class="kt">%</span><span class="p">,</span> <span class="mh">#f37055</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-size</span><span class="p">:</span> <span class="kc">cover</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-clip</span><span class="p">:</span> <span class="kc">text</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kp">-webkit-</span><span class="k">background-clip</span><span class="p">:</span> <span class="kc">text</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kp">-webkit-</span><span class="n">text-fill-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">https</span><span class="o">://</span><span class="nt">io-oi</span><span class="p">.</span><span class="nc">me</span><span class="o">/</span><span class="nt">tech</span><span class="o">/</span><span class="nt">get-started-with-variable-fonts</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">font-face</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">font-family</span><span class="o">:</span> <span class="s1">&#39;Amstelvar&#39;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">font-display</span><span class="o">:</span> <span class="nt">swap</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">src</span><span class="o">:</span> <span class="nt">url</span><span class="o">(</span><span class="s1">&#39;#{$baseRelURL}/fonts/Amstelvar-Italic-VF.woff2&#39;</span><span class="o">)</span> <span class="nt">format</span><span class="o">(</span><span class="s1">&#39;woff2-variations&#39;</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">url</span><span class="o">(</span><span class="s1">&#39;#{$baseRelURL}/fonts/Amstelvar-Italic-VF.woff2&#39;</span><span class="o">)</span> <span class="nt">format</span><span class="o">(</span><span class="s2">&#34;woff2&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">font-weight</span><span class="o">:</span> <span class="nt">100</span> <span class="nt">900</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">font-stretch</span><span class="o">:</span> <span class="nt">50</span><span class="o">%</span> <span class="nt">125</span><span class="o">%;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">font-style</span><span class="o">:</span> <span class="nt">italic</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">font-face</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">font-family</span><span class="o">:</span> <span class="s1">&#39;Amstelvar&#39;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">font-display</span><span class="o">:</span> <span class="nt">swap</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">src</span><span class="o">:</span> <span class="nt">url</span><span class="o">(</span><span class="s1">&#39;#{$baseRelURL}/fonts/Amstelvar-Roman-VF.woff2&#39;</span><span class="o">)</span> <span class="nt">format</span><span class="o">(</span><span class="s1">&#39;woff2-variations&#39;</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">url</span><span class="o">(</span><span class="s1">&#39;#{$baseRelURL}/fonts/Amstelvar-Roman-VF.woff2&#39;</span><span class="o">)</span> <span class="nt">format</span><span class="o">(</span><span class="s1">&#39;woff2&#39;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">font-weight</span><span class="o">:</span> <span class="nt">100</span> <span class="nt">900</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">font-stretch</span><span class="o">:</span> <span class="nt">50</span><span class="o">%</span> <span class="nt">125</span><span class="o">%;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">font-style</span><span class="o">:</span> <span class="nt">normal</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">body</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-family</span><span class="p">:</span> <span class="s1">&#39;Amstelvar&#39;</span><span class="p">,</span> <span class="s1">&#39;Noto Serif SC&#39;</span><span class="p">,</span>  <span class="kc">serif</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">:</span><span class="nd">root</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">--text-wdth</span><span class="p">:</span> <span class="mi">90</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">--text-opsz</span><span class="p">:</span> <span class="mi">40</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">--text-YTLC</span><span class="p">:</span> <span class="mi">460</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">body</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">font-variation-settings</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;wdth&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">wdth</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;opsz&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">opsz</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;YTLC&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">YTLC</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">post-title</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-family</span><span class="p">:</span> <span class="s1">&#39;glyph-correction&#39;</span><span class="p">,</span> <span class="s1">&#39;Amstelvar&#39;</span><span class="p">,</span> <span class="s1">&#39;Noto Serif SC&#39;</span><span class="p">,</span> <span class="kc">serif</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">font-variation-settings</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;wght&#39;</span> <span class="mi">550</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;opsz&#39;</span> <span class="mi">60</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;YOPQ&#39;</span> <span class="mi">90</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">list-item-time</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-feature-settings</span><span class="p">:</span> <span class="s1">&#39;tnum&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">blockquote</span><span class="p">.</span><span class="nc">quote</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">margin</span><span class="p">:</span> <span class="mi">2</span><span class="kt">em</span> <span class="kc">auto</span> <span class="cp">!important</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding-left</span><span class="p">:</span> <span class="mi">3</span><span class="kt">em</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="kc">inherit</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="err">p</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">text-indent</span><span class="p">:</span> <span class="mi">0</span> <span class="cp">!important</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&amp;</span><span class="p">::</span><span class="nd">before</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">content</span><span class="p">:</span> <span class="s1">&#39;“&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">font-size</span><span class="p">:</span> <span class="mi">3</span><span class="kt">em</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">font-weight</span><span class="p">:</span> <span class="kc">bold</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">line-height</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&amp;</span><span class="p">.</span><span class="nc">poetry</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">table</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="err">&amp;::before</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">left</span><span class="p">:</span> <span class="mi">-1</span><span class="kt">em</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">p</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span><span class="kt">em</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">p</span><span class="p">:</span><span class="nd">last-child</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&amp;</span><span class="p">.</span><span class="nc">en</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">p</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">line-height</span><span class="p">:</span> <span class="mf">1.618</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">text-align</span><span class="p">:</span> <span class="kc">left</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">hyphens</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="kp">-webkit-</span><span class="k">hyphens</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="kp">-moz-</span><span class="k">hyphens</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&amp;</span><span class="p">.</span><span class="nc">italic</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">p</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">font-style</span><span class="p">:</span> <span class="kc">italic</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="o">$</span><span class="nt">maxWidth</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">blockquote</span><span class="p">.</span><span class="nc">quote</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">&amp;.poetry</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">padding-left</span><span class="p">:</span> <span class="mi">3</span><span class="kt">em</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="err">&amp;::before</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="err">}</span>
+</span></span><span class="line"><span class="cl">      <span class="err">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="配置toc到页面右边"><a href="#配置toc到页面右边" class="anchor-link">#</a><a href="#contents:配置toc到页面右边" class="headings">配置toc到页面右边</a></h2>
+<p><a href="https://yyqx.online/posts/%E5%8D%9A%E5%AE%A2%E4%BE%A7%E8%BE%B9%E5%AF%BC%E8%88%AA%E6%A0%8F/" target="_blank" rel="noopener">参考博客</a>
+原本想实现滚动动画的，技术力不够，等大佬</p>
+<h3 id="创建mytochtml"><a href="#创建mytochtml" class="anchor-link">#</a><a href="#contents:创建mytochtml" class="headings">创建mytoc.html</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="c">&lt;!-- 注意需要在页面的front-matter中toc：false并rightToc：true --&gt;</span>
+</span></span><span class="line"><span class="cl">{{ if (.Params.rightToc | default false ) }}
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;post-toc&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;post-toc&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">aside</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">h4</span><span class="p">&gt;</span>文章の字数: {{ .WordCount }}<span class="p">&lt;/</span><span class="nt">h4</span><span class="p">&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    {{ $emtLiPtrn := &#34;(?s)<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>\\s<span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>\\s<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>(.*)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>\\s<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>&#34; }}
+</span></span><span class="line"><span class="cl">    {{ $rplcEmtLi := &#34;<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>$1&#34; }}
+</span></span><span class="line"><span class="cl">      {{ .TableOfContents | replaceRE $emtLiPtrn $rplcEmtLi | safeHTML }}
+</span></span><span class="line"><span class="cl">      <span class="c">&lt;!-- https://github.com/gohugoio/hugo/issues/1778#issuecomment-483880269 --&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="c">&lt;!-- {{.TableOfContents}} --&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">aside</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;#&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;toc-toggle&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{{ end }}
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="创建singlehtml"><a href="#创建singlehtml" class="anchor-link">#</a><a href="#contents:创建singlehtml" class="headings">创建single.html</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">{{ define &#34;main&#34; }}
+</span></span><span class="line"><span class="cl">    {{ partial &#34;pages/post.html&#34; . }}
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!--   	将主题的single复制后新加的内容 --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class </span><span class="o">=</span> <span class="s">&#34;toc-wrapper&#34;</span><span class="p">&gt;</span>  
+</span></span><span class="line"><span class="cl">        {{ partial &#34;mytoc.html&#34; . }}
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">{{ end }}
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="修改_customscss样式"><a href="#修改_customscss样式" class="anchor-link">#</a><a href="#contents:修改_customscss样式" class="headings">修改_custom.scss样式</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">post-toc</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">right</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">max-width</span><span class="p">:</span> <span class="mi">40</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">overflow</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">top</span><span class="p">:</span> <span class="mi">5</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">width</span><span class="p">:</span> <span class="mi">25</span><span class="kt">vw</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">bottom</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">toc-wrapper</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">::</span><span class="kp">-webkit-</span><span class="err">scrollbar</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">width</span><span class="p">:</span> <span class="mi">6</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">height</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="p">::</span><span class="nd">-webkit-scrollbar-thumb</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#eee</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="err">&amp;:hover</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">background-color</span><span class="p">:</span> <span class="mh">#ddd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="nt">only</span> <span class="nt">screen</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">1224px</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="p">.</span><span class="nc">post-toc</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="配置豆瓣短码"><a href="#配置豆瓣短码" class="anchor-link">#</a><a href="#contents:配置豆瓣短码" class="headings">配置豆瓣短码</a></h2>
+<h3 id="创建doubanmd"><a href="#创建doubanmd" class="anchor-link">#</a><a href="#contents:创建doubanmd" class="headings">创建douban.md</a></h3>
+<p>xxx\layouts\shortcodes 下创建douban.md</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">{{ $dbUrl := .Get 0 }}
+</span></span><span class="line"><span class="cl">{{ $dbApiUrl := &#34;https://neodb.social/api/&#34; }}
+</span></span><span class="line"><span class="cl">{{ $dbType := &#34;&#34; }}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{{ if ( findRE `^.*neodb\.social\/.*` $dbUrl ) }}
+</span></span><span class="line"><span class="cl">    {{ $dbType = replaceRE `.*neodb.social\/(.*\/.*)` &#34;$1&#34; $dbUrl }}
+</span></span><span class="line"><span class="cl">{{ else }}
+</span></span><span class="line"><span class="cl">    {{ $dbType = $dbUrl }}
+</span></span><span class="line"><span class="cl">    {{ $dbApiUrl = &#34;https://neodb.social/api/catalog/fetch?url=&#34; }}
+</span></span><span class="line"><span class="cl">{{ end }}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!-- {{ $dbFetch := getJSON $dbApiUrl $dbType }} --&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{{ if $dbFetch }}
+</span></span><span class="line"><span class="cl">    {{ $itemRating := 0 }}{{ with $dbFetch.rating }}{{ $itemRating = . }}{{ end }}
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;db-card&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;db-card-subject&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;db-card-post&#34;</span><span class="p">&gt;&lt;</span><span class="nt">img</span> <span class="na">loading</span><span class="o">=</span><span class="s">&#34;lazy&#34;</span> <span class="na">decoding</span><span class="o">=</span><span class="s">&#34;async&#34;</span> <span class="na">referrerpolicy</span><span class="o">=</span><span class="s">&#34;no-referrer&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;{{ $dbFetch.cover_image_url }}&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;db-card-content&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;db-card-title&#34;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;{{ $dbUrl }}&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;cute&#34;</span> <span class="na">target</span><span class="o">=</span><span class="s">&#34;_blank&#34;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;noreferrer&#34;</span><span class="p">&gt;</span>{{ $dbFetch.title }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;rating&#34;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;allstardark&#34;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;allstarlight&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;width:{{mul 10 $itemRating }}%&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;rating_nums&#34;</span><span class="p">&gt;</span>{{ $itemRating }}<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;db-card-abstract&#34;</span><span class="p">&gt;</span>{{ $dbFetch.brief }}<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;db-card-cate&#34;</span><span class="p">&gt;</span>{{ $dbFetch.category }}<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">{{else}}
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;text-align: center;&#34;</span><span class="p">&gt;&lt;</span><span class="nt">small</span><span class="p">&gt;</span>远程获取内容失败，请检查 API 有效性。<span class="p">&lt;/</span><span class="nt">small</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">{{end}}
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="修改customscss样式"><a href="#修改customscss样式" class="anchor-link">#</a><a href="#contents:修改customscss样式" class="headings">修改custom.scss样式</a></h3>
+<p>在源文件下追加，修改了一些样式，使其更适配Meme</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">// douban (api unstable)
+</span></span><span class="line"><span class="cl">.db-card{background:#fafafa;border-radius: 5px;}
+</span></span><span class="line"><span class="cl">.db-card-subject{display: flex;align-items:flex-start;line-height:1.6;padding:12px;position:relative;}
+</span></span><span class="line"><span class="cl">.dark .db-card{background:#252627;}
+</span></span><span class="line"><span class="cl">.db-card-content {flex:1 1 auto;}
+</span></span><span class="line"><span class="cl">.db-card-post {width: 96px;margin-right: 15px;display: flex;flex: 0 0 auto;}
+</span></span><span class="line"><span class="cl">.db-card-title {margin-bottom: 5px;font-size: 18px;}
+</span></span><span class="line"><span class="cl">.db-card-title a{text-decoration: none!important}
+</span></span><span class="line"><span class="cl">.db-card-abstract,.db-card-comment{font-size:14px;overflow: hidden;max-height:4rem;}
+</span></span><span class="line"><span class="cl">.db-card-cate{position: absolute;top:0;right:0;background:#f99b01;padding:1px 8px;font-size:small;font-style:italic;border-radius:0 8px 0 8px;text-transform:capitalize;}
+</span></span><span class="line"><span class="cl">.db-card-post img{margin:0;width: 96px!important;border-radius: 5px;-o-object-fit: cover;object-fit: cover;}
+</span></span><span class="line"><span class="cl">.rating{margin: 0 0 5px;font-size:13px;line-height: 1;display: flex;align-items: center;}
+</span></span><span class="line"><span class="cl">.rating .allstardark{position:relative;color: #f99b01;height: 16px;width: 80px;background-size: auto 100%;margin-right: 8px;background-repeat: repeat;background-image: url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MDguMSAzNTMuMWwtMjUzLjktMzYuOUw1NDAuNyA4Ni4xYy0zLjEtNi4zLTguMi0xMS40LTE0LjUtMTQuNS0xNS44LTcuOC0zNS0xLjMtNDIuOSAxNC41TDM2OS44IDMxNi4ybC0yNTMuOSAzNi45Yy03IDEtMTMuNCA0LjMtMTguMyA5LjMtMTIuMyAxMi43LTEyLjEgMzIuOS42IDQ1LjNsMTgzLjcgMTc5LjEtNDMuNCAyNTIuOWMtMS4yIDYuOS0uMSAxNC4xIDMuMiAyMC4zIDguMiAxNS42IDI3LjYgMjEuNyA0My4yIDEzLjRMNTEyIDc1NGwyMjcuMSAxMTkuNGM2LjIgMy4zIDEzLjQgNC40IDIwLjMgMy4yIDE3LjQtMyAyOS4xLTE5LjUgMjYuMS0zNi45bC00My40LTI1Mi45IDE4My43LTE3OS4xYzUtNC45IDguMy0xMS4zIDkuMy0xOC4zIDIuNy0xNy41LTkuNS0zMy43LTI3LTM2LjN6TTY2NC44IDU2MS42bDM2LjEgMjEwLjNMNTEyIDY3Mi43IDMyMy4xIDc3MmwzNi4xLTIxMC4zLTE1Mi44LTE0OUw0MTcuNiAzODIgNTEyIDE5MC43IDYwNi40IDM4MmwyMTEuMiAzMC43LTE1Mi44IDE0OC45eiIgZmlsbD0iI2Y5OWIwMSIvPjwvc3ZnPg==);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">.rating .allstarlight{position: absolute;left: 0;color: #f99b01;height:16px;overflow: hidden;background-size: auto 100%;background-repeat: repeat;background-image: url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MDguMSAzNTMuMWwtMjUzLjktMzYuOUw1NDAuNyA4Ni4xYy0zLjEtNi4zLTguMi0xMS40LTE0LjUtMTQuNS0xNS44LTcuOC0zNS0xLjMtNDIuOSAxNC41TDM2OS44IDMxNi4ybC0yNTMuOSAzNi45Yy03IDEtMTMuNCA0LjMtMTguMyA5LjMtMTIuMyAxMi43LTEyLjEgMzIuOS42IDQ1LjNsMTgzLjcgMTc5LjEtNDMuNCAyNTIuOWMtMS4yIDYuOS0uMSAxNC4xIDMuMiAyMC4zIDguMiAxNS42IDI3LjYgMjEuNyA0My4yIDEzLjRMNTEyIDc1NGwyMjcuMSAxMTkuNGM2LjIgMy4zIDEzLjQgNC40IDIwLjMgMy4yIDE3LjQtMyAyOS4xLTE5LjUgMjYuMS0zNi45bC00My40LTI1Mi45IDE4My43LTE3OS4xYzUtNC45IDguMy0xMS4zIDkuMy0xOC4zIDIuNy0xNy41LTkuNS0zMy43LTI3LTM2LjN6IiBmaWxsPSIjZjk5YjAxIi8+PC9zdmc+);}
+</span></span><span class="line"><span class="cl">@media (max-width:550px) {
+</span></span><span class="line"><span class="cl">	.db-card{margin:0.8rem 1rem;}
+</span></span><span class="line"><span class="cl">	.db-card-comment{display: none;}
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="注意事项"><a href="#注意事项" class="anchor-link">#</a><a href="#contents:注意事项" class="headings">注意事项</a></h3>
+<ul>
+<li>所给api可能不稳定，可能需要更换。</li>
+<li>也可以试试<a href="https://blog.yandaojiang.com/posts/others/hugo_shortcodes%E7%A4%BA%E4%BE%8B/#%E8%B1%86%E7%93%A3%E6%9D%A1%E7%9B%AE" target="_blank" rel="noopener">本地缓存</a></li>
+<li>使用：
+<ul>
+<li>{a(去掉a){&lt; douban(shortcode_name) &quot;https://book.douban.com/subject/35496106/&quot;&gt;}}</li>
+</ul>
+</li>
+</ul>
+<p>参考网址：</p>
+<ul>
+<li><a href="https://immmmm.com/post-show-douban-item/" target="_blank" rel="noopener">文章内显示豆瓣条目</a></li>
+<li><a href="https://immmmm.com/hugo-shortcodes-douban/" target="_blank" rel="noopener">Hugo 豆瓣短代码</a></li>
+<li><a href="https://www.sulvblog.cn/posts/blog/shortcodes/#5-%e5%bc%95%e5%85%a5%e8%b1%86%e7%93%a3%e9%98%85%e8%af%bb%e5%92%8c%e7%94%b5%e5%bd%b1%e5%8d%a1%e7%89%87" target="_blank" rel="noopener">引入豆瓣（暂时没用）</a></li>
+</ul>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/blog/" rel="tag" class="post-tag-link">#blog</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>Java 学习 半成品 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="半路转C&#43;&#43;了，所以没学完Java，相对来说，韩顺平这个Java视频讲的很详细，如果时间充裕可以看看。
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/archives/java-study/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2023-03-11T20:23:47+00:00",
+        "dateModified": "2024-05-03T14:50:48+08:00",
+        "url": "http://localhost:1313/archives/java-study/",
+        "headline": "Java 学习 半成品",
+        "description": "半路转C++了，所以没学完Java，相对来说，韩顺平这个Java视频讲的很详细，如果时间充裕可以看看。\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  1701 ,
+        "image": ["https://pic.keepjolly.com/halo/blog/2023/03/20230311202016.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230311202016-1.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230311202016-2.png?imageMogr2/format/webp%7C"],
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="Java 学习 半成品" />
+<meta property="og:description" content="半路转C&#43;&#43;了，所以没学完Java，相对来说，韩顺平这个Java视频讲的很详细，如果时间充裕可以看看。
+……" />
+<meta property="og:url" content="http://localhost:1313/archives/java-study/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://pic.keepjolly.com/halo/blog/2023/03/20230311202016.png?imageMogr2/format/webp%7C" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2023-03-11T20:23:47&#43;00:00" />
+    <meta property="article:modified_time" content="2024-05-03T14:50:48&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+<div class="post-toc" id="post-toc">
+<aside>
+    <header>
+    <h4>文章の字数: 1701</h4> 
+    </header>
+    
+    
+    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#初阶知识">初阶知识</a>
+      <ol>
+        <li><a href="#变量">变量</a>
+          <ol>
+            <li><a href="#加法运算">加法运算</a></li>
+            <li><a href="#浮点数byte布尔值">浮点数/byte/布尔值</a></li>
+            <li><a href="#自动类型转换">自动类型转换</a></li>
+          </ol>
+        </li>
+        <li><a href="#运算符">运算符</a>
+          <ol>
+            <li><a href="#算数运算符运算">算数运算符运算</a></li>
+            <li><a href="#逻辑运算符">逻辑运算符</a></li>
+            <li><a href="#进制">进制</a></li>
+            <li><a href="#位运算">位运算</a></li>
+          </ol>
+        </li>
+        <li><a href="#控制结构">控制结构</a></li>
+        <li><a href="#数组排序查找">数组/排序/查找</a>
+          <ol>
+            <li><a href="#二维数组">二维数组</a></li>
+          </ol>
+        </li>
+        <li><a href="#对象">对象</a>
+          <ol>
+            <li><a href="#对象内存布局">对象内存布局</a></li>
+            <li><a href="#java内存的结构分析">Java内存的结构分析</a></li>
+            <li><a href="#递归-">递归 ☆☆☆</a></li>
+            <li><a href="#可变参数">可变参数</a></li>
+            <li><a href="#作用域">作用域</a></li>
+            <li><a href="#this使用">this使用</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#中阶知识">中阶知识</a>
+      <ol>
+        <li><a href="#idea快捷键">Idea快捷键</a></li>
+      </ol>
+    </li>
+    <li><a href="#额外知识">额外知识</a>
+      <ol>
+        <li>
+          <ol>
+            <li><a href="#字符串">字符串</a></li>
+            <li><a href="#cannot-make-a-static-reference-to-the-non-static">Cannot make a static reference to the non-static</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    
+    
+</aside>
+<a href="#" id="toc-toggle"></a>
+</div>
+
+<div class = "toc-phone">
+    <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:初阶知识" href="#初阶知识">初阶知识</a>
+      <ol>
+        <li><a id="contents:变量" href="#变量">变量</a>
+          <ol>
+            <li><a id="contents:加法运算" href="#加法运算">加法运算</a></li>
+            <li><a id="contents:浮点数byte布尔值" href="#浮点数byte布尔值">浮点数/byte/布尔值</a></li>
+            <li><a id="contents:自动类型转换" href="#自动类型转换">自动类型转换</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:运算符" href="#运算符">运算符</a>
+          <ol>
+            <li><a id="contents:算数运算符运算" href="#算数运算符运算">算数运算符运算</a></li>
+            <li><a id="contents:逻辑运算符" href="#逻辑运算符">逻辑运算符</a></li>
+            <li><a id="contents:进制" href="#进制">进制</a></li>
+            <li><a id="contents:位运算" href="#位运算">位运算</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:控制结构" href="#控制结构">控制结构</a></li>
+        <li><a id="contents:数组排序查找" href="#数组排序查找">数组/排序/查找</a>
+          <ol>
+            <li><a id="contents:二维数组" href="#二维数组">二维数组</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:对象" href="#对象">对象</a>
+          <ol>
+            <li><a id="contents:对象内存布局" href="#对象内存布局">对象内存布局</a></li>
+            <li><a id="contents:java内存的结构分析" href="#java内存的结构分析">Java内存的结构分析</a></li>
+            <li><a id="contents:递归-" href="#递归-">递归 ☆☆☆</a></li>
+            <li><a id="contents:可变参数" href="#可变参数">可变参数</a></li>
+            <li><a id="contents:作用域" href="#作用域">作用域</a></li>
+            <li><a id="contents:this使用" href="#this使用">this使用</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:中阶知识" href="#中阶知识">中阶知识</a>
+      <ol>
+        <li><a id="contents:idea快捷键" href="#idea快捷键">Idea快捷键</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:额外知识" href="#额外知识">额外知识</a>
+      <ol>
+        <li>
+          <ol>
+            <li><a id="contents:字符串" href="#字符串">字符串</a></li>
+            <li><a id="contents:cannot-make-a-static-reference-to-the-non-static" href="#cannot-make-a-static-reference-to-the-non-static">Cannot make a static reference to the non-static</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    <hr></hr>
+</div>
+
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">Java 学习 半成品</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <div class="post-body e-content">
+                <p>半路转C++了，所以没学完Java，相对来说，韩顺平这个Java视频讲的很详细，如果时间充裕可以看看。</p>
+<h2 id="初阶知识"><a href="#初阶知识" class="anchor-link">#</a>初阶知识</h2>
+<h3 id="变量"><a href="#变量" class="anchor-link">#</a>变量</h3>
+<h4 id="加法运算"><a href="#加法运算" class="anchor-link">#</a>加法运算</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230311202016.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="浮点数byte布尔值"><a href="#浮点数byte布尔值" class="anchor-link">#</a>浮点数/byte/布尔值</h4>
+<ul>
+<li>浮点数 = 符号位 +指数位 +尾数位</li>
+</ul>
+<p>浮点数默认为double类型，float n1 = 1.1+anything 报错</p>
+<ul>
+<li>boolean变量只能为true/false</li>
+<li>给byte赋常数时，<strong>先</strong>判断该值是否在byte范围(-128~127)内，所以不会出现赋值为int类型</li>
+</ul>
+<h4 id="自动类型转换"><a href="#自动类型转换" class="anchor-link">#</a>自动类型转换</h4>
+<p>进行赋值或运算时，小精度类型自动转化为大精度类型
+char/(byte → short) → int → long → float → double
+byte/char/short 同类型计算或它们之间计算都会自动转成int类型
+强制转换
+(int)(long/float值)</p>
+<h3 id="运算符"><a href="#运算符" class="anchor-link">#</a>运算符</h3>
+<h4 id="算数运算符运算"><a href="#算数运算符运算" class="anchor-link">#</a>算数运算符运算</h4>
+<ul>
+<li>a % b = a - a / b * b 所以当b为<strong>负数</strong>反而为正，ab全为负数则为负</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">++</span><span class="p">;</span> <span class="c1">// temp = i; i = i+1; i = temp;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="c1">// i=1
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><ul>
+<li>复合赋值运算符会自动类型转换(包括++，--)
+<ul>
+<li>b += 2; -&gt; b = (type)b + 2;</li>
+</ul>
+</li>
+</ul>
+<h4 id="逻辑运算符"><a href="#逻辑运算符" class="anchor-link">#</a>逻辑运算符</h4>
+<p>&amp; 和 | 用在检查特等奖和一等奖之间取最好的那个</p>
+<h4 id="进制"><a href="#进制" class="anchor-link">#</a>进制</h4>
+<p>整数有四种进制：</p>
+<ol>
+<li>二进制：以0b或0B开头</li>
+<li>十进制</li>
+<li>八进制：以0开头</li>
+<li>十六进制：以0x或0X开头</li>
+</ol>
+<p>二进制转八进制：从低位开始，二进制数<strong>每三位(</strong>$2^{3}=8$<strong>)<strong>一组，换算成对应八进制数
+二进制转十六进制：从低位开始，二进制数</strong>每四位</strong>一组，换算成对应八进制数
+反之，则将八(十六)进制数<strong>每位</strong>转成对应**三(四)**位二进制数即可</p>
+<h4 id="位运算"><a href="#位运算" class="anchor-link">#</a>位运算</h4>
+<p>原码，反码，补码：</p>
+<ul>
+<li>正数三码合一</li>
+<li>负数的反码 = 原码符号位不变，其他位取反</li>
+<li>负数的反码 = 补码 - 1；补码 = 反码 + 1</li>
+<li>0的反码、补码都是0</li>
+<li>计算机以补码进行运算，Java的数都是有符号</li>
+<li>运算结果用原码</li>
+<li>二进制最高位为符号位：0正1负，位数取决于int大小</li>
+</ul>
+<p>位运算符：</p>
+<ul>
+<li>算数右移&gt;&gt;：低位溢出，符号位不变，高位补符号位 &lt;=&gt; b/2</li>
+<li>算数左移&lt;&lt;：符号位不变，低位补0 &lt;=&gt; b*2</li>
+<li>逻辑右移&gt;&gt;&gt;：低位溢出，高位补0</li>
+<li>低位溢出指的是删除最右边移动的数个；高位补数指的是将数个加到最左边，整体右移</li>
+<li>1000 0000 0000 0110 &gt;&gt;&gt;2：<strong>00</strong>10 0000 0000 00**01 **</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// -2原 10000000 00000000 00000000 00000010
+</span></span></span><span class="line"><span class="cl"><span class="c1">// -2反 11111111 11111111 11111111 11111101
+</span></span></span><span class="line"><span class="cl"><span class="c1">// -2补 11111111 11111111 11111111 11111110
+</span></span></span><span class="line"><span class="cl"><span class="c1">// -2移 00111111 11111111 11111111 11111111
+</span></span></span><span class="line"><span class="cl"><span class="c1">// -2反 11111111 11111111 11111111 11111011
+</span></span></span><span class="line"><span class="cl"><span class="c1">// -2原 10000000 00000000 00000000 00000100
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mb">0b00111111111111111111111111111111</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">&gt;&gt;&gt;</span><span class="mi">2</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="控制结构"><a href="#控制结构" class="anchor-link">#</a>控制结构</h3>
+<ul>
+<li>switch中表达式的返回值必须是：byte, short, int, char, enum, String</li>
+<li>break/continue 可以通过标签指明终止/跳过哪一层语句块（不建议使用）
+<ul>
+<li><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230311202016-1.png?imageMogr2/format/webp%7C" alt="image"></li>
+</ul>
+</li>
+<li>&quot;lucky&quot;.equals(type) // 避免空指针</li>
+</ul>
+<h3 id="数组排序查找"><a href="#数组排序查找" class="anchor-link">#</a>数组/排序/查找</h3>
+<h4 id="二维数组"><a href="#二维数组" class="anchor-link">#</a>二维数组</h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 动态创建数组</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="kt">int</span><span class="w"> </span><span class="o">[][]</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">3</span><span class="o">][]</span><span class="p">;</span><span class="w">  </span><span class="c1">// 确定一维数组个数</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">arr</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="n">1</span><span class="o">]</span><span class="p">;</span><span class="w">  </span><span class="c1">// 第i排上开辟空间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 双下标经典用法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="n">insert_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">15</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">arrNew</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">insert_num</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">++</span><span class="n">j</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">arrNew</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="n">arrNew</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">insert_num</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="对象"><a href="#对象" class="anchor-link">#</a>对象</h3>
+<h4 id="对象内存布局"><a href="#对象内存布局" class="anchor-link">#</a>对象内存布局</h4>
+<p>加载cat类信息从第一句代码就执行
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230311202016-2.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="java内存的结构分析"><a href="#java内存的结构分析" class="anchor-link">#</a>Java内存的结构分析</h4>
+<ul>
+<li>栈：一般存放基本数据类型（局部变量）</li>
+<li>堆：存放对象、数组</li>
+<li>方法区：常量池，类加载信息</li>
+</ul>
+<p>Java创建对象的流程</p>
+<ol>
+<li>加载Person类信息（属性和方法信息，只加载一次）</li>
+<li>在堆中分配空间，进行默认初始化</li>
+<li>把地址赋给p，p就指向对象</li>
+<li>进行属性赋值</li>
+</ol>
+<p>当方法内将对象置空/创建新对象，不会改变main中的对象，参考<a href="https://www.bilibili.com/video/BV1fh411y7R8?p=213" target="_blank" rel="noopener">传参机制</a></p>
+<h4 id="递归-"><a href="#递归-" class="anchor-link">#</a>递归 ☆☆☆</h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 终止条件：在[6][6] == 2
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 递归方式：左下右上
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 遇到的情况：0：未走 1 墙 2 走过 3 不通
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">boolean</span><span class="w"> </span><span class="nf">findWay</span><span class="p">(</span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">map</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">map</span><span class="o">[</span><span class="n">6</span><span class="o">][</span><span class="n">6</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">2</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 当前点的情况</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">map</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">map</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">2</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">findWay</span><span class="p">(</span><span class="n">map</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">+</span><span class="n">1</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">findWay</span><span class="p">(</span><span class="n">map</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">findWay</span><span class="p">(</span><span class="n">map</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">-</span><span class="n">1</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">findWay</span><span class="p">(</span><span class="n">map</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">-</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">map</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">3</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"> </span><span class="c1">// 1,2,3 都不能修改节点值，无法移动</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h4 id="可变参数"><a href="#可变参数" class="anchor-link">#</a>可变参数</h4>
+<p>语法：访问修饰符 返回类型 方法名(数据类型... 形参名)</p>
+<ul>
+<li>可变参数本质是数组，因此实参可以为数组或0-N个值</li>
+<li>可变参数和普通参数放一起，需保证可变参数在最后</li>
+<li>形参列表只能有一个可变参数</li>
+</ul>
+<h4 id="作用域"><a href="#作用域" class="anchor-link">#</a>作用域</h4>
+<p>全局变量（属性）：作用域为整个类体，有默认值
+局部变量（除属性外其他变量）：作用域为代码块，没有默认值</p>
+<h4 id="this使用"><a href="#this使用" class="anchor-link">#</a>this使用</h4>
+<ul>
+<li>访问构造器语法：this(参数列表)，只能在构造器中使用，并且放在第一条语句中</li>
+</ul>
+<h2 id="中阶知识"><a href="#中阶知识" class="anchor-link">#</a>中阶知识</h2>
+<h3 id="idea快捷键"><a href="#idea快捷键" class="anchor-link">#</a>Idea快捷键</h3>
+<ul>
+<li>ctrl + D 粘贴至下一行</li>
+<li>ctrl + Y 删除当前行</li>
+<li>alt + / 补全代码</li>
+<li>alt + insert 生成构造器</li>
+<li>ctrl + H 查看类的层级关系 Hierarchy</li>
+<li>ctrl + B 定位方法</li>
+<li>alt + enter/ .var 自动分配变量名</li>
+</ul>
+<h2 id="额外知识"><a href="#额外知识" class="anchor-link">#</a>额外知识</h2>
+<h4 id="字符串"><a href="#字符串" class="anchor-link">#</a>字符串</h4>
+<p><a href="https://blog.csdn.net/langhong8/article/details/50938041" target="_blank" rel="noopener">字符串常量池</a></p>
+<h4 id="cannot-make-a-static-reference-to-the-non-static"><a href="#cannot-make-a-static-reference-to-the-non-static" class="anchor-link">#</a>Cannot make a static reference to the non-static</h4>
+<p><a href="https://blog.csdn.net/q610376681/article/details/49359819" target="_blank" rel="noopener">Cannot make a static reference to the non-static</a></p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/java/" rel="tag" class="post-tag-link">#java</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

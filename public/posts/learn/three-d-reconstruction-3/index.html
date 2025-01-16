@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>三维重建之路中 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="Rurouni" /><meta name="description" content="三维重建与极几何 单视图重构会受到多义性的影响，并且需要场景知识 而人眼是有两个眼睛，可以组合两种图片，采用多视图几何
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/learn/three-d-reconstruction-3/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2023-05-26T20:28:22+08:00",
+        "dateModified": "2024-05-03T14:50:48+08:00",
+        "url": "http://localhost:1313/posts/learn/three-d-reconstruction-3/",
+        "headline": "三维重建之路中",
+        "description": "三维重建与极几何 单视图重构会受到多义性的影响，并且需要场景知识 而人眼是有两个眼睛，可以组合两种图片，采用多视图几何\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  1489 ,
+        "image": ["https://pic.keepjolly.com/halo/blog/2023/05/20230526195839.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-1.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-2.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-3.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-4.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-5.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-6.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-7.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-8.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-9.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-10.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-11.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230527212253.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-12.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-13.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-14.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-15.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-16.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-17.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-18.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-19.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-20.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-21.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-22.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-23.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-24.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-25.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-26.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-27.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-28.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-29.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-30.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-31.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-32.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-33.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-34.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-35.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-36.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-37.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-38.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-39.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-40.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-41.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-42.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-43.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-44.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-45.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-46.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-47.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-48.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-49.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-50.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-51.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-52.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-53.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-54.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-55.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-56.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-57.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-58.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-59.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-60.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-61.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-62.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-63.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-64.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-65.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-66.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-67.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-68.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-69.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-70.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-71.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-72.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-73.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-74.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-75.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-76.png?imageMogr2/format/webp%7C"],
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="三维重建之路中" />
+<meta property="og:description" content="三维重建与极几何 单视图重构会受到多义性的影响，并且需要场景知识 而人眼是有两个眼睛，可以组合两种图片，采用多视图几何
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/learn/three-d-reconstruction-3/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839.png?imageMogr2/format/webp%7C" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2023-05-26T20:28:22&#43;08:00" />
+    <meta property="article:modified_time" content="2024-05-03T14:50:48&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+<div class="post-toc" id="post-toc">
+<aside>
+    <header>
+    <h4>文章の字数: 1489</h4> 
+    </header>
+    
+    
+    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#三维重建与极几何">三维重建与极几何</a>
+      <ol>
+        <li><a href="#三维重建基础">三维重建基础</a>
+          <ol>
+            <li><a href="#三角化">三角化</a></li>
+            <li><a href="#多视图几何的关键问题">多视图几何的关键问题</a></li>
+          </ol>
+        </li>
+        <li><a href="#极几何与基础矩阵">极几何与基础矩阵</a>
+          <ol>
+            <li><a href="#极几何">极几何</a>
+              <ol>
+                <li><a href="#平行视图">平行视图</a></li>
+                <li><a href="#前向平移无旋转">前向平移（无旋转）</a></li>
+                <li><a href="#极几何约束--本质矩阵">极几何约束--本质矩阵</a></li>
+                <li><a href="#从本质矩阵到基础矩阵">从本质矩阵到基础矩阵</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a href="#基础矩阵估计">基础矩阵估计</a>
+          <ol>
+            <li><a href="#八点算法">八点算法</a></li>
+          </ol>
+        </li>
+        <li><a href="#补充知识">补充知识</a>
+          <ol>
+            <li><a href="#单应矩阵">单应矩阵</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#双目立体视觉">双目立体视觉</a>
+      <ol>
+        <li><a href="#基于平行试图的双目立体视觉">基于平行试图的双目立体视觉</a>
+          <ol>
+            <li><a href="#平行视图-1">平行视图</a></li>
+            <li><a href="#f和e的关系">F和e'的关系</a></li>
+            <li><a href="#平行视图基础矩阵">平行视图基础矩阵</a></li>
+            <li><a href="#平行视图极线p和p关系">平行视图极线、p和p'关系</a></li>
+            <li><a href="#平行视图三角测量三角化">平行视图三角测量（三角化）</a></li>
+            <li><a href="#双目立体视觉系统构建的核心问题">双目立体视觉系统构建的核心问题</a></li>
+          </ol>
+        </li>
+        <li><a href="#图像校正">图像校正</a>
+          <ol>
+            <li><a href="#12步-计算出e">12步 计算出e'</a></li>
+            <li><a href="#3步-e变换到无穷远点">3步 e'变换到无穷远点</a></li>
+            <li><a href="#45步-计算出hh进行重采样">45步 计算出H、H'进行重采样</a></li>
+          </ol>
+        </li>
+        <li><a href="#对应点搜索">对应点搜索</a>
+          <ol>
+            <li><a href="#相关匹配">相关匹配</a></li>
+            <li><a href="#归一化相关匹配">归一化相关匹配</a></li>
+            <li><a href="#对应点问题">对应点问题</a></li>
+            <li><a href="#引入约束">引入约束</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#多视图几何">多视图几何</a>
+      <ol>
+        <li><a href="#运动恢复结构问题">运动恢复结构问题</a></li>
+        <li><a href="#欧式结构恢复问题">欧式结构恢复问题</a>
+          <ol>
+            <li><a href="#无视e的符号及尺度">无视E的符号及尺度</a></li>
+            <li><a href="#分解出e中的r矩阵">分解出E中的R矩阵</a></li>
+            <li><a href="#分解出e中的t向量">分解出E中的T向量</a></li>
+            <li><a href="#分解本质矩阵总结">分解本质矩阵总结</a></li>
+            <li><a href="#计算三角化">计算三角化</a></li>
+            <li><a href="#欧式结构恢复的歧义">欧式结构恢复的歧义</a></li>
+          </ol>
+        </li>
+        <li><a href="#仿射结构恢复问题">仿射结构恢复问题</a>
+          <ol>
+            <li><a href="#回顾弱透视投影摄像机">回顾：弱透视投影摄像机</a></li>
+            <li><a href="#仿射结构问题">仿射结构问题</a></li>
+            <li><a href="#基于因式分解的仿射结构恢复">基于因式分解的仿射结构恢复</a>
+              <ol>
+                <li><a href="#数据中心化">数据中心化</a></li>
+                <li><a href="#因式分解">因式分解</a></li>
+                <li><a href="#总结">总结</a></li>
+              </ol>
+            </li>
+            <li><a href="#仿射结构恢复歧义">仿射结构恢复歧义</a></li>
+          </ol>
+        </li>
+        <li><a href="#透视变换结构恢复">透视变换结构恢复</a>
+          <ol>
+            <li><a href="#透视结构恢复歧义">透视结构恢复歧义</a></li>
+            <li><a href="#恢复方法">恢复方法</a>
+              <ol>
+                <li><a href="#代数方法">代数方法</a>
+                  <ol>
+                    <li><a href="#得到f关于ab的表达式">得到F关于A、b的表达式</a></li>
+                    <li><a href="#计算ab求m2">计算A，b，求M2*</a></li>
+                    <li><a href="#n视图情况">N视图情况</a></li>
+                  </ol>
+                </li>
+                <li><a href="#bundle-adjustment">Bundle Adjustment</a>
+                  <ol>
+                    <li><a href="#代数法与分解法的局限性">代数法与分解法的局限性</a></li>
+                    <li><a href="#最小化重投影误差">最小化重投影误差</a></li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a href="#补充知识-1">补充知识</a>
+          <ol>
+            <li><a href="#pnp问题">PnP问题</a></li>
+            <li><a href="#模型拟合之ransac">模型拟合之RANSAC</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    
+    
+</aside>
+<a href="#" id="toc-toggle"></a>
+</div>
+
+<div class = "toc-phone">
+    <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:三维重建与极几何" href="#三维重建与极几何">三维重建与极几何</a>
+      <ol>
+        <li><a id="contents:三维重建基础" href="#三维重建基础">三维重建基础</a>
+          <ol>
+            <li><a id="contents:三角化" href="#三角化">三角化</a></li>
+            <li><a id="contents:多视图几何的关键问题" href="#多视图几何的关键问题">多视图几何的关键问题</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:极几何与基础矩阵" href="#极几何与基础矩阵">极几何与基础矩阵</a>
+          <ol>
+            <li><a id="contents:极几何" href="#极几何">极几何</a>
+              <ol>
+                <li><a id="contents:平行视图" href="#平行视图">平行视图</a></li>
+                <li><a id="contents:前向平移无旋转" href="#前向平移无旋转">前向平移（无旋转）</a></li>
+                <li><a id="contents:极几何约束--本质矩阵" href="#极几何约束--本质矩阵">极几何约束--本质矩阵</a></li>
+                <li><a id="contents:从本质矩阵到基础矩阵" href="#从本质矩阵到基础矩阵">从本质矩阵到基础矩阵</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a id="contents:基础矩阵估计" href="#基础矩阵估计">基础矩阵估计</a>
+          <ol>
+            <li><a id="contents:八点算法" href="#八点算法">八点算法</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:补充知识" href="#补充知识">补充知识</a>
+          <ol>
+            <li><a id="contents:单应矩阵" href="#单应矩阵">单应矩阵</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:双目立体视觉" href="#双目立体视觉">双目立体视觉</a>
+      <ol>
+        <li><a id="contents:基于平行试图的双目立体视觉" href="#基于平行试图的双目立体视觉">基于平行试图的双目立体视觉</a>
+          <ol>
+            <li><a id="contents:平行视图-1" href="#平行视图-1">平行视图</a></li>
+            <li><a id="contents:f和e的关系" href="#f和e的关系">F和e'的关系</a></li>
+            <li><a id="contents:平行视图基础矩阵" href="#平行视图基础矩阵">平行视图基础矩阵</a></li>
+            <li><a id="contents:平行视图极线p和p关系" href="#平行视图极线p和p关系">平行视图极线、p和p'关系</a></li>
+            <li><a id="contents:平行视图三角测量三角化" href="#平行视图三角测量三角化">平行视图三角测量（三角化）</a></li>
+            <li><a id="contents:双目立体视觉系统构建的核心问题" href="#双目立体视觉系统构建的核心问题">双目立体视觉系统构建的核心问题</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:图像校正" href="#图像校正">图像校正</a>
+          <ol>
+            <li><a id="contents:12步-计算出e" href="#12步-计算出e">12步 计算出e'</a></li>
+            <li><a id="contents:3步-e变换到无穷远点" href="#3步-e变换到无穷远点">3步 e'变换到无穷远点</a></li>
+            <li><a id="contents:45步-计算出hh进行重采样" href="#45步-计算出hh进行重采样">45步 计算出H、H'进行重采样</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:对应点搜索" href="#对应点搜索">对应点搜索</a>
+          <ol>
+            <li><a id="contents:相关匹配" href="#相关匹配">相关匹配</a></li>
+            <li><a id="contents:归一化相关匹配" href="#归一化相关匹配">归一化相关匹配</a></li>
+            <li><a id="contents:对应点问题" href="#对应点问题">对应点问题</a></li>
+            <li><a id="contents:引入约束" href="#引入约束">引入约束</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:多视图几何" href="#多视图几何">多视图几何</a>
+      <ol>
+        <li><a id="contents:运动恢复结构问题" href="#运动恢复结构问题">运动恢复结构问题</a></li>
+        <li><a id="contents:欧式结构恢复问题" href="#欧式结构恢复问题">欧式结构恢复问题</a>
+          <ol>
+            <li><a id="contents:无视e的符号及尺度" href="#无视e的符号及尺度">无视E的符号及尺度</a></li>
+            <li><a id="contents:分解出e中的r矩阵" href="#分解出e中的r矩阵">分解出E中的R矩阵</a></li>
+            <li><a id="contents:分解出e中的t向量" href="#分解出e中的t向量">分解出E中的T向量</a></li>
+            <li><a id="contents:分解本质矩阵总结" href="#分解本质矩阵总结">分解本质矩阵总结</a></li>
+            <li><a id="contents:计算三角化" href="#计算三角化">计算三角化</a></li>
+            <li><a id="contents:欧式结构恢复的歧义" href="#欧式结构恢复的歧义">欧式结构恢复的歧义</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:仿射结构恢复问题" href="#仿射结构恢复问题">仿射结构恢复问题</a>
+          <ol>
+            <li><a id="contents:回顾弱透视投影摄像机" href="#回顾弱透视投影摄像机">回顾：弱透视投影摄像机</a></li>
+            <li><a id="contents:仿射结构问题" href="#仿射结构问题">仿射结构问题</a></li>
+            <li><a id="contents:基于因式分解的仿射结构恢复" href="#基于因式分解的仿射结构恢复">基于因式分解的仿射结构恢复</a>
+              <ol>
+                <li><a id="contents:数据中心化" href="#数据中心化">数据中心化</a></li>
+                <li><a id="contents:因式分解" href="#因式分解">因式分解</a></li>
+                <li><a id="contents:总结" href="#总结">总结</a></li>
+              </ol>
+            </li>
+            <li><a id="contents:仿射结构恢复歧义" href="#仿射结构恢复歧义">仿射结构恢复歧义</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:透视变换结构恢复" href="#透视变换结构恢复">透视变换结构恢复</a>
+          <ol>
+            <li><a id="contents:透视结构恢复歧义" href="#透视结构恢复歧义">透视结构恢复歧义</a></li>
+            <li><a id="contents:恢复方法" href="#恢复方法">恢复方法</a>
+              <ol>
+                <li><a id="contents:代数方法" href="#代数方法">代数方法</a>
+                  <ol>
+                    <li><a id="contents:得到f关于ab的表达式" href="#得到f关于ab的表达式">得到F关于A、b的表达式</a></li>
+                    <li><a id="contents:计算ab求m2" href="#计算ab求m2">计算A，b，求M2*</a></li>
+                    <li><a id="contents:n视图情况" href="#n视图情况">N视图情况</a></li>
+                  </ol>
+                </li>
+                <li><a id="contents:bundle-adjustment" href="#bundle-adjustment">Bundle Adjustment</a>
+                  <ol>
+                    <li><a id="contents:代数法与分解法的局限性" href="#代数法与分解法的局限性">代数法与分解法的局限性</a></li>
+                    <li><a id="contents:最小化重投影误差" href="#最小化重投影误差">最小化重投影误差</a></li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a id="contents:补充知识-1" href="#补充知识-1">补充知识</a>
+          <ol>
+            <li><a id="contents:pnp问题" href="#pnp问题">PnP问题</a></li>
+            <li><a id="contents:模型拟合之ransac" href="#模型拟合之ransac">模型拟合之RANSAC</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    <hr></hr>
+</div>
+
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">三维重建之路中</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <div class="post-body e-content">
+                <h2 id="三维重建与极几何"><a href="#三维重建与极几何" class="anchor-link">#</a>三维重建与极几何</h2>
+<p>单视图重构会受到多义性的影响，并且需要场景知识
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839.png?imageMogr2/format/webp%7C" alt="image">
+而人眼是有两个眼睛，可以组合两种图片，采用多视图几何</p>
+<h3 id="三维重建基础"><a href="#三维重建基础" class="anchor-link">#</a>三维重建基础</h3>
+<h4 id="三角化"><a href="#三角化" class="anchor-link">#</a>三角化</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-1.png?imageMogr2/format/webp%7C" alt="image">
+未知参数：xyz
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-2.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-3.png?imageMogr2/format/webp%7C" alt="image">
+难点：
+需要知道摄像机的内参矩阵，以及R、T矩阵，P点的三维坐标</p>
+<h4 id="多视图几何的关键问题"><a href="#多视图几何的关键问题" class="anchor-link">#</a>多视图几何的关键问题</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-4.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="极几何与基础矩阵"><a href="#极几何与基础矩阵" class="anchor-link">#</a>极几何与基础矩阵</h3>
+<h4 id="极几何"><a href="#极几何" class="anchor-link">#</a>极几何</h4>
+<p>极几何描述了同一场景或者物体的两个视点图像间的几何关系；利用极几何解决第三个关键问题。
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-5.png?imageMogr2/format/webp%7C" alt="image">
+本质矩阵和基础矩阵就是通过p来求极线l</p>
+<h5 id="平行视图"><a href="#平行视图" class="anchor-link">#</a>平行视图</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-6.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="前向平移无旋转"><a href="#前向平移无旋转" class="anchor-link">#</a>前向平移（无旋转）</h5>
+<p>用于深度估计，非课程内容
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-7.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="极几何约束--本质矩阵"><a href="#极几何约束--本质矩阵" class="anchor-link">#</a>极几何约束--本质矩阵</h5>
+<p>通过极几何约束，将搜索范围缩小到对应的极线上。
+本质矩阵是对规范化摄像机拍摄的两个视点图像间的极几何关系进行代数描述。
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-8.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-9.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-10.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-11.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="从本质矩阵到基础矩阵"><a href="#从本质矩阵到基础矩阵" class="anchor-link">#</a>从本质矩阵到基础矩阵</h5>
+<p>基础矩阵是对<strong>一般的</strong>透视摄像机拍摄的两个视点图像间的极几何关系进行代数描述，具有泛化性
+将O1看作世界坐标系
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230527212253.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-12.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-13.png?imageMogr2/format/webp%7C" alt="image">
+总结：
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-14.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="基础矩阵估计"><a href="#基础矩阵估计" class="anchor-link">#</a>基础矩阵估计</h3>
+<h4 id="八点算法"><a href="#八点算法" class="anchor-link">#</a>八点算法</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-15.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-16.png?imageMogr2/format/webp%7C" alt="image">
+精度较低，采用 归一化八点法：
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-17.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-18.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="补充知识"><a href="#补充知识" class="anchor-link">#</a>补充知识</h3>
+<h4 id="单应矩阵"><a href="#单应矩阵" class="anchor-link">#</a>单应矩阵</h4>
+<p>结合基础矩阵，使slam系统更鲁棒
+空间平面在两个摄像机下的投影几何
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-19.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-20.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-21.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h2 id="双目立体视觉"><a href="#双目立体视觉" class="anchor-link">#</a>双目立体视觉</h2>
+<h3 id="基于平行试图的双目立体视觉"><a href="#基于平行试图的双目立体视觉" class="anchor-link">#</a>基于平行试图的双目立体视觉</h3>
+<h4 id="平行视图-1"><a href="#平行视图-1" class="anchor-link">#</a>平行视图</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-22.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="f和e的关系"><a href="#f和e的关系" class="anchor-link">#</a>F和e'的关系</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-23.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="平行视图基础矩阵"><a href="#平行视图基础矩阵" class="anchor-link">#</a>平行视图基础矩阵</h4>
+<p>哦，平行视图基础矩阵长这样。
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-24.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="平行视图极线p和p关系"><a href="#平行视图极线p和p关系" class="anchor-link">#</a>平行视图极线、p和p'关系</h4>
+<p>我的问题：找到pp'之后可以解决唯一确定一个三维点，从而构建三维模型？p'怎么确定，扫描线上哪个点：相似性处理
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-25.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-26.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-27.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-28.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="平行视图三角测量三角化"><a href="#平行视图三角测量三角化" class="anchor-link">#</a>平行视图三角测量（三角化）</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-29.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="双目立体视觉系统构建的核心问题"><a href="#双目立体视觉系统构建的核心问题" class="anchor-link">#</a>双目立体视觉系统构建的核心问题</h4>
+<ul>
+<li>如何获得平行视图</li>
+<li>如何建立点对应关系</li>
+</ul>
+<h3 id="图像校正"><a href="#图像校正" class="anchor-link">#</a>图像校正</h3>
+<p>在平行视图下极线平行，且极点位于无穷远处，则极点坐标e'=[1;0;0]，只要令非平行视图的e'变为平行视图的e'即可</p>
+<h4 id="12步-计算出e"><a href="#12步-计算出e" class="anchor-link">#</a>12步 计算出e'</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-30.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="3步-e变换到无穷远点"><a href="#3步-e变换到无穷远点" class="anchor-link">#</a>3步 e'变换到无穷远点</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-31.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="45步-计算出hh进行重采样"><a href="#45步-计算出hh进行重采样" class="anchor-link">#</a>45步 计算出H、H'进行重采样</h4>
+<p>H的计算不能通过上述步骤完成，可能最后算出来不在同一个平面，因此利用求最小值来近似结果。
+重采样就是将非平行视图的像素点利用H、H'分别映射到对应平行视图的像素点上
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-32.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="对应点搜索"><a href="#对应点搜索" class="anchor-link">#</a>对应点搜索</h3>
+<h4 id="相关匹配"><a href="#相关匹配" class="anchor-link">#</a>相关匹配</h4>
+<p>对亮度敏感
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-33.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="归一化相关匹配"><a href="#归一化相关匹配" class="anchor-link">#</a>归一化相关匹配</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-34.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="对应点问题"><a href="#对应点问题" class="anchor-link">#</a>对应点问题</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-35.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="引入约束"><a href="#引入约束" class="anchor-link">#</a>引入约束</h4>
+<p>其中顺序约束，要在物体没被遮挡的假设下成立
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-36.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h2 id="多视图几何"><a href="#多视图几何" class="anchor-link">#</a>多视图几何</h2>
+<h3 id="运动恢复结构问题"><a href="#运动恢复结构问题" class="anchor-link">#</a>运动恢复结构问题</h3>
+<p>通过三维场景的多张图像，恢复出该场景的三维结构信息以及每张图片对应的摄像机参数
+数学表达：
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-37.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="欧式结构恢复问题"><a href="#欧式结构恢复问题" class="anchor-link">#</a>欧式结构恢复问题</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-38.png?imageMogr2/format/webp%7C" alt="image">
+124问题已经解决，只需要处理本质矩阵即可
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-39.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="无视e的符号及尺度"><a href="#无视e的符号及尺度" class="anchor-link">#</a>无视E的符号及尺度</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-40.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-41.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="分解出e中的r矩阵"><a href="#分解出e中的r矩阵" class="anchor-link">#</a>分解出E中的R矩阵</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-42.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-43.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="分解出e中的t向量"><a href="#分解出e中的t向量" class="anchor-link">#</a>分解出E中的T向量</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-44.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="分解本质矩阵总结"><a href="#分解本质矩阵总结" class="anchor-link">#</a>分解本质矩阵总结</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-45.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="计算三角化"><a href="#计算三角化" class="anchor-link">#</a>计算三角化</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-46.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="欧式结构恢复的歧义"><a href="#欧式结构恢复的歧义" class="anchor-link">#</a>欧式结构恢复的歧义</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-47.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="仿射结构恢复问题"><a href="#仿射结构恢复问题" class="anchor-link">#</a>仿射结构恢复问题</h3>
+<h4 id="回顾弱透视投影摄像机"><a href="#回顾弱透视投影摄像机" class="anchor-link">#</a>回顾：弱透视投影摄像机</h4>
+<p>v 应该是 1×3
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-48.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-49.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="仿射结构问题"><a href="#仿射结构问题" class="anchor-link">#</a>仿射结构问题</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-50.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="基于因式分解的仿射结构恢复"><a href="#基于因式分解的仿射结构恢复" class="anchor-link">#</a>基于因式分解的仿射结构恢复</h4>
+<h5 id="数据中心化"><a href="#数据中心化" class="anchor-link">#</a>数据中心化</h5>
+<p>这里有点没听懂，直接记结论了，为什么bi=0
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-51.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-52.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="因式分解"><a href="#因式分解" class="anchor-link">#</a>因式分解</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-53.png?imageMogr2/format/webp%7C" alt="image">
+M也可以利用U3W3，S用V3T，解会不唯一，参考恢复歧义
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-54.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="总结"><a href="#总结" class="anchor-link">#</a>总结</h5>
+<p>用欧式的话，每次拿两个点来算，会造成误差累积，而仿射一次性计算所有点，可以减少误差；但是仿射遇到被遮挡的点，其一列都不能参与计算，必须所有摄像机都看到
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-55.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="仿射结构恢复歧义"><a href="#仿射结构恢复歧义" class="anchor-link">#</a>仿射结构恢复歧义</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-56.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-57.png?imageMogr2/format/webp%7C" alt="image">
+必须2mn&gt;8m+n-8才有解；2mn表示一对点在m个摄像机下映射到n个三维点</p>
+<h3 id="透视变换结构恢复"><a href="#透视变换结构恢复" class="anchor-link">#</a>透视变换结构恢复</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-58.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="透视结构恢复歧义"><a href="#透视结构恢复歧义" class="anchor-link">#</a>透视结构恢复歧义</h4>
+<p>由歧义引出解
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-59.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-60.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="恢复方法"><a href="#恢复方法" class="anchor-link">#</a>恢复方法</h4>
+<p>困难点：K1、K2、R、T均未知</p>
+<h5 id="代数方法"><a href="#代数方法" class="anchor-link">#</a>代数方法</h5>
+<p>F包含KRT矩阵信息，所以从F中分解出M1，M2矩阵即可
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-61.png?imageMogr2/format/webp%7C" alt="image">
+M1<em>已知，M2</em>未知
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-62.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="得到f关于ab的表达式"><a href="#得到f关于ab的表达式" class="anchor-link">#</a>得到F关于A、b的表达式</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-63.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="计算ab求m2"><a href="#计算ab求m2" class="anchor-link">#</a>计算A，b，求M2*</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-64.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-65.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="n视图情况"><a href="#n视图情况" class="anchor-link">#</a>N视图情况</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-66.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="bundle-adjustment"><a href="#bundle-adjustment" class="anchor-link">#</a>Bundle Adjustment</h5>
+<h6 id="代数法与分解法的局限性"><a href="#代数法与分解法的局限性" class="anchor-link">#</a>代数法与分解法的局限性</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-67.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="最小化重投影误差"><a href="#最小化重投影误差" class="anchor-link">#</a>最小化重投影误差</h6>
+<p>MiXj = xij' 即xij（真实值）的测量点
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-68.png?imageMogr2/format/webp%7C" alt="image"></p>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-69.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="补充知识-1"><a href="#补充知识-1" class="anchor-link">#</a>补充知识</h3>
+<h4 id="pnp问题"><a href="#pnp问题" class="anchor-link">#</a>PnP问题</h4>
+<p>原先欧式结构是已知三维点和像素点的对应关系求F→E→RT，而现在是已知摄像机位姿的视图来求新摄像机位姿，求RT
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-70.png?imageMogr2/format/webp%7C" alt="image">
+图片来源：<a href="https://niecongchong.blog.csdn.net/article/details/127260890" target="_blank" rel="noopener">计算机视觉之三维重建——第七章：运动恢复结构（SFM）系统设计《深入浅出sfm和SLAM核心算法 (鲁鹏)》</a>
+<a href="https://www.cnblogs.com/mafuqiang/p/8302663.html" target="_blank" rel="noopener">求解详细过程</a>
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-71.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-72.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="模型拟合之ransac"><a href="#模型拟合之ransac" class="anchor-link">#</a>模型拟合之RANSAC</h4>
+<p>用RANSAC来减少三维重建点的噪声问题
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-73.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-74.png?imageMogr2/format/webp%7C" alt="image">
+核心是计算采样次数N
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-75.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-76.png?imageMogr2/format/webp%7C" alt="image"></p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/computervision/" rel="tag" class="post-tag-link">#computervision</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

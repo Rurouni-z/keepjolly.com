@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>面试之计算机网络-4 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="四次挥手相关内容 TCP 的连接的拆除需要发送四个包，因此称为四次挥手(Four-way handshake)，客户端或服务器均可主动发起挥手动作。
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/other/interview-network-4/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2024-01-13T21:57:19+08:00",
+        "dateModified": "2024-05-03T14:50:48+08:00",
+        "url": "http://localhost:1313/posts/other/interview-network-4/",
+        "headline": "面试之计算机网络-4",
+        "description": "四次挥手相关内容 TCP 的连接的拆除需要发送四个包，因此称为四次挥手(Four-way handshake)，客户端或服务器均可主动发起挥手动作。\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  4463 ,
+        "image": ["http://oss.interviewguide.cn/img/202205220036404.png","http://oss.interviewguide.cn/img/202205220036408.png","https://pic.keepjolly.com/halo/blog/2024/01/20240113210112.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2024/01/20240113210118.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2024/01/20240113210122.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2024/01/20240113210129.png?imageMogr2/format/webp%7C"],
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="面试之计算机网络-4" />
+<meta property="og:description" content="四次挥手相关内容 TCP 的连接的拆除需要发送四个包，因此称为四次挥手(Four-way handshake)，客户端或服务器均可主动发起挥手动作。
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/other/interview-network-4/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="http://oss.interviewguide.cn/img/202205220036404.png" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2024-01-13T21:57:19&#43;08:00" />
+    <meta property="article:modified_time" content="2024-05-03T14:50:48&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">面试之计算机网络-4</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:四次挥手相关内容" href="#四次挥手相关内容">四次挥手相关内容</a></li>
+    <li><a id="contents:挥手为什么需要四次" href="#挥手为什么需要四次">挥手为什么需要四次？</a></li>
+    <li><a id="contents:msl和ttl" href="#msl和ttl">MSL和TTL？</a></li>
+    <li><a id="contents:四次挥手释放连接时等待2msl的意义" href="#四次挥手释放连接时等待2msl的意义">四次挥手释放连接时，等待2MSL的意义?</a></li>
+    <li><a id="contents:为什么time_wait状态需要经过2msl才能返回到close状态" href="#为什么time_wait状态需要经过2msl才能返回到close状态">为什么TIME_WAIT状态需要经过2MSL才能返回到CLOSE状态？</a></li>
+    <li><a id="contents:tcp粘包问题是什么你会如何去解决它" href="#tcp粘包问题是什么你会如何去解决它">TCP粘包问题是什么？你会如何去解决它？</a></li>
+    <li><a id="contents:osi七层模型中表示层和会话层功能是什么" href="#osi七层模型中表示层和会话层功能是什么">OSI七层模型中表示层和会话层功能是什么？</a></li>
+    <li><a id="contents:三次握手四次挥手的变迁图" href="#三次握手四次挥手的变迁图">三次握手四次挥手的变迁图</a></li>
+    <li><a id="contents:对称密钥加密的优点缺点" href="#对称密钥加密的优点缺点">对称密钥加密的优点缺点？</a></li>
+    <li><a id="contents:非对称密钥加密你了解吗优缺点" href="#非对称密钥加密你了解吗优缺点">非对称密钥加密你了解吗？优缺点？</a></li>
+    <li><a id="contents:https是什么" href="#https是什么">HTTPS是什么？</a></li>
+    <li><a id="contents:http的缺点有哪些" href="#http的缺点有哪些">HTTP的缺点有哪些？</a></li>
+    <li><a id="contents:https采用的加密方式有哪些是对称还是非对称" href="#https采用的加密方式有哪些是对称还是非对称">HTTPS采用的加密方式有哪些？是对称还是非对称？</a></li>
+    <li><a id="contents:为什么有的时候刷新页面不需要重新建立-ssl-连接" href="#为什么有的时候刷新页面不需要重新建立-ssl-连接">为什么有的时候刷新页面不需要重新建立 SSL 连接？</a></li>
+    <li><a id="contents:ssl中的认证中的证书是什么了解过吗" href="#ssl中的认证中的证书是什么了解过吗">SSL中的认证中的证书是什么？了解过吗？</a></li>
+    <li><a id="contents:http如何禁用缓存如何确认缓存" href="#http如何禁用缓存如何确认缓存">HTTP如何禁用缓存？如何确认缓存？</a></li>
+    <li><a id="contents:get与post传递数据的最大长度能够达到多少呢" href="#get与post传递数据的最大长度能够达到多少呢">GET与POST传递数据的最大长度能够达到多少呢？</a></li>
+    <li><a id="contents:网络层常见协议可以说一下吗" href="#网络层常见协议可以说一下吗">网络层常见协议？可以说一下吗？</a></li>
+    <li><a id="contents:tcp四大拥塞控制算法总结极其重要" href="#tcp四大拥塞控制算法总结极其重要">TCP四大拥塞控制算法总结？（极其重要）</a>
+      <ol>
+        <li><a id="contents:慢启动算法--slow-start" href="#慢启动算法--slow-start">慢启动算法 – Slow Start</a></li>
+        <li><a id="contents:拥塞避免算法--congestion-avoidance" href="#拥塞避免算法--congestion-avoidance">拥塞避免算法 – Congestion Avoidance</a></li>
+        <li><a id="contents:拥塞发生算法" href="#拥塞发生算法">拥塞发生算法</a></li>
+        <li><a id="contents:快速恢复算法--fast-recovery" href="#快速恢复算法--fast-recovery">快速恢复算法 – Fast Recovery</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:为何快速重传是选择3次ack" href="#为何快速重传是选择3次ack">为何快速重传是选择3次ACK？</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <h2 id="四次挥手相关内容"><a href="#四次挥手相关内容" class="anchor-link">#</a><a href="#contents:四次挥手相关内容" class="headings">四次挥手相关内容</a></h2>
+<p><img src="http://oss.interviewguide.cn/img/202205220036404.png" alt=""></p>
+<p>TCP 的连接的拆除需要发送四个包，因此称为四次挥手(Four-way handshake)，客户端或服务器均可主动发起挥手动作。</p>
+<ul>
+<li>客户端打算关闭连接，此时会发送一个 TCP 首部 <code>FIN</code> 标志位被置为 <code>1</code> 的报文，即 <code>FIN</code> 报文，之后客户端进入 <code>FIN_WAIT_1</code> 状态。</li>
+<li>服务端收到该报文后，就向客户端发送 <code>ACK</code> 应答报文，接着服务端进入 <code>CLOSE_WAIT</code> 状态。</li>
+<li>客户端收到服务端的 <code>ACK</code> 应答报文后，之后进入 <code>FIN_WAIT_2</code> 状态。</li>
+<li>等待服务端处理完数据后，也向客户端发送 <code>FIN</code> 报文，之后服务端进入 <code>LAST_ACK</code> 状态。</li>
+<li>客户端收到服务端的 <code>FIN</code> 报文后，回一个 <code>ACK</code> 应答报文，之后进入 <code>TIME_WAIT</code> 状态</li>
+<li>服务端收到了 <code>ACK</code> 应答报文后，就进入了 <code>CLOSE</code> 状态，至此服务端已经完成连接的关闭。</li>
+<li>客户端在经过 <code>2MSL</code> 时间后，自动进入 <code>CLOSE</code> 状态，至此客户端也完成连接的关闭。</li>
+</ul>
+<h2 id="挥手为什么需要四次"><a href="#挥手为什么需要四次" class="anchor-link">#</a><a href="#contents:挥手为什么需要四次" class="headings">挥手为什么需要四次？</a></h2>
+<p>服务器收到客户端的 FIN 报文时，内核会马上回一个 ACK 应答报文，<strong>但是服务端应用程序可能还有数据要发送，所以并不能马上发送 FIN 报文，而是将发送 FIN 报文的控制权交给服务端应用程序</strong>：</p>
+<ul>
+<li>如果服务端应用程序有数据要发送的话，就发完数据后，才调用关闭连接的函数；</li>
+<li>如果服务端应用程序没有数据要发送的话，可以直接调用关闭连接的函数，</li>
+</ul>
+<h2 id="msl和ttl"><a href="#msl和ttl" class="anchor-link">#</a><a href="#contents:msl和ttl" class="headings">MSL和TTL？</a></h2>
+<p>MSL（Maximum Segment Lifetime），它是任何报文在网络上存在的<strong>最长时间</strong>。</p>
+<p>IP 头中有一个 <code>TTL</code> 字段，是 IP 数据报可以经过的<strong>最大路由数</strong>，每经过一个处理他的路由器此值就减 1，当此值为 0 则数据报将被丢弃，同时发送 ICMP 报文通知源主机。</p>
+<p>MSL 与 TTL 的区别： MSL 的单位是时间，而 TTL 是经过路由跳数。所以 <strong>MSL 应该要大于等于 TTL 消耗为 0 的时间</strong>，以确保报文已被自然消亡。</p>
+<h2 id="四次挥手释放连接时等待2msl的意义"><a href="#四次挥手释放连接时等待2msl的意义" class="anchor-link">#</a><a href="#contents:四次挥手释放连接时等待2msl的意义" class="headings">四次挥手释放连接时，等待2MSL的意义?</a></h2>
+<ol>
+<li>保证客户端发送的最后一个ACK报文段能够到达服务端。 因为这个ACK有可能丢失，如果丢失服务器会超时重传这个FIN报文，接着客户端再重传一次确认，重新启动时间等待计时器。保证服务器能正常的关闭。</li>
+<li>防止历史连接中的数据，出现在本连接中。经过2MSL，就可以使历史连接内所产生的所有报文段都从网络中消失。</li>
+</ol>
+<h2 id="为什么time_wait状态需要经过2msl才能返回到close状态"><a href="#为什么time_wait状态需要经过2msl才能返回到close状态" class="anchor-link">#</a><a href="#contents:为什么time_wait状态需要经过2msl才能返回到close状态" class="headings">为什么TIME_WAIT状态需要经过2MSL才能返回到CLOSE状态？</a></h2>
+<p>同上</p>
+<h2 id="tcp粘包问题是什么你会如何去解决它"><a href="#tcp粘包问题是什么你会如何去解决它" class="anchor-link">#</a><a href="#contents:tcp粘包问题是什么你会如何去解决它" class="headings">TCP粘包问题是什么？你会如何去解决它？</a></h2>
+<p><strong>TCP粘包</strong>是由于TCP是面向流的协议，它只提供了数据的可靠传输，而没有明确的消息边界，用户不知道数据的边界在哪里，导致解析出错。</p>
+<p><strong>解决</strong>：</p>
+<ol>
+<li>通过特殊标识符表示数据包的边界，例如\n\r，\t，或者一些隐藏字符。</li>
+<li>在TCP报文的头部加上表示数据长度。</li>
+<li>发送数据时<strong>定长</strong>发送。</li>
+</ol>
+<h2 id="osi七层模型中表示层和会话层功能是什么"><a href="#osi七层模型中表示层和会话层功能是什么" class="anchor-link">#</a><a href="#contents:osi七层模型中表示层和会话层功能是什么" class="headings">OSI七层模型中表示层和会话层功能是什么？</a></h2>
+<p>参考OSI七层模型。</p>
+<h2 id="三次握手四次挥手的变迁图"><a href="#三次握手四次挥手的变迁图" class="anchor-link">#</a><a href="#contents:三次握手四次挥手的变迁图" class="headings">三次握手四次挥手的变迁图</a></h2>
+<p>建议不看</p>
+<p>《TCP/IP详解 卷1:协议》有一张TCP状态变迁图，很具有代表性，有助于大家理解三次握手和四次挥手的状态变化。如下图所示，粗的实线箭头表示正常的客户端状态变迁，粗的虚线箭头表示正常的服务器状态变迁。</p>
+<p><img src="http://oss.interviewguide.cn/img/202205220036408.png" alt=""></p>
+<h2 id="对称密钥加密的优点缺点"><a href="#对称密钥加密的优点缺点" class="anchor-link">#</a><a href="#contents:对称密钥加密的优点缺点" class="headings">对称密钥加密的优点缺点？</a></h2>
+<p>对称密钥加密（Symmetric-Key Encryption），加密和解密使用同一密钥。</p>
+<ul>
+<li>优点：运算速度快</li>
+<li>缺点：无法安全地将密钥传输给通信方</li>
+</ul>
+<h2 id="非对称密钥加密你了解吗优缺点"><a href="#非对称密钥加密你了解吗优缺点" class="anchor-link">#</a><a href="#contents:非对称密钥加密你了解吗优缺点" class="headings">非对称密钥加密你了解吗？优缺点？</a></h2>
+<p>非对称密钥加密，加密和解密使用不同的密钥。</p>
+<ul>
+<li>
+<p><strong>公钥加密，私钥解密</strong>。这个目的是为了<strong>保证内容传输的安全</strong>，因为被公钥加密的内容，其他人是无法解密的，只有持有私钥的人，才能解密出实际的内容；</p>
+</li>
+<li>
+<p><strong>私钥加密，公钥解密</strong>。这个目的是为了<strong>保证消息不会被冒充</strong>，因为私钥是不可泄露的，如果公钥能正常解密出私钥加密的内容，就能证明这个消息是来源于持有私钥身份的人发送的。</p>
+</li>
+<li>
+<p>优点：可以更安全地将公开密钥传输给通信发送方；</p>
+</li>
+<li>
+<p>缺点：运算速度慢。</p>
+</li>
+</ul>
+<h2 id="https是什么"><a href="#https是什么" class="anchor-link">#</a><a href="#contents:https是什么" class="headings">HTTPS是什么？</a></h2>
+<p>HTTPS 并不是新协议，而是让 <strong>HTTP 先和 SSL（Secure Sockets Layer）通信，再由 SSL 和 TCP 通信</strong>。通过使用 SSL，HTTPS 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。</p>
+<h2 id="http的缺点有哪些"><a href="#http的缺点有哪些" class="anchor-link">#</a><a href="#contents:http的缺点有哪些" class="headings">HTTP的缺点有哪些？</a></h2>
+<ul>
+<li>使用明文进行通信，内容可能会被窃听；</li>
+<li>不验证通信方的身份，通信方的身份有可能遭遇伪装；</li>
+<li>无法证明报文的完整性，报文有可能遭篡改。</li>
+</ul>
+<h2 id="https采用的加密方式有哪些是对称还是非对称"><a href="#https采用的加密方式有哪些是对称还是非对称" class="anchor-link">#</a><a href="#contents:https采用的加密方式有哪些是对称还是非对称" class="headings">HTTPS采用的加密方式有哪些？是对称还是非对称？</a></h2>
+<p>HTTPS 采用混合的加密机制，使用<strong>非对称密钥加密用于传输会话密钥来保证传输过程的安全性</strong>，之后使用<strong>对称密钥加密通信来保证通信过程的效率</strong>。</p>
+<p>可以说一下ECDHE的过程。</p>
+<h2 id="为什么有的时候刷新页面不需要重新建立-ssl-连接"><a href="#为什么有的时候刷新页面不需要重新建立-ssl-连接" class="anchor-link">#</a><a href="#contents:为什么有的时候刷新页面不需要重新建立-ssl-连接" class="headings">为什么有的时候刷新页面不需要重新建立 SSL 连接？</a></h2>
+<p>由于浏览器和服务器之间的持久连接机制。当客户端发送新的请求时，提供了之前建立 SSL 连接时的会话标识符或会话票据，服务器就可以使用这些信息恢复之前的 SSL 会话状态，从而避免重新进行完整的 SSL 握手过程。</p>
+<h2 id="ssl中的认证中的证书是什么了解过吗"><a href="#ssl中的认证中的证书是什么了解过吗" class="anchor-link">#</a><a href="#contents:ssl中的认证中的证书是什么了解过吗" class="headings">SSL中的认证中的证书是什么？了解过吗？</a></h2>
+<p>一个数字证书通常包含了：</p>
+<ul>
+<li>公钥；</li>
+<li>持有者<strong>信息</strong>；</li>
+<li>证书认证机构（CA）的<strong>信息</strong>；</li>
+<li>CA 对这份文件的<strong>数字签名</strong>及使用的<strong>算法</strong>；</li>
+<li>证书有效期；</li>
+<li>还有一些其他额外信息；</li>
+</ul>
+<p>数字证书的作用，是用来认证公钥持有者的身份，以防止第三方进行冒充。</p>
+<p>扩展
+<img src="https://pic.keepjolly.com/halo/blog/2024/01/20240113210112.png?imageMogr2/format/webp%7C" alt="image">
+CA 签发证书的过程，如上图左边部分：</p>
+<ul>
+<li>首先 CA 会把持有者的公钥、用途、颁发者、有效时间等信息打成一个包，然后对这些信息进行 Hash 计算，得到一个 Hash 值；</li>
+<li>然后 CA 会使用自己的私钥将该 Hash 值加密，生成 Certificate Signature，也就是 CA 对证书做了签名；</li>
+<li>最后将 Certificate Signature 添加在文件证书上，形成数字证书；</li>
+</ul>
+<p>客户端校验服务端的数字证书的过程，如上图右边部分：</p>
+<ul>
+<li>首先客户端会使用同样的 Hash 算法获取该证书的 Hash 值 H1；</li>
+<li>通常浏览器和操作系统中集成了 CA 的公钥信息，浏览器收到证书后可以使用 CA 的公钥解密 Certificate Signature 内容，得到一个 Hash 值 H2 ；</li>
+<li>最后比较 H1 和 H2，如果值相同，则为可信赖的证书，否则则认为证书不可信。</li>
+</ul>
+<h2 id="http如何禁用缓存如何确认缓存"><a href="#http如何禁用缓存如何确认缓存" class="anchor-link">#</a><a href="#contents:http如何禁用缓存如何确认缓存" class="headings">HTTP如何禁用缓存？如何确认缓存？</a></h2>
+<p>可以通过 Cache-Control 首部字段来控制缓存：</p>
+<ul>
+<li><strong>Cache-Control: no-store</strong>：指示客户端不缓存任何响应，每次请求都要向服务器发送。</li>
+<li>Cache-Control: no-cache：指示客户端在使用缓存前必须先向服务器进行重新验证。</li>
+</ul>
+<p>要确认缓存是否生效，可以使用以下方法之一：</p>
+<ol>
+<li>
+<p>查看响应头：在HTTP响应中，可以查看响应头中的缓存控制指令和其他相关字段。其中，常见的字段包括：</p>
+<ul>
+<li>Cache-Control：指示缓存行为的指令。</li>
+<li>Expires：指示响应的过期时间。</li>
+<li>ETag：用于标识响应内容的唯一标识符。</li>
+<li>Last-Modified：指示响应内容的最后修改时间。</li>
+</ul>
+<p>通过查看这些响应头字段的值，可以了解缓存是否被启用，并确定缓存的相关信息。</p>
+</li>
+</ol>
+<h2 id="get与post传递数据的最大长度能够达到多少呢"><a href="#get与post传递数据的最大长度能够达到多少呢" class="anchor-link">#</a><a href="#contents:get与post传递数据的最大长度能够达到多少呢" class="headings">GET与POST传递数据的最大长度能够达到多少呢？</a></h2>
+<p>HTTP 协议没有GET(URL)和POST(Body)的长度限制，对 URL 限制的大多是浏览器和服务器的原因。</p>
+<p>为了浏览器的兼容性，需要限制url长度，一般情况下最大应为2083字节；服务器是为了性能和安全考虑，会给get、post长度加限制。</p>
+<p>了解：</p>
+<blockquote>
+<p>这个限制是特定的浏览器及服务器对它的限制，比如IE对URL长度的限制是2083字节(2K+35字节)。对于其他浏览器，如FireFox，Netscape等，则没有长度限制，这个时候其限制取决于服务器的操作系统；即如果url太长，服务器可能会因为安全方面的设置从而拒绝请求或者发生不完整的数据请求。</p>
+<p>post 理论上讲是没有大小限制的，HTTP协议规范也没有进行大小限制，但实际上post所能传递的数据量大小取决于服务器的设置和内存大小。</p>
+<p>因为我们一般post的数据量很少超过MB的，所以我们很少能感觉的到post的数据量限制，但实际中如果你上传文件的过程中可能会发现这样一个问题，即上传个头比较大的文件到服务器时候，可能上传不上去。</p>
+<p>以php语言来说，查原因的时候你也许会看到有说PHP上传文件涉及到的参数PHP默认的上传有限定，一般这个值是2MB，更改这个值需要更改php.conf的post_max_size这个值。这就很明白的说明了这个问题了。</p>
+</blockquote>
+<h2 id="网络层常见协议可以说一下吗"><a href="#网络层常见协议可以说一下吗" class="anchor-link">#</a><a href="#contents:网络层常见协议可以说一下吗" class="headings">网络层常见协议？可以说一下吗？</a></h2>
+<p><img src="https://pic.keepjolly.com/halo/blog/2024/01/20240113210118.png?imageMogr2/format/webp%7C" alt="image"></p>
+<ol>
+<li>
+<p>Internet Protocol (IP)：IP是互联网的基础协议，负责在网络中传输数据包。<del>它使用IP地址来标识网络上的设备，并提供数据包的路由功能。</del></p>
+</li>
+<li>
+<p>Internet Control Message Protocol (ICMP)：ICMP用于在IP网络中传输控制消息。<del>它主要用于网络故障排除、错误报告和网络状态查询等。</del></p>
+</li>
+<li>
+<p>Internet Group Management Protocol (IGMP)：IGMP是用于在IP网络中管理多播组的协议。<del>它允许主机加入或离开多播组，并与路由器通信以确定多播数据的传输</del>。</p>
+</li>
+<li>
+<p>Address Resolution Protocol (ARP)：ARP用于将IP地址解析为物理（MAC）地址。<del>当主机需要与目标设备通信时，它可以使用ARP协议来获取目标设备的物理地址。</del></p>
+</li>
+<li>
+<p>Reverse Address Resolution Protocol (RARP)：RARP与ARP相反，它将物理地址解析为IP地址。<del>它可以帮助没有硬盘和操作系统配置的设备（如磁盘less工作站）获取其IP地址。</del></p>
+</li>
+<li>
+<p>Internet Protocol version 6 (IPv6)：IPv6是IP协议的下一代版本，旨在解决IPv4地址耗尽和其他一些限制。它使用128位的地址空间，提供更大的地址容量和其他改进。</p>
+</li>
+</ol>
+<h2 id="tcp四大拥塞控制算法总结极其重要"><a href="#tcp四大拥塞控制算法总结极其重要" class="anchor-link">#</a><a href="#contents:tcp四大拥塞控制算法总结极其重要" class="headings">TCP四大拥塞控制算法总结？（极其重要）</a></h2>
+<p><img src="https://pic.keepjolly.com/halo/blog/2024/01/20240113210122.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="慢启动算法--slow-start"><a href="#慢启动算法--slow-start" class="anchor-link">#</a><a href="#contents:慢启动算法--slow-start" class="headings">慢启动算法 – Slow Start</a></h3>
+<p>慢启动是TCP连接刚开始时的拥塞控制算法。
+慢启动的算法的规则就是：**每收到一个 ACK，拥塞窗口 cwnd 的大小就会加 1。**呈指数增加。
+ </p>
+<blockquote>
+<p>慢启动算法：</p>
+<ul>
+<li>连接建立完成后，一开始初始化 <code>cwnd = 1</code>，表示可以传一个 <code>MSS</code> 大小的数据。</li>
+<li>当收到一个 ACK 确认应答后，cwnd 增加 1，于是一次能够发送 2 个</li>
+<li>当收到 2 个的 ACK 确认应答后， cwnd 增加 2，于是就可以比之前多发2 个，所以这一次能够发送 4 个，呈指数增长。</li>
+</ul>
+</blockquote>
+<p>慢启动算法还有一个慢启动门限 <code>ssthresh</code> （slow start threshold）状态变量。</p>
+<ul>
+<li>当 <code>cwnd</code> &lt; <code>ssthresh</code> 时，使用慢启动算法。</li>
+<li>当 <code>cwnd</code> &gt;= <code>ssthresh</code> 时，就会使用「拥塞避免算法」。</li>
+</ul>
+<p><del>一般来说 <code>ssthresh</code> 的大小是 <code>65535</code> 字节。</del></p>
+<h3 id="拥塞避免算法--congestion-avoidance"><a href="#拥塞避免算法--congestion-avoidance" class="anchor-link">#</a><a href="#contents:拥塞避免算法--congestion-avoidance" class="headings">拥塞避免算法 – Congestion Avoidance</a></h3>
+<p>当拥塞窗口 <code>cwnd</code> 「超过」慢启动门限 <code>ssthresh</code> 就会进入拥塞避免算法。</p>
+<p>进入拥塞避免算法后，它的规则是：<strong>每当收到一个 ACK 时，cwnd 增加 1/cwnd。</strong>，呈线性增长。</p>
+<blockquote>
+<p>接上前面的慢启动的例子，现假定 <code>ssthresh</code> 为 <code>8</code>：</p>
+<ul>
+<li>当 8 个 ACK 应答确认到来时，每个确认增加 1/8，8 个 ACK 确认 cwnd 一共增加 1，于是这一次能够发送 9 个 <code>MSS</code> 大小的数据，变成了<strong>线性增长。</strong></li>
+</ul>
+</blockquote>
+<p>过了慢启动阈值后，拥塞避免算法可以避免窗口增长过快导致窗口拥塞，而是缓慢的增加调整到网络的最佳值，直到出现丢包现象，触发拥塞发生的算法。</p>
+<h3 id="拥塞发生算法"><a href="#拥塞发生算法" class="anchor-link">#</a><a href="#contents:拥塞发生算法" class="headings">拥塞发生算法</a></h3>
+<p>当网络出现拥塞，也就是会发生数据包重传，重传机制主要有两种：</p>
+<ul>
+<li>超时重传</li>
+<li>快速重传</li>
+</ul>
+<p>超时重传是在发送一个数据以后就开启一个计时器，在指定时间内如果没有收到ACK报文，说明网络拥塞严重，就触发该算法：
+将慢启动门限<code>ssthresh</code> 设为 <code>cwnd/2</code>，拥塞窗口<code>cwnd</code> 重置为 cwnd 初始化值(Linux 是10)，进入慢启动算法。
+<img src="https://pic.keepjolly.com/halo/blog/2024/01/20240113210129.png?imageMogr2/format/webp%7C" alt="image"></p>
+<p>快速重传是当发送方连续三次收到前一个包的 ACK，于是发送端就会快速地重传，不必等待超时再重传。
+它将拥塞窗口设置为原来的一半，慢启动门限设置为拥塞窗口大小。</p>
+<ul>
+<li><code>cwnd = cwnd/2</code> ，也就是设置为原来的一半;</li>
+<li><code>ssthresh = cwnd</code>;</li>
+<li>进入快速恢复算法</li>
+</ul>
+<h3 id="快速恢复算法--fast-recovery"><a href="#快速恢复算法--fast-recovery" class="anchor-link">#</a><a href="#contents:快速恢复算法--fast-recovery" class="headings">快速恢复算法 – Fast Recovery</a></h3>
+<p>快速恢复算法是认为，还能收到 3 个重复 ACK 说明网络也不那么糟糕，他将：</p>
+<ul>
+<li>拥塞窗口 <code>cwnd = ssthresh + 3</code> （ 3 的意思是确认有 3 个重复数据包被收到了）；</li>
+<li>重传丢失的数据包；</li>
+<li>如果再收到重复的 ACK，那么 cwnd 增加 1；</li>
+<li>如果收到新数据的 ACK 后，把 cwnd 设置为 ssthresh 的值，重新进入拥塞避免算法；</li>
+</ul>
+<h2 id="为何快速重传是选择3次ack"><a href="#为何快速重传是选择3次ack" class="anchor-link">#</a><a href="#contents:为何快速重传是选择3次ack" class="headings">为何快速重传是选择3次ACK？</a></h2>
+<p>主要的考虑还是要区分包的丢失是由于链路故障还是乱序等其他因素引发。</p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/interview/" rel="tag" class="post-tag-link">#interview</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

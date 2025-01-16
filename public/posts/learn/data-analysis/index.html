@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>公务员行测--资料分析 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="Rurouni" /><meta name="description" content="注意：手机端视频跳转不会直接跳转到讲解部分，需要电脑端！！已更新较为详细的解释。
+统计术语 基期量与现期量 作为对比参照的时期称为基期，相对于基期的称为现期 增长量 基期量与现期量增长（降低/减少的）绝对量 增长量 = 现期量-基期量 增长率 增长率=$\frac{increment}{period_{base}} = \frac{period_{base}-period_{now}}{period_{base}}$ $increment$：增长量 $period_{base}$：现期量 $period_{now}$：基期量 减少率 = -增长率 年均增长量 年均增长量=$\frac{period_{newest}-period_{oldest}}{newest-oldest}$ $period_{newest}$：最近的年份 $period_{oldest}$：最久的年份 年均增长率 现期量=$period_{base}\times(1&#43;年均增长率)^n$，其中n为相差年份 同比环比 同比：与历史同期比较，实际上是指与历年的同一时期相比较。 环比：与上个统计周期比较，实际上是指“与紧紧相邻的统计周期相比较”。 比重、倍数、平均数、百分数、成数、翻番 比重=$\frac{part}{all}$ 倍数：A是B的$\frac{A}{B}$倍 平均数：平均数=总数÷总份数 百分点是百分数的单位，用于百位数加减 成表示十分之一 翻一番为原来的2倍，翻n番为原来的$2^n$倍 顺差、逆差 顺差：出口&gt;进口 逆差：进口&gt;出口 GDP=增加值 速算技巧 截位直除 选项首位均不同，保留两位；选项首位有相同的，保留三位 选项之间误差在 10%以上，保留两位 ；选项之间误差在 10%以内，保留三位 一步除式：只估算分母，保留三位；多步连除：分子分母同时截位，分开估算/交叉估算 关于多步截除的增长率估算
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/learn/data-analysis/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2023-11-12T00:49:46+08:00",
+        "dateModified": "2023-12-27T22:08:58+08:00",
+        "url": "http://localhost:1313/posts/learn/data-analysis/",
+        "headline": "公务员行测--资料分析",
+        "description": "注意：手机端视频跳转不会直接跳转到讲解部分，需要电脑端！！已更新较为详细的解释。\n统计术语 基期量与现期量 作为对比参照的时期称为基期，相对于基期的称为现期 增长量 基期量与现期量增长（降低/减少的）绝对量 增长量 = 现期量-基期量 增长率 增长率=$\\frac{increment}{period_{base}} = \\frac{period_{base}-period_{now}}{period_{base}}$ $increment$：增长量 $period_{base}$：现期量 $period_{now}$：基期量 减少率 = -增长率 年均增长量 年均增长量=$\\frac{period_{newest}-period_{oldest}}{newest-oldest}$ $period_{newest}$：最近的年份 $period_{oldest}$：最久的年份 年均增长率 现期量=$period_{base}\\times(1+年均增长率)^n$，其中n为相差年份 同比环比 同比：与历史同期比较，实际上是指与历年的同一时期相比较。 环比：与上个统计周期比较，实际上是指“与紧紧相邻的统计周期相比较”。 比重、倍数、平均数、百分数、成数、翻番 比重=$\\frac{part}{all}$ 倍数：A是B的$\\frac{A}{B}$倍 平均数：平均数=总数÷总份数 百分点是百分数的单位，用于百位数加减 成表示十分之一 翻一番为原来的2倍，翻n番为原来的$2^n$倍 顺差、逆差 顺差：出口\u003e进口 逆差：进口\u003e出口 GDP=增加值 速算技巧 截位直除 选项首位均不同，保留两位；选项首位有相同的，保留三位 选项之间误差在 10%以上，保留两位 ；选项之间误差在 10%以内，保留三位 一步除式：只估算分母，保留三位；多步连除：分子分母同时截位，分开估算/交叉估算 关于多步截除的增长率估算\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  6266 ,
+        "image": ["https://pic.keepjolly.com/halo/blog/2023/11/20231116200706.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/11/20231116224858.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/11/20231116225256.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/11/20231117230604.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/11/20231117230954.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/12/20231213232002.png?imageMogr2/format/webp%7C"],
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="公务员行测--资料分析" />
+<meta property="og:description" content="注意：手机端视频跳转不会直接跳转到讲解部分，需要电脑端！！已更新较为详细的解释。
+统计术语 基期量与现期量 作为对比参照的时期称为基期，相对于基期的称为现期 增长量 基期量与现期量增长（降低/减少的）绝对量 增长量 = 现期量-基期量 增长率 增长率=$\frac{increment}{period_{base}} = \frac{period_{base}-period_{now}}{period_{base}}$ $increment$：增长量 $period_{base}$：现期量 $period_{now}$：基期量 减少率 = -增长率 年均增长量 年均增长量=$\frac{period_{newest}-period_{oldest}}{newest-oldest}$ $period_{newest}$：最近的年份 $period_{oldest}$：最久的年份 年均增长率 现期量=$period_{base}\times(1&#43;年均增长率)^n$，其中n为相差年份 同比环比 同比：与历史同期比较，实际上是指与历年的同一时期相比较。 环比：与上个统计周期比较，实际上是指“与紧紧相邻的统计周期相比较”。 比重、倍数、平均数、百分数、成数、翻番 比重=$\frac{part}{all}$ 倍数：A是B的$\frac{A}{B}$倍 平均数：平均数=总数÷总份数 百分点是百分数的单位，用于百位数加减 成表示十分之一 翻一番为原来的2倍，翻n番为原来的$2^n$倍 顺差、逆差 顺差：出口&gt;进口 逆差：进口&gt;出口 GDP=增加值 速算技巧 截位直除 选项首位均不同，保留两位；选项首位有相同的，保留三位 选项之间误差在 10%以上，保留两位 ；选项之间误差在 10%以内，保留三位 一步除式：只估算分母，保留三位；多步连除：分子分母同时截位，分开估算/交叉估算 关于多步截除的增长率估算
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/learn/data-analysis/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://pic.keepjolly.com/halo/blog/2023/11/20231116200706.png?imageMogr2/format/webp%7C" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2023-11-12T00:49:46&#43;08:00" />
+    <meta property="article:modified_time" content="2023-12-27T22:08:58&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+<div class="post-toc" id="post-toc">
+<aside>
+    <header>
+    <h4>文章の字数: 6266</h4> 
+    </header>
+    
+    
+    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#统计术语">统计术语</a></li>
+    <li><a href="#速算技巧">速算技巧</a>
+      <ol>
+        <li><a href="#截位直除">截位直除</a></li>
+        <li><a href="#特殊分数">特殊分数</a></li>
+        <li><a href="#分数比较">分数比较</a></li>
+      </ol>
+    </li>
+    <li><a href="#重点题型">重点题型</a>
+      <ol>
+        <li><a href="#简单题">简单题</a></li>
+        <li><a href="#增长率相关">增长率相关</a>
+          <ol>
+            <li><a href="#间隔增长率">间隔增长率</a></li>
+            <li><a href="#混合增长率">混合增长率</a></li>
+            <li><a href="#年均增长率">年均增长率</a></li>
+          </ol>
+        </li>
+        <li><a href="#增长量相关">增长量相关</a></li>
+        <li><a href="#比重相关">比重相关</a>
+          <ol>
+            <li><a href="#两期比重">两期比重</a></li>
+          </ol>
+        </li>
+        <li><a href="#平均数与倍数">平均数与倍数</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    
+    
+</aside>
+<a href="#" id="toc-toggle"></a>
+</div>
+
+<div class = "toc-phone">
+    <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:统计术语" href="#统计术语">统计术语</a></li>
+    <li><a id="contents:速算技巧" href="#速算技巧">速算技巧</a>
+      <ol>
+        <li><a id="contents:截位直除" href="#截位直除">截位直除</a></li>
+        <li><a id="contents:特殊分数" href="#特殊分数">特殊分数</a></li>
+        <li><a id="contents:分数比较" href="#分数比较">分数比较</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:重点题型" href="#重点题型">重点题型</a>
+      <ol>
+        <li><a id="contents:简单题" href="#简单题">简单题</a></li>
+        <li><a id="contents:增长率相关" href="#增长率相关">增长率相关</a>
+          <ol>
+            <li><a id="contents:间隔增长率" href="#间隔增长率">间隔增长率</a></li>
+            <li><a id="contents:混合增长率" href="#混合增长率">混合增长率</a></li>
+            <li><a id="contents:年均增长率" href="#年均增长率">年均增长率</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:增长量相关" href="#增长量相关">增长量相关</a></li>
+        <li><a id="contents:比重相关" href="#比重相关">比重相关</a>
+          <ol>
+            <li><a id="contents:两期比重" href="#两期比重">两期比重</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:平均数与倍数" href="#平均数与倍数">平均数与倍数</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    <hr></hr>
+</div>
+
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">公务员行测--资料分析</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <div class="post-body e-content">
+                <p>注意：手机端视频跳转不会直接跳转到讲解部分，需要电脑端！！已更新较为详细的解释。</p>
+<h2 id="统计术语"><a href="#统计术语" class="anchor-link">#</a>统计术语</h2>
+<ul>
+<li>基期量与现期量
+<ul>
+<li>作为对比参照的时期称为基期，相对于基期的称为现期</li>
+</ul>
+</li>
+<li>增长量
+<ul>
+<li>基期量与现期量增长（降低/减少的）<strong>绝对</strong>量</li>
+<li>增长量 = 现期量-基期量</li>
+</ul>
+</li>
+<li>增长率
+<ul>
+<li>增长率=$\frac{increment}{period_{base}} = \frac{period_{base}-period_{now}}{period_{base}}$
+<ul>
+<li>$increment$：增长量</li>
+<li>$period_{base}$：现期量</li>
+<li>$period_{now}$：基期量</li>
+</ul>
+</li>
+<li>减少率 = -增长率</li>
+</ul>
+</li>
+<li>年均增长量
+<ul>
+<li>年均增长量=$\frac{period_{newest}-period_{oldest}}{newest-oldest}$
+<ul>
+<li>$period_{newest}$：最近的年份</li>
+<li>$period_{oldest}$：最久的年份</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>年均增长率
+<ul>
+<li>现期量=$period_{base}\times(1+年均增长率)^n$，其中n为相差年份</li>
+</ul>
+</li>
+<li>同比环比
+<ul>
+<li>同比：与历史同期比较，实际上是指与历年的同一时期相比较。</li>
+<li>环比：与上个统计周期比较，实际上是指“与紧紧相邻的统计周期相比较”。</li>
+</ul>
+</li>
+<li>比重、倍数、平均数、百分数、成数、翻番
+<ul>
+<li>比重=$\frac{part}{all}$</li>
+<li>倍数：A是B的$\frac{A}{B}$倍</li>
+<li>平均数：平均数=总数÷总份数</li>
+<li>百分点是百分数的单位，用于百位数加减</li>
+<li>成表示十分之一</li>
+<li>翻一番为原来的2倍，翻n番为原来的$2^n$倍</li>
+</ul>
+</li>
+<li>顺差、逆差
+<ul>
+<li>顺差：出口&gt;进口</li>
+<li>逆差：进口&gt;出口</li>
+</ul>
+</li>
+<li>GDP=增加值</li>
+</ul>
+<h2 id="速算技巧"><a href="#速算技巧" class="anchor-link">#</a>速算技巧</h2>
+<h3 id="截位直除"><a href="#截位直除" class="anchor-link">#</a>截位直除</h3>
+<ol>
+<li>选项首位均不同，保留两位；选项首位有相同的，保留三位</li>
+<li>选项之间误差在 10%以上，保留两位 ；选项之间误差在 10%以内，保留三位</li>
+<li>一步除式：只估算分母，保留三位；多步连除：分子分母同时截位，分开估算/交叉估算</li>
+</ol>
+<p>关于多步截除的增长率估算</p>
+<p>$\frac{1+0.11}{1+0.08} \approx1+0.03(0.11-0.08)$</p>
+<ul>
+<li>乘法估算：乘法一大一小，各按比例缩放（粗算不需要，首位均不同）</li>
+<li>$99\uparrow+101\downarrow \approx100*100$</li>
+</ul>
+<h3 id="特殊分数"><a href="#特殊分数" class="anchor-link">#</a>特殊分数</h3>
+<ul>
+<li>$\frac{1}{2}=50$%</li>
+<li>$\frac{1}{3}=33.3$%</li>
+<li>$\frac{1}{4}=25$%</li>
+<li>$\frac{1}{5}=20$%</li>
+<li>$\frac{1}{6}=16.7$%</li>
+<li>$\frac{1}{7}=13.4$%</li>
+<li>$\frac{1}{8}=12.5$%</li>
+<li>$\frac{1}{9}=11.1$%</li>
+<li>$\frac{1}{10}=10$%</li>
+<li>markdown % 不能显示，以下所有都化为小数点</li>
+</ul>
+<p>题目：</p>
+<ol>
+<li>
+<p>2011 年前十一个月，某省高新技术产业完成总产值 3763.00 亿元，实现增加 值 896.31 亿元。增加值同比增长 30.74%，比规模以上工业增加值高 11.64 个百 分点，占规模以上工业增加值的比重达到 25.32%。</p>
+<p>【练 5】2010 年前十一个月，该省规模以上工业增加值约为多少亿元？</p>
+<p>A.2972 B.3540 C.3865 D.4373</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=4&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=2259" target="_blank" rel="noopener">1</a>，注意上下式子对应的东西要一致：求出今年的规模以上的GDP，再根据规模以上的增长率求去年的GDP；而不是求今年的高新GDP，再根据1+规模以上的增长率.$\frac{\frac{896}{0.25}}{1+0.3-0.11}$</p>
+</li>
+<li>
+<p>2015 年我国高技术制造业实现主营业务收入 116048.9 亿元，比 2010 年增长 108.2%；占全部制造业企业的比重为 12.8%，比 2010 年提高 0.8 个百分点。2015 年我国高技术制造业实现利润总额 7233.7 亿元，比 2010 年增长 165.5%，增幅比 其他制造业平均水平高出 11.5 个百分点；高技术制造业利润总额占全部制造业 的比重为 13.1%，比 2010 年提高 0.5 个百分点。 <br />【练 3】2010 年，我国制造业实现利润总额约多少万亿元？ <br />A．1.3 B．1.7 C．2.2 D．2.8</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=4&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=1425" target="_blank" rel="noopener">2</a>，$\frac{profit_{2015}}{1+1.655} \div 比重_{2010}\approx \frac{7233\times8}{2.655}\approx \frac{56^+}{2.655}$</p>
+</li>
+</ol>
+<h3 id="分数比较"><a href="#分数比较" class="anchor-link">#</a>分数比较</h3>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=4&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=3859" target="_blank" rel="noopener">视频地址</a></p>
+<ul>
+<li>方法一
+<ul>
+<li>①分子大，分母小，直接判断分数大</li>
+<li>②分子分母同大，看变化速度， 分子变化大，选分子大；分母变化大，选分母小</li>
+</ul>
+</li>
+<li>方法二：直除比较</li>
+<li>优先<strong>直除首位</strong>，其次看变化速度</li>
+</ul>
+<hr>
+<p>题目：</p>
+<ol>
+<li>
+<p>2014 年我国粮食种植面积 11274 万公顷，比上年增加 78 万公顷。棉花种植面积 422 万公顷，减少 13 万公顷。油料种植面积 1408 万公顷，增加 6 万公顷。 糖料种植面积 191 万公顷、减少 9 万公顷。 全年棉花产量 616 万吨，比上年减产 2.2%。油料产量 3517 万吨，与上年持平。糖料产量 13403 万吨，减产 2.5%。茶叶产量 209 万吨，增产 8.7%。 <br />【例 4】将不同作物按 2014 年单位种植面积产量由高到低排序，下列正确的是  <br />A．棉花——油料——糖料 B．棉花——糖料——油料  <br />C．糖料——油料——棉花 D．糖料——棉花——油料</p>
+<p>棉花：$\frac{616}{422} \approx \frac{4+2}{4} \approx 1^+$，油料：$\frac{3517}{1408} \approx \frac{28+7}{14} \approx 2^+$，糖料：$\frac{13403}{191} \gg  2$</p>
+</li>
+</ol>
+<h2 id="重点题型"><a href="#重点题型" class="anchor-link">#</a>重点题型</h2>
+<h3 id="简单题"><a href="#简单题" class="anchor-link">#</a>简单题</h3>
+<p>直接计算和直接查找</p>
+<hr>
+<p>题目：</p>
+<ol>
+<li>
+<p>截至 2012 年底，在网民增长速度逐步放缓的背景下，网络购物应用依然呈 现迅猛增长的势头，网络购物使用率提升至 42.9%，全年网络购物用户增加 4807 万，用户绝对增长量超出上年 1463 万。网上支付使用率提升至 39.2%，全年用 户增长 5389 万。网上银行使用率提升至 39.2%，比上年底提升 6.9 个百分点。 70.6%的网民使用台式电脑上网，相比上年底下降了近三个百分点，使用笔记本 电脑上网的网民比例与上年底相比略有降低，为 45.9%。 <br />【练 7】2012 年我国网民使用台式电脑上网的比例比使用笔记本电脑上网的比例高<br />A.近 3 个百分点 B.近 3% <br />C.24.7% D.24.7 个百分点</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=5&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=1608" target="_blank" rel="noopener">1</a>，百分数加减是百分点。$0.706-0.459=$</p>
+</li>
+</ol>
+<h3 id="增长率相关"><a href="#增长率相关" class="anchor-link">#</a>增长率相关</h3>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=5&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=2890" target="_blank" rel="noopener">增长率相关</a></p>
+<ol>
+<li>增长率=$\frac{increment}{period_{base}} = \frac{period_{base}-period_{now}}{period_{base}}$</li>
+<li>现期量=$period_{base} \times (1 + r)$</li>
+<li>基期量=$\frac{period_{now}}{1 + r} = period_{now} − increment$</li>
+</ol>
+<ul>
+<li>技巧：截位直除</li>
+</ul>
+<hr>
+<p>题目：</p>
+<ol>
+<li>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/11/20231116200706.png?imageMogr2/format/webp%7C" alt="image">
+<br />【练 9】按 2011 年的人口自然增长率计算，预计 2012 年的人口约为（ ）万人。<br />A．135382 B．135409 C．141129 D．141202</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=6&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=2857" target="_blank" rel="noopener">1</a>，$2010年 \times r = 2011年-2010年 \Rightarrow 134091 \times 0.0048 = 13475-134091 = 644$。$2011年 \times r = (2010年+增长量) \times r = 增长量+增长量 \times r \Rightarrow 644 + 0.644\times 5$</p>
+</li>
+</ol>
+<h4 id="间隔增长率"><a href="#间隔增长率" class="anchor-link">#</a>间隔增长率</h4>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=6&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=3122" target="_blank" rel="noopener">间隔增长率</a></p>
+<p>题型特征：间隔一年，2017 年比 2015 年增长率，2016 年第一季度比 2014 年第一季度增长率。</p>
+<p>公式：$R = 𝑟_1 + 𝑟_2 + 𝑟_1 \times 𝑟_2$（𝑟1和𝑟2是较大两个年份的增长率）</p>
+<p>大胆估算𝑟1 × 𝑟2的技巧：</p>
+<ul>
+<li>$r_1 \times r_2 = \frac{a}{100}  \times \frac{b}{100} = \frac{\frac{ab}{100}}{100} $</li>
+<li>r1 × r2，一个化为分数，一个不变</li>
+<li>r1和r2均小于 10%， r1 × r2 &lt; 1%，大胆估算</li>
+</ul>
+<hr>
+<ol>
+<li>
+<p>2014 年全国社会物流总额 213.5 万亿元，同比增长 7.9%，比上年回落 1.6 个百分点。
+<img src="https://pic.keepjolly.com/halo/blog/2023/11/20231116224858.png?imageMogr2/format/webp%7C" alt="image">
+<br />【例 3】2012 年上半年全国社会物流总额约为多少万亿元？（ ） <br />A．93 B．102 C．75 D．86</p>
+<p>累计总额即上半年为第二季度，给2014求2012。$r=r_1+r_2+r_1r_2\approx0.178+0.09\times0.09 \approx 0.186$，$\frac{101.5}{12}\approx 80^+$，D</p>
+</li>
+</ol>
+<h4 id="混合增长率"><a href="#混合增长率" class="anchor-link">#</a>混合增长率</h4>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=7&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=8." target="_blank" rel="noopener">混合增长率</a></p>
+<ul>
+<li>混合增长率：大小居中，偏向基期量大的</li>
+<li>中间=两边的平均数（左边&lt;中间&lt;右边）</li>
+<li>一般题目都是给定当年的量和增长率，缺少左/右的增长率</li>
+<li><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=7&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=1539" target="_blank" rel="noopener">精确求混合</a>
+<ul>
+<li><img src="https://pic.keepjolly.com/halo/blog/2023/11/20231116225256.png?imageMogr2/format/webp%7C" alt="image"></li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>题目：</p>
+<ol>
+<li>
+<p>2013 年 3 月末，主要金融机构及小型农村金融机构、外资银行人民币房地产贷款余额 12.98 万亿元，同比增长 16.4%。地产开发贷款余额 1.04 万亿元， 同比增长 21.4%。房产开发贷款余额 3.2 万亿元，同比增长 12.3%。个人购房贷款余额 8.57 万亿元，同比增长 17.4%。保障性住房开发贷款余额 6140 亿元，同 比增长 42.4%。</p>
+<p>【例 2】2013 年 3 月末，房地产开发贷款余额同比增速约为（ ）。</p>
+<p>A.14.4% B.12.3% C.19.3% D.21.4%</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=7&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=432" target="_blank" rel="noopener">例2</a>，房产3.2万亿，12.3%，地产1.04万亿，21.4%。3.2&gt;1.04 =&gt; 房地产12.3%&lt; x &lt;(12.3+21.4)/2%</p>
+</li>
+<li>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/11/20231116224858.png?imageMogr2/format/webp%7C" alt="image"></p>
+<p>【例 4】2013 年第三季度社会物流总额同比增速高于第四季度(T/F)</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=7&amp;share_source=copy_web&amp;vd_source=50404" target="_blank" rel="noopener">1</a>，累计前三季度(158.1，9.5%)+累计前二季度(101.5，9.1) =&gt;三季度&gt;9.5%；累计前四季度(213.5，9.5%)+累计前三季度(158.1，9.5%)=&gt;四季度=9.5%</p>
+</li>
+</ol>
+<h4 id="年均增长率"><a href="#年均增长率" class="anchor-link">#</a>年均增长率</h4>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=7&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=2949" target="_blank" rel="noopener">年均增长率</a></p>
+<p>年均增长率计算：代入特殊值(答案的居中值：10 20 )</p>
+<p>年均增长率比较：比较每个$\frac{period_{newest}}{period_{oldest}}$的值</p>
+<p>关于怎么数年份：问 2013-2017 年的年均增长率，如果没有给出 2012 年的 具体值，那么以 2013 年为基期，求 4 年的年均增长；如果给出了 2012 年的具体 值，那么以 2012 年为基期，求 5 年的年均增长。</p>
+<p>$11^2=121,12^2=144,13^2=169,14^2=196,15^2=225,16^2=256$</p>
+<ul>
+<li>年均增长量
+<ul>
+<li>$=\frac{现期量-基期量}{间隔年份}$</li>
+</ul>
+</li>
+<li>年均增长率
+<ul>
+<li>$现期量=基期量\times(1+年均增长率)^n$，其中n为相差年份</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>题目：</p>
+<ol>
+<li>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/11/20231117230604.png?imageMogr2/format/webp%7C" alt="image">
+<br />【例 4】(2013 年江苏)若不考虑价格因素，则 2003-2011 年九年，江苏金融业增加值年均增速 Vj、第三产业增加值年均增速 Vs、地区国内生产总值年均增速 Vg 的大小关系是：
+<br />A. Vs＞Vj＞Vg    B. Vj＞Vg＞Vs <br />C. Vj＞Vs＞Vg    D. Vs＞Vg＞Vj</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=7&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=4588" target="_blank" rel="noopener">1</a>。如果第一年到最后一年的增长率大，平均到每一年就大，所以看第一年到最后一年的增长率。$\frac{2600}{370}\approx7^+ &gt; \frac{20842}{3891}\approx5^+ &gt; \frac{49110}{10606}\approx5^-$，可以首位直除</p>
+</li>
+</ol>
+<h3 id="增长量相关"><a href="#增长量相关" class="anchor-link">#</a>增长量相关</h3>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=8&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=238" target="_blank" rel="noopener">增长量相关</a></p>
+<p>增长量 = 现期量 − 基期量 = 基期量 × r = 现期量/(1 + r) × r</p>
+<p>解题技巧:</p>
+<ul>
+<li><a href="https://keepjolly.com/posts/learn/data-analysis/#%E7%89%B9%E6%AE%8A%E5%88%86%E6%95%B0" target="_blank" rel="noopener">特殊分数</a>
+<ul>
+<li>现期/(1+特殊分数) = 现期/(特殊分数+1)</li>
+<li>现期/(1+1/8) = 现期/9</li>
+<li>现期/(1-1/8) = 现期/7</li>
+</ul>
+</li>
+<li>截位直除法
+<ul>
+<li>现期量 × r /(1 + r)</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=8&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=1706" target="_blank" rel="noopener">增长量大小比较</a>：</p>
+<ol>
+<li>现期值大，增长率大，大大则大。</li>
+<li>一大一小，近似比较现期量 × r 的值
+<ol>
+<li>$\frac{Ar_1}{1+r_1}$和 $\frac{Br_2}{1+r_2}$</li>
+<li>忽略底部，看分子乘积
+<ul>
+<li>r1和r2的差距在20%以内可以忽略底部</li>
+</ul>
+</li>
+<li>r1和r2的差距在20%以上，列出完整式子进行估算</li>
+<li>如果两个乘积比较接近，列出完整式子进行估算</li>
+</ol>
+</li>
+<li>正大于负</li>
+</ol>
+<hr>
+<p>题目：</p>
+<ol>
+<li>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/11/20231117230954.png?imageMogr2/format/webp%7C" alt="image">
+<br />【练 8】2011～2017 年，全国二手车交易量同比增量低于 80 万辆的年份有几个？
+<br />A．3 B．4 C．5 D．7</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=8&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=3823" target="_blank" rel="noopener">不等于求年平均增长率</a>，需要求2011年：$\frac{682}{1.124} - 682 &lt; 80$</p>
+</li>
+<li>
+<p>2011 年前十一个月，某省高新技术产业完成总产值 3763.00 亿元，实现增加 值 896.31 亿元。增加值同比增长 30.74%，比规模以上工业增加值高 11.64 个百 分点，占规模以上工业增加值的比重达到 25.32%。<br />【练 10】若该省高新技术产业增加值保持同样的增长速度，则 2012 年前十一个月高新技术产业增加值比 2010 年同期约增加多少亿元： <br />A．210.7 B．486.3 C．275.5 D．685.6</p>
+<p>2012-2010=2011增长量+2012增长量=$\frac{896}{1+0.3}+896\times0.3 \approx 270+896/130 \approx 270+200^+$</p>
+</li>
+<li>
+<p>2010 年，我国机电产品出口 9334.3 亿美元，同比增加 30.9%;高新技术产品出口 4924.1 亿美元，同比增长 30.7%。船舶、汽车零部件出口保持较快增长，其中船舶出口同比增长 44.5%，汽车零部件出口同比增长 44.1%。 2010 年，机电产品进口额达到 6603.1 亿美元，同比增长 34.4%，高新技术产品进口额达到 4126.7 亿美元，同比增长 33.2%。<br /> 【例 9】问题：在 2010 年我国进出口贸易中，下列哪一项的同比增长金额最高？ <br />A．机电产品出口 B．高新技术产品出口 <br />C．机电产品进口 D．高新技术产品进口</p>
+<p>增长率近似，看现期×增长率，9000&gt;6600&gt;4924&gt;4126，A。如果看高新技术进出口增长量，需要列出完整式子</p>
+</li>
+</ol>
+<h3 id="比重相关"><a href="#比重相关" class="anchor-link">#</a>比重相关</h3>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=9&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=457" target="_blank" rel="noopener">基期比重</a></p>
+<p>比重  = $\frac{A}{B} \times \frac{1+b}{1+a}$,不化简好记一点$\frac{\frac{A}{1+a}}{\frac{B}{1+b}}$</p>
+<hr>
+<p>题目：</p>
+<ol>
+<li>
+<p>2015 年，江西规模以上工业增加值 7268.9 亿元，比上年增长 9.2%。分轻重 工业看，轻工业增加值 2731.2 亿元，增长 7.7%；重工业增加值 4537.7 亿元， 增长 10.1%。
+<br />【例 5】2014 年江西省重工业增加值占规模以上工业增加值的比重为（ ）。
+<br />A．56.7% B．62.4% C．61.9% D．68.3%</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=9&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=802" target="_blank" rel="noopener">例5</a>，BC近似则分母保留3位，分子不变$\frac{4537}{7270}\times\frac{1+0.092}{1+0.101}$，又因为B是现期比重$\frac{4537}{7270}\approx 62^+$,干扰项，直接推C</p>
+</li>
+</ol>
+<h4 id="两期比重"><a href="#两期比重" class="anchor-link">#</a>两期比重</h4>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=9&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=1087" target="_blank" rel="noopener">两期比重变化</a></p>
+<ul>
+<li>看<strong>部分</strong>的增长率大于<strong>整体</strong>的增长率则比重增大，否则比重减少
+<ul>
+<li>$去年：\frac{X_{part}}{Y_{all}} &gt; 今年：\frac{X_{part}(1+a)}{Y_{all}(1+b)} \Rightarrow \frac{1+a}{1+b} \Rightarrow a&gt;b 比重 \uparrow$</li>
+</ul>
+</li>
+<li>比重上升也可以反推部分增速快</li>
+</ul>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=9&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=1639" target="_blank" rel="noopener">两期比重差</a>(百分点)：</p>
+<ul>
+<li>$\frac{A}{B} - \frac{A}{B}\times\frac{1+b}{1+a} = \frac{A}{B}(\frac{a-b}{1+a})$</li>
+<li>实际上看a-b，其他部分$&lt;1$</li>
+</ul>
+<hr>
+<ol>
+<li>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=9&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=4023" target="_blank" rel="noopener">练6</a>，十字交叉法</p>
+</li>
+<li>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/12/20231213232002.png?imageMogr2/format/webp%7C" alt="image">
+<br />【练 11】2005—2013 年，全国技术合同成交金额增速超过 GDP 增速的年份有（ ）个。 <br />A．3 B．4 C．5 D．6</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=9&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=5012" target="_blank" rel="noopener">【11】</a>，比重=$\frac{TradeVolume}{GDP}$，比重上升反推去年到今年的部分增速快，即成交金额增速快，则比重上升。2006：0.85→0.87、2007：0.87→0.9、2010、2011、2012、2013</p>
+</li>
+<li>
+<p>2017年全国海洋生产总值77611亿元，比上年增长6.9%，海洋生产总值占国内生产总值的9.4%。<br />2017年，J省海洋生产总值为7217亿元，比上年增长9.2%，海洋生产总值占地区生产总值的8.4%，2017年，全省沿海沿江港口完成货物吞吐量20.4亿吨，同比增长8.3%；集装箱吞吐量1698.8万标箱，同比增长5.5%。<br />2017年J省海洋生产总值占全国的比重比上年：
+<br />A . 上升了约0.2个百分点  B . 上升了约2个百分点  <br />C . 下降了约0.2个百分点  D . 下降了约2个百分点</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=9&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=2887" target="_blank" rel="noopener">拓展</a>，a-b=2.3%，大于0上升排除CD。都比2小，看整体$\frac{77611}{7217}\times\frac{0.023}{1+0.092}\approx 0.1*0.023=0.002$</p>
+</li>
+</ol>
+<h3 id="平均数与倍数"><a href="#平均数与倍数" class="anchor-link">#</a>平均数与倍数</h3>
+<ul>
+<li>现期倍数，A 是 B 的几倍，$\frac{A}{B}$</li>
+<li><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=10&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=507" target="_blank" rel="noopener">基期倍数</a> $\frac{\frac{A}{1+a}}{\frac{B}{1+b}}=\frac{A}{B} \times \frac{1+b}{1+a}$</li>
+<li>平均数 等差数列平均数等于中位数</li>
+<li><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=10&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=1908" target="_blank" rel="noopener">平均值增长率</a>：$\frac{year_{now}-year_{last}}{year_{last}} = \frac{A(1+a)/B(1+b)-A/B}{A/B}= \frac{a-b}{1+b}$ （不等于比重差）</li>
+</ul>
+<p>应用技巧：截位直除，叠除估算</p>
+<hr>
+<ol>
+<li>
+<p>2014 年我国粮食再获丰收。全年粮食产量 60710 万吨，比上年增加 516 万 吨，增产 0.9%。其中，夏粮产量 13660 万吨，增产 3.6%；早稻产量 3401 万吨， 减产 0.4%；秋粮产量 43649 万吨，增产 0.1%。
+<br />【例 4】2013 年，秋粮产量约为夏粮产量的多少倍？
+<br />A．不到 2 倍 B．2 倍多 C．3 倍多 D．4 倍多</p>
+<p>$\frac{43649}{13660}\times\frac{1+0.036}{1+0.001}\approx3^+\times1^+$，选项差距大，保留两位，C</p>
+</li>
+<li>
+<p>2017 年，A 省完成客运总量 148339 万人次，同比增长 5.4%，增幅比前三季度提高 0.2 个百分点，比上年提高 0.5 个百分点；完成旅客周转总量 4143.84 亿人公里，增长 7.7%，增幅比前三季度提高 0.7 个百分点，比上年提高 1.8 个百分 点。
+<br />【练 13】2017 年前三季度，A 省平均每人次客运旅客运输距离（旅客周转量÷客运总量）同比：
+<br />A．下降了不到 2% B．下降了 2%以上 C．上升了不到 2% D．上升了 2%以上</p>
+<p><a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=10&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=4217" target="_blank" rel="noopener">13</a>，求得是平均增速，不是两期比重差。$\frac{a-b}{1+b}=\frac{0.07-0.052}{1+0.052}\approx\frac{1.8}{1}=2^-$，大于0选上升，即C。（不考虑%是因为对结果没有影响，首位都是2，除非遇到2和20、200等，需要考虑%）</p>
+</li>
+<li>
+<p>【<a href="https://www.bilibili.com/video/BV1f4411C7z5/?p=10&amp;share_source=copy_web&amp;vd_source=504045c18340a005fec8674ac78d7934&amp;t=1098" target="_blank" rel="noopener">例6</a>】直接看图求平均数</p>
+</li>
+<li>
+<p>2011 年全国全年粮食种植面积 11057 万公顷，比上年增加 70 万公顷，棉花 种植面积 504 万公顷，增加 19 万公顷。全年粮食产量 57121 万吨，比上年增加 2473 万吨，增产 4.5%；全年棉花产量 650 万吨，比上年增产 10.7%。 <br />【例 9】2011 年全国全年粮食、棉花平均亩产量与 2010 年相比（ ）。 <br />A.粮食有所提高，棉花有所降低 B.粮食有所降低，棉花有所提高<br /> C.两者均有所降低 D.两者都有所提高</p>
+<p><a href="https://keepjolly.com/posts/learn/data-analysis/#%E6%AF%94%E9%87%8D%E7%9B%B8%E5%85%B3" target="_blank" rel="noopener">比重增速</a>和平均数增速一致，所以看a(粮食增速)，b（总增速）的大小关系：$\frac{0.045}{0.007}$，粮食提高$\frac{0.107}{0.007}$，棉花提高。</p>
+</li>
+</ol>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/civilservant/" rel="tag" class="post-tag-link">#civilservant</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

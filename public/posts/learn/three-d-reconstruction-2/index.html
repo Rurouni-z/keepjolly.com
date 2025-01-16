@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>三维重建之路下 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="Rurouni" /><meta name="description" content="运动恢复结构SfM系统解析 回顾 本质矩阵与单应矩阵区别 Global Bundle Adjustment P3P 已知内参矩阵，3个像素点坐标及对应三维点坐标，求RT SfM系统问题描述 内参读取exif文件即可 ……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/learn/three-d-reconstruction-2/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2023-05-26T20:09:59+08:00",
+        "dateModified": "2024-05-03T14:50:48+08:00",
+        "url": "http://localhost:1313/posts/learn/three-d-reconstruction-2/",
+        "headline": "三维重建之路下",
+        "description": "运动恢复结构SfM系统解析 回顾 本质矩阵与单应矩阵区别 Global Bundle Adjustment P3P 已知内参矩阵，3个像素点坐标及对应三维点坐标，求RT SfM系统问题描述 内参读取exif文件即可 ……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  2691 ,
+        "image": ["https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-77.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-78.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-79.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-80.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-81.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-82.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-83.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-84.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-85.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-86.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-87.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-88.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-89.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-90.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-91.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-92.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-93.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-94.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-95.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-96.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-97.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-98.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-99.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-100.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-101.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-102.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-103.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-104.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-105.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-106.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-107.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-108.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-109.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-110.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-111.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-112.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-113.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-114.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-115.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-116.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-117.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-118.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-119.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-120.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-121.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-122.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-123.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-124.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-125.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-126.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-127.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-128.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-129.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-130.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-131.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-132.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-133.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-134.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-135.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-136.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-137.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-138.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-139.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-140.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-141.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-142.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-143.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-144.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-145.png?imageMogr2/format/webp%7C"],
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="三维重建之路下" />
+<meta property="og:description" content="运动恢复结构SfM系统解析 回顾 本质矩阵与单应矩阵区别 Global Bundle Adjustment P3P 已知内参矩阵，3个像素点坐标及对应三维点坐标，求RT SfM系统问题描述 内参读取exif文件即可 ……" />
+<meta property="og:url" content="http://localhost:1313/posts/learn/three-d-reconstruction-2/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-77.png?imageMogr2/format/webp%7C" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2023-05-26T20:09:59&#43;08:00" />
+    <meta property="article:modified_time" content="2024-05-03T14:50:48&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+<div class="post-toc" id="post-toc">
+<aside>
+    <header>
+    <h4>文章の字数: 2691</h4> 
+    </header>
+    
+    
+    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#运动恢复结构sfm系统解析">运动恢复结构SfM系统解析</a>
+      <ol>
+        <li><a href="#回顾">回顾</a>
+          <ol>
+            <li><a href="#本质矩阵与单应矩阵区别">本质矩阵与单应矩阵区别</a></li>
+            <li><a href="#global-bundle-adjustment">Global Bundle Adjustment</a></li>
+            <li><a href="#p3p">P3P</a></li>
+          </ol>
+        </li>
+        <li><a href="#sfm系统问题描述">SfM系统问题描述</a>
+          <ol>
+            <li><a href="#用欧式结构恢复2视图">用欧式结构恢复（2视图）</a></li>
+            <li><a href="#对应点计算--特征提取sift">对应点计算--特征提取sift</a></li>
+            <li><a href="#对应点计算--特征匹配">对应点计算--特征匹配</a></li>
+            <li><a href="#对应点计算--特征拟合-ransac">对应点计算--特征拟合 RANSAC</a></li>
+            <li><a href="#求解步骤结束">求解步骤结束</a></li>
+          </ol>
+        </li>
+        <li><a href="#基于增量法的sfm系统--openmvg多视图">基于增量法的SfM系统--OpenMVG（多视图）</a>
+          <ol>
+            <li><a href="#预处理">预处理</a></li>
+            <li><a href="#增量法总体步骤">增量法总体步骤</a>
+              <ol>
+                <li><a href="#计算轨迹">计算轨迹</a></li>
+                <li><a href="#计算共视图连通图">计算共视图（连通图）</a></li>
+                <li><a href="#g中选边e">G中选边e</a></li>
+                <li><a href="#两视图重构">两视图重构</a></li>
+                <li><a href="#增量法">增量法</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a href="#补充知识">补充知识</a>
+          <ol>
+            <li><a href="#词袋模型">词袋模型</a></li>
+            <li><a href="#基于词袋模型的图像检索">基于词袋模型的图像检索</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#slam系统解析">SLAM系统解析</a>
+      <ol>
+        <li><a href="#优化问题">优化问题</a></li>
+        <li><a href="#生成树">生成树</a></li>
+        <li><a href="#slam介绍">SLAM介绍</a></li>
+        <li><a href="#orb-slam">ORB-SLAM</a>
+          <ol>
+            <li><a href="#数据结构与数据库">数据结构与数据库</a></li>
+            <li><a href="#系统工作流程-">系统工作流程 ⭐</a>
+              <ol>
+                <li><a href="#跟踪">跟踪</a>
+                  <ol>
+                    <li><a href="#地图初始化">地图初始化</a></li>
+                    <li><a href="#初始位姿估计">初始位姿估计</a></li>
+                    <li><a href="#位姿优化">位姿优化</a></li>
+                    <li><a href="#关键帧选取">关键帧选取</a></li>
+                  </ol>
+                </li>
+                <li><a href="#建图">建图</a>
+                  <ol>
+                    <li><a href="#关键帧插入">关键帧插入</a></li>
+                    <li><a href="#地图点剔除">地图点剔除</a></li>
+                    <li><a href="#新地图点生成">新地图点生成</a></li>
+                    <li><a href="#局部地图优化">局部地图优化</a></li>
+                    <li><a href="#局部关键帧剔除">局部关键帧剔除</a></li>
+                  </ol>
+                </li>
+                <li><a href="#回环校正">回环校正</a>
+                  <ol>
+                    <li><a href="#回环候选帧检测">回环候选帧检测</a></li>
+                    <li><a href="#计算sim3变换">计算Sim3变换</a></li>
+                    <li><a href="#回环融合">回环融合</a></li>
+                    <li><a href="#位姿优化-1">位姿优化</a></li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#总结">总结</a>
+      <ol>
+        <li><a href="#摄像机几何">摄像机几何</a></li>
+        <li><a href="#摄像机标定">摄像机标定</a></li>
+        <li><a href="#单视图几何">单视图几何</a>
+          <ol>
+            <li><a href="#求出内参矩阵">求出内参矩阵</a></li>
+            <li><a href="#求出平面法向量">求出平面法向量</a></li>
+            <li><a href="#求出三维场景">求出三维场景</a></li>
+          </ol>
+        </li>
+        <li><a href="#三维重建基础知识">三维重建基础知识</a>
+          <ol>
+            <li><a href="#三角化">三角化</a></li>
+            <li><a href="#极几何">极几何</a></li>
+            <li><a href="#p3p-1">P3P</a></li>
+            <li><a href="#基于词袋模型的图像检索-1">基于词袋模型的图像检索</a></li>
+            <li><a href="#本质矩阵于单应矩阵">本质矩阵于单应矩阵</a></li>
+            <li><a href="#bundle-adjustment">Bundle Adjustment</a></li>
+          </ol>
+        </li>
+        <li><a href="#双目立体视觉">双目立体视觉</a>
+          <ol>
+            <li><a href="#将非平行视图转换为平行视图">将非平行视图转换为平行视图</a></li>
+            <li><a href="#平行视图的双目立体视觉">平行视图的双目立体视觉</a></li>
+          </ol>
+        </li>
+        <li><a href="#多视图几何">多视图几何</a>
+          <ol>
+            <li><a href="#欧式结构恢复">欧式结构恢复</a></li>
+          </ol>
+        </li>
+        <li><a href="#sfm系统">SfM系统</a>
+          <ol>
+            <li><a href="#欧式结构运动恢复两视图">欧式结构运动恢复(两视图)</a></li>
+            <li><a href="#增量法openmvg多视图">增量法（OpenMVG）(多视图)：</a></li>
+          </ol>
+        </li>
+        <li><a href="#slam系统">SLAM系统</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    
+    
+</aside>
+<a href="#" id="toc-toggle"></a>
+</div>
+
+<div class = "toc-phone">
+    <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:运动恢复结构sfm系统解析" href="#运动恢复结构sfm系统解析">运动恢复结构SfM系统解析</a>
+      <ol>
+        <li><a id="contents:回顾" href="#回顾">回顾</a>
+          <ol>
+            <li><a id="contents:本质矩阵与单应矩阵区别" href="#本质矩阵与单应矩阵区别">本质矩阵与单应矩阵区别</a></li>
+            <li><a id="contents:global-bundle-adjustment" href="#global-bundle-adjustment">Global Bundle Adjustment</a></li>
+            <li><a id="contents:p3p" href="#p3p">P3P</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:sfm系统问题描述" href="#sfm系统问题描述">SfM系统问题描述</a>
+          <ol>
+            <li><a id="contents:用欧式结构恢复2视图" href="#用欧式结构恢复2视图">用欧式结构恢复（2视图）</a></li>
+            <li><a id="contents:对应点计算--特征提取sift" href="#对应点计算--特征提取sift">对应点计算--特征提取sift</a></li>
+            <li><a id="contents:对应点计算--特征匹配" href="#对应点计算--特征匹配">对应点计算--特征匹配</a></li>
+            <li><a id="contents:对应点计算--特征拟合-ransac" href="#对应点计算--特征拟合-ransac">对应点计算--特征拟合 RANSAC</a></li>
+            <li><a id="contents:求解步骤结束" href="#求解步骤结束">求解步骤结束</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:基于增量法的sfm系统--openmvg多视图" href="#基于增量法的sfm系统--openmvg多视图">基于增量法的SfM系统--OpenMVG（多视图）</a>
+          <ol>
+            <li><a id="contents:预处理" href="#预处理">预处理</a></li>
+            <li><a id="contents:增量法总体步骤" href="#增量法总体步骤">增量法总体步骤</a>
+              <ol>
+                <li><a id="contents:计算轨迹" href="#计算轨迹">计算轨迹</a></li>
+                <li><a id="contents:计算共视图连通图" href="#计算共视图连通图">计算共视图（连通图）</a></li>
+                <li><a id="contents:g中选边e" href="#g中选边e">G中选边e</a></li>
+                <li><a id="contents:两视图重构" href="#两视图重构">两视图重构</a></li>
+                <li><a id="contents:增量法" href="#增量法">增量法</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a id="contents:补充知识" href="#补充知识">补充知识</a>
+          <ol>
+            <li><a id="contents:词袋模型" href="#词袋模型">词袋模型</a></li>
+            <li><a id="contents:基于词袋模型的图像检索" href="#基于词袋模型的图像检索">基于词袋模型的图像检索</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:slam系统解析" href="#slam系统解析">SLAM系统解析</a>
+      <ol>
+        <li><a id="contents:优化问题" href="#优化问题">优化问题</a></li>
+        <li><a id="contents:生成树" href="#生成树">生成树</a></li>
+        <li><a id="contents:slam介绍" href="#slam介绍">SLAM介绍</a></li>
+        <li><a id="contents:orb-slam" href="#orb-slam">ORB-SLAM</a>
+          <ol>
+            <li><a id="contents:数据结构与数据库" href="#数据结构与数据库">数据结构与数据库</a></li>
+            <li><a id="contents:系统工作流程-" href="#系统工作流程-">系统工作流程 ⭐</a>
+              <ol>
+                <li><a id="contents:跟踪" href="#跟踪">跟踪</a>
+                  <ol>
+                    <li><a id="contents:地图初始化" href="#地图初始化">地图初始化</a></li>
+                    <li><a id="contents:初始位姿估计" href="#初始位姿估计">初始位姿估计</a></li>
+                    <li><a id="contents:位姿优化" href="#位姿优化">位姿优化</a></li>
+                    <li><a id="contents:关键帧选取" href="#关键帧选取">关键帧选取</a></li>
+                  </ol>
+                </li>
+                <li><a id="contents:建图" href="#建图">建图</a>
+                  <ol>
+                    <li><a id="contents:关键帧插入" href="#关键帧插入">关键帧插入</a></li>
+                    <li><a id="contents:地图点剔除" href="#地图点剔除">地图点剔除</a></li>
+                    <li><a id="contents:新地图点生成" href="#新地图点生成">新地图点生成</a></li>
+                    <li><a id="contents:局部地图优化" href="#局部地图优化">局部地图优化</a></li>
+                    <li><a id="contents:局部关键帧剔除" href="#局部关键帧剔除">局部关键帧剔除</a></li>
+                  </ol>
+                </li>
+                <li><a id="contents:回环校正" href="#回环校正">回环校正</a>
+                  <ol>
+                    <li><a id="contents:回环候选帧检测" href="#回环候选帧检测">回环候选帧检测</a></li>
+                    <li><a id="contents:计算sim3变换" href="#计算sim3变换">计算Sim3变换</a></li>
+                    <li><a id="contents:回环融合" href="#回环融合">回环融合</a></li>
+                    <li><a id="contents:位姿优化-1" href="#位姿优化-1">位姿优化</a></li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:总结" href="#总结">总结</a>
+      <ol>
+        <li><a id="contents:摄像机几何" href="#摄像机几何">摄像机几何</a></li>
+        <li><a id="contents:摄像机标定" href="#摄像机标定">摄像机标定</a></li>
+        <li><a id="contents:单视图几何" href="#单视图几何">单视图几何</a>
+          <ol>
+            <li><a id="contents:求出内参矩阵" href="#求出内参矩阵">求出内参矩阵</a></li>
+            <li><a id="contents:求出平面法向量" href="#求出平面法向量">求出平面法向量</a></li>
+            <li><a id="contents:求出三维场景" href="#求出三维场景">求出三维场景</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:三维重建基础知识" href="#三维重建基础知识">三维重建基础知识</a>
+          <ol>
+            <li><a id="contents:三角化" href="#三角化">三角化</a></li>
+            <li><a id="contents:极几何" href="#极几何">极几何</a></li>
+            <li><a id="contents:p3p-1" href="#p3p-1">P3P</a></li>
+            <li><a id="contents:基于词袋模型的图像检索-1" href="#基于词袋模型的图像检索-1">基于词袋模型的图像检索</a></li>
+            <li><a id="contents:本质矩阵于单应矩阵" href="#本质矩阵于单应矩阵">本质矩阵于单应矩阵</a></li>
+            <li><a id="contents:bundle-adjustment" href="#bundle-adjustment">Bundle Adjustment</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:双目立体视觉" href="#双目立体视觉">双目立体视觉</a>
+          <ol>
+            <li><a id="contents:将非平行视图转换为平行视图" href="#将非平行视图转换为平行视图">将非平行视图转换为平行视图</a></li>
+            <li><a id="contents:平行视图的双目立体视觉" href="#平行视图的双目立体视觉">平行视图的双目立体视觉</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:多视图几何" href="#多视图几何">多视图几何</a>
+          <ol>
+            <li><a id="contents:欧式结构恢复" href="#欧式结构恢复">欧式结构恢复</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:sfm系统" href="#sfm系统">SfM系统</a>
+          <ol>
+            <li><a id="contents:欧式结构运动恢复两视图" href="#欧式结构运动恢复两视图">欧式结构运动恢复(两视图)</a></li>
+            <li><a id="contents:增量法openmvg多视图" href="#增量法openmvg多视图">增量法（OpenMVG）(多视图)：</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:slam系统" href="#slam系统">SLAM系统</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    <hr></hr>
+</div>
+
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">三维重建之路下</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <div class="post-body e-content">
+                <h2 id="运动恢复结构sfm系统解析"><a href="#运动恢复结构sfm系统解析" class="anchor-link">#</a>运动恢复结构SfM系统解析</h2>
+<h3 id="回顾"><a href="#回顾" class="anchor-link">#</a>回顾</h3>
+<h4 id="本质矩阵与单应矩阵区别"><a href="#本质矩阵与单应矩阵区别" class="anchor-link">#</a>本质矩阵与单应矩阵区别</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-77.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="global-bundle-adjustment"><a href="#global-bundle-adjustment" class="anchor-link">#</a>Global Bundle Adjustment</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-78.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="p3p"><a href="#p3p" class="anchor-link">#</a>P3P</h4>
+<p>已知内参矩阵，3个像素点坐标及对应三维点坐标，求RT
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-79.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="sfm系统问题描述"><a href="#sfm系统问题描述" class="anchor-link">#</a>SfM系统问题描述</h3>
+<p>内参读取exif文件即可
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-80.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="用欧式结构恢复2视图"><a href="#用欧式结构恢复2视图" class="anchor-link">#</a>用欧式结构恢复（2视图）</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-81.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="对应点计算--特征提取sift"><a href="#对应点计算--特征提取sift" class="anchor-link">#</a>对应点计算--特征提取sift</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-82.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-83.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="对应点计算--特征匹配"><a href="#对应点计算--特征匹配" class="anchor-link">#</a>对应点计算--特征匹配</h4>
+<p>其中计算出x'y'的128维描述子后，与左图找出的所有描述子计算距离，选出top2的点，再进行求比，防止x'y'与两个点都距离近，从而不好区分该匹配哪个点，所以直接不要。但是会出现特征点匹配错误的问题。
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-84.png?imageMogr2/format/webp%7C" alt="image">
+如果图像多、特征数多，用词袋模型，相同的单词就构成一对匹配。</p>
+<h4 id="对应点计算--特征拟合-ransac"><a href="#对应点计算--特征拟合-ransac" class="anchor-link">#</a>对应点计算--特征拟合 RANSAC</h4>
+<p>减轻特征点匹配的错误
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-85.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-86.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="求解步骤结束"><a href="#求解步骤结束" class="anchor-link">#</a>求解步骤结束</h4>
+<ol>
+<li>对应点求解（SIFT特征提取+近邻匹配）</li>
+<li>求解基础矩阵F （RANSAC+归一化八点法）</li>
+<li>求解本质矩阵  （下面三步老方法即可）</li>
+<li>分解本质矩阵</li>
+<li>三角化</li>
+</ol>
+<h3 id="基于增量法的sfm系统--openmvg多视图"><a href="#基于增量法的sfm系统--openmvg多视图" class="anchor-link">#</a>基于增量法的SfM系统--OpenMVG（多视图）</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-87.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="预处理"><a href="#预处理" class="anchor-link">#</a>预处理</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-88.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="增量法总体步骤"><a href="#增量法总体步骤" class="anchor-link">#</a>增量法总体步骤</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-89.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="计算轨迹"><a href="#计算轨迹" class="anchor-link">#</a>计算轨迹</h5>
+<p>根据预处理的结果特征提取和特征匹配就可以构建轨迹
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-90.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="计算共视图连通图"><a href="#计算共视图连通图" class="anchor-link">#</a>计算共视图（连通图）</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-91.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="g中选边e"><a href="#g中选边e" class="anchor-link">#</a>G中选边e</h5>
+<p>选出初始两张图构建初始三维模型。图中是三维点在两幅图上的像素点
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-92.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="两视图重构"><a href="#两视图重构" class="anchor-link">#</a>两视图重构</h5>
+<p>t是轨迹中大于2的点，e是连通边上两张图所有的匹配点，取交集
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-93.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="增量法"><a href="#增量法" class="anchor-link">#</a>增量法</h5>
+<ol start="7">
+<li>
+<p>有了连通图，就由处理所有图片变成处理G中的边即可。</p>
+</li>
+<li></li>
+<li>
+<p>选取最大化是为了使得P3P结果更加鲁棒，因为新加入的图片与重建完的图片匹配的点最多，</p>
+</li>
+<li>
+<p>通过前两幅图的像素点和三维点来构建新图片的位姿，因为新图片和旧图片的像素点是匹配的（track含义），所以旧图片的像素点和三维点的匹配可以推出新图片也跟该三维点匹配，由此再知道内参矩阵，就可以构建出位姿</p>
+</li>
+<li>
+<p>就是把未构建三维点的像素点拿来三角化（并且是tracks中的点）</p>
+</li>
+<li>
+<p>删边</p>
+</li>
+<li>
+<p>优化结果</p>
+</li>
+</ol>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-94.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="补充知识"><a href="#补充知识" class="anchor-link">#</a>补充知识</h3>
+<h4 id="词袋模型"><a href="#词袋模型" class="anchor-link">#</a>词袋模型</h4>
+<ol>
+<li>提取特征
+<ol>
+<li>数据库所有的图片找到所有sift特征点</li>
+<li>聚类</li>
+</ol>
+</li>
+<li>学习视觉词典
+<ol>
+<li>考虑的问题：词典大小适中</li>
+<li>计算效率：词汇树、AKM</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-95.png?imageMogr2/format/webp%7C" alt="image"></p>
+<ol start="3">
+<li>利用视觉词汇出现的频率表达图像</li>
+</ol>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-96.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="基于词袋模型的图像检索"><a href="#基于词袋模型的图像检索" class="anchor-link">#</a>基于词袋模型的图像检索</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-97.png?imageMogr2/format/webp%7C" alt="image">
+搜索中使用相似性度量
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-98.png?imageMogr2/format/webp%7C" alt="image">
+排除无意义特征：TF-IDF
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-99.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-100.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h2 id="slam系统解析"><a href="#slam系统解析" class="anchor-link">#</a>SLAM系统解析</h2>
+<h3 id="优化问题"><a href="#优化问题" class="anchor-link">#</a>优化问题</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-101.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="生成树"><a href="#生成树" class="anchor-link">#</a>生成树</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-102.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="slam介绍"><a href="#slam介绍" class="anchor-link">#</a>SLAM介绍</h3>
+<p>Simultaneous Localization and Mapping(SLAM)：</p>
+<ul>
+<li>Localization：传感器的位置和姿态；</li>
+<li>Mapping：地图构建</li>
+<li>SLAM：同时定位和建图</li>
+<li>应用场景：定位、导航、避障、重建、交互</li>
+</ul>
+<p>SLAM传感器分类：</p>
+<ul>
+<li>携带于机器人本体上的，例如机器人的轮式编码器、相机、激光等；</li>
+<li>安装于环境中的，如导轨、二维码标志等；</li>
+</ul>
+<p>按照相机的工作方式，相机可分为：单目（Monocular）、双目（Stereo）和深度相机（RGB-D）
+地图：
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-103.png?imageMogr2/format/webp%7C" alt="image">
+地图的用处
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-104.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h3 id="orb-slam"><a href="#orb-slam" class="anchor-link">#</a>ORB-SLAM</h3>
+<p>开源方案
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-105.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-106.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="数据结构与数据库"><a href="#数据结构与数据库" class="anchor-link">#</a>数据结构与数据库</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-107.png?imageMogr2/format/webp%7C" alt="image">
+核心数据库内容：
+地图点</p>
+<ul>
+<li>世界坐标系下的3D点坐标；</li>
+<li>观测方向，即所有可以观测到该特征点的视图所产生的观测方向均值；
+<ul>
+<li>排除离特征点方向过大的视图，提高鲁棒</li>
+</ul>
+</li>
+<li>ORB特征描述子；</li>
+<li>该点能被观测到的最大距离与最小距离；
+<ul>
+<li>排除离特征点过远过近的视图，提高鲁棒</li>
+</ul>
+</li>
+</ul>
+<p>关键帧</p>
+<ul>
+<li>摄像机位姿；</li>
+<li>内参数；</li>
+<li>该帧中提取到的全部ORB特征描述子（近似SIFT），以及它们和地图点之间的对应关系；
+<ul>
+<li>没有对应关系的等待下次重建时再填充</li>
+</ul>
+</li>
+</ul>
+<p>共视图（近似OpenMVG连通图）</p>
+<ul>
+<li>一种有向无权图，节点为关键帧，如两个节点共享的地图点数量大于阈值（至少15个），则存在一条边，边的权重设置为共享地图点的个数。
+<ul>
+<li>后续用于bundle adjustment优化</li>
+</ul>
+</li>
+</ul>
+<p>本质图</p>
+<ul>
+<li>是共视图的子图，保留所有节点，边数量相较于共视图更少，尽量减少边，其作用是加速回环校正的计算。
+<strong>本质图=生成树+共视图边权重超过100的边+回环边</strong>
+<ul>
+<li>回环边：检测中自己生成的边，把视图拉回正常视角的边</li>
+<li>生成树：<strong>Kruskal算法</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="系统工作流程-"><a href="#系统工作流程-" class="anchor-link">#</a>系统工作流程 ⭐</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-108.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="跟踪"><a href="#跟踪" class="anchor-link">#</a>跟踪</h5>
+<p>核心功能：1. 确定当前帧位姿（RT）；2. 确定其是否将其作为关键帧</p>
+<h6 id="地图初始化"><a href="#地图初始化" class="anchor-link">#</a>地图初始化</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-109.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="初始位姿估计"><a href="#初始位姿估计" class="anchor-link">#</a>初始位姿估计</h6>
+<p>1.
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-110.png?imageMogr2/format/webp%7C" alt="image"></p>
+<ol start="2">
+<li></li>
+</ol>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-111.png?imageMogr2/format/webp%7C" alt="image">
+2.2 对于每一个候选参考关键帧：
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-112.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="位姿优化"><a href="#位姿优化" class="anchor-link">#</a>位姿优化</h6>
+<p>运用优化问题中的<a href="#fHQG5">位姿优化</a>公式
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-113.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="关键帧选取"><a href="#关键帧选取" class="anchor-link">#</a>关键帧选取</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-114.png?imageMogr2/format/webp%7C" alt="image">
+Kref来自于数据集中的某帧 （前一步位姿优化中出现）</p>
+<h5 id="建图"><a href="#建图" class="anchor-link">#</a>建图</h5>
+<p>该线程核心功能：完成局部地图构建</p>
+<h6 id="关键帧插入"><a href="#关键帧插入" class="anchor-link">#</a>关键帧插入</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-115.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="地图点剔除"><a href="#地图点剔除" class="anchor-link">#</a>地图点剔除</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-116.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="新地图点生成"><a href="#新地图点生成" class="anchor-link">#</a>新地图点生成</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-117.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="局部地图优化"><a href="#局部地图优化" class="anchor-link">#</a>局部地图优化</h6>
+<p>当前帧K1，共视关键帧K2，能看到但没有共视K3
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-118.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="局部关键帧剔除"><a href="#局部关键帧剔除" class="anchor-link">#</a>局部关键帧剔除</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-119.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h5 id="回环校正"><a href="#回环校正" class="anchor-link">#</a>回环校正</h5>
+<p>该线程核心功能：修正累计误差
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-120.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="回环候选帧检测"><a href="#回环候选帧检测" class="anchor-link">#</a>回环候选帧检测</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-121.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-122.png?imageMogr2/format/webp%7C" alt="image">
+图中的第三步的绿云里红色圈假设就是关键帧，因为在前几帧里也出现了，然后选为候选帧</p>
+<h6 id="计算sim3变换"><a href="#计算sim3变换" class="anchor-link">#</a>计算Sim3变换</h6>
+<p>Sim3就是Sij
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-123.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="回环融合"><a href="#回环融合" class="anchor-link">#</a>回环融合</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-124.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h6 id="位姿优化-1"><a href="#位姿优化-1" class="anchor-link">#</a>位姿优化</h6>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-125.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h2 id="总结"><a href="#总结" class="anchor-link">#</a>总结</h2>
+<h3 id="摄像机几何"><a href="#摄像机几何" class="anchor-link">#</a>摄像机几何</h3>
+<p>在针孔摄像机下，建立<strong>世界坐标系</strong>上的三维点到<strong>像平面坐标系</strong>上像素点的关系</p>
+<ul>
+<li>外参矩阵将世界坐标系转换到摄像机坐标系</li>
+<li>内参矩阵将摄像机坐标系上的空间点映射到像平面坐标上的像素点</li>
+</ul>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-126.png?imageMogr2/format/webp%7C" alt="image"></p>
+<hr>
+<h3 id="摄像机标定"><a href="#摄像机标定" class="anchor-link">#</a>摄像机标定</h3>
+<p>通过已知<strong>二维点、三维点，<strong>利用</strong>p=MP</strong>求解摄像机<strong>内外参数矩阵</strong>，求出参数矩阵就可以应用摄像机几何
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-127.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-128.png?imageMogr2/format/webp%7C" alt="image"></p>
+<hr>
+<h3 id="单视图几何"><a href="#单视图几何" class="anchor-link">#</a>单视图几何</h3>
+<p>通过<strong>影消点和直线方向</strong>的关系，<strong>影消线和平面法向量</strong>的关系，<strong>摄像机几何</strong>（还是标定？）恢复三维场景结构
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-129.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="求出内参矩阵"><a href="#求出内参矩阵" class="anchor-link">#</a>求出内参矩阵</h4>
+<p>利用影消点和直线方向的关系,找到互相垂直的点得到$v_{1}^{T} \omega v_{2}=0 (\theta =90^\circ)$，然后利用$\omega$获得K矩阵
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-130.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="求出平面法向量"><a href="#求出平面法向量" class="anchor-link">#</a>求出平面法向量</h4>
+<p>求出K矩阵后利用影消线和平面法向量的关系，求出平面法向量
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-131.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="求出三维场景"><a href="#求出三维场景" class="anchor-link">#</a>求出三维场景</h4>
+<p>已知内参矩阵、平面法向量、利用摄像机几何（还是摄像机标定？）中三维点和像素点的转换关系，求得最终的三维重建，不考虑外参矩阵</p>
+<hr>
+<h3 id="三维重建基础知识"><a href="#三维重建基础知识" class="anchor-link">#</a>三维重建基础知识</h3>
+<h4 id="三角化"><a href="#三角化" class="anchor-link">#</a>三角化</h4>
+<p>已知p, p', K, K', R, T，求三维点</p>
+<ul>
+<li>线性解法：奇异值分解</li>
+<li>非线性解法：牛顿法、L-M方法</li>
+</ul>
+<h4 id="极几何"><a href="#极几何" class="anchor-link">#</a>极几何</h4>
+<p>在同一场景下两个视点图像的几何关系：点线关系，点点关系，基础矩阵和极点关系
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-132.png?imageMogr2/format/webp%7C" alt="image">
+获得近似基础矩阵：归一化八点法
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-133.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="p3p-1"><a href="#p3p-1" class="anchor-link">#</a>P3P</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-134.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="基于词袋模型的图像检索-1"><a href="#基于词袋模型的图像检索-1" class="anchor-link">#</a>基于词袋模型的图像检索</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-135.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="本质矩阵于单应矩阵"><a href="#本质矩阵于单应矩阵" class="anchor-link">#</a>本质矩阵于单应矩阵</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-136.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="bundle-adjustment"><a href="#bundle-adjustment" class="anchor-link">#</a>Bundle Adjustment</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-137.png?imageMogr2/format/webp%7C" alt="image"></p>
+<hr>
+<h3 id="双目立体视觉"><a href="#双目立体视觉" class="anchor-link">#</a>双目立体视觉</h3>
+<p>利用平行视图获取深度构建双目立体视觉系统</p>
+<h4 id="将非平行视图转换为平行视图"><a href="#将非平行视图转换为平行视图" class="anchor-link">#</a>将非平行视图转换为平行视图</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-138.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h4 id="平行视图的双目立体视觉"><a href="#平行视图的双目立体视觉" class="anchor-link">#</a>平行视图的双目立体视觉</h4>
+<ul>
+<li>平行视图基础矩阵：$F = \begin{bmatrix}
+0&amp;0  &amp;0 \
+0&amp;0  &amp;-1 \
+0&amp;1  &amp;0
+\end{bmatrix}$</li>
+<li>平行视图的极线平行于u轴，p和p'的v坐标相等，因此沿着扫描线搜索即可
+<ul>
+<li>对应点搜索使用归一化相关匹配，再加上一些约束</li>
+<li>由此构建点对应关系</li>
+</ul>
+</li>
+<li>通过p'和p坐标，利用平行视图三角化公式$p_{u}-p_{u}^{\prime}=\frac{B \cdot f}{z}$，就可求出深度z</li>
+<li>有了深度，就可以形成深度图或者3D电影，构建双目立体视觉系统</li>
+</ul>
+<hr>
+<h3 id="多视图几何"><a href="#多视图几何" class="anchor-link">#</a>多视图几何</h3>
+<p>通过三维场景的多张二维图像，恢复出该场景的<strong>三维结构信息</strong>以及每张图片对应的<strong>摄像机参数</strong></p>
+<h4 id="欧式结构恢复"><a href="#欧式结构恢复" class="anchor-link">#</a>欧式结构恢复</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-139.png?imageMogr2/format/webp%7C" alt="image">
+求解步骤：</p>
+<ol>
+<li>求解基础矩阵F (归一化八点法)</li>
+<li>求解本质矩阵 $(E=K_{2}^{T} F K_{1})$</li>
+<li>分解本质矩阵
+<ol>
+<li><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-140.png?imageMogr2/format/webp%7C" alt="image"></li>
+</ol>
+</li>
+<li>三角化 （线性法、非线性法）</li>
+</ol>
+<hr>
+<h3 id="sfm系统"><a href="#sfm系统" class="anchor-link">#</a>SfM系统</h3>
+<h4 id="欧式结构运动恢复两视图"><a href="#欧式结构运动恢复两视图" class="anchor-link">#</a>欧式结构运动恢复(两视图)</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-141.png?imageMogr2/format/webp%7C" alt="image">
+欧式结构恢复(两视图)求解步骤：</p>
+<ol>
+<li>对应点求解（SIFT特征提取+近邻匹配）</li>
+<li>求解基础矩阵F （RANSAC+归一化八点法）</li>
+<li>求解本质矩阵  $E=K_{2}^{T} F K_{1}$</li>
+<li>分解本质矩阵 $E \rightarrow R, T \rightarrow M_{2}$</li>
+<li>三角化</li>
+</ol>
+<h4 id="增量法openmvg多视图"><a href="#增量法openmvg多视图" class="anchor-link">#</a>增量法（OpenMVG）(多视图)：</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-142.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-143.png?imageMogr2/format/webp%7C" alt="image"></p>
+<hr>
+<h3 id="slam系统"><a href="#slam系统" class="anchor-link">#</a>SLAM系统</h3>
+<p>同时摄像机定位和构建三维模型
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-144.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/05/20230526195839-145.png?imageMogr2/format/webp%7C" alt="image"></p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/computervision/" rel="tag" class="post-tag-link">#computervision</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>MySQL学习 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="Rurouni" /><meta name="description" content="数据库概述 资料&#43;视频
+MySQL常用命令 退出 exit 查看数据库 show databases; 使用某数据库 use xxx; 创建数据库 create databse xxx; 查看数据库中的表 show tables; 导入表 source path/xxx.sql 查看当前使用的数据库 select database() 批量执行sql脚本 source xxx.sql(或者windows直接sql文件拖进来) 建议都小写，不同操作系统处理方式不一致 以;结尾才会执行 表的理解 数据库中最基本的单位是表 数据库中以表格的形式表示数据 任何一张表都有行和列： 行：数据/记录 列：字段（包含字段名、数据类型、约束等属性） 数据库中的有一条命名规范：所有的标识符都是全部小写，单词和单词之间使用下划线进行衔接。 SQL语句的分类 DQL：数据查询语言（有select关键字） DML：数据操作语言（增删改表中的数据（insert into、delete、update）） DDL：数据定义语言（增删改表（create、drop、alter）） TCL：事务控制语言（事务提交commit、事务回滚rollback） DCL：数据控制语言（授权grant、撤权revoke） 查看表信息 select * from table_name 查看表内数据 desc table_name 查看表结构 SQL查询 简单查询 查询一个字段：
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/learn/mysql-tutorial/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2023-08-10T23:13:48+08:00",
+        "dateModified": "2023-08-10T23:24:32+08:00",
+        "url": "http://localhost:1313/posts/learn/mysql-tutorial/",
+        "headline": "MySQL学习",
+        "description": "数据库概述 资料+视频\nMySQL常用命令 退出 exit 查看数据库 show databases; 使用某数据库 use xxx; 创建数据库 create databse xxx; 查看数据库中的表 show tables; 导入表 source path/xxx.sql 查看当前使用的数据库 select database() 批量执行sql脚本 source xxx.sql(或者windows直接sql文件拖进来) 建议都小写，不同操作系统处理方式不一致 以;结尾才会执行 表的理解 数据库中最基本的单位是表 数据库中以表格的形式表示数据 任何一张表都有行和列： 行：数据/记录 列：字段（包含字段名、数据类型、约束等属性） 数据库中的有一条命名规范：所有的标识符都是全部小写，单词和单词之间使用下划线进行衔接。 SQL语句的分类 DQL：数据查询语言（有select关键字） DML：数据操作语言（增删改表中的数据（insert into、delete、update）） DDL：数据定义语言（增删改表（create、drop、alter）） TCL：事务控制语言（事务提交commit、事务回滚rollback） DCL：数据控制语言（授权grant、撤权revoke） 查看表信息 select * from table_name 查看表内数据 desc table_name 查看表结构 SQL查询 简单查询 查询一个字段：\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  10434 ,
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+
+    
+
+
+
+<meta property="og:title" content="MySQL学习" />
+<meta property="og:description" content="数据库概述 资料&#43;视频
+MySQL常用命令 退出 exit 查看数据库 show databases; 使用某数据库 use xxx; 创建数据库 create databse xxx; 查看数据库中的表 show tables; 导入表 source path/xxx.sql 查看当前使用的数据库 select database() 批量执行sql脚本 source xxx.sql(或者windows直接sql文件拖进来) 建议都小写，不同操作系统处理方式不一致 以;结尾才会执行 表的理解 数据库中最基本的单位是表 数据库中以表格的形式表示数据 任何一张表都有行和列： 行：数据/记录 列：字段（包含字段名、数据类型、约束等属性） 数据库中的有一条命名规范：所有的标识符都是全部小写，单词和单词之间使用下划线进行衔接。 SQL语句的分类 DQL：数据查询语言（有select关键字） DML：数据操作语言（增删改表中的数据（insert into、delete、update）） DDL：数据定义语言（增删改表（create、drop、alter）） TCL：事务控制语言（事务提交commit、事务回滚rollback） DCL：数据控制语言（授权grant、撤权revoke） 查看表信息 select * from table_name 查看表内数据 desc table_name 查看表结构 SQL查询 简单查询 查询一个字段：
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/learn/mysql-tutorial/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2023-08-10T23:13:48&#43;08:00" />
+    <meta property="article:modified_time" content="2023-08-10T23:24:32&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">MySQL学习</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:数据库概述" href="#数据库概述">数据库概述</a>
+      <ol>
+        <li><a id="contents:mysql常用命令" href="#mysql常用命令">MySQL常用命令</a></li>
+        <li><a id="contents:表的理解" href="#表的理解">表的理解</a></li>
+        <li><a id="contents:sql语句的分类" href="#sql语句的分类">SQL语句的分类</a></li>
+        <li><a id="contents:查看表信息" href="#查看表信息">查看表信息</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:sql查询" href="#sql查询">SQL查询</a>
+      <ol>
+        <li><a id="contents:简单查询" href="#简单查询">简单查询</a></li>
+        <li><a id="contents:条件查询" href="#条件查询">条件查询</a></li>
+        <li><a id="contents:排序" href="#排序">排序</a></li>
+        <li><a id="contents:数据处理函数" href="#数据处理函数">数据处理函数</a></li>
+        <li><a id="contents:分组函数" href="#分组函数">分组函数</a>
+          <ol>
+            <li><a id="contents:分组查询" href="#分组查询">分组查询</a>
+              <ol>
+                <li><a id="contents:执行顺序" href="#执行顺序">执行顺序</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a id="contents:连接查询" href="#连接查询">连接查询</a>
+          <ol>
+            <li><a id="contents:笛卡尔积" href="#笛卡尔积">笛卡尔积</a></li>
+            <li><a id="contents:内连接" href="#内连接">内连接</a></li>
+            <li><a id="contents:外连接" href="#外连接">外连接</a></li>
+            <li><a id="contents:多表连接" href="#多表连接">多表连接</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:子查询" href="#子查询">子查询</a></li>
+        <li><a id="contents:union" href="#union">union</a></li>
+        <li><a id="contents:limit-important" href="#limit-important">limit (!important)</a>
+          <ol>
+            <li><a id="contents:分页" href="#分页">分页</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:dql总结" href="#dql总结">DQL总结</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:sql增删改" href="#sql增删改">SQL增删改</a>
+      <ol>
+        <li><a id="contents:mysql中的数据类型" href="#mysql中的数据类型">mysql中的数据类型</a></li>
+        <li><a id="contents:增删改表ddl" href="#增删改表ddl">增删改表（DDL）</a></li>
+        <li><a id="contents:增删改数据dml" href="#增删改数据dml">增删改数据（DML）</a></li>
+        <li><a id="contents:增删改表结构" href="#增删改表结构">增删改表结构</a></li>
+        <li><a id="contents:约束" href="#约束">约束</a></li>
+        <li><a id="contents:存储引擎" href="#存储引擎">存储引擎</a></li>
+        <li><a id="contents:事务" href="#事务">事务</a></li>
+        <li><a id="contents:索引" href="#索引">索引</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:视图" href="#视图">视图</a></li>
+    <li><a id="contents:dba命令" href="#dba命令">DBA命令</a></li>
+    <li><a id="contents:数据库三范式" href="#数据库三范式">数据库三范式</a></li>
+    <li><a id="contents:34课后题" href="#34课后题">34课后题</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <h2 id="数据库概述"><a href="#数据库概述" class="anchor-link">#</a><a href="#contents:数据库概述" class="headings">数据库概述</a></h2>
+<p><a href="https://pan.baidu.com/s/18W0ZRYaCR60mQWFP92CJsg?pwd=2you" target="_blank" rel="noopener">资料</a>+<a href="https://www.bilibili.com/video/BV1Vy4y1z7EX" target="_blank" rel="noopener">视频</a></p>
+<h3 id="mysql常用命令"><a href="#mysql常用命令" class="anchor-link">#</a><a href="#contents:mysql常用命令" class="headings">MySQL常用命令</a></h3>
+<div class="table-container"><table>
+  <thead>
+      <tr>
+          <th>退出</th>
+          <th>exit</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>查看数据库</td>
+          <td>show databases;</td>
+      </tr>
+      <tr>
+          <td>使用某数据库</td>
+          <td>use xxx;</td>
+      </tr>
+      <tr>
+          <td>创建数据库</td>
+          <td>create databse xxx;</td>
+      </tr>
+      <tr>
+          <td>查看数据库中的表</td>
+          <td>show tables;</td>
+      </tr>
+      <tr>
+          <td>导入表</td>
+          <td>source path/xxx.sql</td>
+      </tr>
+      <tr>
+          <td>查看当前使用的数据库</td>
+          <td>select database()</td>
+      </tr>
+      <tr>
+          <td>批量执行sql脚本</td>
+          <td>source xxx.sql(或者windows直接sql文件拖进来)</td>
+      </tr>
+      <tr>
+          <td><a href="https://www.cnblogs.com/kevingrace/p/6150748.html" target="_blank" rel="noopener">建议都小写</a>，不同操作系统处理方式不一致</td>
+          <td>以;结尾才会执行</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="表的理解"><a href="#表的理解" class="anchor-link">#</a><a href="#contents:表的理解" class="headings">表的理解</a></h3>
+<ul>
+<li>数据库中最基本的单位是表</li>
+<li>数据库中以表格的形式表示数据</li>
+<li>任何一张表都有行和列：
+<ul>
+<li>行：数据/记录</li>
+<li>列：字段（包含字段名、数据类型、约束等属性）</li>
+</ul>
+</li>
+<li>数据库中的有一条命名规范：所有的标识符都是全部小写，单词和单词之间使用下划线进行衔接。</li>
+</ul>
+<h3 id="sql语句的分类"><a href="#sql语句的分类" class="anchor-link">#</a><a href="#contents:sql语句的分类" class="headings">SQL语句的分类</a></h3>
+<ul>
+<li>DQL：数据查询语言（有select关键字）</li>
+<li>DML：数据<strong>操作</strong>语言（增删改表中的数据（insert into、delete、update））</li>
+<li>DDL：数据<strong>定义</strong>语言（增删改表（create、drop、alter））</li>
+<li>TCL：事务控制语言（事务提交commit、事务回滚rollback）</li>
+<li>DCL：数据控制语言（授权grant、撤权revoke）</li>
+</ul>
+<h3 id="查看表信息"><a href="#查看表信息" class="anchor-link">#</a><a href="#contents:查看表信息" class="headings">查看表信息</a></h3>
+<ul>
+<li>select * from table_name 查看表内数据</li>
+<li>desc table_name  查看表结构</li>
+</ul>
+<h2 id="sql查询"><a href="#sql查询" class="anchor-link">#</a><a href="#contents:sql查询" class="headings">SQL查询</a></h2>
+<h3 id="简单查询"><a href="#简单查询" class="anchor-link">#</a><a href="#contents:简单查询" class="headings">简单查询</a></h3>
+<p>查询一个字段：</p>
+<ul>
+<li>select 字段名 from 表名;
+<ul>
+<li>select/from是关键字</li>
+<li>字段名和表名是标识符</li>
+<li>字段名处也可以为字面量/字面值，此时输出 值为一样的所有行
+<ul>
+<li>select 1000 as num from EMP;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>查询多个字段：</p>
+<ul>
+<li>select 字段名1,字段名2 from 表名</li>
+</ul>
+<p>查询全部字段：</p>
+<ul>
+<li>select 全部字段 from 表名</li>
+<li>or</li>
+<li>select * from 表名
+<ul>
+<li>效率比较低，可读性差</li>
+<li>不建议写到程序里</li>
+</ul>
+</li>
+</ul>
+<p>起别名：</p>
+<ul>
+<li>select 字段名 as 别名 from 表名
+<ul>
+<li>只是将查询结果的列表显示为别名，不会修改表字段名</li>
+</ul>
+</li>
+</ul>
+<p>例：</p>
+<ul>
+<li>-- mysql注释</li>
+<li>select deptno, dname deptname from dept;  -- 去除as</li>
+<li>select deptno, dname 'dept name' from dept  -- 别名加空格/中文用单引号;
+<ul>
+<li>注意数据库中使用单引号，双引号不标准</li>
+</ul>
+</li>
+<li>select ename, sal*10 as '年薪' from EMP -- 使用数学表达式 ;</li>
+</ul>
+<h3 id="条件查询"><a href="#条件查询" class="anchor-link">#</a><a href="#contents:条件查询" class="headings">条件查询</a></h3>
+<p>语法格式：<br />select 字段1, 字段2<br />from 表名<br />where 条件;<br />比较符号：</p>
+<ul>
+<li>= 、&lt;&gt;或!= 、&lt; 、&lt;= 、&gt; 、&gt;=、between…and … （闭区间，左小右大）</li>
+<li>select empno, enmae, sal from EMP where sal &lt; 1000;</li>
+</ul>
+<p>判断符号：</p>
+<ul>
+<li>is null 为空（ is not null 不为空）<br />and 、or <br />in 包含，相当于多个 or （ not in 不在这个范围中）<br />not 可以取非，主要用在 is 或 in 中</li>
+<li>select empno,ename,sal,comm from emp where comm <strong>is null</strong>;</li>
+<li>select * from emp where (job='MANAGER' <strong>or</strong> job = 'SALESMAN') <strong>and</strong> sal &gt; 3000;
+<ul>
+<li>and 优先级高</li>
+</ul>
+</li>
+<li>select empno,ename,job from emp where job <strong>in</strong> ('MANAGER', 'SALESMAN');</li>
+</ul>
+<p>模糊查询：</p>
+<ul>
+<li>like 称为模糊查询，支持%或下划线匹配</li>
+<li>特殊符号：% 匹配任意个字符、_ 只匹配一个字符</li>
+<li>select ename from emp where ename like '%T' -- 最后一个是T</li>
+<li>select ename from emp where ename like '__R%'   -- 第三个字母是R</li>
+<li>select name from t_student where name like '%_%' -- \转义字符</li>
+</ul>
+<h3 id="排序"><a href="#排序" class="anchor-link">#</a><a href="#contents:排序" class="headings">排序</a></h3>
+<p>语法格式：<br />select * from tablename <br />order by sal  -- 默认升序;<br />order by sal desc -- 降序 或者-sal;<br />order by sal asc -- 升序 或者+sal;<br />语句顺序为 from -&gt; where -&gt; order by<br />多字段排序：</p>
+<ul>
+<li>select ename,sal from emp<br />order by <br />	sal asc, ename asc; // sal在前，起主导，只有sal相等的时候，才会考虑启用ename排序。</li>
+</ul>
+<h3 id="数据处理函数"><a href="#数据处理函数" class="anchor-link">#</a><a href="#contents:数据处理函数" class="headings">数据处理函数</a></h3>
+<p>又称为单行处理函数。特点：一个输入对应一个输出。<br />常见函数：</p>
+<ul>
+<li>Lower 转换小写、upper 转换大写
+<ul>
+<li>select lower(ename) as ename from EMP;</li>
+</ul>
+</li>
+<li>substr 取子串 (substr(被截取的字符串,起始下标,截取的长度))
+<ul>
+<li>select ename from EMP where substr(ename, 1, 1) = 'A' -- 下标从1开始</li>
+<li>select concat(lower(substr(ename,1,1)), substr(ename, 2)) as result from EMP  -- 首字母小写</li>
+</ul>
+</li>
+<li>length 取长度
+<ul>
+<li>select length(ename) enamelength from EMP;</li>
+</ul>
+</li>
+<li>trim 去空格
+<ul>
+<li>select * from EMP where ename = trim('   KING');</li>
+</ul>
+</li>
+<li>str_to_date 将字符串转换成日期
+<ul>
+<li>str_to_date('字符串日期', '日期格式')</li>
+<li>%Y	年  %m 月  %d 日  %h  时  %i   分   %s   秒</li>
+<li>%Y-%m-%d 不需要写日期格式</li>
+<li>通常使用在插入insert方面，因为插入的时候需要一个日期类型的数据</li>
+<li>insert into t_user(id,name,birth) values(1, 'zhangsan', str_to_date('01-10-1990','%d-%m-%Y'));</li>
+<li>默认格式  %Y-%m-%d</li>
+</ul>
+</li>
+<li>date_format 格式化日期
+<ul>
+<li>date_format(birth, '%m/%d/%Y')</li>
+<li>通常使用在查询日期方面。设置展示的日期格式。</li>
+<li>select id,name,date_format(birth,'%Y/%m/%d') as birth from t_user;</li>
+<li>默认的日期格式：'%Y-%m-%d'</li>
+</ul>
+</li>
+<li>format 设置千分位
+<ul>
+<li>select ename, format(sal, '$999,9999') as sal from EMP;  // 不写999没事</li>
+</ul>
+</li>
+<li>round 四舍五入
+<ul>
+<li>select round(1236.5567, -1) as res from EMP;   // 个位数四舍五入</li>
+</ul>
+</li>
+<li>rand() 生成随机数
+<ul>
+<li>select round(rand()*100,0) from emp; // 100以内的随机数</li>
+</ul>
+</li>
+<li>Ifnull 可以将 null 转换成一个具体值
+<ul>
+<li>ifnull是空处理函数。专门处理NULL的。<br />在所有数据库当中，只要有NULL参与的数学运算，最终结果就是NULL。</li>
+<li>select ename, (sal + ifnull(comm, 0)) * 12 as yearsal from emp;</li>
+</ul>
+</li>
+<li>case ... when ... then ... when ... then ... else ... end
+<ul>
+<li>select ename,  job, sal as oldsal,<br />(case job when 'MANAGER' then sal * 1.1 when 'SALESMAN' then sal * 1.5 else sal end) as newsal <br />from emp;</li>
+</ul>
+</li>
+</ul>
+<h3 id="分组函数"><a href="#分组函数" class="anchor-link">#</a><a href="#contents:分组函数" class="headings">分组函数</a></h3>
+<p>又名多行处理函数，特点：输入多行，输出一行。<br />分组函数在使用的时候先分组，再使用，默认一张表为一组。</p>
+<ul>
+<li>count 计数
+<ul>
+<li>select count(ename) from EMP;</li>
+</ul>
+</li>
+<li>sum 求和</li>
+<li>avg 平均值</li>
+<li>max 最大值</li>
+<li>min 最小值</li>
+</ul>
+<p>注意事项：</p>
+<ul>
+<li>分组函数自动忽略NULL，不需要提前处理NULL</li>
+<li>分组函数中count(*)和count(具体字段)的区别
+<ul>
+<li>具体字段：统计该字段下所有不为NULL的元素的总数</li>
+<li>*：统计表中所有行。一行不可能全为NULL</li>
+</ul>
+</li>
+<li>分组函数不能直接用在where子句中
+<ul>
+<li>select ename,sal from emp where sal &gt; min(sal);  // error</li>
+</ul>
+</li>
+<li>所有分组函数可以组合起来使用，不能嵌套使用</li>
+</ul>
+<h4 id="分组查询"><a href="#分组查询" class="anchor-link">#</a><a href="#contents:分组查询" class="headings">分组查询</a></h4>
+<p>select ... from ... <strong>group by</strong> ...</p>
+<h5 id="执行顺序"><a href="#执行顺序" class="anchor-link">#</a><a href="#contents:执行顺序" class="headings">执行顺序</a></h5>
+<ul>
+<li>from -&gt; where -&gt; group by -&gt; having -&gt; select -&gt; order by</li>
+</ul>
+<p>为什么分组函数不能直接使用在where后面？<br />select ename,sal from emp where sal &gt; min(sal);  //报错。<br />因为分组函数在使用的时候必须<strong>先分组之后才能使用</strong>。<br />where执行的时候，还没有分组。所以where后面不能出现分组函数。<br />select sum(sal) from emp; 这个没有分组，为啥sum()函数可以用呢？<br />因为select在group by之后执行。不分组默认一张表一组<br />例：</p>
+<ul>
+<li>select job,sum(sal) from emp group by job;
+<ul>
+<li>先从emp表中查询数据。根据job字段进行分组。然后对每一组的数据进行sum(sal)</li>
+<li>在一条select语句当中，如果有group by语句的话，select后面只能跟：<strong>参加分组的字段，以及分组函数</strong>。其它的一律不能跟，sql旧版本不会报错。</li>
+</ul>
+</li>
+<li>select deptno, job, max(sal) from emp group by deptno, job;
+<ul>
+<li>联合分组查询，每个部门，不同工作岗位的最高薪资</li>
+</ul>
+</li>
+</ul>
+<p>使用<strong>having</strong>  <br />进一步过滤 （不能单独使用，只能配套group by）<br />where和having，优先选择where，where实在完成不了，再选择having。<br />例：</p>
+<ul>
+<li>select job, avg(sal) avgsal from EMP where job &lt;&gt; 'MANAGER' group by job having avg(sal) &gt; 1500 order by avgsal desc;
+<ul>
+<li>最好使用desc而不是-avgsal 会报错</li>
+</ul>
+</li>
+</ul>
+<h3 id="连接查询"><a href="#连接查询" class="anchor-link">#</a><a href="#contents:连接查询" class="headings">连接查询</a></h3>
+<ul>
+<li>去除重复记录 distinct
+<ul>
+<li>// distinct出现在job,deptno两个字段之前，表示两个字段联合起来去重。</li>
+<li>select distinct job,deptno from emp;</li>
+<li>select count(distinct job) from emp;  // 得到工作种类数</li>
+</ul>
+</li>
+</ul>
+<p>概念：多张表联合查询。<br />连接查询的分类：</p>
+<ul>
+<li>语法的年代
+<ul>
+<li>sql92</li>
+<li>sql99 （本文使用）</li>
+</ul>
+</li>
+<li>连接的方式
+<ul>
+<li>内连接
+<ul>
+<li>等值连接</li>
+<li>非等值连接</li>
+<li>自连接</li>
+</ul>
+</li>
+<li>外连接
+<ul>
+<li>左外连接（左连接）</li>
+<li>右外连接（右连接）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="笛卡尔积"><a href="#笛卡尔积" class="anchor-link">#</a><a href="#contents:笛卡尔积" class="headings">笛卡尔积</a></h4>
+<p>当两张表进行连接查询，没有任何条件限制的时候，最终查询结果条数，是两张表行数的乘积，这种现象被称为：笛卡尔积现象。<br />加入条件限制：select ename, dname from EMP, DEPT where EMP.ename = DEPT.dname<br />匹配次数没减少，显示条数减少，添加筛选<br />优化（表起别名）：</p>
+<blockquote>
+<p>select e.ename, d.dname from EMP e, DEPT  d where e.deptno = d.deptno; //92语法</p>
+</blockquote>
+<p>注意：通过笛卡尔积现象得出，<strong>表的连接次数越多效率越低</strong>，尽量避免表的连接次数。</p>
+<h4 id="内连接"><a href="#内连接" class="anchor-link">#</a><a href="#contents:内连接" class="headings">内连接</a></h4>
+<p>sql92的缺点：结构不清晰，表的连接条件，和后期进一步筛选的条件，都放到了where后面。<br />sql99的优点：表连接的条件是独立的，连接之后，如果还需要进一步筛选，再往后继续添加where。<br />sql99的语法：select ... from a <strong>join</strong> b <strong>on</strong> a和b的连接条件 where 筛选条件 （默认内连接 inner join）</p>
+<p>内连接特点：A和B连接，AB两张表没有主次关系。平等的。</p>
+<ul>
+<li>等值连接
+<ul>
+<li>条件是等量关系，所以被称为等值连接。</li>
+<li>select e.ename,d.dname from emp e inner join dept d on <strong>e.deptno = d.deptno</strong>;</li>
+</ul>
+</li>
+<li>非等值连接
+<ul>
+<li>条件不是一个等量关系，称为非等值连接。</li>
+<li>select e.ename, e.sal, s.grade from emp e inner join salgrade s on <strong>e.sal between s.losal and s.hisal;</strong></li>
+</ul>
+</li>
+<li>自连接
+<ul>
+<li>一张表看做两张表。</li>
+<li>select a.ename, b.ename from EMP a join EMP b on a.mgr = b.empno;</li>
+<li>注意 null不显示</li>
+</ul>
+</li>
+</ul>
+<h4 id="外连接"><a href="#外连接" class="anchor-link">#</a><a href="#contents:外连接" class="headings">外连接</a></h4>
+<ul>
+<li>右连接
+<ul>
+<li>select e.ename,d.dname from emp e  <strong>right outer join</strong> dept d on e.deptno = d.deptno;</li>
+<li>right表示将join关键字<strong>右边的这张表看成主表</strong>，主要是为了将这张表的数据全部查询出来，捎带着关联查询左边的表。在外连接当中，两张表连接，产生了主次关系。</li>
+</ul>
+</li>
+<li>左连接
+<ul>
+<li>select a.ename as '员工名', b.ename as '领导名' from emp a <strong>left join</strong> emp b on a.mgr = b.empno;</li>
+<li>内连接不显示null</li>
+</ul>
+</li>
+<li>外连接的查询结果条数一定是 &gt;= 内连接的查询结果条数</li>
+</ul>
+<h4 id="多表连接"><a href="#多表连接" class="anchor-link">#</a><a href="#contents:多表连接" class="headings">多表连接</a></h4>
+<p>语法：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">a</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">join</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">b</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">on</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">a和b的连接条件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">join</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">c</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">on</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">a和c的连接条件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">right</span><span class="w"> </span><span class="k">join</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">on</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">a和d的连接条件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">每个员工的部门名称以及工资等级，还有上级领导，员工信息</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">e</span><span class="p">.</span><span class="n">ename</span><span class="p">,</span><span class="n">e</span><span class="p">.</span><span class="n">sal</span><span class="p">,</span><span class="n">d</span><span class="p">.</span><span class="n">dname</span><span class="p">,</span><span class="n">s</span><span class="p">.</span><span class="n">grade</span><span class="p">,</span><span class="n">l</span><span class="p">.</span><span class="n">ename</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">from</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">emp</span><span class="w"> </span><span class="n">e</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">join</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">dept</span><span class="w"> </span><span class="n">d</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">on</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">e</span><span class="p">.</span><span class="n">deptno</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">deptno</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">join</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">salgrade</span><span class="w"> </span><span class="n">s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">on</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">e</span><span class="p">.</span><span class="n">sal</span><span class="w"> </span><span class="k">between</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">losal</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">hisal</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">left</span><span class="w"> </span><span class="k">join</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">emp</span><span class="w"> </span><span class="n">l</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">on</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">e</span><span class="p">.</span><span class="n">mgr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">empno</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="子查询"><a href="#子查询" class="anchor-link">#</a><a href="#contents:子查询" class="headings">子查询</a></h3>
+<p>定义：select语句中嵌套select语句，被嵌套的语句称为子查询<br />子查询可以出现在select ...(select) from ... (select) where ... (select)</p>
+<ul>
+<li>where中的子查询
+<ul>
+<li>select ename,sal from emp where sal &gt; (select min(sal) from emp);</li>
+</ul>
+</li>
+<li>from中的子查询
+<ul>
+<li>可以将子查询的结果作为临时表</li>
+<li>select  t.*, s.grade from<br />(select job,avg(sal) as avgsal from emp group by job) t <br />join salgrade s on t.avgsal between s.losal and s.hisal;
+<ul>
+<li>子查询中avg要起别名</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>select中的子查询 （了解即可）
+<ul>
+<li>select子查询必须返回一条结果</li>
+<li>select e.ename,e.deptno,(select d.dname from dept d where e.deptno = d.deptno) as dname from emp e;</li>
+</ul>
+</li>
+</ul>
+<h3 id="union"><a href="#union" class="anchor-link">#</a><a href="#contents:union" class="headings">union</a></h3>
+<p>union的效率要高一些。对于表连接来说，每连接一次新表，则匹配的次数满足笛卡尔积，成倍的翻。。<br />但是union可以减少匹配的次数。在减少匹配次数的情况下，还可以完成两个结果集的拼接。<br />a 连接 b 连接 c<br />a 10条记录<br />b 10条记录<br />c 10条记录<br />匹配次数是：1000</p>
+<p>a 连接 b一个结果：10 * 10 --&gt; 100次<br />a 连接 c一个结果：10 * 10 --&gt; 100次<br />使用union的话是：100次 + 100次 = 200次。（union把乘法变成了加法运算）</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">ename</span><span class="p">,</span><span class="n">job</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">EMP</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;MANAGER&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">union</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">ename</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">EMP</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;SALESMAN&#39;</span><span class="p">;</span><span class="w">   </span><span class="c1">-- 需要加上job  
+</span></span></span><span class="line"><span class="cl"><span class="c1">-- 否则oracle,mysql8报错，要求：结果集合并时列和列的数据类型也要一致。
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="limit-important"><a href="#limit-important" class="anchor-link">#</a><a href="#contents:limit-important" class="headings">limit (!important)</a></h3>
+<p>limit作用：将查询结果集的一部分取出来。通常使用在分页查询当中。<br />完整用法：limit startIndex, length<br />只能加<a href="https://stackoverflow.com/questions/53234654/how-to-set-the-value-of-limit-using-select-countid-from-another-table-mysql" target="_blank" rel="noopener">数字</a></p>
+<blockquote>
+<p>The LIMIT clause can be used to constrain the number of rows returned by the <a href="https://dev.mysql.com/doc/refman/8.0/en/select.html" target="_blank" rel="noopener">SELECT</a> statement. LIMIT takes one or two numeric arguments, which must both be nonnegative integer constants, with these exceptions:</p>
+<ul>
+<li>Within prepared statements, LIMIT parameters can be specified using ? placeholder markers.</li>
+<li>Within stored programs, LIMIT parameters can be specified using integer-valued routine parameters or local variables.</li>
+</ul>
+</blockquote>
+<p>startIndex是起始下标从0开始，length是长度。<br />缺省用法：limit 5; 这是取前5.</p>
+<ul>
+<li>执行顺序在order by 之后</li>
+<li>select ename, sal from EMP order by sal limit 2, 3;</li>
+</ul>
+<h4 id="分页"><a href="#分页" class="anchor-link">#</a><a href="#contents:分页" class="headings">分页</a></h4>
+<p>每页显示pageSize条记录<br />	第pageNo页：limit (pageNo - 1) * pageSize  , pageSize</p>
+<h3 id="dql总结"><a href="#dql总结" class="anchor-link">#</a><a href="#contents:dql总结" class="headings">DQL总结</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">from</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">having</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">limit</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">执行顺序：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="mi">1</span><span class="p">.</span><span class="k">from</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="mi">2</span><span class="p">.</span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="mi">3</span><span class="p">.</span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="mi">4</span><span class="p">.</span><span class="k">having</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="mi">5</span><span class="p">.</span><span class="k">select</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="mi">6</span><span class="p">.</span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="mi">7</span><span class="p">.</span><span class="k">limit</span><span class="p">..</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="sql增删改"><a href="#sql增删改" class="anchor-link">#</a><a href="#contents:sql增删改" class="headings">SQL增删改</a></h2>
+<h3 id="mysql中的数据类型"><a href="#mysql中的数据类型" class="anchor-link">#</a><a href="#contents:mysql中的数据类型" class="headings">mysql中的数据类型</a></h3>
+<ul>
+<li>varchar(最长255)	可变长度的字符串
+<ul>
+<li>比较智能，节省空间。会根据实际的数据长度动态分配空间。</li>
+<li>优点：节省空间。缺点：需要动态分配空间，速度慢。</li>
+</ul>
+</li>
+<li>char(最长255)	定长字符串
+<ul>
+<li>不管实际的数据长度是多少。分配固定长度的空间去存储数据。使用不恰当的时候，可能会导致空间的浪费。</li>
+<li>优点：不需要动态分配空间，速度快。缺点：使用不当可能会导致空间的浪费。</li>
+<li>varchar和char我们应该怎么选择？</li>
+<li>性别字段你选什么？因为性别是固定长度的字符串，所以选择char。<br />姓名字段你选什么？每一个人的名字长度不同，所以选择varchar。</li>
+</ul>
+</li>
+<li>int	整数型。(最长11)。</li>
+<li>bigint	长整型。</li>
+<li>float	单精度浮点型数据</li>
+<li>double	双精度浮点型数据</li>
+<li>date	短日期类型
+<ul>
+<li>默认格式：%Y-%m-%d</li>
+</ul>
+</li>
+<li>datetime	长日期类型
+<ul>
+<li>默认格式：%Y-%m-%d %h:%i:%s</li>
+<li>获取当前时间 now()函数</li>
+</ul>
+</li>
+<li>clob	字符大对象	Character Large OBject
+<ul>
+<li>最多可以存储4G的字符串。超过255个字符的都要采用CLOB字符大对象来存储。</li>
+</ul>
+</li>
+<li>blob	二进制大对象	Binary Large Object
+<ul>
+<li>专门用来存储<strong>图片、声音、视频</strong>等流媒体数据。</li>
+<li>往BLOB类型的字段上插入数据的时候，例如插入一个图片、视频等，需要使用IO流。</li>
+</ul>
+</li>
+</ul>
+<h3 id="增删改表ddl"><a href="#增删改表ddl" class="anchor-link">#</a><a href="#contents:增删改表ddl" class="headings">增删改表（DDL）</a></h3>
+<ul>
+<li>create table 表名(字段名1 数据类型, 字段名2 数据类型, ...);
+<ul>
+<li>表名：建议以t_ 或者 tbl_开始，可读性强。见名知意。</li>
+<li>字段名：见名知意。</li>
+<li>表名和字段名都属于<strong>标识符</strong>。</li>
+<li>快速建表：create table emp as select * from EMP;  //了解
+<ul>
+<li>将查询结果当做一个表新建，完成快速复制</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w">  </span><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">t_student</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">no</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">name</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">sex</span><span class="w"> </span><span class="nb">char</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">age</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">email</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><ul>
+<li>drop table 表名;   // 不存在则删除报错
+<ul>
+<li>drop table if exists 表名;  // 不报错</li>
+</ul>
+</li>
+<li>truncate table 表名
+<ul>
+<li>比delete 快，但是不支持回滚，是物理删除，需要仔细确认。</li>
+<li>删除表数据，不是删除表</li>
+</ul>
+</li>
+</ul>
+<h3 id="增删改数据dml"><a href="#增删改数据dml" class="anchor-link">#</a><a href="#contents:增删改数据dml" class="headings">增删改数据（DML）</a></h3>
+<ul>
+<li>insert into 表名(字段名1,字段名2,字段名3...) values(值1,值2,值3), (值1, 值2, 值3), (...);
+<ul>
+<li>注意：字段名和值要一一对应。数量要对应。数据类型要对应。</li>
+<li>insert语句执行成功了，必然会多一条记录。没有给其它字段指定值的话，默认值是NULL。</li>
+<li>insert into t_student values(2, 'lisi', 'f', 20, 'lisi@123.com');   // 不写字段名，需要跟表字段名一一对应</li>
+<li>快速复制：insert into emp_bak select  * from emp;   //了解</li>
+</ul>
+</li>
+<li>update 表名 set 字段名1=值1, 字段名2=值2,...** where 条件**;
+<ul>
+<li>不加条件限制会更新所有数据</li>
+</ul>
+</li>
+<li>delete from 表名** where 条件**;
+<ul>
+<li>不加条件限制会删除所有数据</li>
+<li>删除数据的原理：表中的数据被删除了，但是保存在硬盘内的数据不会被释放；因此效率较低，但是可以回滚，恢复数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="增删改表结构"><a href="#增删改表结构" class="anchor-link">#</a><a href="#contents:增删改表结构" class="headings">增删改表结构</a></h3>
+<ul>
+<li>开发中很少进行表结构的修改。</li>
+<li>alter关键字</li>
+</ul>
+<h3 id="约束"><a href="#约束" class="anchor-link">#</a><a href="#contents:约束" class="headings">约束</a></h3>
+<p>保证数据有效性、完整性<br />约束包括：<br />create table中指定</p>
+<ul>
+<li>非空约束 not null
+<ul>
+<li>列级约束：id int <strong>not null</strong></li>
+</ul>
+</li>
+<li>唯一性约束 unique
+<ul>
+<li>null可以重复</li>
+<li>列级约束：name varchar(23) <strong>unique</strong></li>
+<li>表级约束（多字段联合约束）：<strong>unique(<strong>name, email</strong>)</strong></li>
+</ul>
+</li>
+<li><strong>主键约束 primary key</strong>
+<ul>
+<li>主键约束、主键字段、主键值</li>
+<li>一个字段同时非空又不能重复自动为主键，oracle不行，主键约束特征是not null + unique</li>
+<li>每个表都应有主键，是每一行记录的唯一标识</li>
+<li>可以单一主键或复合主键（不建议使用复合）
+<ul>
+<li>int id primary key,</li>
+<li>primary key(id, name),</li>
+</ul>
+</li>
+<li>又分为自然主键和业务主键，通常自然主键</li>
+<li>主键约束只能有一个</li>
+<li>建议使用int、bigint、char，等定长类型</li>
+<li>自动维护主键值：id int primary key <strong>auto_increment</strong>,</li>
+</ul>
+</li>
+<li><strong>外键约束 foreign key</strong>
+<ul>
+<li>减少表冗余，防止出现无效数据</li>
+<li>外界约束、外键字段、外键值</li>
+<li>格式： foreign key(子表字段) references (父表唯一性约束字段，可以为NULL)</li>
+</ul>
+</li>
+<li>检查约束 check （mysql 不支持，oracle支持）</li>
+</ul>
+<h3 id="存储引擎"><a href="#存储引擎" class="anchor-link">#</a><a href="#contents:存储引擎" class="headings">存储引擎</a></h3>
+<p>存储引擎是MySQL中特有的一个术语，其它数据库中没有。（Oracle中有，但是不叫这个名字）<br />存储引擎是一个表<strong>存储/组织数据的方式</strong>。<br />不同的存储引擎，表存储数据的方式不同。<br />给表指定存储引擎</p>
+<ul>
+<li>显示存储引擎：show create table 表名</li>
+<li>mysql默认引擎是InnoDB，字符集utf8</li>
+<li>格式：create table 表名() engine=InnoDB default charset=gbk;</li>
+</ul>
+<p>查看mysql支持存储引擎：show engines \G</p>
+<ul>
+<li>MyISAM存储引擎
+<ul>
+<li>它管理的表具有以下特征：
+<ul>
+<li>使用三个文件表示每个表：
+<ul>
+<li>格式文件 — 存储表结构的定义（mytable.frm / framework）</li>
+<li>数据文件 — 存储表行的内容（mytable.MYD/ mydata）</li>
+<li>索引文件 — 存储表上索引（mytable.MYI / myindex）：索引是一本书的目录，缩小扫描范围，提高查询效率的一种机制。</li>
+</ul>
+</li>
+<li>可被转换为压缩（只读）表来节省空间</li>
+<li>对于一张表来说，只要是主键，或者加有unique约束的字段上会自动创建索引。</li>
+</ul>
+</li>
+<li>MyISAM存储引擎特点：
+<ul>
+<li>可被转换为压缩（只读）表来<strong>节省空间</strong></li>
+<li>这是这种存储引擎的优势！</li>
+</ul>
+</li>
+<li>MyISAM不支持事务机制，安全性低。</li>
+</ul>
+</li>
+<li>InnoDB存储引擎
+<ul>
+<li>这是mysql默认的存储引擎，同时也是一个重量级的存储引擎。</li>
+<li>InnoDB支持事务，支持数据库崩溃后自动恢复机制。</li>
+<li>InnoDB存储引擎最主要的特点是：非常安全。</li>
+<li>它管理的表具有下列主要特征：
+<ul>
+<li>每个 InnoDB 表在数据库目录中以.frm 格式文件表示</li>
+<li>InnoDB 表空间 tablespace 被用于存储表的内容（表空间是一个逻辑名称。表空间：存储数据+索引。）</li>
+<li>提供一组用来记录事务性活动的日志文件</li>
+<li>用 COMMIT(提交)、SAVEPOINT 及ROLLBACK(回滚)支持<strong>事务</strong>处理</li>
+<li>提供全 ACID 兼容</li>
+<li>在 MySQL 服务器崩溃后提供自动恢复</li>
+<li>多版本（MVCC）和行级锁定</li>
+<li>支持外键及引用的完整性，包括级联删除和更新</li>
+</ul>
+</li>
+<li>InnoDB最大的特点就是支持事务：
+<ul>
+<li>保证数据的安全。效率不是很高，不能压缩，不能转换为只读，不能很好的节省存储空间。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>MEMORY存储引擎
+<ul>
+<li>用 MEMORY 存储引擎的表，其数据存储在内存中，且行的长度固定，这两个特点使得 MEMORY 存储引擎非常快。</li>
+<li>MEMORY 存储引擎管理的表具有下列特征：
+<ul>
+<li>在数据库目录内，每个表均以.frm 格式的文件表示。</li>
+<li>表数据及索引被存储在内存中。（目的就是快，查询快！）</li>
+<li>表级锁机制。</li>
+<li>不能包含 TEXT 或 BLOB 字段。</li>
+</ul>
+</li>
+<li>MEMORY 存储引擎以前被称为HEAP 引擎。</li>
+<li>MEMORY引擎优点：查询效率是最高的。不需要和硬盘交互。</li>
+<li>MEMORY引擎缺点：不安全，关机之后数据消失。因为数据和索引都是在内存当中。</li>
+</ul>
+</li>
+</ul>
+<h3 id="事务"><a href="#事务" class="anchor-link">#</a><a href="#contents:事务" class="headings">事务</a></h3>
+<p>一个事务是一个完整的业务逻辑。是一个最小的工作单元。不可再分，同生同死。<br />事务：就是批量的DML语句同时成功，或者同时失败！<br />一个完整的业务逻辑：</p>
+<ol>
+<li>假设转账，从A账户向B账户中转账10000.</li>
+<li>将A账户的钱减去10000（update语句）</li>
+<li>将B账户的钱加上10000（update语句）</li>
+<li>这就是一个完整的业务逻辑。</li>
+</ol>
+<p>只有DML语句有事务一说，因为它们涉及数据的增删改，insert/update/delete</p>
+<p>InnoDB存储引擎：提供一组用来记录事务性活动的日志文件。<br />在事务的执行过程中，每一条DML的操作都会记录到“事务性活动的日志文件”中。<br />在事务的执行过程中，可以提交事务，也可以回滚事务。</p>
+<ul>
+<li>提交事务
+<ul>
+<li>commit;</li>
+<li>清空事务性活动的日志文件，将数据全部彻底持久化到数据库表中。提交事务标志着，事务的结束。并且是一种全部成功的结束。</li>
+<li>默认执行一条提交一次。</li>
+</ul>
+</li>
+<li>回滚事务
+<ul>
+<li>rollback;</li>
+<li>将之前所有的DML操作全部撤销，并且清空事务性活动的日志文件。回滚事务标志着，事务的结束。并且是一种全部失败的结束。</li>
+</ul>
+</li>
+</ul>
+<p>使用start transaction; 关闭提交事务（默认）<br />commit;/rollback; 后结束该次事务。</p>
+<p>事务四个特性：</p>
+<ul>
+<li>A：原子性 atomicity
+<ul>
+<li>说明事务是最小的工作单元。不可再分。</li>
+</ul>
+</li>
+<li>C：一致性 consistency
+<ul>
+<li>所有事务要求，在同一个事务当中，所有操作必须同时成功，或者同时失败，以保证数据的一致性。</li>
+</ul>
+</li>
+<li>I：隔离性 isolation
+<ul>
+<li>隔离两种事务。</li>
+</ul>
+</li>
+<li>D：持久性 durability
+<ul>
+<li>事务最终结束的一个保障。事务提交，就相当于将没有保存到硬盘上的数据保存到硬盘上！</li>
+</ul>
+</li>
+</ul>
+<p>隔离性：</p>
+<ul>
+<li>读未提交：read uncommitted（最低的隔离级别）《没有提交就读到了》
+<ul>
+<li>事务A可以读取到事务B未提交的数据。</li>
+<li>这种隔离级别存在的问题就是：<strong>脏读现象</strong>！(Dirty Read)</li>
+<li>这种隔离级别一般都是理论上的，大多数的数据库隔离级别都是二档起步！</li>
+</ul>
+</li>
+<li>读已提交：read committed《提交之后才能读到》
+<ul>
+<li>事务A只能读取到事务B提交之后的数据。</li>
+<li>解决了脏读的现象。</li>
+<li>这种隔离级别存在的问题：<strong>不可重复读取数据</strong>。
+<ul>
+<li>什么是不可重复读取数据呢？</li>
+<li>在事务开启之后，第一次读到的数据是3条，当前事务还没有结束，可能第二次再读取的时候，读到的数据是4条，3不等于4称为不可重复读取。</li>
+</ul>
+</li>
+<li>这种隔离级别是比较真实的数据，每一次读到的数据是绝对的真实。</li>
+<li>oracle数据库默认的隔离级别是：read committed</li>
+</ul>
+</li>
+<li>可重复读：repeatable read《提交之后也读不到，永远读取的都是刚开启事务时的数据》
+<ul>
+<li>
+<p>事务A开启之后，不管是多久，每一次在事务A中读取到的数据都是一致的。即使事务B将数据已经修改，并且提交了，事务A读取到的数据还是没有发生改变，这就是可重复读。</p>
+</li>
+<li>
+<p>解决了不可重复读取数据。</p>
+</li>
+<li>
+<p>可重复读存在的问题：会出现<strong>幻影读</strong>。每一次读取到的数据都是幻象。</p>
+<ul>
+<li>
+<p>不够真实。早晨9点开始开启了事务，只要事务不结束，到晚上9点，读到的数据还是那样！</p>
+<pre><code>读到的是假象。不够绝对的真实。
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>mysql中默认的事务隔离级别就是这个！</p>
+</li>
+</ul>
+</li>
+<li>序列化/串行化：serializable（最高的隔离级别）
+<ul>
+<li>这是最高隔离级别，效率最低。解决了所有的问题。</li>
+<li>这种隔离级别表示事务排队，不能并发！</li>
+<li>每一次读取到的数据都是最真实的，并且效率是最低的。</li>
+</ul>
+</li>
+</ul>
+<p>查看隔离级别：select @@tx_isolation;<br />设置隔离级别：set global transaction isolation level xxxx; exit;</p>
+<h3 id="索引"><a href="#索引" class="anchor-link">#</a><a href="#contents:索引" class="headings">索引</a></h3>
+<ul>
+<li>索引是在数据库表的字段上添加的，是为了提高查询效率存在的一种机制。</li>
+<li>一张表的一个字段可以添加一个索引，多个字段联合起来叫复合索引。</li>
+<li>MySQL在查询方面主要就是两种方式：
+<ul>
+<li>第一种方式：全表扫描</li>
+<li>第二种方式：根据索引检索。</li>
+</ul>
+</li>
+<li>mysql索引是一个B-Tree数据结构。遵循左小右大原则存放。采用中序遍历方式遍历取数据。</li>
+<li>提醒
+<ul>
+<li>提醒1：在任何数据库当中<strong>主键</strong>上都会自动添加索引对象，mysql中一个字段上如果有<strong>unique约束</strong>的话，也会自动创建索引对象。</li>
+<li>提醒2：在任何数据库当中，任何一张表的任何一条记录在硬盘存储上<strong>都有一个硬盘的物理存储编号</strong>。</li>
+<li>提醒3：在mysql当中，<strong>索引是一个单独的对象</strong>，不同的存储引擎以不同的形式存在，在MyISAM存储引擎中，索引存储在一个.MYI文件中。在InnoDB存储引擎中索引存储在一个逻辑名称叫做tablespace的当中。在MEMORY存储引擎当中索引被存储在内存当中。不管索引存储在哪里，索引在mysql当中都是一个树的形式存在。（自平衡二叉树：B-Tree）</li>
+</ul>
+</li>
+<li>什么时候添加字段
+<ul>
+<li>数据量庞大（视物理设备决定）</li>
+<li>经常出现在where后面，经常会被扫描到</li>
+<li>很少DML操作，否则需要重新排序</li>
+<li>太多索引会降低性能</li>
+</ul>
+</li>
+<li>添加索引
+<ul>
+<li>create index emp_ename_index on emp(ename);</li>
+</ul>
+</li>
+<li>删除索引
+<ul>
+<li>drop index emp_ename_index on emp;</li>
+</ul>
+</li>
+<li>查看索引
+<ul>
+<li>explain select * from emp where ename='KING';</li>
+<li>看row列的扫描次数</li>
+</ul>
+</li>
+<li>索引失效
+<ul>
+<li>目前版本不会失效，当使用模糊查询以'%'开头</li>
+<li>使用or（union能恢复索引，存疑）</li>
+<li>使用复合索引后，没有用最左侧的字段查找</li>
+<li>where中字段参加了数学运算，字段使用函数</li>
+</ul>
+</li>
+</ul>
+<p>索引是各种数据库进行优化的重要手段。优化的时候优先考虑的因素就是<code><em class="emphasis-point">索引</em></code>。<br />索引在数据库的分类<br />	单一索引：一个字段上添加索引。<br />	复合索引：两个字段或者更多的字段上添加索引。<br />	主键索引：主键上添加索引。<br />	唯一性索引：具有unique约束的字段上添加索引。<br />	.....<br />	注意：唯一性比较弱的字段上添加索引用处不大。</p>
+<h2 id="视图"><a href="#视图" class="anchor-link">#</a><a href="#contents:视图" class="headings">视图</a></h2>
+<p>创建视图对象</p>
+<ul>
+<li>create view 视图名 as DQL语句;</li>
+</ul>
+<p>删除视图对象</p>
+<ul>
+<li>drop view 视图名</li>
+</ul>
+<p>可以面向视图对象进行增删改查，对视图对象的增删改查，会导致原表被操作！（视图的特点：通过对视图的操作，会影响到原表数据。）<br />视图的作用：方便，简化开发，利于维护<br />假设有一条非常复杂的SQL语句，而这条SQL语句需要在不同的位置上反复使用。每一次使用这个sql语句的时候都需要重新编写，很长，很麻烦，怎么办？</p>
+<ul>
+<li>可以把这条复杂的SQL语句以视图对象的形式新建。</li>
+<li>在需要编写这条SQL语句的位置直接使用视图对象，可以大大简化开发。</li>
+<li>并且利于后期的维护，因为修改的时候也只需要修改一个位置就行，只需要修改视图对象所映射的SQL语句。</li>
+<li>我们以后面向视图开发的时候，使用视图的时候可以像使用table一样。可以对视图进行增删改查等操作。视图不是在内存当中，视图对象也是<strong>存储在硬盘</strong>上的，不会消失。</li>
+</ul>
+<p>C:Create（增）<br />R:Retrieve（查）<br />U:Update（改）<br />D:Delete（删）</p>
+<h2 id="dba命令"><a href="#dba命令" class="anchor-link">#</a><a href="#contents:dba命令" class="headings">DBA命令</a></h2>
+<p>重点掌握：<br />	数据的导入和导出（数据的备份）<br />	其它命令了解一下即可<br />数据导出<br />	终端窗口：mysqldump bjpowernode&gt;D:\bjpowernode.sql -uroot -p123456<br />	导出指定的表：mysqldump bjpowernode <strong>emp</strong>&gt;D:\bjpowernode.sql -uroot -p123456<br />数据导入<br />	先登录到mysql数据库服务器上：mysql -uroot -p123456；<br />	然后创建数据库：create database bjpowernode;<br />	使用数据库：use bjpowernode<br />	然后初始化数据库：source D:\bjpowernode.sql</p>
+<h2 id="数据库三范式"><a href="#数据库三范式" class="anchor-link">#</a><a href="#contents:数据库三范式" class="headings">数据库三范式</a></h2>
+<p>数据库设计依据：数据库表的设计依据。教你怎么进行数据库表的设计。</p>
+<ul>
+<li><strong>第一范式</strong>：要求任何一张表必须有主键，每一个字段原子性不可再分。</li>
+<li><strong>第二范式</strong>：建立在第一范式的基础之上，要求所有非主键字段完全依赖主键，不要产生部分依赖。
+<ul>
+<li>多对多，三张表，关系表两个主键 （复合主键容易出现部分依赖）</li>
+</ul>
+</li>
+<li><strong>第三范式</strong>：建立在第二范式的基础之上，要求所有非主键字段直接依赖主键，不要产生传递依赖。
+<ul>
+<li>一对'多'，两张表，'多'的表加外键</li>
+</ul>
+</li>
+<li>一对一，外键唯一 （如果一个表内容过多）</li>
+<li>可以避免数据冗余，空间浪费。</li>
+<li>实际开发中拿冗余换执行速度，为了客户需求，减少笛卡尔积。</li>
+</ul>
+<h2 id="34课后题"><a href="#34课后题" class="anchor-link">#</a><a href="#contents:34课后题" class="headings">34课后题</a></h2>
+<ol>
+<li>select ename,sal,deptno from emp where sal in (select max(sal) from emp group by deptno);
+<ul>
+<li>select e.ename, t.* from emp e join (select deptno,max(sal) as maxsal from emp group by deptno) t on t.deptno = e.deptno and t.maxsal = e.sal;</li>
+<li>解二效率低</li>
+</ul>
+</li>
+<li>select t.*, e.ename, e.sal from emp e join (select deptno,avg(sal) as avgsal from emp group by deptno) t on e.deptno = t.deptno and e.sal &gt; t.avgsal;</li>
+<li>select deptno, avg(grade) from EMP join SALGRADE on sal between LOSAL and HISAL group by deptno;</li>
+<li>select sal from EMP group by sal desc limit 1;
+<ul>
+<li>select sal from emp where sal not in(select distinct a.sal from emp a join emp b on a.sal &lt; b.sal);</li>
+<li>解二看看就好，强行用自连接</li>
+</ul>
+</li>
+<li>select deptno, avg(sal) from emp group by deptno order by avg(sal) desc limit 1;</li>
+</ol>
+<ul>
+<li>select deptno from emp group by deptno having avg(sal) = (select max(asal) from (select deptno, avg(sal) asal from emp group by deptno) t);</li>
+<li>解二看看就行</li>
+</ul>
+<ol start="6">
+<li>select dname from dept where deptno = (select deptno from emp group by deptno order by avg(sal) desc limit 1);
+<ul>
+<li>select d.dname,avg(e.sal) as avgsal from emp e join dept d on e.deptno = d.deptno group by d.dname order by avgsal desc limit 1;</li>
+</ul>
+</li>
+<li>select dname from dept d join emp e on d.deptno = e.deptno group by dname order by avg(sal) limit 1;</li>
+</ol>
+<ul>
+<li>create view temp as select deptno, t.asal, grade from salgrade sg join (select deptno, avg(sal) asal from emp group by deptno) t on t.asal between losal and hisal;</li>
+<li>select dname,grade from dept d join temp t on d.deptno = t.deptno where grade=(select min(grade) from temp);</li>
+<li>drop view temp;
+<ul>
+<li>将具有<strong>相同</strong>最小值查出来</li>
+<li>时间复杂度较高</li>
+</ul>
+</li>
+<li>select grade from salgrade where (select avg(sal) as avgsal from emp group by deptno order by avgsal asc limit 1) between losal and hisal;
+<ul>
+<li>稍微没我的快 explain</li>
+</ul>
+</li>
+</ul>
+<ol start="8">
+<li>select ename, sal from EMP where sal &lt; (select max(sal) from EMP where empno not in (select distinct mgr from EMP where mgr is not null)) and empno in (select distinct mgr from EMP where mgr is not null);
+<ul>
+<li>稍微增加难度，寻找比最高工资小的领导（修改了表数据）</li>
+<li>题目答案：select ename, sal from EMP where sal &gt; (select max(sal) from EMP where empno not in (select distinct mgr from EMP where mgr is not null)) and empno in (select distinct mgr from EMP where mgr is not null);</li>
+</ul>
+</li>
+<li>select ename,sal from EMP order by sal desc limit 5;</li>
+<li>select ename,sal from EMP order by sal desc,ename limit 5,5;</li>
+<li>select ename,hiredate from EMP order by hiredate desc,ename limit 5;</li>
+<li>select grade,count(*) from EMP join SALGRADE on sal between losal and hisal group by grade;</li>
+<li>select sname,sc.cno from S s join SC sc on s.sno=sc.sno where cno!=(select cno from C where cteacher='LM');</li>
+<li>先建表</li>
+<li>select sname from S where sno not in (select distinct sno from SC sc join C c on sc.cno = (select cno from C where cteacher='LM'));  // 先找出学了LM的学生再排除掉</li>
+<li>select sname, avg(scgrade) from S s join SC sc on s.sno=sc.sno where s.sno in (select sno from SC where scgrade &lt; 60 group by sno having count(scgrade) &gt;=2) group by sname;  //先找到不及格的学生，再联合表查询这两个学生</li>
+<li>select distinct sname from S join SC on S.sno=SC.sno where S.sno in (select sno from SC where cno in (1,2) group by sno having count(sno)=2);
+<ol>
+<li>优化：select distinct sname from S join (select sno from SC where cno in (1,2) group by sno having count(sno)=2) t on S.sno=t.sno;</li>
+</ol>
+</li>
+<li>应该还有其他解法</li>
+<li>select a.ename, ifnull(b.ename, 'no leader') from emp a left join emp b on a.mgr=b.empno;</li>
+<li>select a.empno, a.ename,c.dname from emp a left join emp b on a.mgr=b.empno join dept c on a.deptno=c.deptno where a.hiredate &lt; b.hiredate;  // 先员工再领导的主次关系</li>
+<li>select dname, e.* from dept d left join emp e on e.deptno=d.deptno order by d.deptno,empno;  // 先部门再员工的主次关系</li>
+<li>select dname, count(<em>) from DEPT d join EMP e on d.deptno=e.deptno group by dname having count(</em>) &gt; 4;</li>
+<li>select * from EMP where sal &gt; (select sal from EMP where ename='SMITH');</li>
+<li>select ename, dname, cc from EMP e join DEPT d on e.deptno=d.deptno join (select deptno, count(deptno) cc from EMP group by deptno) t on t.deptno = e.deptno where job='CLERK';</li>
+<li>select job,count(*) from EMP group by job having min(sal) &gt; 1500;</li>
+<li>select ename from EMP e join DEPT d on e.deptno=d.deptno where d.dname='SALES';</li>
+<li>select a.ename, dname, grade, b.ename from EMP a join DEPT d on a.deptno=d.deptno join SALGRADE sg on a.sal between losal and hisal left join EMP b on a.mgr=b.empno where a.sal &gt; (select avg(sal) from EMP);</li>
+<li>select ename, dname from EMP e join DEPT d on e.deptno=d.deptno where job=(select job from EMP where ename='SCOTT') and ename!='SCOTT';</li>
+<li>还有种麻烦的方法，不写了</li>
+<li>select ename, sal from EMP where sal in (select distinct sal from EMP where deptno=30) and deptno&lt;&gt;30;</li>
+<li>select ename, sal, dname from EMP e join DEPT d on e.deptno=d.deptno where sal &gt; (select max(sal) from EMP where deptno=30);</li>
+<li>select dname, count(ename) sum, ifnull(avg(sal),0) avg, ifnull(avg(<strong>timestampdiff</strong>(YEAR, hiredate, now())), 0) time from EMP e right join DEPT d on e.deptno=d.deptno group by dname;</li>
+</ol>
+<ul>
+<li>TimeStampDiff(间隔类型, 前一个日期, 后一个日期)</li>
+<li>timestampdiff(YEAR, hiredate, now())</li>
+<li>间隔类型：SECOND   秒，MINUTE   分钟，HOUR   小时，DAY   天，WEEK   星期，MONTH   月，QUARTER   季度，YEAR   年</li>
+</ul>
+<ol start="27">
+<li>select ename, dname, sal from EMP join DEPT on EMP.deptno = DEPT.deptno order by dname;</li>
+<li>select d.*, count(e.deptno) from DEPT d left join EMP e on d.deptno=e.deptno group by d.deptno;</li>
+<li>group by并不是只能跟deptno</li>
+<li>select * from EMP where sal in (select min(sal) from EMP group by job);</li>
+<li>join 会造成不必要的数据，where可以在单表中筛选</li>
+<li>select deptno, min(sal) from (select distinct a.mgr, a.deptno, a.sal from EMP a join EMP b on a.empno=b.mgr) t group by deptno;</li>
+<li>select deptno, min(sal) from emp where job = 'MANAGER' group by deptno;   // 额</li>
+<li>select ename, (sal + ifnull(comm,0)) * 12 income from EMP order by income;</li>
+<li>select a.ename, b.ename, b.sal from EMP a join EMP b on a.mgr=b.empno where b.sal &gt; 3000;</li>
+<li>select dname, ifnull(sum(sal),0) sum, count(e.deptno) num from EMP e right join DEPT d on e.deptno=d.deptno where dname like 'S%' or dname like '%S%' or dname like '%S' group by d.deptno;</li>
+<li>update EMP set sal=sal*1.1 where timestampdiff(year, hiredate, now()) &gt; 30;</li>
+</ol>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/mysql/" rel="tag" class="post-tag-link">#mysql</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

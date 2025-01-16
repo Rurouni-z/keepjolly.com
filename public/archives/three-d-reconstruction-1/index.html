@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>三维重建之路上 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="instant-ngp --scene data/nerf/fox 视频：计算机视觉之三维重建 找到一个同样是这个视频的笔记网址 摄像机几何 针孔模型 &amp; 透镜 针孔摄像机 物体直接映射到胶片上，会导致多个点映射到同一个点上，因此采用针孔成像。如下图，其中x,y,z是世界点Pw在摄像机坐标系上的坐标，已知；f是焦距，已知；由此可求得P&#39;在像平面坐标。 ……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/archives/three-d-reconstruction-1/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2023-03-26T09:07:02+00:00",
+        "dateModified": "2024-05-03T14:50:48+08:00",
+        "url": "http://localhost:1313/archives/three-d-reconstruction-1/",
+        "headline": "三维重建之路上",
+        "description": "instant-ngp --scene data/nerf/fox 视频：计算机视觉之三维重建 找到一个同样是这个视频的笔记网址 摄像机几何 针孔模型 \u0026 透镜 针孔摄像机 物体直接映射到胶片上，会导致多个点映射到同一个点上，因此采用针孔成像。如下图，其中x,y,z是世界点Pw在摄像机坐标系上的坐标，已知；f是焦距，已知；由此可求得P'在像平面坐标。 ……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  3852 ,
+        "image": ["https://pic.keepjolly.com/halo/blog/2023/03/20230326090143.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-1.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-2.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-3.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230527212427.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/05/20230527212446.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-5.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-6.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-7.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-8.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-9.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-10.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-11.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-12.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-13.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-14.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-15.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-16.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-17.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-18.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-19.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-20.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-21.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-22.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-23.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-24.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-25.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-26.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-27.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-28.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-29.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-30.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-31.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-32.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-33.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-34.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-35.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-36.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-37.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-38.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-39.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-40.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-41.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-42.png?imageMogr2/format/webp%7C","https://cdn.nlark.com/yuque/0/2023/png/12600461/1678154285531-0bfa14f4-d345-4ae1-b317-ef2e02729257.png#averageHue=%23ebebf2\u0026amp;clientId=u68e9a600-0c37-4\u0026amp;from=paste\u0026amp;height=317\u0026amp;id=u83842eee\u0026amp;name=image.png\u0026amp;originHeight=684\u0026amp;originWidth=1256\u0026amp;originalType=binary\u0026amp;ratio=1.2699999809265137\u0026amp;rotation=0\u0026amp;showTitle=false\u0026amp;size=55246\u0026amp;status=done\u0026amp;style=none\u0026amp;taskId=u88b7be70-3edb-4ab6-acfc-5e588cfc20e\u0026amp;title=\u0026amp;width=583.00146484375","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-43.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-44.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-45.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-46.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-47.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-48.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-49.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-50.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-51.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-52.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-53.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-54.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-55.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-56.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-57.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-58.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-59.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-60.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-61.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-62.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-63.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-64.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-65.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-66.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-67.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-68.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-69.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-70.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-71.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-72.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-73.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-74.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-75.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-76.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-77.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-78.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-79.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-80.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-81.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-82.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-83.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-84.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-85.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-86.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-87.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-88.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-89.png?imageMogr2/format/webp%7C"],
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="三维重建之路上" />
+<meta property="og:description" content="instant-ngp --scene data/nerf/fox 视频：计算机视觉之三维重建 找到一个同样是这个视频的笔记网址 摄像机几何 针孔模型 &amp; 透镜 针孔摄像机 物体直接映射到胶片上，会导致多个点映射到同一个点上，因此采用针孔成像。如下图，其中x,y,z是世界点Pw在摄像机坐标系上的坐标，已知；f是焦距，已知；由此可求得P&#39;在像平面坐标。 ……" />
+<meta property="og:url" content="http://localhost:1313/archives/three-d-reconstruction-1/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143.png?imageMogr2/format/webp%7C" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2023-03-26T09:07:02&#43;00:00" />
+    <meta property="article:modified_time" content="2024-05-03T14:50:48&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+<div class="post-toc" id="post-toc">
+<aside>
+    <header>
+    <h4>文章の字数: 3852</h4> 
+    </header>
+    
+    
+    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#摄像机几何">摄像机几何</a>
+      <ol>
+        <li><a href="#针孔模型--透镜">针孔模型 &amp; 透镜</a>
+          <ol>
+            <li><a href="#针孔摄像机">针孔摄像机</a></li>
+            <li><a href="#加透镜">加透镜</a></li>
+          </ol>
+        </li>
+        <li><a href="#摄像机几何-1">摄像机几何</a>
+          <ol>
+            <li><a href="#偏置-单位变换">偏置 单位变换</a></li>
+            <li><a href="#转化为齐次坐标系">转化为齐次坐标系</a>
+              <ol>
+                <li><a href="#插曲将坐标转为线性关系">插曲：将坐标转为线性关系</a></li>
+              </ol>
+            </li>
+            <li><a href="#摄像机偏移">摄像机偏移</a></li>
+            <li><a href="#世界坐标系转换到摄像机坐标系">世界坐标系转换到摄像机坐标系</a></li>
+            <li><a href="#摄像机模型pkr-tpw">摄像机模型P'=K[R T]Pw</a>
+              <ol>
+                <li><a href="#物理意义自由度欧式空间">物理意义、自由度、欧式空间</a></li>
+              </ol>
+            </li>
+            <li><a href="#fauferas定理">Fauferas定理</a></li>
+            <li><a href="#投影变换的性质">投影变换的性质</a></li>
+          </ol>
+        </li>
+        <li><a href="#其他摄像机模型">其他摄像机模型</a>
+          <ol>
+            <li><a href="#规范化摄像机">规范化摄像机</a></li>
+            <li><a href="#弱透视投影摄像机">弱透视投影摄像机</a></li>
+            <li><a href="#正交投影摄像机">正交投影摄像机</a></li>
+            <li><a href="#总结">总结</a></li>
+          </ol>
+        </li>
+        <li><a href="#补充知识">补充知识</a>
+          <ol>
+            <li><a href="#线性方程组的最小二乘解">线性方程组的最小二乘解</a></li>
+            <li><a href="#齐次线性方程组的最小二乘解">齐次线性方程组的最小二乘解</a></li>
+            <li><a href="#非线性方程组的最小二乘解">非线性方程组的最小二乘解</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#摄像机标定">摄像机标定</a>
+      <ol>
+        <li><a href="#标定问题基本思路">标定问题基本思路</a></li>
+        <li><a href="#超定齐次方程的原因">超定齐次方程的原因</a></li>
+        <li><a href="#转换成矩阵形式">转换成矩阵形式</a></li>
+        <li><a href="#利用奇异值分解求超定齐次方程">利用奇异值分解求超定齐次方程</a></li>
+        <li><a href="#提取摄像机系数">提取摄像机系数</a>
+          <ol>
+            <li><a href="#求u0v0放大系数ρ">求u0、v0，放大系数ρ</a></li>
+            <li><a href="#求θ">求θ</a></li>
+            <li><a href="#求α和β">求α和β</a></li>
+            <li><a href="#求外参r1r2r3">求外参r1，r2，r3</a></li>
+            <li><a href="#求外参t">求外参T</a></li>
+            <li><a href="#总结-1">总结</a></li>
+          </ol>
+        </li>
+        <li><a href="#径向畸变的摄像机标定">径向畸变的摄像机标定</a>
+          <ol>
+            <li><a href="#畸变模型">畸变模型</a></li>
+            <li><a href="#非线性求解">非线性求解</a></li>
+            <li><a href="#求解线性部分加快迭代">求解线性部分加快迭代</a></li>
+          </ol>
+        </li>
+        <li><a href="#补充知识-1">补充知识</a>
+          <ol>
+            <li><a href="#2d平面上的变换">2D平面上的变换</a>
+              <ol>
+                <li><a href="#欧式变换">欧式变换</a></li>
+                <li><a href="#相似变换">相似变换</a></li>
+                <li><a href="#仿射变换">仿射变换</a></li>
+                <li><a href="#透视变换">透视变换</a></li>
+              </ol>
+            </li>
+            <li><a href="#3d变换">3D变换</a>
+              <ol>
+                <li><a href="#欧式相似变换">欧式+相似变换</a></li>
+                <li><a href="#仿射变换-1">仿射变换</a></li>
+                <li><a href="#透视变换-1">透视变换</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#单视图几何">单视图几何</a>
+      <ol>
+        <li><a href="#单视测量">单视测量</a>
+          <ol>
+            <li><a href="#无穷远点无穷远线无穷远面">无穷远点、无穷远线、无穷远面</a>
+              <ol>
+                <li><a href="#2d空间">2D空间</a></li>
+                <li><a href="#3d空间">3D空间</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a href="#影消点和影消面">影消点和影消面</a>
+          <ol>
+            <li><a href="#2d平面">2D平面</a></li>
+            <li><a href="#影消点">影消点</a></li>
+            <li><a href="#影消线">影消线</a></li>
+            <li><a href="#影消线与平面法向量">影消线与平面法向量</a></li>
+            <li><a href="#总结单视图重构关键">总结（单视图重构关键）</a></li>
+          </ol>
+        </li>
+        <li><a href="#单视图重构">单视图重构</a>
+          <ol>
+            <li><a href="#总结-2">总结</a></li>
+          </ol>
+        </li>
+        <li><a href="#总结-3">总结</a></li>
+      </ol>
+    </li>
+    <li><a href="#harris角点">Harris角点</a>
+      <ol>
+        <li><a href="#uv与euv的关系">uv与Euv的关系</a></li>
+        <li><a href="#泰勒展开">泰勒展开</a></li>
+        <li><a href="#m矩阵对变化程度的关系">M矩阵对变化程度的关系</a></li>
+        <li><a href="#更进一步转化">更进一步转化</a>
+          <ol>
+            <li><a href="#总结-4">总结</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#sift特征">SIFT特征</a>
+      <ol>
+        <li><a href="#scale-selection">Scale selection</a>
+          <ol>
+            <li><a href="#blob-detection-in-2d">Blob detection in 2D</a></li>
+            <li><a href="#characteristic-scale-尺度特性">Characteristic scale 尺度特性</a></li>
+            <li><a href="#scale-space-blob-detector">Scale-space blob detector</a></li>
+          </ol>
+        </li>
+        <li><a href="#sift更高效的做法">SIFT，更高效的做法</a></li>
+        <li><a href="#真实应用的改进">真实应用的改进</a>
+          <ol>
+            <li><a href="#解决-affine-covariance">解决 affine covariance</a></li>
+            <li><a href="#解决角度问题">解决角度问题</a></li>
+            <li><a href="#解决光照问题">解决光照问题</a></li>
+            <li><a href="#匹配问题">匹配问题</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#识别词袋模型">识别&amp;词袋模型</a>
+      <ol>
+        <li><a href="#视觉任务">视觉任务</a>
+          <ol>
+            <li><a href="#难点">难点</a></li>
+            <li><a href="#基本问题">基本问题</a>
+              <ol>
+                <li><a href="#representation">Representation</a></li>
+                <li><a href="#learning">Learning</a></li>
+                <li><a href="#recognition">Recognition</a></li>
+              </ol>
+            </li>
+            <li><a href="#how-to-represent-an-object-category">How to represent an object category;</a>
+              <ol>
+                <li><a href="#bag-of-features-models">Bag-of-features models</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    
+    
+</aside>
+<a href="#" id="toc-toggle"></a>
+</div>
+
+<div class = "toc-phone">
+    <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:摄像机几何" href="#摄像机几何">摄像机几何</a>
+      <ol>
+        <li><a id="contents:针孔模型--透镜" href="#针孔模型--透镜">针孔模型 &amp; 透镜</a>
+          <ol>
+            <li><a id="contents:针孔摄像机" href="#针孔摄像机">针孔摄像机</a></li>
+            <li><a id="contents:加透镜" href="#加透镜">加透镜</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:摄像机几何-1" href="#摄像机几何-1">摄像机几何</a>
+          <ol>
+            <li><a id="contents:偏置-单位变换" href="#偏置-单位变换">偏置 单位变换</a></li>
+            <li><a id="contents:转化为齐次坐标系" href="#转化为齐次坐标系">转化为齐次坐标系</a>
+              <ol>
+                <li><a id="contents:插曲将坐标转为线性关系" href="#插曲将坐标转为线性关系">插曲：将坐标转为线性关系</a></li>
+              </ol>
+            </li>
+            <li><a id="contents:摄像机偏移" href="#摄像机偏移">摄像机偏移</a></li>
+            <li><a id="contents:世界坐标系转换到摄像机坐标系" href="#世界坐标系转换到摄像机坐标系">世界坐标系转换到摄像机坐标系</a></li>
+            <li><a id="contents:摄像机模型pkr-tpw" href="#摄像机模型pkr-tpw">摄像机模型P'=K[R T]Pw</a>
+              <ol>
+                <li><a id="contents:物理意义自由度欧式空间" href="#物理意义自由度欧式空间">物理意义、自由度、欧式空间</a></li>
+              </ol>
+            </li>
+            <li><a id="contents:fauferas定理" href="#fauferas定理">Fauferas定理</a></li>
+            <li><a id="contents:投影变换的性质" href="#投影变换的性质">投影变换的性质</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:其他摄像机模型" href="#其他摄像机模型">其他摄像机模型</a>
+          <ol>
+            <li><a id="contents:规范化摄像机" href="#规范化摄像机">规范化摄像机</a></li>
+            <li><a id="contents:弱透视投影摄像机" href="#弱透视投影摄像机">弱透视投影摄像机</a></li>
+            <li><a id="contents:正交投影摄像机" href="#正交投影摄像机">正交投影摄像机</a></li>
+            <li><a id="contents:总结" href="#总结">总结</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:补充知识" href="#补充知识">补充知识</a>
+          <ol>
+            <li><a id="contents:线性方程组的最小二乘解" href="#线性方程组的最小二乘解">线性方程组的最小二乘解</a></li>
+            <li><a id="contents:齐次线性方程组的最小二乘解" href="#齐次线性方程组的最小二乘解">齐次线性方程组的最小二乘解</a></li>
+            <li><a id="contents:非线性方程组的最小二乘解" href="#非线性方程组的最小二乘解">非线性方程组的最小二乘解</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:摄像机标定" href="#摄像机标定">摄像机标定</a>
+      <ol>
+        <li><a id="contents:标定问题基本思路" href="#标定问题基本思路">标定问题基本思路</a></li>
+        <li><a id="contents:超定齐次方程的原因" href="#超定齐次方程的原因">超定齐次方程的原因</a></li>
+        <li><a id="contents:转换成矩阵形式" href="#转换成矩阵形式">转换成矩阵形式</a></li>
+        <li><a id="contents:利用奇异值分解求超定齐次方程" href="#利用奇异值分解求超定齐次方程">利用奇异值分解求超定齐次方程</a></li>
+        <li><a id="contents:提取摄像机系数" href="#提取摄像机系数">提取摄像机系数</a>
+          <ol>
+            <li><a id="contents:求u0v0放大系数ρ" href="#求u0v0放大系数ρ">求u0、v0，放大系数ρ</a></li>
+            <li><a id="contents:求θ" href="#求θ">求θ</a></li>
+            <li><a id="contents:求α和β" href="#求α和β">求α和β</a></li>
+            <li><a id="contents:求外参r1r2r3" href="#求外参r1r2r3">求外参r1，r2，r3</a></li>
+            <li><a id="contents:求外参t" href="#求外参t">求外参T</a></li>
+            <li><a id="contents:总结-1" href="#总结-1">总结</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:径向畸变的摄像机标定" href="#径向畸变的摄像机标定">径向畸变的摄像机标定</a>
+          <ol>
+            <li><a id="contents:畸变模型" href="#畸变模型">畸变模型</a></li>
+            <li><a id="contents:非线性求解" href="#非线性求解">非线性求解</a></li>
+            <li><a id="contents:求解线性部分加快迭代" href="#求解线性部分加快迭代">求解线性部分加快迭代</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:补充知识-1" href="#补充知识-1">补充知识</a>
+          <ol>
+            <li><a id="contents:2d平面上的变换" href="#2d平面上的变换">2D平面上的变换</a>
+              <ol>
+                <li><a id="contents:欧式变换" href="#欧式变换">欧式变换</a></li>
+                <li><a id="contents:相似变换" href="#相似变换">相似变换</a></li>
+                <li><a id="contents:仿射变换" href="#仿射变换">仿射变换</a></li>
+                <li><a id="contents:透视变换" href="#透视变换">透视变换</a></li>
+              </ol>
+            </li>
+            <li><a id="contents:3d变换" href="#3d变换">3D变换</a>
+              <ol>
+                <li><a id="contents:欧式相似变换" href="#欧式相似变换">欧式+相似变换</a></li>
+                <li><a id="contents:仿射变换-1" href="#仿射变换-1">仿射变换</a></li>
+                <li><a id="contents:透视变换-1" href="#透视变换-1">透视变换</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:单视图几何" href="#单视图几何">单视图几何</a>
+      <ol>
+        <li><a id="contents:单视测量" href="#单视测量">单视测量</a>
+          <ol>
+            <li><a id="contents:无穷远点无穷远线无穷远面" href="#无穷远点无穷远线无穷远面">无穷远点、无穷远线、无穷远面</a>
+              <ol>
+                <li><a id="contents:2d空间" href="#2d空间">2D空间</a></li>
+                <li><a id="contents:3d空间" href="#3d空间">3D空间</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a id="contents:影消点和影消面" href="#影消点和影消面">影消点和影消面</a>
+          <ol>
+            <li><a id="contents:2d平面" href="#2d平面">2D平面</a></li>
+            <li><a id="contents:影消点" href="#影消点">影消点</a></li>
+            <li><a id="contents:影消线" href="#影消线">影消线</a></li>
+            <li><a id="contents:影消线与平面法向量" href="#影消线与平面法向量">影消线与平面法向量</a></li>
+            <li><a id="contents:总结单视图重构关键" href="#总结单视图重构关键">总结（单视图重构关键）</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:单视图重构" href="#单视图重构">单视图重构</a>
+          <ol>
+            <li><a id="contents:总结-2" href="#总结-2">总结</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:总结-3" href="#总结-3">总结</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:harris角点" href="#harris角点">Harris角点</a>
+      <ol>
+        <li><a id="contents:uv与euv的关系" href="#uv与euv的关系">uv与Euv的关系</a></li>
+        <li><a id="contents:泰勒展开" href="#泰勒展开">泰勒展开</a></li>
+        <li><a id="contents:m矩阵对变化程度的关系" href="#m矩阵对变化程度的关系">M矩阵对变化程度的关系</a></li>
+        <li><a id="contents:更进一步转化" href="#更进一步转化">更进一步转化</a>
+          <ol>
+            <li><a id="contents:总结-4" href="#总结-4">总结</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:sift特征" href="#sift特征">SIFT特征</a>
+      <ol>
+        <li><a id="contents:scale-selection" href="#scale-selection">Scale selection</a>
+          <ol>
+            <li><a id="contents:blob-detection-in-2d" href="#blob-detection-in-2d">Blob detection in 2D</a></li>
+            <li><a id="contents:characteristic-scale-尺度特性" href="#characteristic-scale-尺度特性">Characteristic scale 尺度特性</a></li>
+            <li><a id="contents:scale-space-blob-detector" href="#scale-space-blob-detector">Scale-space blob detector</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:sift更高效的做法" href="#sift更高效的做法">SIFT，更高效的做法</a></li>
+        <li><a id="contents:真实应用的改进" href="#真实应用的改进">真实应用的改进</a>
+          <ol>
+            <li><a id="contents:解决-affine-covariance" href="#解决-affine-covariance">解决 affine covariance</a></li>
+            <li><a id="contents:解决角度问题" href="#解决角度问题">解决角度问题</a></li>
+            <li><a id="contents:解决光照问题" href="#解决光照问题">解决光照问题</a></li>
+            <li><a id="contents:匹配问题" href="#匹配问题">匹配问题</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:识别词袋模型" href="#识别词袋模型">识别&amp;词袋模型</a>
+      <ol>
+        <li><a id="contents:视觉任务" href="#视觉任务">视觉任务</a>
+          <ol>
+            <li><a id="contents:难点" href="#难点">难点</a></li>
+            <li><a id="contents:基本问题" href="#基本问题">基本问题</a>
+              <ol>
+                <li><a id="contents:representation" href="#representation">Representation</a></li>
+                <li><a id="contents:learning" href="#learning">Learning</a></li>
+                <li><a id="contents:recognition" href="#recognition">Recognition</a></li>
+              </ol>
+            </li>
+            <li><a id="contents:how-to-represent-an-object-category" href="#how-to-represent-an-object-category">How to represent an object category;</a>
+              <ol>
+                <li><a id="contents:bag-of-features-models" href="#bag-of-features-models">Bag-of-features models</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    <hr></hr>
+</div>
+
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">三维重建之路上</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <div class="post-body e-content">
+                <p>instant-ngp --scene data/nerf/fox
+视频：<a href="https://www.bilibili.com/video/BV1mT4y1o7Q2" target="_blank" rel="noopener">计算机视觉之三维重建</a>
+找到一个同样是这个视频的<a href="https://blog.csdn.net/xijuezhu8128/category_11916420.html" target="_blank" rel="noopener">笔记网址</a>
+<a name="PVvJl"></a></p>
+<h2 id="摄像机几何"><a href="#摄像机几何" class="anchor-link">#</a>摄像机几何</h2>
+<p><a name="yUygC"></a></p>
+<h3 id="针孔模型--透镜"><a href="#针孔模型--透镜" class="anchor-link">#</a>针孔模型 &amp; 透镜</h3>
+<p><a name="kEeEO"></a></p>
+<h4 id="针孔摄像机"><a href="#针孔摄像机" class="anchor-link">#</a>针孔摄像机</h4>
+<p>物体直接映射到胶片上，会导致多个点映射到同一个点上，因此采用针孔成像。如下图，其中x,y,z是世界点Pw在摄像机坐标系上的坐标，已知；f是焦距，已知；由此可求得P'在像平面坐标。
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143.png?imageMogr2/format/webp%7C" alt="image">
+<a name="DVeeA"></a></p>
+<h4 id="加透镜"><a href="#加透镜" class="anchor-link">#</a>加透镜</h4>
+<p>可以让上述摄像机保持焦距越小，图像越清晰的情况下，<strong>增加亮度</strong>。
+透镜将所有平行于光轴的光线汇聚到焦点，焦点到透镜中心的距离称为焦距（非上述焦距）。穿过透镜中心的光线的<strong>方向不会改变</strong>。
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-1.png?imageMogr2/format/webp%7C" alt="image">
+产生的问题：</p>
+<ul>
+<li>失焦，物体“聚焦”有特定距离，一些地方清晰，一些地方模糊</li>
+<li>径向畸变
+<a name="QKFdG"></a></li>
+</ul>
+<h3 id="摄像机几何-1"><a href="#摄像机几何-1" class="anchor-link">#</a>摄像机几何</h3>
+<p>为了将像平面图像（连续）转到数字图像（离散），使其可被建模。进行一些修正：
+前三步是摄像机坐标系下
+<a name="zyC7R"></a></p>
+<h4 id="偏置-单位变换"><a href="#偏置-单位变换" class="anchor-link">#</a>偏置 单位变换</h4>
+<p>（下图f=f+z0,简化符号）</p>
+<ul>
+<li><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-2.png?imageMogr2/format/webp%7C" alt="image"></li>
+</ul>
+<hr>
+<p><a name="bcZVp"></a></p>
+<h4 id="转化为齐次坐标系"><a href="#转化为齐次坐标系" class="anchor-link">#</a>转化为齐次坐标系</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-3.png?imageMogr2/format/webp%7C" alt="image">
+其中M是相机内参，不变矩阵，P是3D点，变化向量，建立了P'到P的线性关系
+<a name="S7JfO"></a></p>
+<h5 id="插曲将坐标转为线性关系"><a href="#插曲将坐标转为线性关系" class="anchor-link">#</a>插曲：将坐标转为线性关系</h5>
+<ul>
+<li>齐次坐标：EtoH：多加一维，值为1；HtoE：前n-1维除以第n维（E欧氏空间、H齐次空间）</li>
+<li><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230527212427.png?imageMogr2/format/webp%7C" alt="image">（α=fk。β=fl）</li>
+<li>约定后续Ph写做P，除非特别指明是欧式空间下的P</li>
+<li><img src="https://pic.keepjolly.com/halo/blog/2023/05/20230527212446.png?imageMogr2/format/webp%7C" alt="image"></li>
+</ul>
+<hr>
+<p><a name="thwSn"></a></p>
+<h4 id="摄像机偏移"><a href="#摄像机偏移" class="anchor-link">#</a>摄像机偏移</h4>
+<p>工艺问题，不能垂直，所以需要加偏移系数
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-5.png?imageMogr2/format/webp%7C" alt="image">
+自由度：α，β，θ，Cx，Cy
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-6.png?imageMogr2/format/webp%7C" alt="image"></p>
+<hr>
+<p><a name="dUwn6"></a></p>
+<h4 id="世界坐标系转换到摄像机坐标系"><a href="#世界坐标系转换到摄像机坐标系" class="anchor-link">#</a>世界坐标系转换到摄像机坐标系</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-7.png?imageMogr2/format/webp%7C" alt="image">
+<a name="SDFNM"></a></p>
+<h4 id="摄像机模型pkr-tpw"><a href="#摄像机模型pkr-tpw" class="anchor-link">#</a>摄像机模型P'=K[R T]Pw</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-8.png?imageMogr2/format/webp%7C" alt="image">
+RT矩阵具体内容不知道是什么，如有链接欢迎评论，后面的<strong>摄像机标定的</strong><a href="#HFfse"><strong>补充知识</strong></a><strong>有讲</strong></p>
+<hr>
+<p><a name="Vb4P5"></a></p>
+<h5 id="物理意义自由度欧式空间"><a href="#物理意义自由度欧式空间" class="anchor-link">#</a>物理意义、自由度、欧式空间</h5>
+<ol>
+<li><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-9.png?imageMogr2/format/webp%7C" alt="image"></li>
+<li>自由度：五个内参+6个外参（3个旋转3个平移）= 11个自由度（图中应该是1×4）</li>
+<li>齐次空间转换为欧式空间：<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-10.png?imageMogr2/format/webp%7C" alt="image">
+<a name="nXOMW"></a></li>
+</ol>
+<h4 id="fauferas定理"><a href="#fauferas定理" class="anchor-link">#</a>Fauferas定理</h4>
+<p>零倾斜就是没有θ
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-11.png?imageMogr2/format/webp%7C" alt="image">
+<a name="Bm2Md"></a></p>
+<h4 id="投影变换的性质"><a href="#投影变换的性质" class="anchor-link">#</a>投影变换的性质</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-12.png?imageMogr2/format/webp%7C" alt="image">
+<a name="bRqXq"></a></p>
+<h3 id="其他摄像机模型"><a href="#其他摄像机模型" class="anchor-link">#</a>其他摄像机模型</h3>
+<p><a name="bo1qJ"></a></p>
+<h4 id="规范化摄像机"><a href="#规范化摄像机" class="anchor-link">#</a>规范化摄像机</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-13.png?imageMogr2/format/webp%7C" alt="image">
+<a name="k4TrS"></a></p>
+<h4 id="弱透视投影摄像机"><a href="#弱透视投影摄像机" class="anchor-link">#</a>弱透视投影摄像机</h4>
+<p>当相对景深小于其与相机的距离时，可以对其进行一些简化，就简单地认为这些点就在一个深度上，直接投影到平面上，适合拍摄中远距离图像
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-14.png?imageMogr2/format/webp%7C" alt="image"></p>
+<ul>
+<li>其中f'为焦距，z0是物体到光圈O的距离，xy物体真实位置，x'y'像素面位置。这样子将z0固定为常数，使其为线性变换，而不是<a href="#kEeEO">非线性变换</a>。</li>
+</ul>
+<p>v应该是 1×3 矩阵，Abv是K[R T]之后的结果
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-15.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-16.png?imageMogr2/format/webp%7C" alt="image">
+<a name="UQgMG"></a></p>
+<h4 id="正交投影摄像机"><a href="#正交投影摄像机" class="anchor-link">#</a>正交投影摄像机</h4>
+<p>当摄像机中心到像平面距离无限远时，直接映射。
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-17.png?imageMogr2/format/webp%7C" alt="image">
+<a name="WR68Q"></a></p>
+<h4 id="总结"><a href="#总结" class="anchor-link">#</a>总结</h4>
+<ul>
+<li>正交投影，更多地应用在建筑设计AUTOCAD，或者工业设计行业</li>
+<li>弱透视投影在数学方面更简单，当物体较小且较远时准确，常用于图像识别任务</li>
+<li>透视投影对于3D到2D映射的建模更为准确，用于运动恢复结构或SLAM</li>
+<li>参考博客
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/154808198" target="_blank" rel="noopener">机器视觉学习（七）摄像机模型</a></li>
+<li><a href="https://blog.csdn.net/qq_28087491/article/details/107965151" target="_blank" rel="noopener">常用相机投影及畸变模型（针孔|广角|鱼眼）</a></li>
+<li><a href="https://www.cnblogs.com/silence-cho/p/15023822.html" target="_blank" rel="noopener">针孔相机成像模型</a></li>
+<li><a href="https://www.jianshu.com/p/510f43de2164" target="_blank" rel="noopener">二维坐标转换与坐标系转换</a></li>
+<li><a href="https://blog.csdn.net/swety_gxy/article/details/73087848" target="_blank" rel="noopener">三维空间中的几何变换-平移旋转缩放</a></li>
+<li><a href="https://pengfeixc.com/blogs/computer-graphics" target="_blank" rel="noopener">计算机图形学</a>
+<a name="etdZi"></a></li>
+</ul>
+</li>
+</ul>
+<h3 id="补充知识"><a href="#补充知识" class="anchor-link">#</a>补充知识</h3>
+<p><a name="IMPSW"></a></p>
+<h4 id="线性方程组的最小二乘解"><a href="#线性方程组的最小二乘解" class="anchor-link">#</a>线性方程组的最小二乘解</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-18.png?imageMogr2/format/webp%7C" alt="image">
+<a name="SU3hp"></a></p>
+<h4 id="齐次线性方程组的最小二乘解"><a href="#齐次线性方程组的最小二乘解" class="anchor-link">#</a>齐次线性方程组的最小二乘解</h4>
+<p>只需记住齐次线性用奇异值分解即可，后面经常用
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-19.png?imageMogr2/format/webp%7C" alt="image">
+<a name="qCzTi"></a></p>
+<h4 id="非线性方程组的最小二乘解"><a href="#非线性方程组的最小二乘解" class="anchor-link">#</a>非线性方程组的最小二乘解</h4>
+<p>只需记住齐次非线性用牛顿、L-M方法即可，后面经常用
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-20.png?imageMogr2/format/webp%7C" alt="image">
+<a name="VWsOw"></a></p>
+<h2 id="摄像机标定"><a href="#摄像机标定" class="anchor-link">#</a>摄像机标定</h2>
+<p>摄像机标定，即<strong>已知点坐标求解摄像机内、外参数矩阵</strong>，使得二维转三维可行。
+更换符号：p=P'（像平面P'变为p）     P=Pw（世界坐标Pw变为P）。
+<a name="UKmUo"></a></p>
+<h3 id="标定问题基本思路"><a href="#标定问题基本思路" class="anchor-link">#</a>标定问题基本思路</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-21.png?imageMogr2/format/webp%7C" alt="image">
+<a name="nhXJc"></a></p>
+<h3 id="超定齐次方程的原因"><a href="#超定齐次方程的原因" class="anchor-link">#</a>超定齐次方程的原因</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-22.png?imageMogr2/format/webp%7C" alt="image">
+<a name="LDwvq"></a></p>
+<h3 id="转换成矩阵形式"><a href="#转换成矩阵形式" class="anchor-link">#</a>转换成矩阵形式</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-23.png?imageMogr2/format/webp%7C" alt="image">
+<a name="NVpqQ"></a></p>
+<h3 id="利用奇异值分解求超定齐次方程"><a href="#利用奇异值分解求超定齐次方程" class="anchor-link">#</a>利用奇异值分解求超定齐次方程</h3>
+<p>其中M求解的值是真实世界的值差一个<strong>放大系数</strong>
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-24.png?imageMogr2/format/webp%7C" alt="image">
+<a name="b0ZeZ"></a></p>
+<h3 id="提取摄像机系数"><a href="#提取摄像机系数" class="anchor-link">#</a>提取摄像机系数</h3>
+<p>详细过程参见：<a href="https://niecongchong.blog.csdn.net/article/details/127209507#t5" target="_blank" rel="noopener">提取摄像机内参数</a>
+课堂知识：互相垂直点乘·为0（r1r2r3互相垂直）；r1×r2=r3 （另外图中矩阵大小可能有误）
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-25.png?imageMogr2/format/webp%7C" alt="image">
+<a name="i3JVJ"></a></p>
+<h4 id="求u0v0放大系数ρ"><a href="#求u0v0放大系数ρ" class="anchor-link">#</a>求u0、v0，放大系数ρ</h4>
+<p>不知道为什么a有时候转置有时候不转置
+u0、v0就是<a href="#zyC7R">偏置Cx、Cy</a>
+r1·r3 = 0；r2·r3=0；r3·r3=1，且都互不相关，正交矩阵
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-26.png?imageMogr2/format/webp%7C" alt="image">
+（图中是点乘不是叉乘）
+<a name="PatrE"></a></p>
+<h4 id="求θ"><a href="#求θ" class="anchor-link">#</a>求θ</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-27.png?imageMogr2/format/webp%7C" alt="image">
+然后左式子点乘 比上 右式子点乘即可出现下图 （具体看视频，虽然讲的也不怎么清楚，参考弹幕或前面的<a href="https://niecongchong.blog.csdn.net/article/details/127209507#t5" target="_blank" rel="noopener">链接</a>）
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-28.png?imageMogr2/format/webp%7C" alt="image">
+ps. 如果θ=90° 则符合faugeras定理
+<a name="qT9nR"></a></p>
+<h4 id="求α和β"><a href="#求α和β" class="anchor-link">#</a>求α和β</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-29.png?imageMogr2/format/webp%7C" alt="image">
+如果α=β，则符合faugeras定理
+<a name="inEAt"></a></p>
+<h4 id="求外参r1r2r3"><a href="#求外参r1r2r3" class="anchor-link">#</a>求外参r1，r2，r3</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-30.png?imageMogr2/format/webp%7C" alt="image">
+<a name="oFdwP"></a></p>
+<h4 id="求外参t"><a href="#求外参t" class="anchor-link">#</a>求外参T</h4>
+<p>K满秩所必可逆
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-31.png?imageMogr2/format/webp%7C" alt="image">
+<a name="jJbl2"></a></p>
+<h4 id="总结-1"><a href="#总结-1" class="anchor-link">#</a>总结</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-32.png?imageMogr2/format/webp%7C" alt="image">
+取点不能都位于同一平面，否则三点确定一个平面，多余的点都是没用的
+<a name="acfQ6"></a></p>
+<h3 id="径向畸变的摄像机标定"><a href="#径向畸变的摄像机标定" class="anchor-link">#</a>径向畸变的摄像机标定</h3>
+<p><a name="Q1aWO"></a></p>
+<h4 id="畸变模型"><a href="#畸变模型" class="anchor-link">#</a>畸变模型</h4>
+<p>Sλ就是畸变矩阵
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-33.png?imageMogr2/format/webp%7C" alt="image">
+<a name="uZX1S"></a></p>
+<h4 id="非线性求解"><a href="#非线性求解" class="anchor-link">#</a>非线性求解</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-34.png?imageMogr2/format/webp%7C" alt="image">
+m1m2m3是<a href="#b0ZeZ">提取摄像机系数</a>里的投影矩阵的三行
+<a name="CQYTA"></a></p>
+<h4 id="求解线性部分加快迭代"><a href="#求解线性部分加快迭代" class="anchor-link">#</a>求解线性部分加快迭代</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-35.png?imageMogr2/format/webp%7C" alt="image">
+ui÷vi即在原世界坐标下的等比例缩放直线，就那个d2
+<a name="HFfse"></a></p>
+<h3 id="补充知识-1"><a href="#补充知识-1" class="anchor-link">#</a>补充知识</h3>
+<p><a name="AFtVr"></a></p>
+<h4 id="2d平面上的变换"><a href="#2d平面上的变换" class="anchor-link">#</a>2D平面上的变换</h4>
+<p><a name="JcnrV"></a></p>
+<h5 id="欧式变换"><a href="#欧式变换" class="anchor-link">#</a>欧式变换</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-36.png?imageMogr2/format/webp%7C" alt="image">
+<a name="WH0r5"></a></p>
+<h5 id="相似变换"><a href="#相似变换" class="anchor-link">#</a>相似变换</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-37.png?imageMogr2/format/webp%7C" alt="image">
+<a name="mgqTd"></a></p>
+<h5 id="仿射变换"><a href="#仿射变换" class="anchor-link">#</a>仿射变换</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-38.png?imageMogr2/format/webp%7C" alt="image">
+<a name="qkdFZ"></a></p>
+<h5 id="透视变换"><a href="#透视变换" class="anchor-link">#</a>透视变换</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-39.png?imageMogr2/format/webp%7C" alt="image">
+<a name="CWnR3"></a></p>
+<h4 id="3d变换"><a href="#3d变换" class="anchor-link">#</a>3D变换</h4>
+<p><a name="YMczI"></a></p>
+<h5 id="欧式相似变换"><a href="#欧式相似变换" class="anchor-link">#</a>欧式+相似变换</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-40.png?imageMogr2/format/webp%7C" alt="image">
+<a name="Nmej8"></a></p>
+<h5 id="仿射变换-1"><a href="#仿射变换-1" class="anchor-link">#</a>仿射变换</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-41.png?imageMogr2/format/webp%7C" alt="image">
+<a name="Aa7tF"></a></p>
+<h5 id="透视变换-1"><a href="#透视变换-1" class="anchor-link">#</a>透视变换</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-42.png?imageMogr2/format/webp%7C" alt="image">
+<a name="i8fr7"></a></p>
+<h2 id="单视图几何"><a href="#单视图几何" class="anchor-link">#</a>单视图几何</h2>
+<p>用单张图构建三维模型
+<a name="VYNZX"></a></p>
+<h3 id="单视测量"><a href="#单视测量" class="anchor-link">#</a>单视测量</h3>
+<p>00:17:46 影消点
+<a name="VaZCW"></a></p>
+<h4 id="无穷远点无穷远线无穷远面"><a href="#无穷远点无穷远线无穷远面" class="anchor-link">#</a>无穷远点、无穷远线、无穷远面</h4>
+<p><a name="EVjLI"></a></p>
+<h5 id="2d空间"><a href="#2d空间" class="anchor-link">#</a>2D空间</h5>
+<p>$url?imageMogr2/format/webp|?watermark/3/type/3/text/a2VlcGpvbGx5
+<strong>用l表示一条直线</strong>
+<img src="https://cdn.nlark.com/yuque/0/2023/png/12600461/1678154285531-0bfa14f4-d345-4ae1-b317-ef2e02729257.png#averageHue=%23ebebf2&amp;clientId=u68e9a600-0c37-4&amp;from=paste&amp;height=317&amp;id=u83842eee&amp;name=image.png&amp;originHeight=684&amp;originWidth=1256&amp;originalType=binary&amp;ratio=1.2699999809265137&amp;rotation=0&amp;showTitle=false&amp;size=55246&amp;status=done&amp;style=none&amp;taskId=u88b7be70-3edb-4ab6-acfc-5e588cfc20e&amp;title=&amp;width=583.00146484375" alt="image.png">
+<strong>x是两条直线的交点，x是l和l'的叉乘</strong>
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-43.png?imageMogr2/format/webp%7C" alt="image">
+<strong>2D空间中的无穷远点即当前直线方向的前两行加0即可。[a,b,0]</strong>
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-44.png?imageMogr2/format/webp%7C" alt="image">
+<strong>2D空间中的无穷远直线</strong>
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-45.png?imageMogr2/format/webp%7C" alt="image">
+<a name="IGTw5"></a></p>
+<h5 id="3d空间"><a href="#3d空间" class="anchor-link">#</a>3D空间</h5>
+<ul>
+<li>3D空间的面</li>
+</ul>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-46.png?imageMogr2/format/webp%7C" alt="image"></p>
+<ul>
+<li>3D空间中的直线</li>
+</ul>
+<p>为了方便，将其直线定义为直线方向，或者两平面的交线
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-47.png?imageMogr2/format/webp%7C" alt="image"></p>
+<ul>
+<li>3D空间中的无穷远点</li>
+</ul>
+<p>根据2D中的无穷远点，即在直线方向上（a,b,c）最后一行多加0即可
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-48.png?imageMogr2/format/webp%7C" alt="image"></p>
+<ul>
+<li>3D空间中的无穷远平面</li>
+</ul>
+<p>无穷远直线即为同个平面上的平行线上的无穷远点集汇聚成无穷远直线；或者是两个平行平面在无穷远处交与一条直线。视频位置33:30.
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-49.png?imageMogr2/format/webp%7C" alt="image">
+<a name="iDZeo"></a></p>
+<h3 id="影消点和影消面"><a href="#影消点和影消面" class="anchor-link">#</a>影消点和影消面</h3>
+<p><a name="isQzT"></a></p>
+<h4 id="2d平面"><a href="#2d平面" class="anchor-link">#</a>2D平面</h4>
+<ul>
+<li><strong>无穷远点的变换</strong></li>
+</ul>
+<p>只要第三行为0就是无穷远点，透视除非v为0否则就不是。
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-50.png?imageMogr2/format/webp%7C" alt="image"></p>
+<ul>
+<li><strong>无穷远线的变换</strong></li>
+</ul>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-51.png?imageMogr2/format/webp%7C" alt="image">
+透视一般不是无穷远线，仿射一般是无穷远线。
+因为仿射变换保持平行线不变，而透视变换可能会有在近处有交点而不会在无穷远处相交。
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-52.png?imageMogr2/format/webp%7C" alt="image">
+<a name="r58RU"></a></p>
+<h4 id="影消点"><a href="#影消点" class="anchor-link">#</a>影消点</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-53.png?imageMogr2/format/webp%7C" alt="image">
+<strong>影消点与直线方向</strong>
+也可这样理解：K是做仿射变换，所以v=Kd（为什么这里证明的时候不考虑外参矩阵，摄像机坐标系？）
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-54.png?imageMogr2/format/webp%7C" alt="image">
+<a name="eePSg"></a></p>
+<h4 id="影消线"><a href="#影消线" class="anchor-link">#</a>影消线</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-55.png?imageMogr2/format/webp%7C" alt="image"></p>
+<ul>
+<li>橙色即影消线</li>
+</ul>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-56.png?imageMogr2/format/webp%7C" alt="image">
+<a name="ulA20"></a></p>
+<h4 id="影消线与平面法向量"><a href="#影消线与平面法向量" class="anchor-link">#</a>影消线与平面法向量</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-57.png?imageMogr2/format/webp%7C" alt="image">
+<a name="FRZVb"></a></p>
+<h4 id="总结单视图重构关键"><a href="#总结单视图重构关键" class="anchor-link">#</a>总结（单视图重构关键）</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-58.png?imageMogr2/format/webp%7C" alt="image">
+<a name="bTJ9Z"></a></p>
+<h3 id="单视图重构"><a href="#单视图重构" class="anchor-link">#</a>单视图重构</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-59.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-60.png?imageMogr2/format/webp%7C" alt="image">
+在假设下，θ已知，α=β，则还剩下Cx，Cy未知，一共三个变量未知？，并且v1v2v3互相在三维中是垂直关系，然后三个方程求解。
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-61.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-62.png?imageMogr2/format/webp%7C" alt="image">
+<a name="epDTg"></a></p>
+<h4 id="总结-2"><a href="#总结-2" class="anchor-link">#</a>总结</h4>
+<p>根据前面的求出摄像机内参矩阵后，就可以根据摄像机几何来获取像素点和三维点的关系，然后根据场景平面方向n来重建三维场景。
+缺点是：场景的实际比例无法恢复，需要手动选择影消点与影消线，还需要场景先验信息（点对应关系，线、面几何信息等）
+<a name="Z6Nsa"></a></p>
+<h3 id="总结-3"><a href="#总结-3" class="anchor-link">#</a>总结</h3>
+<p>01:16:00.知道法向量和影消线的关系，影消点和直线的方向后，然后通过取三垂直的面来计算摄像机的内参矩阵，在两个假设下成立。然后通过法向量和影消线的关系，已知影消线就可求平面法向量，然后通过p=MP，获得三维点就可以三维重构了吗？期待评论单视图重构详细过程
+推荐阅读博客：<a href="https://blog.csdn.net/Nismilesucc/article/details/121056910" target="_blank" rel="noopener">单视图测量</a>
+<a name="VwLVo"></a></p>
+<h2 id="harris角点"><a href="#harris角点" class="anchor-link">#</a>Harris角点</h2>
+<p><a href="https://www.bilibili.com/video/BV1nz4y197Qv" target="_blank" rel="noopener">视频地址</a>
+<a name="Rx6wg"></a></p>
+<h3 id="uv与euv的关系"><a href="#uv与euv的关系" class="anchor-link">#</a>uv与Euv的关系</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-63.png?imageMogr2/format/webp%7C" alt="image">
+通过观察uv的变化进而观察E(u, v)的变化，从而发现是不是角点，但是此处不方便，都需要经过I来计算，下面通过泰勒二阶展开，简化运算
+<a name="NpI6o"></a></p>
+<h3 id="泰勒展开"><a href="#泰勒展开" class="anchor-link">#</a>泰勒展开</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-64.png?imageMogr2/format/webp%7C" alt="image">
+得到M与Euv的关系，进而只需要分析M矩阵
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-65.png?imageMogr2/format/webp%7C" alt="image">
+<a name="dKqDb"></a></p>
+<h3 id="m矩阵对变化程度的关系"><a href="#m矩阵对变化程度的关系" class="anchor-link">#</a>M矩阵对变化程度的关系</h3>
+<p>R是旋转矩阵使其变为水平椭圆， λ是方向变化剧烈程度，其值越大（λ1，λ2）则变化越快
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-66.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-67.png?imageMogr2/format/webp%7C" alt="image">
+<a name="NR12n"></a></p>
+<h3 id="更进一步转化"><a href="#更进一步转化" class="anchor-link">#</a>更进一步转化</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-68.png?imageMogr2/format/webp%7C" alt="image">
+<a name="BkiH2"></a></p>
+<h4 id="总结-4"><a href="#总结-4" class="anchor-link">#</a>总结</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-69.png?imageMogr2/format/webp%7C" alt="image"></p>
+<ul>
+<li>Partially invariant to affine intensity change</li>
+<li>Corner location is covariant w.r.t. translation</li>
+<li>Corner location is covariant w.r.t. rotation</li>
+<li>Corner location is not covariant to scaling!<br>
+<a name="AVnWo"></a></li>
+</ul>
+<h2 id="sift特征"><a href="#sift特征" class="anchor-link">#</a>SIFT特征</h2>
+<p><a name="pRCYJ"></a></p>
+<h3 id="scale-selection"><a href="#scale-selection" class="anchor-link">#</a>Scale selection</h3>
+<p>Spatial selection: the magnitude of the Laplacian response will achieve <strong>a maximum at the center of the blob</strong>, provided the scale of the Laplacian is “<strong>matched</strong>” to the scale of the blob<br>
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-70.png?imageMogr2/format/webp%7C" alt="image">
+The response of a derivative of Gaussian filter to a perfect step **edge decreases as σ increases **
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-71.png?imageMogr2/format/webp%7C" alt="image">
+To keep response the same (scale-invariant), must **multiply Gaussian derivative by σ，**固定为1/√2Π
+Laplacian is the second Gaussian derivative, so it **must be multiplied by σ2 **
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-72.png?imageMogr2/format/webp%7C" alt="image">
+<a name="hDlGR"></a></p>
+<h4 id="blob-detection-in-2d"><a href="#blob-detection-in-2d" class="anchor-link">#</a>Blob detection in 2D</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-73.png?imageMogr2/format/webp%7C" alt="image">
+前面听完一遍没听懂，可以去26:30min
+<a name="lm8Lh"></a></p>
+<h4 id="characteristic-scale-尺度特性"><a href="#characteristic-scale-尺度特性" class="anchor-link">#</a>Characteristic scale 尺度特性</h4>
+<p>找到对应核后，就可以在图中画出对应圆圈，r=√2Πσ
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-74.png?imageMogr2/format/webp%7C" alt="image">
+<a name="l5g8s"></a></p>
+<h4 id="scale-space-blob-detector"><a href="#scale-space-blob-detector" class="anchor-link">#</a>Scale-space blob detector</h4>
+<p>三个尺度为一组进行判断，只有尺度变化σ最大的那个点并且在3<em>3</em>3-1个点内是尺度变化σ最大的，才输出圆
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-75.png?imageMogr2/format/webp%7C" alt="image">
+<a name="vovnz"></a></p>
+<h3 id="sift更高效的做法"><a href="#sift更高效的做法" class="anchor-link">#</a>SIFT，更高效的做法</h3>
+<p>原先用拉普拉斯太耗时，图片越大计算量越大
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-76.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-77.png?imageMogr2/format/webp%7C" alt="image">
+下图听不懂的话继续往后听，在老师问大家的时候 回复3后面的时间讲的很清晰 1:09:20
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-78.png?imageMogr2/format/webp%7C" alt="image"></p>
+<ol>
+<li>首先DoG近似于拉普拉斯算子，它利用差分来逼近，所以通过构造DoG减少运算量</li>
+<li>为了输出一个尺度空间，需要三个DoG结果，因此图中只能输出两个尺度空间k、k2（有可能会因为nms而减少，暂不考虑）
+<ol>
+<li><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-79.png?imageMogr2/format/webp%7C" alt="image"></li>
+<li>同理：  <img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-80.png?imageMogr2/format/webp%7C" alt="image">
+<ol>
+<li>这里因为下采样了，为了获得原图的圆半径大小，所以乘以2 [1:12:10]</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>为了使其输出的尺度空间可以连续，即映射到坐标轴上是一条直线，从而根据σ推出半径r，进而比较最大值出现在那个尺度空间内，为了完成上述的<a href="#UlNnH">Characteristic scale 尺度特性</a>。
+<ol>
+<li>怎么连续呢，既让$k=2^{1/s}$(s是输出的尺度空间个数)，当s=2时，$k\sigma , k^2\sigma ,2k\sigma ,2k^2\sigma = \sqrt{ 2} \sigma,2\sigma,2\sqrt{ 2} \sigma,4 \sigma$,以√2倍的速率稳定增加，形成等比序列</li>
+</ol>
+</li>
+<li>根据s可得DoG需要S+2层，高斯响应需要S+3层，然后计算各个k,k2,k3即可</li>
+<li>下采样的层是通过前一个采样层的倒数第三层得到，因为第三层（第3条.a小点）是$k^2\sigma = 2\sigma$，而下采样第一层是$\sigma$,相差两倍。</li>
+<li>有了下采样层就可以减少计算量了，因为像素点变少了
+<a name="g2xuV"></a></li>
+</ol>
+<h3 id="真实应用的改进"><a href="#真实应用的改进" class="anchor-link">#</a>真实应用的改进</h3>
+<p><a name="Tlrbn"></a></p>
+<h4 id="解决-affine-covariance"><a href="#解决-affine-covariance" class="anchor-link">#</a>解决 affine covariance</h4>
+<p>利用M矩阵调整梯度大小，让小λ等于大λ ，使其$\lambda1\lambda2$一致，每次调整两个值的时候，同时修改检测圆的大小，
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-81.png?imageMogr2/format/webp%7C" alt="image">
+<a name="OK6lw"></a></p>
+<h4 id="解决角度问题"><a href="#解决角度问题" class="anchor-link">#</a>解决角度问题</h4>
+<p>计算梯度方向直方图后，将其整体方向转到同一个方向，即可比较
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-82.png?imageMogr2/format/webp%7C" alt="image">
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-83.png?imageMogr2/format/webp%7C" alt="image">
+<a name="S2peS"></a></p>
+<h4 id="解决光照问题"><a href="#解决光照问题" class="anchor-link">#</a>解决光照问题</h4>
+<p><strong>将归一化后的图片计算各个局部格子的梯度方向直方图</strong>，为什么不用全局直方图是因为更细致一点，防止全局下虽然方向一致，但是局部其实不太一样。用4×4是因为精细程度适中，实验结果得出。
+<a name="uLp2j"></a></p>
+<h4 id="匹配问题"><a href="#匹配问题" class="anchor-link">#</a>匹配问题</h4>
+<p>近邻匹配
+<img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-84.png?imageMogr2/format/webp%7C" alt="image">
+<a name="oQ5oK"></a></p>
+<h2 id="识别词袋模型"><a href="#识别词袋模型" class="anchor-link">#</a>识别&amp;词袋模型</h2>
+<p><a name="BJ9o3"></a></p>
+<h3 id="视觉任务"><a href="#视觉任务" class="anchor-link">#</a>视觉任务</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-85.png?imageMogr2/format/webp%7C" alt="image">
+<a name="MGz4J"></a></p>
+<h4 id="难点"><a href="#难点" class="anchor-link">#</a>难点</h4>
+<ul>
+<li>类别多</li>
+<li>视觉变换大</li>
+<li>光照</li>
+<li>尺度</li>
+<li>形变</li>
+<li>遮挡</li>
+<li>物体和环境相似  background clutter</li>
+<li>同个类别不同形状  intra-class variation<br>
+<a name="aqDvU"></a></li>
+</ul>
+<h4 id="基本问题"><a href="#基本问题" class="anchor-link">#</a>基本问题</h4>
+<p><a name="fZSdt"></a></p>
+<h5 id="representation"><a href="#representation" class="anchor-link">#</a>Representation</h5>
+<ul>
+<li>用局部特征来表示一个物体</li>
+<li>特征直接放到词袋内或者存储特征的相似关系
+<ul>
+<li><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-86.png?imageMogr2/format/webp%7C" alt="image"></li>
+</ul>
+</li>
+<li>解决方法
+<ul>
+<li>处理intra-class 变化，使用概率模型</li>
+<li>常用方法：产生式、判别式、混合式
+<ul>
+<li>产生式是利用同个物体的特征相似度</li>
+<li>判别式是利用不同物体的特征差异性
+<a name="ItqzP"></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="learning"><a href="#learning" class="anchor-link">#</a>Learning</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-87.png?imageMogr2/format/webp%7C" alt="image">
+<a name="ZIUgZ"></a></p>
+<h5 id="recognition"><a href="#recognition" class="anchor-link">#</a>Recognition</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-88.png?imageMogr2/format/webp%7C" alt="image">
+<a name="Nz4FC"></a></p>
+<h4 id="how-to-represent-an-object-category"><a href="#how-to-represent-an-object-category" class="anchor-link">#</a>How to represent an object category;</h4>
+<p>将图片表示成一个向量
+<a name="p1SF5"></a></p>
+<h5 id="bag-of-features-models"><a href="#bag-of-features-models" class="anchor-link">#</a>Bag-of-features models</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/03/20230326090143-89.png?imageMogr2/format/webp%7C" alt="image"></p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/computervision/" rel="tag" class="post-tag-link">#computervision</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

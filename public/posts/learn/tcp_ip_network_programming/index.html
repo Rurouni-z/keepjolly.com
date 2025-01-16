@@ -1,0 +1,2370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>TCP_IP网络编程 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="Rurouni" /><meta name="description" content="理解网络编程和套接字 server：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 #include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; #include &lt;string.h&gt; #include &lt;unistd.h&gt; #include &lt;arpa/inet.h&gt; #include &lt;sys/socket.h&gt; int main(){ int sockfd; int clnt_sock; struct sockaddr_in serv_addr; struct sockaddr_in clnt_addr; // 创建套接字 sockfd = socket(PF_INET, SOCK_STREAM, 0); if (sockfd == -1) exit(0); // 端口复用，防止address in use int one = 1; setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &amp;one, sizeof(one)); // bind地址 memset(&amp;serv_addr, 0, sizeof(sockaddr_in)); serv_addr.sin_family = AF_INET; serv_addr.sin_addr.s_addr = htonl(INADDR_ANY); serv_addr.sin_port = htons(8888); if (bind(sockfd, ( struct sockaddr*)&amp;serv_addr, sizeof(serv_addr))&lt; 0) exit(0); // 开始监听客户端连入 if (listen(sockfd, 1) &lt; 0) exit(0); // 可以与客户端通信 socklen_t clnt_addr_size; clnt_addr_size = sizeof(clnt_addr); // 不能使用(socklen_t*)clnt_addr_size使用(socklen_t*)&amp;clnt_addr_size clnt_sock = accept(sockfd, (struct sockaddr*)&amp;clnt_addr, &amp;clnt_addr_size); if (clnt_sock &lt; 0) exit(0); // 发送数据 char message[] = &#34;Hello!&#34;; write(clnt_sock, message, sizeof(message)); close(clnt_sock); close(sockfd); return 0; } client：
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/learn/tcp_ip_network_programming/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2023-08-13T22:41:54+08:00",
+        "dateModified": "2024-05-03T14:50:48+08:00",
+        "url": "http://localhost:1313/posts/learn/tcp_ip_network_programming/",
+        "headline": "TCP_IP网络编程",
+        "description": "理解网络编程和套接字 server：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 #include \u003cstdio.h\u003e #include \u003cstdlib.h\u003e #include \u003cstring.h\u003e #include \u003cunistd.h\u003e #include \u003carpa/inet.h\u003e #include \u003csys/socket.h\u003e int main(){ int sockfd; int clnt_sock; struct sockaddr_in serv_addr; struct sockaddr_in clnt_addr; // 创建套接字 sockfd = socket(PF_INET, SOCK_STREAM, 0); if (sockfd == -1) exit(0); // 端口复用，防止address in use int one = 1; setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, \u0026one, sizeof(one)); // bind地址 memset(\u0026serv_addr, 0, sizeof(sockaddr_in)); serv_addr.sin_family = AF_INET; serv_addr.sin_addr.s_addr = htonl(INADDR_ANY); serv_addr.sin_port = htons(8888); if (bind(sockfd, ( struct sockaddr*)\u0026serv_addr, sizeof(serv_addr))\u003c 0) exit(0); // 开始监听客户端连入 if (listen(sockfd, 1) \u003c 0) exit(0); // 可以与客户端通信 socklen_t clnt_addr_size; clnt_addr_size = sizeof(clnt_addr); // 不能使用(socklen_t*)clnt_addr_size使用(socklen_t*)\u0026clnt_addr_size clnt_sock = accept(sockfd, (struct sockaddr*)\u0026clnt_addr, \u0026clnt_addr_size); if (clnt_sock \u003c 0) exit(0); // 发送数据 char message[] = \"Hello!\"; write(clnt_sock, message, sizeof(message)); close(clnt_sock); close(sockfd); return 0; } client：\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  12632 ,
+        "image": ["https://pic.keepjolly.com/halo/blog/2023/06/20230607220100.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-1.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-2.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-3.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-4.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-5.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-6.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-7.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-8.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-9.png?imageMogr2/format/webp%7C","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-10.png?imageMogr2/format/webp%7C","https://camo.githubusercontent.com/e8059964da650325509a86c00916dc588b147221b21e0355ca13e6ee8126f667/68747470733a2f2f73322e617831782e636f6d2f323031392f30312f32312f6b5037526a782e706e67#from=url\u0026amp;id=SMxPg\u0026amp;originHeight=363\u0026amp;originWidth=513\u0026amp;originalType=binary\u0026amp;ratio=1.2\u0026amp;rotation=0\u0026amp;showTitle=false\u0026amp;status=done\u0026amp;style=none\u0026amp;title=","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-11.png?imageMogr2/format/webp%7C","https://camo.githubusercontent.com/60042284b80365905816ec0f9ca8bcf8695895916bad37b1d6d30a716e85ba0f/68747470733a2f2f73322e617831782e636f6d2f323031392f30312f32312f6b5062686b442e706e67#from=url\u0026amp;id=Qy4jl\u0026amp;originHeight=295\u0026amp;originWidth=459\u0026amp;originalType=binary\u0026amp;ratio=1.2\u0026amp;rotation=0\u0026amp;showTitle=false\u0026amp;status=done\u0026amp;style=none\u0026amp;title=","https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-12.png?imageMogr2/format/webp%7C"],
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="TCP_IP网络编程" />
+<meta property="og:description" content="理解网络编程和套接字 server：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 #include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; #include &lt;string.h&gt; #include &lt;unistd.h&gt; #include &lt;arpa/inet.h&gt; #include &lt;sys/socket.h&gt; int main(){ int sockfd; int clnt_sock; struct sockaddr_in serv_addr; struct sockaddr_in clnt_addr; // 创建套接字 sockfd = socket(PF_INET, SOCK_STREAM, 0); if (sockfd == -1) exit(0); // 端口复用，防止address in use int one = 1; setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &amp;one, sizeof(one)); // bind地址 memset(&amp;serv_addr, 0, sizeof(sockaddr_in)); serv_addr.sin_family = AF_INET; serv_addr.sin_addr.s_addr = htonl(INADDR_ANY); serv_addr.sin_port = htons(8888); if (bind(sockfd, ( struct sockaddr*)&amp;serv_addr, sizeof(serv_addr))&lt; 0) exit(0); // 开始监听客户端连入 if (listen(sockfd, 1) &lt; 0) exit(0); // 可以与客户端通信 socklen_t clnt_addr_size; clnt_addr_size = sizeof(clnt_addr); // 不能使用(socklen_t*)clnt_addr_size使用(socklen_t*)&amp;clnt_addr_size clnt_sock = accept(sockfd, (struct sockaddr*)&amp;clnt_addr, &amp;clnt_addr_size); if (clnt_sock &lt; 0) exit(0); // 发送数据 char message[] = &#34;Hello!&#34;; write(clnt_sock, message, sizeof(message)); close(clnt_sock); close(sockfd); return 0; } client：
+……" />
+<meta property="og:url" content="http://localhost:1313/posts/learn/tcp_ip_network_programming/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100.png?imageMogr2/format/webp%7C" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2023-08-13T22:41:54&#43;08:00" />
+    <meta property="article:modified_time" content="2024-05-03T14:50:48&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+<div class="post-toc" id="post-toc">
+<aside>
+    <header>
+    <h4>文章の字数: 12632</h4> 
+    </header>
+    
+    
+    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#理解网络编程和套接字">理解网络编程和套接字</a>
+      <ol>
+        <li><a href="#地址族与数据序列">地址族与数据序列</a></li>
+        <li><a href="#问题">问题</a></li>
+      </ol>
+    </li>
+    <li><a href="#基于tcp的客户端服务端">基于TCP的客户端/服务端</a>
+      <ol>
+        <li><a href="#tcpip-协议栈">TCP/IP 协议栈</a></li>
+        <li><a href="#tcp流程">TCP流程</a>
+          <ol>
+            <li><a href="#服务端">服务端</a></li>
+            <li><a href="#客户端">客户端</a></li>
+            <li><a href="#echo-serverclient">echo server/client</a></li>
+          </ol>
+        </li>
+        <li><a href="#问题-1">问题</a></li>
+      </ol>
+    </li>
+    <li><a href="#基于-tcp-的服务端客户端2">基于 TCP 的服务端/客户端（2）</a>
+      <ol>
+        <li><a href="#echo-client的完美实现">echo client的完美实现</a>
+          <ol>
+            <li><a href="#已知接收数据的大小">已知接收数据的大小</a></li>
+            <li><a href="#问题不在于回声客户端定义应用层协议">问题不在于回声客户端：定义应用层协议</a></li>
+          </ol>
+        </li>
+        <li><a href="#tcp-原理">TCP 原理</a>
+          <ol>
+            <li><a href="#tcp-套接字中的-io-缓冲">TCP 套接字中的 I/O 缓冲</a></li>
+            <li><a href="#tcp-内部工作原理">TCP 内部工作原理</a>
+              <ol>
+                <li><a href="#1-与对方套接字的连接">1 与对方套接字的连接</a></li>
+                <li><a href="#2与对方主机的数据交换">2与对方主机的数据交换</a></li>
+                <li><a href="#3与对方主机的数据交换">3与对方主机的数据交换</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#基于udp的服务端客户端">基于UDP的服务端/客户端</a>
+      <ol>
+        <li><a href="#udp原理">UDP原理</a></li>
+        <li><a href="#udp工作原理">UDP工作原理</a></li>
+        <li><a href="#代码实现">代码实现</a></li>
+        <li><a href="#udp-的数据传输特性和调用-connect-函数">UDP 的数据传输特性和调用 connect 函数</a></li>
+      </ol>
+    </li>
+    <li><a href="#优雅的断开套接字的连接">优雅的断开套接字的连接</a>
+      <ol>
+        <li><a href="#基于-tcp-的半关闭">基于 TCP 的半关闭</a>
+          <ol>
+            <li><a href="#针对优雅断开的-shutdown-函数">针对优雅断开的 shutdown 函数</a></li>
+            <li><a href="#为何要半关闭">为何要半关闭</a></li>
+            <li><a href="#一个优雅的流程">一个优雅的流程</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#域名及网络地址">域名及网络地址</a>
+      <ol>
+        <li><a href="#域名系统">域名系统</a></li>
+        <li><a href="#ip地址和域名之间的转换">IP地址和域名之间的转换</a>
+          <ol>
+            <li><a href="#通过域名获得ip">通过域名获得ip</a></li>
+            <li><a href="#利用ip地址获取域名">利用IP地址获取域名</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#套接字的多种可选项">套接字的多种可选项</a>
+      <ol>
+        <li><a href="#套接字可选项和-io-缓冲大小">套接字可选项和 I/O 缓冲大小</a>
+          <ol>
+            <li><a href="#getsockopt--setsockopt">getsockopt &amp; setsockopt</a></li>
+            <li><a href="#so_sndbuf--so_rcvbuf">SO_SNDBUF &amp; SO_RCVBUF</a></li>
+          </ol>
+        </li>
+        <li><a href="#so_reuseaddrimportant">SO_REUSEADDR（important）</a>
+          <ol>
+            <li><a href="#time-wait-状态">Time-wait 状态</a></li>
+            <li><a href="#地址再分配">地址再分配</a></li>
+          </ol>
+        </li>
+        <li><a href="#tcp_nodelay">TCP_NODELAY</a>
+          <ol>
+            <li><a href="#禁用-nagle-算法">禁用 Nagle 算法</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#多进程服务器端">多进程服务器端</a>
+      <ol>
+        <li><a href="#进程概念及应用">进程概念及应用</a>
+          <ol>
+            <li><a href="#理解进程">理解进程</a></li>
+            <li><a href="#调用-fork-函数创建进程">调用 fork 函数创建进程</a></li>
+          </ol>
+        </li>
+        <li><a href="#僵尸进程">僵尸进程</a>
+          <ol>
+            <li><a href="#产生僵尸进程的原因">产生僵尸进程的原因</a></li>
+            <li><a href="#销毁僵尸进程-1利用-wait-函数">销毁僵尸进程 1：利用 wait 函数</a></li>
+            <li><a href="#销毁僵尸进程-2使用-waitpid-函数">销毁僵尸进程 2：使用 waitpid 函数</a></li>
+          </ol>
+        </li>
+        <li><a href="#信号处理">信号处理</a>
+          <ol>
+            <li><a href="#信号与-signal-函数">信号与 signal 函数</a></li>
+            <li><a href="#利用-sigaction-函数进行信号处理">利用 sigaction 函数进行信号处理</a></li>
+            <li><a href="#利用信号处理技术消灭僵尸进程">利用信号处理技术消灭僵尸进程</a></li>
+          </ol>
+        </li>
+        <li><a href="#基于多任务的并发服务器">基于多任务的并发服务器</a>
+          <ol>
+            <li><a href="#基于进程的并发服务器模型">基于进程的并发服务器模型</a></li>
+            <li><a href="#通过-fork-函数复制文件描述符">通过 fork 函数复制文件描述符</a></li>
+          </ol>
+        </li>
+        <li><a href="#分割-tcp-的-io-程序">分割 TCP 的 I/O 程序</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    
+    
+</aside>
+<a href="#" id="toc-toggle"></a>
+</div>
+
+<div class = "toc-phone">
+    <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:理解网络编程和套接字" href="#理解网络编程和套接字">理解网络编程和套接字</a>
+      <ol>
+        <li><a id="contents:地址族与数据序列" href="#地址族与数据序列">地址族与数据序列</a></li>
+        <li><a id="contents:问题" href="#问题">问题</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:基于tcp的客户端服务端" href="#基于tcp的客户端服务端">基于TCP的客户端/服务端</a>
+      <ol>
+        <li><a id="contents:tcpip-协议栈" href="#tcpip-协议栈">TCP/IP 协议栈</a></li>
+        <li><a id="contents:tcp流程" href="#tcp流程">TCP流程</a>
+          <ol>
+            <li><a id="contents:服务端" href="#服务端">服务端</a></li>
+            <li><a id="contents:客户端" href="#客户端">客户端</a></li>
+            <li><a id="contents:echo-serverclient" href="#echo-serverclient">echo server/client</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:问题-1" href="#问题-1">问题</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:基于-tcp-的服务端客户端2" href="#基于-tcp-的服务端客户端2">基于 TCP 的服务端/客户端（2）</a>
+      <ol>
+        <li><a id="contents:echo-client的完美实现" href="#echo-client的完美实现">echo client的完美实现</a>
+          <ol>
+            <li><a id="contents:已知接收数据的大小" href="#已知接收数据的大小">已知接收数据的大小</a></li>
+            <li><a id="contents:问题不在于回声客户端定义应用层协议" href="#问题不在于回声客户端定义应用层协议">问题不在于回声客户端：定义应用层协议</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:tcp-原理" href="#tcp-原理">TCP 原理</a>
+          <ol>
+            <li><a id="contents:tcp-套接字中的-io-缓冲" href="#tcp-套接字中的-io-缓冲">TCP 套接字中的 I/O 缓冲</a></li>
+            <li><a id="contents:tcp-内部工作原理" href="#tcp-内部工作原理">TCP 内部工作原理</a>
+              <ol>
+                <li><a id="contents:1-与对方套接字的连接" href="#1-与对方套接字的连接">1 与对方套接字的连接</a></li>
+                <li><a id="contents:2与对方主机的数据交换" href="#2与对方主机的数据交换">2与对方主机的数据交换</a></li>
+                <li><a id="contents:3与对方主机的数据交换" href="#3与对方主机的数据交换">3与对方主机的数据交换</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:基于udp的服务端客户端" href="#基于udp的服务端客户端">基于UDP的服务端/客户端</a>
+      <ol>
+        <li><a id="contents:udp原理" href="#udp原理">UDP原理</a></li>
+        <li><a id="contents:udp工作原理" href="#udp工作原理">UDP工作原理</a></li>
+        <li><a id="contents:代码实现" href="#代码实现">代码实现</a></li>
+        <li><a id="contents:udp-的数据传输特性和调用-connect-函数" href="#udp-的数据传输特性和调用-connect-函数">UDP 的数据传输特性和调用 connect 函数</a></li>
+      </ol>
+    </li>
+    <li><a id="contents:优雅的断开套接字的连接" href="#优雅的断开套接字的连接">优雅的断开套接字的连接</a>
+      <ol>
+        <li><a id="contents:基于-tcp-的半关闭" href="#基于-tcp-的半关闭">基于 TCP 的半关闭</a>
+          <ol>
+            <li><a id="contents:针对优雅断开的-shutdown-函数" href="#针对优雅断开的-shutdown-函数">针对优雅断开的 shutdown 函数</a></li>
+            <li><a id="contents:为何要半关闭" href="#为何要半关闭">为何要半关闭</a></li>
+            <li><a id="contents:一个优雅的流程" href="#一个优雅的流程">一个优雅的流程</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:域名及网络地址" href="#域名及网络地址">域名及网络地址</a>
+      <ol>
+        <li><a id="contents:域名系统" href="#域名系统">域名系统</a></li>
+        <li><a id="contents:ip地址和域名之间的转换" href="#ip地址和域名之间的转换">IP地址和域名之间的转换</a>
+          <ol>
+            <li><a id="contents:通过域名获得ip" href="#通过域名获得ip">通过域名获得ip</a></li>
+            <li><a id="contents:利用ip地址获取域名" href="#利用ip地址获取域名">利用IP地址获取域名</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:套接字的多种可选项" href="#套接字的多种可选项">套接字的多种可选项</a>
+      <ol>
+        <li><a id="contents:套接字可选项和-io-缓冲大小" href="#套接字可选项和-io-缓冲大小">套接字可选项和 I/O 缓冲大小</a>
+          <ol>
+            <li><a id="contents:getsockopt--setsockopt" href="#getsockopt--setsockopt">getsockopt &amp; setsockopt</a></li>
+            <li><a id="contents:so_sndbuf--so_rcvbuf" href="#so_sndbuf--so_rcvbuf">SO_SNDBUF &amp; SO_RCVBUF</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:so_reuseaddrimportant" href="#so_reuseaddrimportant">SO_REUSEADDR（important）</a>
+          <ol>
+            <li><a id="contents:time-wait-状态" href="#time-wait-状态">Time-wait 状态</a></li>
+            <li><a id="contents:地址再分配" href="#地址再分配">地址再分配</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:tcp_nodelay" href="#tcp_nodelay">TCP_NODELAY</a>
+          <ol>
+            <li><a id="contents:禁用-nagle-算法" href="#禁用-nagle-算法">禁用 Nagle 算法</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:多进程服务器端" href="#多进程服务器端">多进程服务器端</a>
+      <ol>
+        <li><a id="contents:进程概念及应用" href="#进程概念及应用">进程概念及应用</a>
+          <ol>
+            <li><a id="contents:理解进程" href="#理解进程">理解进程</a></li>
+            <li><a id="contents:调用-fork-函数创建进程" href="#调用-fork-函数创建进程">调用 fork 函数创建进程</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:僵尸进程" href="#僵尸进程">僵尸进程</a>
+          <ol>
+            <li><a id="contents:产生僵尸进程的原因" href="#产生僵尸进程的原因">产生僵尸进程的原因</a></li>
+            <li><a id="contents:销毁僵尸进程-1利用-wait-函数" href="#销毁僵尸进程-1利用-wait-函数">销毁僵尸进程 1：利用 wait 函数</a></li>
+            <li><a id="contents:销毁僵尸进程-2使用-waitpid-函数" href="#销毁僵尸进程-2使用-waitpid-函数">销毁僵尸进程 2：使用 waitpid 函数</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:信号处理" href="#信号处理">信号处理</a>
+          <ol>
+            <li><a id="contents:信号与-signal-函数" href="#信号与-signal-函数">信号与 signal 函数</a></li>
+            <li><a id="contents:利用-sigaction-函数进行信号处理" href="#利用-sigaction-函数进行信号处理">利用 sigaction 函数进行信号处理</a></li>
+            <li><a id="contents:利用信号处理技术消灭僵尸进程" href="#利用信号处理技术消灭僵尸进程">利用信号处理技术消灭僵尸进程</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:基于多任务的并发服务器" href="#基于多任务的并发服务器">基于多任务的并发服务器</a>
+          <ol>
+            <li><a id="contents:基于进程的并发服务器模型" href="#基于进程的并发服务器模型">基于进程的并发服务器模型</a></li>
+            <li><a id="contents:通过-fork-函数复制文件描述符" href="#通过-fork-函数复制文件描述符">通过 fork 函数复制文件描述符</a></li>
+          </ol>
+        </li>
+        <li><a id="contents:分割-tcp-的-io-程序" href="#分割-tcp-的-io-程序">分割 TCP 的 I/O 程序</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    <hr></hr>
+</div>
+
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">TCP_IP网络编程</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <div class="post-body e-content">
+                <h2 id="理解网络编程和套接字"><a href="#理解网络编程和套接字" class="anchor-link">#</a>理解网络编程和套接字</h2>
+<p>server：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;arpa/inet.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">sockfd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">clnt_sock</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="nc">sockaddr_in</span> <span class="n">serv_addr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="nc">sockaddr_in</span> <span class="n">clnt_addr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 创建套接字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">sockfd</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">sockfd</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 端口复用，防止address in use
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">one</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">setsockopt</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">one</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">one</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// bind地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">serv_addr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">sockaddr_in</span><span class="p">));</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">serv_addr</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">serv_addr</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span> <span class="o">=</span> <span class="n">htonl</span><span class="p">(</span><span class="n">INADDR_ANY</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">serv_addr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="mi">8888</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">bind</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="p">(</span> <span class="k">struct</span> <span class="nc">sockaddr</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">serv_addr</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">serv_addr</span><span class="p">))</span><span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 开始监听客户端连入
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">listen</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 可以与客户端通信
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">socklen_t</span> <span class="n">clnt_addr_size</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">clnt_addr_size</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">clnt_addr</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="c1">// 不能使用(socklen_t*)clnt_addr_size使用(socklen_t*)&amp;clnt_addr_size
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">clnt_sock</span> <span class="o">=</span> <span class="n">accept</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="nc">sockaddr</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">clnt_addr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">clnt_addr_size</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">clnt_sock</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 发送数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">char</span> <span class="n">message</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&#34;Hello!&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">write</span><span class="p">(</span><span class="n">clnt_sock</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">message</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">close</span><span class="p">(</span><span class="n">clnt_sock</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">close</span><span class="p">(</span><span class="n">sockfd</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>client：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;arpa/inet.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[]){</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">sock</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="nc">sockaddr_in</span> <span class="n">serv_addr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">message</span><span class="p">[</span><span class="mi">30</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">str_len</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 创建套接字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// connect连接
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">serv_addr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">serv_addr</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">serv_addr</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">serv_addr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="mi">8888</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">serv_addr</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span> <span class="o">=</span> <span class="n">inet_addr</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">connect</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="p">(</span> <span class="n">sockaddr</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">serv_addr</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">serv_addr</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 读取server数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">str_len</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Message : %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">close</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="地址族与数据序列"><a href="#地址族与数据序列" class="anchor-link">#</a>地址族与数据序列</h3>
+<p>只需通过IP地址的第一个字节即可判断网络地址占用的总字节数，因为我们根据IP地址的边界区分网络地址，如下所示：</p>
+<ul>
+<li>A 类地址的首字节范围为：0~127</li>
+<li>B 类地址的首字节范围为：128~191</li>
+<li>C 类地址的首字节范围为：192~223</li>
+</ul>
+<p>还有如下这种表示方式：</p>
+<ul>
+<li>A 类地址的首位以 0 开始</li>
+<li>B 类地址的前2位以 10 开始</li>
+<li>C 类地址的前3位以 110 开始</li>
+</ul>
+<ol>
+<li>端口号由 16 位构成，可分配的端口号范围除 0-1023，这些是知名端口，一般分配给特定的应用程序，所以应当分配给此范围之外的值。HTTP 的端口号是 80 ，FTP 的端口号是20和21
+<ol>
+<li>虽然端口号不能重复，但是 TCP 套接字和 UDP 套接字不会共用端接口号，所以允许重复。</li>
+</ol>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cm">/* Structure describing an Internet socket address.  */</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">sockaddr_in</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">__SOCKADDR_COMMON</span> <span class="p">(</span><span class="n">sin_</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">in_port_t</span> <span class="n">sin_port</span><span class="p">;</span>			<span class="cm">/* Port number.  uint16_t  16bits*/</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="nc">in_addr</span> <span class="n">sin_addr</span><span class="p">;</span>		<span class="cm">/* Internet address.  uint32_t*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Pad to size of `struct sockaddr&#39;.  8 = 16-2-2-4， 用于强制转换成sockaddr*/</span> 
+</span></span><span class="line"><span class="cl">    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">sin_zero</span><span class="p">[</span><span class="k">sizeof</span> <span class="p">(</span><span class="k">struct</span> <span class="nc">sockaddr</span><span class="p">)</span> <span class="o">-</span> <span class="c1">// 16byte
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			   <span class="n">__SOCKADDR_COMMON_SIZE</span> <span class="o">-</span>  <span class="c1">// 2byte
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			   <span class="k">sizeof</span> <span class="p">(</span><span class="n">in_port_t</span><span class="p">)</span> <span class="o">-</span>  <span class="c1">// 2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			   <span class="k">sizeof</span> <span class="p">(</span><span class="k">struct</span> <span class="nc">in_addr</span><span class="p">)];</span> <span class="c1">// 4
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">};</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><div class="table-container"><table>
+  <thead>
+      <tr>
+          <th>sa_family_t</th>
+          <th>地址族（address family）</th>
+          <th>sys/socket.h</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>socklen_t</td>
+          <td>长度（length of struct）</td>
+          <td>sys/socket.h</td>
+      </tr>
+      <tr>
+          <td>in_addr_t</td>
+          <td>IP地址，声明为 uint_32_t</td>
+          <td>netinet/in.h</td>
+      </tr>
+      <tr>
+          <td>in_port_t</td>
+          <td>端口号，声明为 uint_16_t</td>
+          <td>netinet/in.h</td>
+      </tr>
+      <tr>
+          <td>int 8_t 这种类型都是在该头文件</td>
+          <td>signed 8-bit int</td>
+          <td>sys/types.h</td>
+      </tr>
+  </tbody>
+</table></div>
+<ul>
+<li>
+<p>大端序（Big Endian）：高位字节存放到低位地址，网络字节序</p>
+</li>
+<li>
+<p>小端序（Little Endian）：高位字节存放到高位地址</p>
+</li>
+<li>
+<p>h to n s 的 h 代表主机（host）字节序。通常小端序</p>
+</li>
+<li>
+<p>htons 的 n 代表网络（network）字节序。</p>
+</li>
+<li>
+<p>s 代表两个字节的 short =uint16=2字节，因此以 s 为后缀的函数用于端口转换</p>
+</li>
+<li>
+<p>l 代表四个字节的 long 类型，所以以 l 为后缀的函数用于 IP 地址转换（long在64位系统下仍是4字节，因为是uint32）</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">in_addr_t</span> <span class="nf">inet_addr</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">string</span><span class="p">);</span>   <span class="c1">// 点/数字符串形式的IP地址转换成整数型的IP地址
+</span></span></span><span class="line"><span class="cl"><span class="c1">//成功时返回 32 位大端序整数型值，失败时返回 INADDR_NONE，以便存入是sockaddr_in中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">inet_aton</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">string</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">in_addr</span> <span class="o">*</span><span class="n">addr</span><span class="p">);</span>  <span class="c1">// more use
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">成功时返回 1 ，失败时返回 0
+</span></span></span><span class="line"><span class="cl"><span class="cm">string: 含有需要转换的IP地址信息的字符串地址值
+</span></span></span><span class="line"><span class="cl"><span class="cm">addr: 保存转换结果的 in_addr 结构体变量的地址值
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span> <span class="o">*</span><span class="nf">inet_ntoa</span><span class="p">(</span><span class="k">struct</span> <span class="nc">in_addr</span> <span class="n">adr</span><span class="p">);</span>  <span class="c1">// 网络字节序整数型IP地址转换成字符串形式
+</span></span></span><span class="line"><span class="cl"><span class="c1">//成功时返回保存转换结果的字符串地址值，失败时返回 NULL 空指针
+</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="问题"><a href="#问题" class="anchor-link">#</a>问题</h3>
+<ol>
+<li>端口不一致会导致乱码
+<ol>
+<li>htonl(8888) != htons(8888)，<a href="https://www.cnblogs.com/sddai/p/5790479.html" target="_blank" rel="noopener">htons</a></li>
+</ol>
+</li>
+<li><a href="https://blog.csdn.net/qq_45831156/article/details/107469716" target="_blank" rel="noopener">Linux 文件 1.4—文件描述符0 1 2（文件操作简述）</a>
+<ol>
+<li>因此文件open之后的文件描述符从3开始</li>
+</ol>
+</li>
+</ol>
+<p><a href="https://blog.csdn.net/owen7500/article/details/53263981" target="_blank" rel="noopener">底层文件I/O和ANSI标准I/O的区别</a> 通过文件I/O读写文件时，每次操作都会执行相关系统调用。这样处理的好处是直接读写实际文件，坏处是频繁的系统调用会增加系统开销，标准I/O可以看成是在文件I/O的基础上封装了缓冲机制。先读写缓冲区，必要时再访问实际文件，从而减少了系统调用的次数。</p>
+<h2 id="基于tcp的客户端服务端"><a href="#基于tcp的客户端服务端" class="anchor-link">#</a>基于TCP的客户端/服务端</h2>
+<h3 id="tcpip-协议栈"><a href="#tcpip-协议栈" class="anchor-link">#</a>TCP/IP 协议栈</h3>
+<p>TCP/IP 协议栈共分为 4 层，可以理解为数据收发分成了 4 个层次化过程，通过层次化的方式来解决问题</p>
+<ol>
+<li>链路层</li>
+</ol>
+<p>链路层是<strong>物理链接领域标准化</strong>的结果，也是最基本的领域，专门定义LAN、WAN、MAN等网络标准。若两台主机通过网络进行数据交换，则需要物理连接，链路层就负责这些标准。</p>
+<ol start="2">
+<li>IP 层</li>
+</ol>
+<p>准备好物理连接后就要传输数据。为了在复杂网络中传输数据，首先要<strong>考虑路径的选择</strong>。向目标传输数据需要经过哪条路径？解决此问题的就是IP层，该层使用的协议就是IP。<br />IP 是<strong>面向消息的、不可靠</strong>的协议。每次传输数据时会帮我们选择路径，但并不一致。如果传输过程中发生错误，则选择其他路径，但是如果发生数据丢失或错误，则无法解决。换言之，IP协议无法应对数据错误。</p>
+<ol start="3">
+<li>TCP/UDP 层</li>
+</ol>
+<p>IP 层解决数据传输中的路径选择问题，只需照此路径传输数据即可。TCP 和 UDP 层以 IP 层提供的路径信息为基础完成<strong>实际的数据传输</strong>，故该层又称为传输层 。 TCP 可以保证数据的可靠传输，但是它发送数据时以 IP 层为基础（这也是协议栈层次化的原因）。<br />IP 层只关注<strong>一个数据包（数据传输基本单位）的传输过程</strong>。因此，即使传输多个数据包，每个数据包也是由 IP 层实际传输的，也就是说传输顺序及传输本身是不可靠的。若只利用IP层传输数据，是不可靠的，需要利用TCP来解决数据丢失，顺序不一致等问题。</p>
+<ol start="4">
+<li>应用层</li>
+</ol>
+<p>上述内容是套接字通信过程中自动处理的。选择数据传输路径、数据确认过程都被<strong>隐藏到套接字内部</strong>。向程序员提供的工具就是套接字，只需要利用套接字编出程序即可。编写软件的过程中，需要根据程序的特点来<strong>决定服务器和客户端之间的数据传输规则</strong>，这便是应用层协议。</p>
+<h3 id="tcp流程"><a href="#tcp流程" class="anchor-link">#</a>TCP流程</h3>
+<h4 id="服务端"><a href="#服务端" class="anchor-link">#</a>服务端</h4>
+<p>#include &lt;sys/socket.h&gt;</p>
+<ol>
+<li>
+<p>socket(AF_INET, SOCKEt_STREAM, 0) 创建套接字</p>
+</li>
+<li>
+<p>bind(sockfd, (struct sockaddr *)&amp;serv_adr, sizeof(serv_adr)) 分配套接字地址</p>
+</li>
+<li>
+<p>listen(sockfd, 请求数backlog) 等待连接请求状态，此时客户端才能发送connet请求</p>
+</li>
+<li>
+<p>accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen) 允许连接，产生用于数据IO的套接字，需要close()</p>
+</li>
+<li>
+<p>read() / write() 数据交换</p>
+</li>
+<li>
+<p>close() 断开连接</p>
+</li>
+<li>
+<p>服务端实现过程中首先要创建套接字，此时的套接字并非是真正的服务端套接字</p>
+</li>
+<li>
+<p>为了完成套接字地址的分配，初始化结构体变量并调用 bind 函数。</p>
+</li>
+<li>
+<p>调用 listen 函数进入等待连接请求状态。连接请求状态队列的长度设置为5.此时的套接字才是服务端套接字。</p>
+</li>
+<li>
+<p>调用 accept 函数从队头取 1 个连接请求与客户端建立连接，并返回创建的套接字文件描述符。另外，调用 accept 函数时若等待队列为空，则 <strong>accept 函数不会返回</strong>，直到队列中出现新的客户端连接。</p>
+</li>
+<li>
+<p>调用 write 函数向客户端传送数据，调用 close 关闭连接</p>
+</li>
+</ol>
+<h4 id="客户端"><a href="#客户端" class="anchor-link">#</a>客户端</h4>
+<ol>
+<li>创建准备连接服务器的套接字，此时创建的是 TCP 套接字</li>
+<li>结构体变量 serv_addr 中初始化IP和端口信息。初始化值为<strong>目标服务器端套接字</strong>的IP和端口信息。</li>
+<li>调用 connect 函数向服务端发起连接请求，自动分配客户端IP地址和端口</li>
+<li>完成连接后，接收服务端传输的数据</li>
+<li>接收数据后调用 close 函数关闭套接字，结束与服务器端的连接。(对套接字调用close函数，对应于向建立连接的对应套接字发送EOF。即，如果客户端的套接字调用了close函数，服务端<strong>read时候会返回0</strong>。)</li>
+</ol>
+<ul>
+<li>客户端只能等到服务端调用 listen 函数后才能调用 connect 函数</li>
+<li>服务器端可能会在客户端调用 connect 之前调用 accept 函数，这时服务器端进入<strong>阻塞（blocking）状态</strong>，直到客户端调用 connect 函数后接收到连接请求。</li>
+</ul>
+<h4 id="echo-serverclient"><a href="#echo-serverclient" class="anchor-link">#</a>echo server/client</h4>
+<p>使用for循环处理多个连接，会出现服务端发送多个数据给一个客户端，并且可能数据太多，需要分开发送，但客户端只调用一次read。上述原因为TCP 不存在数据边界。</p>
+<h3 id="问题-1"><a href="#问题-1" class="anchor-link">#</a>问题</h3>
+<p>分层的好处：①隔层之间是独立的②灵活性好③结构上可以分隔开④易于实现和维护⑤能促进标准化工作。</p>
+<h2 id="基于-tcp-的服务端客户端2"><a href="#基于-tcp-的服务端客户端2" class="anchor-link">#</a>基于 TCP 的服务端/客户端（2）</h2>
+<h3 id="echo-client的完美实现"><a href="#echo-client的完美实现" class="anchor-link">#</a>echo client的完美实现</h3>
+<h4 id="已知接收数据的大小"><a href="#已知接收数据的大小" class="anchor-link">#</a>已知接收数据的大小</h4>
+<p>echo client如果可以知道接收数据的大小，则可以利用for循环来接收，但是一般情况下不确定。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">str_len</span> <span class="o">=</span> <span class="n">write</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">recv_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="p">(</span><span class="n">recv_len</span> <span class="o">&lt;</span> <span class="n">str_len</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">recv_cnt</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">message</span><span class="p">[</span><span class="n">recv_len</span><span class="p">],</span> <span class="n">BUF_SIZE</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">recv_cnt</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">error_handling</span><span class="p">(</span><span class="s">&#34;read() error&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">recv_len</span> <span class="o">+=</span> <span class="n">recv_cnt</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h4 id="问题不在于回声客户端定义应用层协议"><a href="#问题不在于回声客户端定义应用层协议" class="anchor-link">#</a>问题不在于回声客户端：定义应用层协议</h4>
+<p>在收发过程中定好规则（协议）以表示数据边界，或者提前告知需要发送的数据的大小。服务端/客户端实现过程中逐步定义的规则集合就是应用层协议。</p>
+<h3 id="tcp-原理"><a href="#tcp-原理" class="anchor-link">#</a>TCP 原理</h3>
+<h4 id="tcp-套接字中的-io-缓冲"><a href="#tcp-套接字中的-io-缓冲" class="anchor-link">#</a>TCP 套接字中的 I/O 缓冲</h4>
+<p>实际上，write 函数调用后并非立即传输数据， read 函数调用后也并非马上接收数据。<br /><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100.png?imageMogr2/format/webp%7C" alt="image"><br />I/O 缓冲特性可以整理如下：</p>
+<ul>
+<li>I/O 缓冲在每个 TCP 套接字中单独存在</li>
+<li>I/O 缓冲在创建套接字时自动生成</li>
+<li>即使关闭套接字也会继续传递输出缓冲中遗留的数据</li>
+<li>关闭套接字将丢失输入缓冲中的数据</li>
+</ul>
+<h4 id="tcp-内部工作原理"><a href="#tcp-内部工作原理" class="anchor-link">#</a>TCP 内部工作原理</h4>
+<p>TCP 套接字从创建到消失所经过的过程分为如下三步：</p>
+<ul>
+<li>与对方套接字建立连接</li>
+<li>与对方套接字进行数据交换</li>
+<li>断开与对方套接字的连接</li>
+</ul>
+<h5 id="1-与对方套接字的连接"><a href="#1-与对方套接字的连接" class="anchor-link">#</a>1 与对方套接字的连接</h5>
+<ul>
+<li><strong>Three-way handshaking</strong></li>
+<li><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-1.png?imageMogr2/format/webp%7C" alt="image">
+<ul>
+<li>第一次客户端发送SYN，表示发送SEQ为1000的数据包</li>
+<li>第二次服务端发送SYN+ACK，表示接收后发送ACK（1000+1）的数据包，并发送SEQ为2000的数据包</li>
+<li>第三次客户端发送SYN+ACK，表示接收到服务端的数据包，并发送下一个数据包</li>
+</ul>
+</li>
+</ul>
+<h5 id="2与对方主机的数据交换"><a href="#2与对方主机的数据交换" class="anchor-link">#</a>2与对方主机的数据交换</h5>
+<ul>
+<li><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-2.png?imageMogr2/format/webp%7C" alt="image">
+<ul>
+<li>首先主机A发送100字节的数据包，SEQ为1200，主机B确认收到发送ACK（SEQ+传递字节数+1）=1301给主机B，防止丢失数据</li>
+<li>第二次发送时主机A失败，主机B未发送ACK，主机A启动计时器等待ACK应答，超时则重传数据。</li>
+</ul>
+</li>
+</ul>
+<h5 id="3与对方主机的数据交换"><a href="#3与对方主机的数据交换" class="anchor-link">#</a>3与对方主机的数据交换</h5>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-3.png?imageMogr2/format/webp%7C" alt="image"><br />图中数据包内的 FIN 表示断开连接。也就是说，双方各发送 1 次 FIN 消息后断开连接。图中，主机 A 传递了两次 ACK 5001，也许这里会有困惑。其实，第二次 FIN 数据包中的 ACK 5001 只是因为发送了 ACK 消息后未接收到的数据重传的。</p>
+<h2 id="基于udp的服务端客户端"><a href="#基于udp的服务端客户端" class="anchor-link">#</a>基于UDP的服务端/客户端</h2>
+<h3 id="udp原理"><a href="#udp原理" class="anchor-link">#</a>UDP原理</h3>
+<p>寄信前应先在信封上填好寄信人ip和收信人的地址port，之后贴上邮票放进邮筒write即可。当然，信件的特点使我们无法确认信件是否被收到。邮寄过程中也可能发生信件丢失的情况。也就是说，信件是一种不可靠的传输方式，UDP 也是一种不可靠的数据传输方式。</p>
+<h3 id="udp工作原理"><a href="#udp工作原理" class="anchor-link">#</a>UDP工作原理</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-4.png?imageMogr2/format/webp%7C" alt="image"><br />IP 的作用就是让离开主机 B 的 UDP 数据包准确传递到主机 A 。但是把 UDP 数据包最终交给主机 A 的某一 UDP 套接字的过程是由 UDP 完成的。UDP 的最重要的作用就是根据端口号将传到主机的数据包交付给最终的 UDP 套接字。<br />TCP 比 UDP 慢的原因主要有以下两点：</p>
+<ul>
+<li>收发数据前后进行的连接设置及清除过程。</li>
+<li>收发过程中为保证可靠性而添加的流控制。</li>
+</ul>
+<p>如果收发的数据量小但是需要频繁连接时，UDP 比 TCP 更高效。</p>
+<ul>
+<li>TCP需要listen、accept，而UDP只需要只有创建套接字和数据交换过程。</li>
+<li>TCP只能一一对应服务端客户端，UDP可以一对多传输</li>
+</ul>
+<h3 id="代码实现"><a href="#代码实现" class="anchor-link">#</a>代码实现</h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">ssize_t</span> <span class="nf">sendto</span><span class="p">(</span><span class="kt">int</span> <span class="n">sock</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buff</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">nbytes</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="k">struct</span> <span class="nc">sockaddr</span> <span class="o">*</span><span class="n">to</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="n">addrlen</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">成功时返回发送的字节数，失败时返回 -1
+</span></span></span><span class="line"><span class="cl"><span class="cm">sock: 用于传输数据的 UDP 套接字
+</span></span></span><span class="line"><span class="cl"><span class="cm">buff: 保存待传输数据的缓冲地址值
+</span></span></span><span class="line"><span class="cl"><span class="cm">nbytes: 待传输的数据长度，以字节为单位
+</span></span></span><span class="line"><span class="cl"><span class="cm">flags: 可选项参数，若没有则传递 0
+</span></span></span><span class="line"><span class="cl"><span class="cm">to: 存有目标地址的 sockaddr 结构体变量的地址值
+</span></span></span><span class="line"><span class="cl"><span class="cm">addrlen: 传递给参数 to 的地址值结构体变量长度
+</span></span></span><span class="line"><span class="cl"><span class="cm">调用 sendto 函数时自动给client分配IP和端口号
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="n">ssize_t</span> <span class="nf">recvfrom</span><span class="p">(</span><span class="kt">int</span> <span class="n">sock</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buff</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">nbytes</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="k">struct</span> <span class="nc">sockaddr</span> <span class="o">*</span><span class="n">from</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="o">*</span><span class="n">addrlen</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">成功时返回接收的字节数，失败时返回 -1
+</span></span></span><span class="line"><span class="cl"><span class="cm">sock: 用于传输数据的 UDP 套接字
+</span></span></span><span class="line"><span class="cl"><span class="cm">buff: 保存待传输数据的缓冲地址值
+</span></span></span><span class="line"><span class="cl"><span class="cm">nbytes: 待传输的数据长度，以字节为单位
+</span></span></span><span class="line"><span class="cl"><span class="cm">flags: 可选项参数，若没有则传递 0
+</span></span></span><span class="line"><span class="cl"><span class="cm">from: 存有**发送端**地址信息的 sockaddr 结构体变量的地址值
+</span></span></span><span class="line"><span class="cl"><span class="cm">addrlen: 保存参数 from 的结构体变量长度的变量地址值。
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="udp-的数据传输特性和调用-connect-函数"><a href="#udp-的数据传输特性和调用-connect-函数" class="anchor-link">#</a>UDP 的数据传输特性和调用 connect 函数</h3>
+<ul>
+<li>输入函数的调用次数和输出函数的调用次数应该<strong>完全一致</strong></li>
+<li>每次调用 sendto 函数时每次都变更目标地址，因此可以重复利用同一 UDP 套接字向不同目标传递数据。这种未注册目标地址信息的套接字称为未连接套接字，反之，注册了目标地址的套接字称为连接 connected 套接字。
+<ul>
+<li>sendto流程</li>
+<li>第 1 阶段：向 UDP 套接字注册目标 IP 和端口号</li>
+<li>第 2 阶段：传输数据</li>
+<li>第 3 阶段：删除 UDP 套接字中注册的目标地址信息。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>python -c &quot;import socket;print([(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])&quot;</p>
+</blockquote>
+<p>终端输入上述命令获取本地ip</p>
+<h2 id="优雅的断开套接字的连接"><a href="#优雅的断开套接字的连接" class="anchor-link">#</a>优雅的断开套接字的连接</h2>
+<h3 id="基于-tcp-的半关闭"><a href="#基于-tcp-的半关闭" class="anchor-link">#</a>基于 TCP 的半关闭</h3>
+<p>TCP 的断开过程可能发生预想不到的情况，需要掌握半关闭（half-close）。Linux 和 Windows 的 closesocket 函数意味着完全断开连接。完全断开不仅指无法传输数据，而且也不能接收数据。<br />一旦两台主机之间建立了套接字连接，每个主机就会拥有单独的输入流和输出流。</p>
+<h4 id="针对优雅断开的-shutdown-函数"><a href="#针对优雅断开的-shutdown-函数" class="anchor-link">#</a>针对优雅断开的 shutdown 函数</h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">shutdown</span><span class="p">(</span><span class="kt">int</span> <span class="n">sock</span><span class="p">,</span> <span class="kt">int</span> <span class="n">howto</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">成功时返回 0 ，失败时返回 -1
+</span></span></span><span class="line"><span class="cl"><span class="cm">sock: 需要断开套接字文件描述符
+</span></span></span><span class="line"><span class="cl"><span class="cm">howto: 传递断开方式信息
+</span></span></span><span class="line"><span class="cl"><span class="cm">	SHUT_RD : 断开输入流 0
+</span></span></span><span class="line"><span class="cl"><span class="cm">    SHUT_WR : 断开输出流 1
+</span></span></span><span class="line"><span class="cl"><span class="cm">    SHUT_RDWR : 同时断开 I/O 流 2
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><a href="https://www.cnblogs.com/JohnABC/p/7238241.html" target="_blank" rel="noopener">Linux-socket的close和shutdown区别及应用场景</a>（也有后续章节的多进程传输中使用shutdown的原因，会不管计数，直接关闭输入输出流）</p>
+<h4 id="为何要半关闭"><a href="#为何要半关闭" class="anchor-link">#</a>为何要半关闭</h4>
+<p>为了关闭服务器后，仍可以接收客户端的数据。调用 shutdown 函数，只关闭服务器的输出流。这样既可以发送 EOF ，同时又保留了输入流。</p>
+<h4 id="一个优雅的流程"><a href="#一个优雅的流程" class="anchor-link">#</a>一个优雅的流程</h4>
+<p>当服务端发送完数据后，shutdown关闭发送流，当接收到客户端的回复信息，则close套接字，同时客户端发送完消息后关闭套接字。<br /><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-5.png?imageMogr2/format/webp%7C" alt="image"></p>
+<h2 id="域名及网络地址"><a href="#域名及网络地址" class="anchor-link">#</a>域名及网络地址</h2>
+<h3 id="域名系统"><a href="#域名系统" class="anchor-link">#</a>域名系统</h3>
+<p>DNS 是对IP地址和域名进行相互转换的系统，其核心是 DNS 服务器<br />域名是IP地址的别名，可以通过DNS服务器查询到对应IP地址<br /><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-6.png?imageMogr2/format/webp%7C" alt="image"><br />当在电脑浏览器上输入一个域名，会通过一系列的DNS服务器的映射找到最终的目标服务器。</p>
+<h3 id="ip地址和域名之间的转换"><a href="#ip地址和域名之间的转换" class="anchor-link">#</a>IP地址和域名之间的转换</h3>
+<h4 id="通过域名获得ip"><a href="#通过域名获得ip" class="anchor-link">#</a>通过域名获得ip</h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;netdb.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">struct</span> <span class="nc">hostent</span> <span class="o">*</span><span class="nf">gethostbyname</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">hostname</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">成功时返回 hostent 结构体地址，失败时返回 NULL 指针
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">hostent</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">h_name</span><span class="p">;</span>       <span class="cm">/* Official name of host.  官方域名*/</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">**</span><span class="n">h_aliases</span><span class="p">;</span>   <span class="cm">/* Alias list.  域名别称*/</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">h_addrtype</span><span class="p">;</span>     <span class="cm">/* Host address type.  IP地址*/</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">h_length</span><span class="p">;</span>       <span class="cm">/* Length of address.  IP地址长度*/</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">**</span><span class="n">h_addr_list</span><span class="p">;</span> <span class="cm">/* List of addresses from name server. 域名对应IP地址 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-7.png?imageMogr2/format/webp%7C" alt="image"><br />linux下可以使用dig @8.8.8.8 +trace baidu.com命令追踪DNS查询路径</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;arpa/inet.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;netdb.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">void</span> <span class="nf">error_handling</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="nc">hostent</span> <span class="o">*</span><span class="n">host</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Usage : %s &lt;addr&gt;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 把参数传递给函数，返回结构体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">host</span> <span class="o">=</span> <span class="n">gethostbyname</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// IP to host
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// struct sockaddr_in addr;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// memset(&amp;addr, 0, sizeof(addr));
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// addr.sin_addr.s_addr = inet_addr(argv[1]);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// host = gethostbyaddr((char *)&amp;addr.sin_addr, 4, AF_INET);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">host</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;gethost... error&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 输出官方域名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Official name: %s </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">host</span><span class="o">-&gt;</span><span class="n">h_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Aliases 貌似是解析的 cname 域名？
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">host</span><span class="o">-&gt;</span><span class="n">h_aliases</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Aliases %d: %s </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">host</span><span class="o">-&gt;</span><span class="n">h_aliases</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//看看是不是ipv4
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Address type: %s </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">           <span class="p">(</span><span class="n">host</span><span class="o">-&gt;</span><span class="n">h_addrtype</span> <span class="o">==</span> <span class="n">AF_INET</span><span class="p">)</span> <span class="o">?</span> <span class="s">&#34;AF_INET&#34;</span> <span class="o">:</span> <span class="s">&#34;AF_INET6&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 输出ip地址信息
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">host</span><span class="o">-&gt;</span><span class="n">h_addr_list</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 对in_addr*指针取值用*
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;IP addr %d: %s </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">inet_ntoa</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="k">struct</span> <span class="nc">in_addr</span> <span class="o">*</span><span class="p">)</span><span class="n">host</span><span class="o">-&gt;</span><span class="n">h_addr_list</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h4 id="利用ip地址获取域名"><a href="#利用ip地址获取域名" class="anchor-link">#</a>利用IP地址获取域名</h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;netdb.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">struct</span> <span class="nc">hostent</span> <span class="o">*</span><span class="nf">gethostbyaddr</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">addr</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">family</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">成功时返回 hostent 结构体变量地址值，失败时返回 NULL 指针
+</span></span></span><span class="line"><span class="cl"><span class="cm">addr: 含有IP地址信息的 in_addr 结构体指针。为了同时传递 IPV4 地址之外的全部信息，该变量的类型声明为 char 指针
+</span></span></span><span class="line"><span class="cl"><span class="cm">len: 向第一个参数传递的地址信息的字节数，IPV4时为 4 ，IPV6 时为16.
+</span></span></span><span class="line"><span class="cl"><span class="cm">family: 传递地址族信息，ipv4 是 AF_INET ，IPV6是 AF_INET6
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><a href="https://www.zhihu.com/question/34873227/answer/518086565" target="_blank" rel="noopener">在浏览器地址栏输入一个URL后回车，背后会进行哪些技术步骤？</a></p>
+<h2 id="套接字的多种可选项"><a href="#套接字的多种可选项" class="anchor-link">#</a>套接字的多种可选项</h2>
+<h3 id="套接字可选项和-io-缓冲大小"><a href="#套接字可选项和-io-缓冲大小" class="anchor-link">#</a>套接字可选项和 I/O 缓冲大小</h3>
+<p>我们之前写得程序都是创建好套接字之后直接使用的，此时通过默认的套接字特性进行数据通信，这里列出了一些套接字可选项。</p>
+<div class="table-container"><table>
+  <thead>
+      <tr>
+          <th>协议层</th>
+          <th>选项名</th>
+          <th>getsockopt</th>
+          <th>setsockopt</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>SOL_SOCKET</td>
+          <td>SO_SNDBUF</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>SOL_SOCKET</td>
+          <td>SO_RCVBUF</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>SOL_SOCKET</td>
+          <td>SO_REUSEADDR</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>SOL_SOCKET</td>
+          <td>SO_KEEPALIVE</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>SOL_SOCKET</td>
+          <td>SO_BROADCAST</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>SOL_SOCKET</td>
+          <td>SO_DONTROUTE</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>SOL_SOCKET</td>
+          <td>SO_OOBINLINE</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>SOL_SOCKET</td>
+          <td>SO_ERROR</td>
+          <td>O</td>
+          <td>X</td>
+      </tr>
+      <tr>
+          <td>SOL_SOCKET</td>
+          <td>SO_TYPE</td>
+          <td>O</td>
+          <td>X</td>
+      </tr>
+      <tr>
+          <td>IPPROTO_IP</td>
+          <td>IP_TOS</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>IPPROTO_IP</td>
+          <td>IP_TTL</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>IPPROTO_IP</td>
+          <td>IP_MULTICAST_TTL</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>IPPROTO_IP</td>
+          <td>IP_MULTICAST_LOOP</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>IPPROTO_IP</td>
+          <td>IP_MULTICAST_IF</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>IPPROTO_TCP</td>
+          <td>TCP_KEEPALIVE</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>IPPROTO_TCP</td>
+          <td>TCP_NODELAY</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+      <tr>
+          <td>IPPROTO_TCP</td>
+          <td>TCP_MAXSEG</td>
+          <td>O</td>
+          <td>O</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>从表中可以看出，套接字可选项是分层的。</p>
+<ul>
+<li>IPPROTO_IP 可选项是IP协议相关事项</li>
+<li>IPPROTO_TCP 层可选项是 TCP 协议的相关事项</li>
+<li>SOL_SOCKET 层是套接字的通用可选项。</li>
+<li>用于验证套接类型的 SO_TYPE 是只读可选项，因为<strong>套接字类型只能在创建(调用socket()方法时)时决定，以后不能再更改</strong>。</li>
+</ul>
+<h4 id="getsockopt--setsockopt"><a href="#getsockopt--setsockopt" class="anchor-link">#</a>getsockopt &amp; setsockopt</h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">// 读取套接字可选项
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">getsockopt</span><span class="p">(</span><span class="kt">int</span> <span class="n">sock</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">,</span> <span class="kt">int</span> <span class="n">optname</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">optval</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="o">*</span><span class="n">optlen</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">成功时返回 0 ，失败时返回 -1
+</span></span></span><span class="line"><span class="cl"><span class="cm">sock: 用于查看选项套接字文件描述符
+</span></span></span><span class="line"><span class="cl"><span class="cm">level: 要查看的可选项协议层
+</span></span></span><span class="line"><span class="cl"><span class="cm">optname: 要查看的可选项名
+</span></span></span><span class="line"><span class="cl"><span class="cm">optval: 保存查看结果的缓冲地址值
+</span></span></span><span class="line"><span class="cl"><span class="cm">optlen: 向第四个参数传递的缓冲大小。调用函数后，该变量中保存通过第四个参数返回的可选项信息的字节数。
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">// 更改可选项
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">setsockopt</span><span class="p">(</span><span class="kt">int</span> <span class="n">sock</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">,</span> <span class="kt">int</span> <span class="n">optname</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">optval</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="n">optlen</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">成功时返回 0 ，失败时返回 -1
+</span></span></span><span class="line"><span class="cl"><span class="cm">sock: 用于更改选项套接字文件描述符
+</span></span></span><span class="line"><span class="cl"><span class="cm">level: 要更改的可选项协议层
+</span></span></span><span class="line"><span class="cl"><span class="cm">optname: 要更改的可选项名
+</span></span></span><span class="line"><span class="cl"><span class="cm">optval: 保存更改结果的缓冲地址值
+</span></span></span><span class="line"><span class="cl"><span class="cm">optlen: 向第四个参数传递的缓冲大小。调用函数后，该变量中保存通过第四个参数返回的可选项信息的字节数。
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">tcp_sock</span><span class="p">,</span> <span class="n">udp_sock</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">sock_type</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">socklen_t</span> <span class="n">optlen</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">optlen</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">sock_type</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tcp_sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">udp_sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_DGRAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;SOCK_STREAM: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;SOCK_DGRAM: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">SOCK_DGRAM</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">state</span> <span class="o">=</span> <span class="n">getsockopt</span><span class="p">(</span><span class="n">tcp_sock</span><span class="p">,</span> <span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">SO_TYPE</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">sock_type</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">optlen</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Socket type one: %d </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">sock_type</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">state</span> <span class="o">=</span> <span class="n">getsockopt</span><span class="p">(</span><span class="n">udp_sock</span><span class="p">,</span> <span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">SO_TYPE</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">sock_type</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">optlen</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Socket type two: %d </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">sock_type</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h4 id="so_sndbuf--so_rcvbuf"><a href="#so_sndbuf--so_rcvbuf" class="anchor-link">#</a>SO_SNDBUF &amp; SO_RCVBUF</h4>
+<p>设置缓冲区不会按照代码所要求的缓冲区大小，所以实现要小心。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cm">/* Set socket FD&#39;s option OPTNAME at protocol level LEVEL
+</span></span></span><span class="line"><span class="cl"><span class="cm">   to *OPTVAL (which is OPTLEN bytes long).
+</span></span></span><span class="line"><span class="cl"><span class="cm">   Returns 0 on success, -1 for errors.  */</span>
+</span></span><span class="line"><span class="cl"><span class="k">extern</span> <span class="kt">int</span> <span class="nf">setsockopt</span> <span class="p">(</span><span class="kt">int</span> <span class="n">__fd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">__level</span><span class="p">,</span> <span class="kt">int</span> <span class="n">__optname</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		       <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">__optval</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="n">__optlen</span><span class="p">)</span> <span class="n">__THROW</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* Put the current value for socket FD&#39;s option OPTNAME at protocol level LEVEL
+</span></span></span><span class="line"><span class="cl"><span class="cm">   into OPTVAL (which is *OPTLEN bytes long), and set *OPTLEN to the value&#39;s
+</span></span></span><span class="line"><span class="cl"><span class="cm">   actual length.  Returns 0 on success, -1 for errors.  */</span>
+</span></span><span class="line"><span class="cl"><span class="k">extern</span> <span class="kt">int</span> <span class="nf">getsockopt</span> <span class="p">(</span><span class="kt">int</span> <span class="n">__fd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">__level</span><span class="p">,</span> <span class="kt">int</span> <span class="n">__optname</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		       <span class="kt">void</span> <span class="o">*</span><span class="n">__restrict</span> <span class="n">__optval</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		       <span class="n">socklen_t</span> <span class="o">*</span><span class="n">__restrict</span> <span class="n">__optlen</span><span class="p">)</span> <span class="n">__THROW</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="so_reuseaddrimportant"><a href="#so_reuseaddrimportant" class="anchor-link">#</a>SO_REUSEADDR（important）</h3>
+<h4 id="time-wait-状态"><a href="#time-wait-状态" class="anchor-link">#</a>Time-wait 状态</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-8.png?imageMogr2/format/webp%7C" alt="image"><br />假设图中主机 A 是服务器，因为是主机 A 向 B 发送 FIN 消息，即服务器使用 CTRL+C强制终止 。但是问题是，套接字经过四次握手后并没有立即消除，而是要经过一段时间的 Time-wait 状态。当然，只有<strong>先断开连接</strong>的（<strong>先发送 FIN 消息</strong>的）主机才经过 Time-wait 状态。因此，若服务器端先断开连接，则无法立即重新运行。套接字处在 Time-wait 过程时，相应端口是正在使用的状态。因此，就像之前验证过的，bind 函数调用过程中会发生错误。<br />实际上，不论是服务端还是客户端，都要经过一段时间的 Time-wait 过程。先断开连接的套接字必然会经过 Time-wait 过程，但是由于<strong>客户端套接字的端口是任意指定</strong>的，所以无需过多关注 Time-wait 状态。<br />那到底为什么会有 Time-wait 状态呢，在图中假设，主机 A 向主机 B 传输 ACK 消息（SEQ 5001 , ACK 7502 ）后立刻消除套接字。但是最后这条 ACK 消息在传递过程中丢失，没有传递主机 B ，这时主机 B 就会试图重传。但是此时主机 A 已经是完全终止状态，因此主机 B 永远无法收到从主机 A 最后传来的 ACK 消息。防止数据丢失后，无法再次通信，所以要设计 Time-wait 状态。</p>
+<h4 id="地址再分配"><a href="#地址再分配" class="anchor-link">#</a>地址再分配</h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">socklen_t</span> <span class="n">optlen</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">option</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">option</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">setsockopt</span><span class="p">(</span><span class="n">serv_sock</span><span class="p">,</span> <span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">option</span><span class="p">,</span> <span class="n">optlen</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="tcp_nodelay"><a href="#tcp_nodelay" class="anchor-link">#</a>TCP_NODELAY</h3>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-9.png?imageMogr2/format/webp%7C" alt="image"><br />TCP 套接字默认使用 Nagle 算法交换数据，因此最大限度的进行缓冲，直到收到 ACK 。左图也就是说一共传递 4 个数据包以传输一个字符串。从右图可以看出，发送数据包一共使用了 10 个数据包。由此可知，不使用 Nagle 算法将对网络流量产生负面影响。即使只传输一个字节的数据，其头信息都可能是几十个字节。因此，为了提高网络传输效率，必须使用 Nagle 算法。<br />Nagle 算法并不是什么情况下都适用，<strong>网络流量未受太大影响时</strong>，不使用 Nagle 算法要比使用它时传输速度快。最典型的就是「<strong>传输大文数据</strong>」。将文件数据传入输出缓冲不会花太多时间，因此，不使用 Nagle 算法，也会在装满输出缓冲时传输数据包。这不仅不会增加数据包的数量，反而在无需等待 ACK 的前提下连续传输，因此可以大大提高传输速度。<br />所以，未准确判断数据性质时不应禁用 Nagle 算法。</p>
+<h4 id="禁用-nagle-算法"><a href="#禁用-nagle-算法" class="anchor-link">#</a>禁用 Nagle 算法</h4>
+<p>禁用 Nagle 算法应该使用：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;netinet/tcp.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;netinet/in.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="n">opt_val</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="n">setsockopt</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">IPPROTO_TCP</span><span class="p">,</span> <span class="n">TCP_NODELAY</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">opt_val</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">opt_val</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>通过 TCP_NODELAY 的值来查看Nagle 算法的设置状态。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">opt_len</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">opt_val</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="n">getsockopt</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">IPPROTO_TCP</span><span class="p">,</span> <span class="n">TCP_NODELAY</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">opt_val</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">opt_len</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>如果正在使用Nagle 算法，那么 opt_val 值为 0（默认启用），如果禁用则为 1.<br />关于这个算法，可以参考这个回答：<a href="https://www.zhihu.com/question/42308970/answer/246334766" target="_blank" rel="noopener">TCP连接中启用和禁用TCP_NODELAY有什么影响？</a></p>
+<h2 id="多进程服务器端"><a href="#多进程服务器端" class="anchor-link">#</a>多进程服务器端</h2>
+<p>通过改进服务端，使其同时向所有发起请求的客户端提供服务，以提高平均满意度。而且，网络程序中数据通信时间比 CPU 运算时间占比更大，因此，向多个客户端提供服务是一种有效的利用 CPU 的方式。</p>
+<ul>
+<li>多进程服务器：通过创建多个进程提供服务</li>
+<li>多路复用服务器：通过捆绑并统一管理 I/O 对象提供服务</li>
+<li>多线程服务器：通过生成与客户端等量的线程提供服务</li>
+</ul>
+<h3 id="进程概念及应用"><a href="#进程概念及应用" class="anchor-link">#</a>进程概念及应用</h3>
+<h4 id="理解进程"><a href="#理解进程" class="anchor-link">#</a>理解进程</h4>
+<p>进程的定义如下：</p>
+<blockquote>
+<p>占用内存空间的正在运行的程序</p>
+</blockquote>
+<p>所有的进程都会被操作系统分配一个 ID。此 ID 被称为「进程ID」，其值为大于 2 的整数。1 要分配给操作系统启动后的（用于协助操作系统）首个进程。<br />linux运行 ps au 命令，可以查看当前运行的所有进程的详细信息。</p>
+<h4 id="调用-fork-函数创建进程"><a href="#调用-fork-函数创建进程" class="anchor-link">#</a>调用 fork 函数创建进程</h4>
+<p>创建进程的方式很多，此处只介绍用于创建多进程服务端的 fork 函数。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">pid_t</span> <span class="nf">fork</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>fork 函数将创建调用的进程副本，复制正在运行的、调用 fork 函数的进程。另外，两个进程都执行 fork 函数调用后的所有语句。但因为是通过同一个进程、复制相同的内存空间，之后的程序流要根据 fork 函数的返回值用if/else加以区分。即利用 fork 函数的如下特点区分程序执行流程。</p>
+<ul>
+<li>父进程：fork 函数返回子进程 ID</li>
+<li>子进程：fork 函数返回 0</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="n">gval</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pid_t</span> <span class="n">pid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">lval</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gval</span><span class="o">++</span><span class="p">,</span> <span class="n">lval</span> <span class="o">+=</span> <span class="mi">5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 先前gval=11, lval = 25
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1">// 子进程操作val
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">gval</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">lval</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>  <span class="c1">// 父进程操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">gval</span> <span class="o">-=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">lval</span> <span class="o">-=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Child Proc: [%d,%d] </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">gval</span><span class="p">,</span> <span class="n">lval</span><span class="p">);</span>  <span class="c1">// [13, 27]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Parent Proc: [%d,%d] </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">gval</span><span class="p">,</span> <span class="n">lval</span><span class="p">);</span>  <span class="c1">// [9, 23]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="僵尸进程"><a href="#僵尸进程" class="anchor-link">#</a>僵尸进程</h3>
+<blockquote>
+<p>僵尸进程是当子进程比父进程先结束，而父进程又没有回收子进程，释放子进程占用的资源，此时子进程将成为一个僵尸进程。如果父进程先退出 ，子进程被init接管，子进程退出后init会回收其占用的相关资源</p>
+</blockquote>
+<p>使用ps au 查看僵尸进程时，其stat为Z，以下是常用stat，可组合使用</p>
+<blockquote>
+<p>D      //无法中断的休眠状态（通常 IO 的进程）； <br />R      //正在运行可中在队列中可过行的； <br />S      //处于休眠状态； <br />T      //停止或被追踪； <br />W      //进入内存交换 （从内核2.6开始无效）； <br />X      //死掉的进程 （基本很少见）； <br />Z      //僵尸进程； <br />&lt;      //优先级高的进程 <br />N      //优先级较低的进程 <br />L      //有些页被锁进内存； <br />s      //进程的领导者（在它之下有子进程）； <br />l      //多线程，克隆线程（使用 CLONE_THREAD, 类似 NPTL pthreads）； <br />+      //位于后台的进程组；（正在使用的进程？）</p>
+</blockquote>
+<h4 id="产生僵尸进程的原因"><a href="#产生僵尸进程的原因" class="anchor-link">#</a>产生僵尸进程的原因</h4>
+<p>向 exit 函数传递的参数值(e.g. 0)和 main 函数的 return 语句返回的值(e.g. 0)都会传递给操作系统。而操作系统不会销毁子进程，<strong>直到把这些值传递给产生该子进程的父进程</strong>。处在这种状态下的进程就是僵尸进程。也就是说将子进程变成僵尸进程的正是操作系统。既然如此，僵尸进程何时被销毁呢？父进程主动发起请求（wait函数调用）的时候。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pid_t</span> <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">puts</span><span class="p">(</span><span class="s">&#34;Hi, I am a child Process&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Child Process ID: %d </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sleep</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>  <span class="c1">// 使子进程变僵尸，30s后再终止子进程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">puts</span><span class="p">(</span><span class="s">&#34;End child proess&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="n">puts</span><span class="p">(</span><span class="s">&#34;End parent process&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><blockquote>
+<p>利用 ./zombie &amp;可以使程序在后台运行，不用打开新的命令行窗口。输入ps au查看Z</p>
+</blockquote>
+<h4 id="销毁僵尸进程-1利用-wait-函数"><a href="#销毁僵尸进程-1利用-wait-函数" class="anchor-link">#</a>销毁僵尸进程 1：利用 wait 函数</h4>
+<p>为了销毁子进程，父进程应该主动请求获取子进程的返回值。下面是发起请求的具体方法，有两种。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">pid_t</span> <span class="nf">wait</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">statloc</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">成功时返回终止的子进程 ID ,失败时返回 -1
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>调用此函数时如果已有子进程终止，那么子进程终止时传递的返回值（exit 函数的参数返回值，main 函数的 return 返回值）将保存到该函数的参数所指的内存空间。但函数参数指向的内存空间中还包含其他信息，因此需要用下列宏进行分离：</p>
+<ul>
+<li>WIFEXITED 子进程正常终止时返回「真」</li>
+<li>WEXITSTATUS 返回子进程时的返回值</li>
+</ul>
+<p>也就是说，向 wait 函数传递变量 status 的地址时，调用 wait 函数后应编写如下代码：<br />WIFIEXITED：((status) &amp; 0x7f) == 0<br />WEXITSTATUS：(((status) &amp; 0xff00) &gt;&gt; 8)</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">status</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pid_t</span> <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span> <span class="c1">//这里的子进程将在第13行通过 return 语句终止
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Child PID: %d </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span> <span class="c1">//这里的子进程将在 21 行通过 exit() 函数终止
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">exit</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Child PID: %d </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">status</span><span class="p">);</span>         <span class="c1">//之间终止的子进程相关信息将被保存到 status 中，同时相关子进程被完全销毁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">WIFEXITED</span><span class="p">(</span><span class="n">status</span><span class="p">))</span> <span class="c1">//通过 WIFEXITED 来验证子进程是否正常终止。如果正常终止，则调用 WEXITSTATUS 宏输出子进程返回值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Child send one: %d </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">WEXITSTATUS</span><span class="p">(</span><span class="n">status</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">status</span><span class="p">);</span> <span class="c1">//因为之前创建了两个进程，所以再次调用 wait 函数和宏
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">WIFEXITED</span><span class="p">(</span><span class="n">status</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Child send two: %d </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">WEXITSTATUS</span><span class="p">(</span><span class="n">status</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sleep</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>这就是通过 wait 函数消灭僵尸进程的方法，调用 wait 函数时，如果没有已经终止的子进程，那么程序将<strong>阻塞（Blocking）直到有子进程终止</strong>，因此要谨慎调用该函数。</p>
+<h4 id="销毁僵尸进程-2使用-waitpid-函数"><a href="#销毁僵尸进程-2使用-waitpid-函数" class="anchor-link">#</a>销毁僵尸进程 2：使用 waitpid 函数</h4>
+<p>wait 函数会引起程序阻塞，还可以考虑调用 waitpid 函数。这是防止僵尸进程的第二种方法，也是防止阻塞的方法。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">pid_t</span> <span class="nf">waitpid</span><span class="p">(</span><span class="n">pid_t</span> <span class="n">pid</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">statloc</span><span class="p">,</span> <span class="kt">int</span> <span class="n">options</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">成功时返回终止的子进程ID 或 0 ，失败时返回 -1
+</span></span></span><span class="line"><span class="cl"><span class="cm">pid: 等待终止的目标子进程的ID,若传 -1，则与 wait 函数相同，可以等待任意子进程终止
+</span></span></span><span class="line"><span class="cl"><span class="cm">statloc: 与 wait 函数的 statloc 参数具有相同含义
+</span></span></span><span class="line"><span class="cl"><span class="cm">options: 传递头文件 sys/wait.h 声明的常量 WNOHANG ,即使没有终止的子进程也不会进入阻塞状态，而是返回 0 退出函数。
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">status</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pid_t</span> <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c1">//用 sleep 推迟子进程的执行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="mi">24</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//调用waitpid 传递参数 WNOHANG ，这样没有终止的子进程返回0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">waitpid</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">status</span><span class="p">,</span> <span class="n">WNOHANG</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">puts</span><span class="p">(</span><span class="s">&#34;sleep 3 sec.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">WIFEXITED</span><span class="p">(</span><span class="n">status</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Child send %d </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">WEXITSTATUS</span><span class="p">(</span><span class="n">status</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="信号处理"><a href="#信号处理" class="anchor-link">#</a>信号处理</h3>
+<p>我们已经知道了进程的创建及销毁的办法，但是还有一个问题没有解决。</p>
+<blockquote>
+<p>子进程究竟何时终止？调用 waitpid 函数后要无休止的等待吗？</p>
+</blockquote>
+<p>子进程终止的识别主题是操作系统，因此，若操作系统能把子进程结束的信息告诉正忙于工作的父进程，将有助于构建更高效的程序<br />为了实现上述的功能，引入信号处理机制（Signal Handing）。此处「信号」是在特定事件发生时由操作系统向进程发送的消息。另外，为了响应该消息，执行与消息相关的自定义操作的过程被称为「处理」或「信号处理」（QT信号槽？）。</p>
+<h4 id="信号与-signal-函数"><a href="#信号与-signal-函数" class="anchor-link">#</a>信号与 signal 函数</h4>
+<p>下面进程和操作系统的对话可以帮助理解信号处理。</p>
+<blockquote>
+<p>进程：操作系统，如果我之前创建的子进程终止，就帮我调用 zombie_handler 函数。
+操作系统：好的，如果你的子进程终止，我就帮你调用 zombie_handler 函数，你先把函数要执行的语句写好。</p>
+</blockquote>
+<ol>
+<li>上述的对话，相当于「注册信号」的过程。</li>
+</ol>
+<p>即进程发现自己的子进程结束时，请求操作系统调用特定的函数。该请求可以通过如下函数调用完成：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">signal</span><span class="p">(</span><span class="kt">int</span> <span class="n">signo</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">int</span><span class="p">)))(</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">为了在产生信号时调用，返回之前注册的函数指针
+</span></span></span><span class="line"><span class="cl"><span class="cm">函数名: signal
+</span></span></span><span class="line"><span class="cl"><span class="cm">参数：int signo,void(*func)(int)
+</span></span></span><span class="line"><span class="cl"><span class="cm">返回类型：参数类型为int型，返回 void 型函数指针
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>调用上述函数时，第一个参数为特殊情况，第二个参数为特殊情况下将要<strong>调用的函数的地址值</strong>（指针）。发生第一个参数代表的情况时，调用第二个参数所指的函数。下面给出可以在 signal 函数中注册的部分特殊情况。</p>
+<ul>
+<li>SIGALRM：已到通过调用 alarm 函数注册时间</li>
+<li>SIGINT：输入 ctrl+c</li>
+<li>SIGCHLD：子进程终止</li>
+</ul>
+<p>调用的函数的参数应为 int ，返回值类型应为 void 。只有这样才能成为 signal 函数的第二个参数。</p>
+<ol start="2">
+<li>接下来编写 signal 函数的调用语句，分别完成如下两个请求：
+<ol>
+<li>已到通过 alarm 函数注册时间，请调用 timeout 函数</li>
+<li>输入 ctrl+c 时调用 keycontrol 函数</li>
+</ol>
+</li>
+</ol>
+<p>代表这 2 种情况的常数分别为 SIGALRM 和 SIGINT ，因此按如下方式调用 signal 函数。</p>
+<blockquote>
+<p>signal(SIGALRM , timeout);
+signal(SIGINT , keycontrol);</p>
+</blockquote>
+<ol start="3">
+<li>注册好信号之后，发射注册信号时（注册的情况发生时），操作系统将调用该信号对应的函数。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="nf">alarm</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">seconds</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 返回0或以秒为单位的距 SIGALRM 信号发生所剩时间
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 如果调用该函数的同时向它传递一个正整型参数，相应时间后（以秒为单位）将产生 SIGALRM 信号。
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 若向该函数传递为 0 ，则之前对 SIGALRM 信号的预约将取消。
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 如果通过该函数预约信号后未指定该信号对应的处理函数，
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 则（通过调用 signal 函数）终止进程，不做任何处理。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">void</span> <span class="nf">timeout</span><span class="p">(</span><span class="kt">int</span> <span class="n">sig</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//信号处理器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">sig</span> <span class="o">==</span> <span class="n">SIGALRM</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">puts</span><span class="p">(</span><span class="s">&#34;Time out!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">alarm</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">//为了每隔 2 秒重复产生 SIGALRM 信号，在信号处理器中调用 alarm 函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">keycontrol</span><span class="p">(</span><span class="kt">int</span> <span class="n">sig</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//信号处理器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">sig</span> <span class="o">==</span> <span class="n">SIGINT</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">puts</span><span class="p">(</span><span class="s">&#34;CTRL+C pressed&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">signal</span><span class="p">(</span><span class="n">SIGALRM</span><span class="p">,</span> <span class="n">timeout</span><span class="p">);</span> <span class="c1">//注册信号及相应处理函数，注释该行2s后输出alarm clock，终止进程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">signal</span><span class="p">(</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">keycontrol</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">alarm</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">//预约 2 秒候发射 SIGALRM 信号
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">puts</span><span class="p">(</span><span class="s">&#34;wait...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sleep</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>  <span class="c1">// sleep 100s
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>产生信号时，为了调用信号处理器，将唤醒由于调用 sleep 函数而进入阻塞状态的进程。<br />本来系统要睡眠100秒，但是到了 alarm(2) 规定的两秒之后，就会唤醒睡眠的进程，<strong>进程被唤醒了就不会再进入睡眠状态了</strong>，所以就不用等待100秒。如果把 timeout() 函数中的 alarm(2) 注释掉，就会先输出wait...，然后再输出Time out! (这时已经跳过了第一次的 sleep(100) 秒),然后就真的会睡眠100秒，因为没有再发出 alarm(2) 的信号。</p>
+<h4 id="利用-sigaction-函数进行信号处理"><a href="#利用-sigaction-函数进行信号处理" class="anchor-link">#</a>利用 sigaction 函数进行信号处理</h4>
+<blockquote>
+<p>signal 函数在 Unix 系列的不同操作系统可能存在区别，但 sigaction 函数完全相同</p>
+</blockquote>
+<p>实际上现在很少用 signal 函数编写程序，它只是为了保持对旧程序的兼容，下面介绍 sigaction 函数，只讲解可以替换 signal 函数的功能。</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">sigaction</span><span class="p">(</span><span class="kt">int</span> <span class="n">signo</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">sigaction</span> <span class="o">*</span><span class="n">act</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">sigaction</span> <span class="o">*</span><span class="n">oldact</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">成功时返回 0 ，失败时返回 -1
+</span></span></span><span class="line"><span class="cl"><span class="cm">act: 对于第一个参数的信号处理函数（信号处理器）信息。
+</span></span></span><span class="line"><span class="cl"><span class="cm">oldact: 通过此参数获取之前注册的信号处理函数指针，若不需要则传递 0
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// struct sigaction  // sigaction结构体
+</span></span></span><span class="line"><span class="cl"><span class="c1">// {
+</span></span></span><span class="line"><span class="cl"><span class="c1">//     void (*sa_handler)(int);  // 保存信号处理的函数指针值（地址值）
+</span></span></span><span class="line"><span class="cl"><span class="c1">//     sigset_t sa_mask;  // 防止僵尸进程置0
+</span></span></span><span class="line"><span class="cl"><span class="c1">//     int sa_flags;  // 可看源码的所有flag
+</span></span></span><span class="line"><span class="cl"><span class="c1">// };
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">void</span> <span class="nf">timeout</span><span class="p">(</span><span class="kt">int</span> <span class="n">sig</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">sig</span> <span class="o">==</span> <span class="n">SIGALRM</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">puts</span><span class="p">(</span><span class="s">&#34;Time out!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">alarm</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="nc">sigaction</span> <span class="n">act</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">act</span><span class="p">.</span><span class="n">sa_handler</span> <span class="o">=</span> <span class="n">timeout</span><span class="p">;</span>    <span class="c1">// 保存函数指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">sigemptyset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">act</span><span class="p">.</span><span class="n">sa_mask</span><span class="p">);</span>   <span class="c1">// sig empty set将 sa_mask 成员的所有位初始化成0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">act</span><span class="p">.</span><span class="n">sa_flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>            <span class="c1">//sa_flags 同样初始化成 0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">sigaction</span><span class="p">(</span><span class="n">SIGALRM</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">act</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// 注册 SIGALRM 信号的处理器。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
+</span></span><span class="line"><span class="cl">    <span class="n">alarm</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">//2 秒后发生 SIGALRM 信号
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">puts</span><span class="p">(</span><span class="s">&#34;wait...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sleep</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h4 id="利用信号处理技术消灭僵尸进程"><a href="#利用信号处理技术消灭僵尸进程" class="anchor-link">#</a>利用信号处理技术消灭僵尸进程</h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">void</span> <span class="nf">read_childproc</span><span class="p">(</span><span class="kt">int</span> <span class="n">sig</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 销毁子进程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">status</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pid_t</span> <span class="n">id</span> <span class="o">=</span> <span class="n">waitpid</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">status</span><span class="p">,</span> <span class="n">WNOHANG</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">WIFEXITED</span><span class="p">(</span><span class="n">status</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Removed proc id: %d </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>             <span class="c1">//子进程的 pid
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Child send: %d </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">WEXITSTATUS</span><span class="p">(</span><span class="n">status</span><span class="p">));</span> <span class="c1">//子进程的返回值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pid_t</span> <span class="n">pid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="nc">sigaction</span> <span class="n">act</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">act</span><span class="p">.</span><span class="n">sa_handler</span> <span class="o">=</span> <span class="n">read_childproc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sigemptyset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">act</span><span class="p">.</span><span class="n">sa_mask</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">act</span><span class="p">.</span><span class="n">sa_flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sigaction</span><span class="p">(</span><span class="n">SIGCHLD</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">act</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">puts</span><span class="p">(</span><span class="s">&#34;Hi I&#39;m child process 1&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">12</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Child 1 proc id: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">puts</span><span class="p">(</span><span class="s">&#34;Hi! I&#39;m child process 2&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">exit</span><span class="p">(</span><span class="mi">24</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Child 2 proc id: %d </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">puts</span><span class="p">(</span><span class="s">&#34;wait&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>程序是先创建了两个子进程，并且父进程比子进程执行快。</p>
+<blockquote>
+<ol>
+<li>wait</li>
+<li>5s -&gt; wait</li>
+<li>5s -&gt; wait</li>
+<li>两个子进程终止，唤醒父进程 -&gt; wait -&gt; wait （唤醒后不休眠，所以直接跳过两次for循环，进入最后一次休眠）</li>
+<li>5s -&gt; 程序中止</li>
+</ol>
+</blockquote>
+<h3 id="基于多任务的并发服务器"><a href="#基于多任务的并发服务器" class="anchor-link">#</a>基于多任务的并发服务器</h3>
+<h4 id="基于进程的并发服务器模型"><a href="#基于进程的并发服务器模型" class="anchor-link">#</a>基于进程的并发服务器模型</h4>
+<p><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-10.png?imageMogr2/format/webp%7C" alt="image"><br />从图中可以看出，每当有客户端请求时（连接请求），回声服务器都创建子进程以提供服务。如果请求的客户端有 5 个，则将创建 5 个子进程来提供服务，为了完成这些任务，需要经过如下过程：</p>
+<ul>
+<li>第一阶段：回声服务器端（父进程）通过调用 accept 函数受理连接请求</li>
+<li>第二阶段：此时获取的套接字文件描述符创建并传递给子进程</li>
+<li>第三阶段：进程利用传递来的文件描述符提供服务</li>
+</ul>
+<p><a href="https://github.com/riba2534/TCP-IP-NetworkNote/blob/master/ch10/echo_mpserv.c" target="_blank" rel="noopener">完整代码</a>，可使用对应的<a href="https://github.com/riba2534/TCP-IP-NetworkNote/blob/master/ch04/echo_client.c" target="_blank" rel="noopener">echo_client</a></p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">adr_sz</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">clnt_adr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">clnt_sock</span> <span class="o">=</span> <span class="n">accept</span><span class="p">(</span><span class="n">serv_sock</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="nc">sockaddr</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">clnt_adr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">adr_sz</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">clnt_sock</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;new client connected...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span> <span class="c1">//此时，父子进程分别带有一个套接字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 分配失败
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">close</span><span class="p">(</span><span class="n">clnt_sock</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//子进程运行区域, 此部分向客户端提供回声服务
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">close</span><span class="p">(</span><span class="n">serv_sock</span><span class="p">);</span> <span class="c1">//关闭服务器套接字，因为从父进程传递到了子进程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">while</span> <span class="p">((</span><span class="n">str_len</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">clnt_sock</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">BUFSIZ</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">write</span><span class="p">(</span><span class="n">clnt_sock</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">str_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">close</span><span class="p">(</span><span class="n">clnt_sock</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">puts</span><span class="p">(</span><span class="s">&#34;client disconnected...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">close</span><span class="p">(</span><span class="n">clnt_sock</span><span class="p">);</span> <span class="c1">//通过 accept 函数创建的套接字文件描述符已经复制给子进程，因此服务器端要销毁自己的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h4 id="通过-fork-函数复制文件描述符"><a href="#通过-fork-函数复制文件描述符" class="anchor-link">#</a>通过 fork 函数复制文件描述符</h4>
+<p>示例中给出了通过 fork 函数复制文件描述符的过程。父进程将 2 个套接字（一个是服务端套接字另一个是客户端套接字）文件描述符复制给了子进程。<br />调用 fork 函数时赋值<strong>父进程的所有资源</strong>，但是套接字不是归进程所有的，而是<strong>归操作系统所有</strong>，只是进程拥有代表相应套接字的文件描述符。<br /><img src="https://camo.githubusercontent.com/e8059964da650325509a86c00916dc588b147221b21e0355ca13e6ee8126f667/68747470733a2f2f73322e617831782e636f6d2f323031392f30312f32312f6b5037526a782e706e67#from=url&amp;id=SMxPg&amp;originHeight=363&amp;originWidth=513&amp;originalType=binary&amp;ratio=1.2&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" alt="image"><br />如图所示，1 个套接字存在 2 个文件描述符时，只有 2 个文件描述符都终止（销毁）后，才能销毁套接字。如果维持图中的状态，即使<strong>子进程销毁了与客户端连接的套接字文件描述符，也无法销毁套接字</strong>（服务器套接字同样如此）。因此调用 fork 函数后，要将<strong>无关紧要的套接字文件描述符关掉</strong>，如图所示：<br /><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-11.png?imageMogr2/format/webp%7C" alt=""></p>
+<h3 id="分割-tcp-的-io-程序"><a href="#分割-tcp-的-io-程序" class="anchor-link">#</a>分割 TCP 的 I/O 程序</h3>
+<p>我们已经实现的回声<strong>客户端</strong>的数据回声方式如下：</p>
+<blockquote>
+<p>向服务器传输数据，并等待服务器端回复。无条件等待，直到接收完服务器端的回声数据后，才能传输下一批数据。</p>
+</blockquote>
+<p>传输数据后要等待服务器端返回的数据，因为程序代码中重复调用了 read 和 write 函数。只能这么写的原因之一是，程序在 1 个进程中运行，现在可以创建多个进程，因此可以分割数据收发过程。分割后过程如下图所示：<br /><img src="https://camo.githubusercontent.com/60042284b80365905816ec0f9ca8bcf8695895916bad37b1d6d30a716e85ba0f/68747470733a2f2f73322e617831782e636f6d2f323031392f30312f32312f6b5062686b442e706e67#from=url&amp;id=Qy4jl&amp;originHeight=295&amp;originWidth=459&amp;originalType=binary&amp;ratio=1.2&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" alt="image"><br />从图中可以看出，客户端的父进程负责接收数据，额外创建的子进程负责发送数据，分割后，父子进程分别负责输入输出，这样，无论客户端是否从服务器端接收完数据都可以进程传输。<br />分割 I/O 程序的另外一个好处是，可以提高频繁交换数据的程序性能，如下图所示：<br /><img src="https://pic.keepjolly.com/halo/blog/2023/06/20230607220100-12.png?imageMogr2/format/webp%7C" alt=""><br />根据上图显示可以看出，在网络不好的情况下，明显提升速度。</p>
+<ul>
+<li><a href="https://github.com/riba2534/TCP-IP-NetworkNote/blob/master/ch10/echo_mpclient.c" target="_blank" rel="noopener">回声客户端的 I/O 分割的代码实现</a></li>
+</ul>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/tcp/" rel="tag" class="post-tag-link">#tcp</a> <a href="/tags/c-/" rel="tag" class="post-tag-link">#c</a> <a href="/tags/network/" rel="tag" class="post-tag-link">#network</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

@@ -8,26 +8,43 @@
     {{ $dbType = $dbUrl }}
     {{ $dbApiUrl = "https://neodb.social/api/catalog/fetch?url=" }}
 {{ end }}
-{{ if not .Site.IsServer }}
-<p style="text-align: center;"><small>远程获取内容失败，请检查 API 有效性。{{ $dbUrl }}</small></p>
-{{ else }}
-    
-{{ $dbFetch := getJSON $dbApiUrl $dbType }}
 
-{{ if $dbFetch }}
-    {{ $itemRating := 0 }}{{ with $dbFetch.rating }}{{ $itemRating = . }}{{ end }}
-    <div class="db-card">
-        <div class="db-card-subject">
-            <div class="db-card-post"><img loading="lazy" decoding="async" referrerpolicy="no-referrer" src="{{ $dbFetch.cover_image_url }}"></div>
-            <div class="db-card-content">
-                <div class="db-card-title"><a href="{{ $dbUrl }}" class="cute" target="_blank" rel="noreferrer">{{ $dbFetch.title }}</a></div>
-                <div class="rating"><span class="allstardark"><span class="allstarlight" style="width:{{mul 10 $itemRating }}%"></span></span><span class="rating_nums">{{ $itemRating }}</span></div>
-                <div class="db-card-abstract">{{ $dbFetch.brief }}</div>
+{{ if not hugo.IsServer }}
+<p style="text-align: center;"><small>远程获取内容失败，请检查 API 有效性。</small></p>
+{{ else }}
+{{ $dbApiUrl := printf "%s%s" $dbApiUrl $dbType }}
+
+
+{{if 1}}
+    <p style="text-align: center;"><small>{{$dbApiUrl}}</small></p>
+    <p style="text-align: center;"><small>无限期待修改代码，参考https://immmmm.com/hi-neodb-api/</small></p>
+{{ else }}
+    {{ with resources.GetRemote $dbApiUrl }}
+    {{ with .Err }}
+        {{ errorf "%s" . }}
+    {{ else }}
+        {{ $dbFetch := . | transform.Unmarshal }}
+            {{ if $dbFetch }}
+            
+            {{ $itemRating := 0 }}{{ with $dbFetch.rating }}{{ $itemRating = . }}{{ end }}
+            <div class="db-card">
+                <div class="db-card-subject">
+                    <div class="db-card-post"><img loading="lazy" decoding="async" referrerpolicy="no-referrer" src="{{ $dbFetch.cover_image_url }}"></div>
+                    <div class="db-card-content">
+                        <div class="db-card-title"><a href="{{ $dbUrl }}" class="cute" target="_blank" rel="noreferrer">{{ $dbFetch.title }}</a></div>
+                        <div class="rating"><span class="allstardark"><span class="allstarlight" style="width:{{mul 10 $itemRating }}%"></span></span><span class="rating_nums">{{ $itemRating }}</span></div>
+                        <div class="db-card-abstract">{{ $dbFetch.brief }}</div>
+                    </div>
+                    <div class="db-card-cate">{{ $dbFetch.category }}</div>
+                </div>
             </div>
-            <div class="db-card-cate">{{ $dbFetch.category }}</div>
-        </div>
-    </div>
-{{else}}
-    <p style="text-align: center;"><small>远程获取内容失败，请检查 API 有效性。</small></p>
-{{end}}
+            {{else}}
+                <p style="text-align: center;"><small>远程获取内容失败，请检查 API 有效性。</small></p>
+            {{end}}
+    {{ end }}
+    {{ else }}
+    {{ errorf "Unable to get remote resource %q" $dbApiUrl}}
+    {{ end }}
+{{ end }}
+
 {{ end }}

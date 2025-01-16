@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.140.2"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>opencv提高摄像头分辨率时，无法打开摄像头 | 悠闲の小屋</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js" defer></script><script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="" /><meta name="description" content="前言 本文环境是win7，opencv-python，有两个摄像头设备 参考链接：
+万能的StackOverflow-1 万能的StackOverflow-2 遇到的问题 win7设备上需要调高摄像头分辨率，有两个摄像头，一个固定一个usb，但是只能控制在640 x 480，才能两个都能使用，否则调整随机调整摄像头分辨率两个都无法点亮。并且在win10使用单个摄像头，修改为3000 x 2000 输出的图片分辨率可以直接自适应为2048 x 1536，可以点亮摄像头。
+……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="悠闲の小屋" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="悠闲の小屋" />
+    <meta name="msapplication-starturl" content="../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://localhost:1313/archives/opencv-set-high-resolution-cant-open-camera/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2022-11-16T16:40:52+00:00",
+        "dateModified": "2023-05-27T18:00:39+08:00",
+        "url": "http://localhost:1313/archives/opencv-set-high-resolution-cant-open-camera/",
+        "headline": "opencv提高摄像头分辨率时，无法打开摄像头",
+        "description": "前言 本文环境是win7，opencv-python，有两个摄像头设备 参考链接：\n万能的StackOverflow-1 万能的StackOverflow-2 遇到的问题 win7设备上需要调高摄像头分辨率，有两个摄像头，一个固定一个usb，但是只能控制在640 x 480，才能两个都能使用，否则调整随机调整摄像头分辨率两个都无法点亮。并且在win10使用单个摄像头，修改为3000 x 2000 输出的图片分辨率可以直接自适应为2048 x 1536，可以点亮摄像头。\n……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  505 ,
+        "author": {
+            "@type": "Person",
+            "url": "http://localhost:1313/",
+            
+        },
+        "license": "在保留本文作者及本文链接的前提下，非商业用途随意转载分享(我会高强度自搜的喔👊)。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "悠闲の小屋",
+            "url": "http://localhost:1313/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://localhost:1313/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+
+    
+
+
+
+<meta property="og:title" content="opencv提高摄像头分辨率时，无法打开摄像头" />
+<meta property="og:description" content="前言 本文环境是win7，opencv-python，有两个摄像头设备 参考链接：
+万能的StackOverflow-1 万能的StackOverflow-2 遇到的问题 win7设备上需要调高摄像头分辨率，有两个摄像头，一个固定一个usb，但是只能控制在640 x 480，才能两个都能使用，否则调整随机调整摄像头分辨率两个都无法点亮。并且在win10使用单个摄像头，修改为3000 x 2000 输出的图片分辨率可以直接自适应为2048 x 1536，可以点亮摄像头。
+……" />
+<meta property="og:url" content="http://localhost:1313/archives/opencv-set-high-resolution-cant-open-camera/" />
+<meta property="og:site_name" content="悠闲の小屋" />
+<meta property="og:locale" content="zh" /><meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2022-11-16T16:40:52&#43;00:00" />
+    <meta property="article:modified_time" content="2023-05-27T18:00:39&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+        <meta name="google-site-verification" content="mBjLYgXaXR8EAfTNbi4DTVC5KOJuBHpZDsmtgbgC6Rs" />
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">悠闲の小屋</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/categories/"><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">阅读更多 »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    
+    <div class = "toc-wrapper">
+        
+
+    </div>
+    
+
+<main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">opencv提高摄像头分辨率时，无法打开摄像头</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目录</h2><ol class="toc">
+    <li><a id="contents:遇到的问题" href="#遇到的问题">遇到的问题</a></li>
+    <li><a id="contents:解决办法一" href="#解决办法一">解决办法一</a></li>
+    <li><a id="contents:解决办法二" href="#解决办法二">解决办法二</a></li>
+  </ol>
+</nav><hr></hr><div class="post-body e-content">
+                <p>前言
+本文环境是win7，opencv-python，有两个摄像头设备
+参考链接：</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/19448078/python-opencv-access-webcam-maximum-resolution" target="_blank" rel="noopener">万能的StackOverflow-1</a></li>
+<li><a href="https://stackoverflow.com/questions/29664399/capturing-video-from-two-cameras-in-opencv-at-once" target="_blank" rel="noopener">万能的StackOverflow-2</a></li>
+</ul>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="anchor-link">#</a><a href="#contents:遇到的问题" class="headings">遇到的问题</a></h2>
+<p>win7设备上需要调高摄像头分辨率，有两个摄像头，一个固定一个usb，但是只能控制在640 x 480，才能两个都能使用，否则调整随机调整摄像头分辨率两个都无法点亮。并且在win10使用单个摄像头，修改为3000 x 2000 输出的图片分辨率可以直接自适应为2048 x 1536，可以点亮摄像头。</p>
+<h2 id="解决办法一"><a href="#解决办法一" class="anchor-link">#</a><a href="#contents:解决办法一" class="headings">解决办法一</a></h2>
+<p>因为要对程序做迁移，但是在win10上可以直接任意设置分辨率来时opencv自适应摄像头最大分辨率，但是在win7无法实现，所以设定分辨率为固定值</p>
+<ul>
+<li>640 x 480</li>
+<li>800 x 600</li>
+<li>1024 x 768</li>
+<li>1280 x 960</li>
+<li>1920 x 1080</li>
+<li>2048 x 1536</li>
+<li>.....</li>
+<li>注意越大分辨率需求的算力越大，以及有些分辨率可能不是通用，可以多试试</li>
+<li>或者在代码上多设置几个大整数，然后get CV_CAP_PROP_FRAME_WIDTH，输出看一下，摄像头的分辨率是多少</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Frame default resolution: (&#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">CV_CAP_PROP_FRAME_WIDTH</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&#34;; &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">CV_CAP_PROP_FRAME_HEIGHT</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&#34;)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">cap</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">CV_CAP_PROP_FRAME_WIDTH</span><span class="p">,</span> <span class="mi">800</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">cap</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">CV_CAP_PROP_FRAME_HEIGHT</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 id="解决办法二"><a href="#解决办法二" class="anchor-link">#</a><a href="#contents:解决办法二" class="headings">解决办法二</a></h2>
+<p>未经测试，就是有多个摄像头设备的时候，占用一个总线，所以导致冲突了，多添加一个usb card（我也不知道是啥，可能是usb接口）
+<a href="https://stackoverflow.com/a/29702444" target="_blank" rel="noopener">https://stackoverflow.com/a/29702444</a></p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    <footer class="minimal-footer">
+        
+            <div class="post-tag"><a href="/tags/python/" rel="tag" class="post-tag-link">#python</a> <a href="/tags/opencv/" rel="tag" class="post-tag-link">#opencv</a></div>
+        
+        
+            <div class="post-category">
+                <a href="/posts/" class="post-category-link active">posts</a> | 
+            </div>
+        
+        
+    </footer>
+
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>
